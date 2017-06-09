@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ku.Core.CMS.Web.Admin", "Ku.Core.CMS.Web.Admin\Ku.Core.CMS.Web.Admin.csproj", "{E723CB95-286B-4243-98BD-1472C35B58F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Web.Admin", "Vino.Core.CMS.Web.Admin\Vino.Core.CMS.Web.Admin.csproj", "{E723CB95-286B-4243-98BD-1472C35B58F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{5F420258-0110-494B-98DA-94B5B61B2E5F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{38AE7166-6167-4D42-A479-647797CD1A83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ku.Core.CMS.Core", "Ku.Core.CMS.Core\Ku.Core.CMS.Core.csproj", "{73C2FAAC-7BCB-420E-913E-37CE2F21470F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Core", "Vino.Core.CMS.Core\Vino.Core.CMS.Core.csproj", "{73C2FAAC-7BCB-420E-913E-37CE2F21470F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{710A57A2-44CD-4A89-A01A-1AF755B90113}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ku.Core.CMS.Data", "Ku.Core.CMS.Data\Ku.Core.CMS.Data.csproj", "{02FBBBAB-95BC-4C92-BABA-B0F1F84EA50B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Data", "Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj", "{02FBBBAB-95BC-4C92-BABA-B0F1F84EA50B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

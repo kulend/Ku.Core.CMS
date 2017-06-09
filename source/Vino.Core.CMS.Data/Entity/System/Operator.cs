@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Ku.Core.CMS.Core.Common;
+using Vino.Core.CMS.Core.Common;
 
-namespace Ku.Core.CMS.Data.Entity.System
+namespace Vino.Core.CMS.Data.Entity.System
 {
     [Table("system_operators")]
     public class Operator : BaseProtectedEntity

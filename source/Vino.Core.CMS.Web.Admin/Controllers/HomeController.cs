@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ku.Core.CMS.Web.Admin.Controllers
+namespace Vino.Core.CMS.Web.Admin.Controllers
 {
     public class HomeController : Controller
     {

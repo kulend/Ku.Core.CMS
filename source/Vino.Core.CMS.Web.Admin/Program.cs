@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Ku.Core.CMS.Web.Admin
+namespace Vino.Core.CMS.Web.Admin
 {
     public class Program
     {

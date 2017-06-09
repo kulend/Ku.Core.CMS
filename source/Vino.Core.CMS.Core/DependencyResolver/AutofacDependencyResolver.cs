@@ -8,7 +8,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.Loader;
 
-namespace Ku.Core.CMS.Core.DependencyResolver
+namespace Vino.Core.CMS.Core.DependencyResolver
 {
     public class AutofacDependencyResolver : IDependencyResolver
     {

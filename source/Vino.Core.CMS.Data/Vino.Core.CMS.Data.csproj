@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ku.Core.CMS.Core\Ku.Core.CMS.Core.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Core\Vino.Core.CMS.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Ku.Core.CMS.Core.Common;
+using Vino.Core.CMS.Core.Common;
 
-namespace Ku.Core.CMS.Data.Common
+namespace Vino.Core.CMS.Data.Common
 {
     /// <summary>
     /// Repository

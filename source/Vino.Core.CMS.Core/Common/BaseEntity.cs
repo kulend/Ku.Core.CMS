@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text;
 
-namespace Ku.Core.CMS.Core.Common
+namespace Vino.Core.CMS.Core.Common
 {
     /// <summary>
     /// 基础Entity

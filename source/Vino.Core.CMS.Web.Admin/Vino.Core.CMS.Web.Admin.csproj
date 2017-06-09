@@ -140,11 +140,12 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ku.Core.CMS.Core\Ku.Core.CMS.Core.csproj" />
-    <ProjectReference Include="..\Ku.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\Vino.Core.CMS.Core\Vino.Core.CMS.Core.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
   </ItemGroup>
 
 </Project>

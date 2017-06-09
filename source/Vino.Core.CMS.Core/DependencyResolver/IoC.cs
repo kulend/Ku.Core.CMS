@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ku.Core.CMS.Core.DependencyResolver
+namespace Vino.Core.CMS.Core.DependencyResolver
 {
     public static class IoC
     {

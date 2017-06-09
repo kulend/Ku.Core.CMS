@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Ku.Core.CMS.Core.DependencyResolver;
-using Ku.Core.CMS.Data.Common;
+using Vino.Core.CMS.Core.DependencyResolver;
+using Vino.Core.CMS.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Ku.Core.CMS.Web.Admin
+namespace Vino.Core.CMS.Web.Admin
 {
     public class Startup
     {
@@ -32,7 +32,7 @@ namespace Ku.Core.CMS.Web.Admin
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContext<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Admin")));
+            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Admin")));
             //services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
             services.AddMvc();

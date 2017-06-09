@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ku.Core.CMS.Core.DependencyResolver
+namespace Vino.Core.CMS.Core.DependencyResolver
 {
     public class DependencyResolverFactory : IDependencyResolverFactory
     {
@@ -21,7 +21,7 @@ namespace Ku.Core.CMS.Core.DependencyResolver
         /// Ctor
         /// </summary>
         public DependencyResolverFactory()
-            : this("Ku.Core.CMS.Core.DependencyResolver.AutofacDependencyResolver")
+            : this("Vino.Core.CMS.Core.DependencyResolver.AutofacDependencyResolver")
         {
         }
 

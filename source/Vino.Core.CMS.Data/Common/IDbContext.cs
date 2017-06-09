@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Ku.Core.CMS.Core.Common;
+using Vino.Core.CMS.Core.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ku.Core.CMS.Data.Common
+namespace Vino.Core.CMS.Data.Common
 {
     public interface IDbContext
     {

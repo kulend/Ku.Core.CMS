@@ -1,108 +1,142 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = null;
 }
-
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 -  Powered By AAAAAAAAAAAA</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css" />
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/admin.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/admin.min.css" asp-append-version="true" />
+    </environment>
+    <script src="~/lib/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout main-index layui-layout-admin">
+    <div class="layui-header frame-header-xsm frame-header header">
+        <a class="logo-xsm logo hidden-md hidden-lg" href="#">
+            <img src="~/images/logo.png" alt="sssssssssssssssssssssssss">
+        </a>
+        <div class="layui-main">
+            <a class="logo hidden-xs hidden-sm" href="#">
+                <img src="~/images/logo.png" alt="jsyso-admin">
+            </a>
+            <ul class="layui-nav layui-nav-xsm">
+                <li class="layui-nav-item layui-nav-item-xsm hidden-md hidden-lg">
+                    <a href="javascript:;" id="J_open_nav"><i class="fa fa-bars"></i></a>
+                </li>
+                <li class="layui-nav-item layui-nav-item-xsm">
+                    <a href="javascript:;"><i class="layui-icon">&#xe60c;</i>
+                        欢迎，AAAAAAAAAAAAA<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" class="do-open-nav" data-url="/sys/user/update-pwd" data-id="user_update_pwd"><i class="fa fa-lock"></i><cite>修改密码</cite></a>
+                        </dd>
+                        <dd>
+                            <a href="~/logout"><i class="fa fa-sign-out"></i><cite>退出</cite></a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
         </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
+    </div>
+    <div class="layui-side layui-side-xsm layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree index-nav" lay-filter="F_index_nav">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="fa caacacacacacac"></i><cite>AAAAA</cite>
+                        <span class="layui-nav-more"></span>
                     </a>
-                </p>
-            </div>
+                    <dl class="layui-nav-child">
+                        <dd data-url="#" data-id="111">
+                            <a href="javascript:;">BBBBB</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
         </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Package Management" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner4.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+    </div>
+    <div class="layui-body layui-body-xsm">
+        <div class="layui-tab layui-tab-card main-index-tab" lay-filter="F_index_tab">
+            <ul class="layui-tab-title" id="J_index_tab_title">
+                <li class="layui-this">首页</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <iframe name="mainFrame" frameborder="0" src=""></iframe>
+                </div>
             </div>
         </div>
     </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run & Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
+    <div class="layui-footer layui-footer-xsm main-index-footer">
+        <div class="layui-main">
+            <p>© 2017 kulend </p>
+        </div>
     </div>
 </div>
+<script type="text/javascript">
+    layui.use(['element'], function(){
+        var $ = layui.jquery
+            ,layer = layui.layer
+            ,element = layui.element();
+	
+        //iframe自适应
+        $(window).on('resize', function () {
+            var $content = $('.main-index-tab .layui-tab-content')
+                ,headHeight = $(".frame-header").height()
+                ,tabHeight = $(".layui-tab-title").height()
+                ,footHeight = $(".main-index-footer").outerHeight();
+            $content.height($(this).height() - headHeight - tabHeight - footHeight - 30);
+        }).resize();
+	
+        function _openNav() {
+            var elem = $(this)
+                ,url = elem.data('url')
+                ,id = elem.data('id')
+                ,$tabTitle = $("#J_index_tab_title");
+            // 是否已经存在iframe
+            if(!$tabTitle.children("li[lay-id='"+id+"']").length) {
+                var title = elem.text() + '<i class="layui-icon layui-unselect layui-tab-close" data-id="'+id+'">&#x1006;</i>'
+                    ,content = '<iframe id="J_iframe_'+id+'" data-id="'+id+'" frameborder="0" src="${__ADMIN__ }'+url+'"></iframe>';
+                element.tabAdd('F_index_tab', {
+                    title: title
+                    ,content: content
+                    ,id: id
+                });
+                //监听关闭事件
+                $tabTitle.find('i.layui-tab-close').on('click', function() {
+                    element.tabDelete('F_index_tab', $(this).data('id'));
+                });
+            }else {
+                $('#J_iframe_' + id).attr('src', "${__ADMIN__ }"+url);  
+            }
+            // 切换到当前选项卡
+            element.tabChange('F_index_tab', id);
+            // 关闭菜单
+            $(".layui-side-xsm").hide();
+        }
+        // 菜单点击打开iframe
+        element.on('nav(F_index_nav)', _openNav);
+        $(".do-open-nav").on('click', _openNav);
+        $("#J_open_nav").on('click', function() {
+            $(".layui-side-xsm").toggle();
+        });
+    });
+</script>
+</body>
+</html>

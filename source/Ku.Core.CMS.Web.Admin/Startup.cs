@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Ku.Core.CMS.Core.DependencyResolver;
+using Ku.Core.CMS.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,10 +29,14 @@ namespace Ku.Core.CMS.Web.Admin
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("MysqlDatabase");
+            services.AddDbContext<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Admin")));
+            //services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
             services.AddMvc();
+            return IoC.InitializeWith(new DependencyResolverFactory(), services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

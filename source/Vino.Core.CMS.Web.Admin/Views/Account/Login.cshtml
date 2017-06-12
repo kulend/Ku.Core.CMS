@@ -7,11 +7,11 @@
         </tr>
         <tr>
             <td>Password</td>
-            <td>@Html.PasswordFor(m => m.Password)</td>
+            <td>@Html.PasswordFor(m => m.Password, new { Value = "123456" })</td>
         </tr>
         <tr>
             <td></td>
-            <td><a class="action-submit">Login</a></td>
+            <td><button class="action-submit">Login</button></td>
         </tr>
     </table>
 </form>

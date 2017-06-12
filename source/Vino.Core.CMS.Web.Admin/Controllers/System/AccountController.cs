@@ -18,7 +18,10 @@ namespace Vino.Core.CMS.Web.Admin.Controllers.System
         {
             var url = Request.Query["ReturnUrl"];
             ViewData["ReturnUrl"] = string.IsNullOrEmpty(url) ? "/" : url.ToString();
-            return View();
+            LoginFormData userFromFore = new LoginFormData();
+            userFromFore.Account = "admin";
+            userFromFore.Password = "123456";
+            return View(userFromFore);
         }
 
         [HttpPost]
@@ -31,7 +34,7 @@ namespace Vino.Core.CMS.Web.Admin.Controllers.System
             var claims = new List<Claim>()
             {
                 new Claim("Account",user.Account)
-                ,new Claim(ClaimTypes.Name,user.OperatorName)
+                ,new Claim(ClaimTypes.Name,user.Name)
                 ,new Claim("ID", user.Id.ToString())
                 //,new Claim(ClaimTypes.Email,"emailaccount@microsoft.com") 
             };

@@ -8,8 +8,8 @@ using Vino.Core.CMS.Core.Common;
 
 namespace Vino.Core.CMS.Data.Entity.System
 {
-    [Table("system_operators")]
-    public class Operator : BaseProtectedEntity
+    [Table("system_user")]
+    public class User : BaseProtectedEntity
     {
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Vino.Core.CMS.Data.Entity.System
         /// 名称
         /// </summary>
         [Required, MaxLength(40)]
-        public string OperatorName { set; get; }
+        public string Name { set; get; }
 
         /// <summary>
         /// 手机号
@@ -52,5 +52,26 @@ namespace Vino.Core.CMS.Data.Entity.System
         /// </summary>
         [MaxLength(40)]
         public string LastLoginIp { set; get; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [MaxLength(200)]
+        public string Remarks { get; set; }
+
+        ///// <summary>
+        ///// 创建人
+        ///// </summary>
+        //public long CreateUserId { get; set; }
+
+        ///// <summary>
+        ///// 创建人实体
+        ///// </summary>
+        //public virtual User CreateUser { get; set; }
+
+        ///// <summary>
+        ///// 角色集合
+        ///// </summary>
+        //public virtual ICollection<Role> Roles { get; set; }
     }
 }

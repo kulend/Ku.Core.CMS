@@ -24,7 +24,7 @@ namespace Vino.Core.CMS.Service.System
         /// <param name="account"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public Operator DoLogin(string account, string password)
+        public User DoLogin(string account, string password)
         {
             if (string.IsNullOrEmpty(account))
                 throw new VinoArgNullException("账户名不能为空！");
@@ -32,7 +32,7 @@ namespace Vino.Core.CMS.Service.System
             if (string.IsNullOrEmpty(password))
                 throw new VinoArgNullException("密码不能为空！");
 
-            var entity = _context.Operators.SingleOrDefault(x => x.Account.Equals(account, 
+            var entity = _context.Users.SingleOrDefault(x => x.Account.Equals(account, 
                                                 StringComparison.OrdinalIgnoreCase));
             if (entity == null)
             {
@@ -47,7 +47,7 @@ namespace Vino.Core.CMS.Service.System
             return entity;
         }
 
-        public Operator Create(string account, string password)
+        public User Create(string account, string password)
         {
             if (string.IsNullOrEmpty(account))
                 throw new VinoArgNullException("账户名不能为空！");
@@ -55,7 +55,7 @@ namespace Vino.Core.CMS.Service.System
             if (string.IsNullOrEmpty(password))
                 throw new VinoArgNullException("密码不能为空！");
 
-            var entity = _context.Operators.SingleOrDefault(x => x.Account.Equals(account,
+            var entity = _context.Users.SingleOrDefault(x => x.Account.Equals(account,
                 StringComparison.OrdinalIgnoreCase));
 
             if (entity != null)
@@ -63,15 +63,15 @@ namespace Vino.Core.CMS.Service.System
                 throw new VinoException("账号已存在！");
             }
 
-            entity = new Operator();
+            entity = new User();
             entity.Id = DateTime.Now.Ticks;
             entity.Account = account;
             entity.Password = password;
             entity.IsEnable = true;
-            entity.OperatorName = account;
+            entity.Name = account;
             entity.IsDeleted = false;
             entity.CreateTime = DateTime.Now;
-            _context.Operators.Add(entity);
+            _context.Users.Add(entity);
             _context.SaveChanges();
             return entity;
         }

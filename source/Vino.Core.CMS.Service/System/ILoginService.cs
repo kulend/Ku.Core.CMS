@@ -8,8 +8,8 @@ namespace Vino.Core.CMS.Service.System
 {
     public interface ILoginService : IDependency
     {
-        Operator DoLogin(string account, string password);
+        User DoLogin(string account, string password);
 
-        Operator Create(string account, string password);
+        User Create(string account, string password);
     }
 }

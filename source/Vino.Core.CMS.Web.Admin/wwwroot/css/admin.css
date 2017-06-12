@@ -17,13 +17,11 @@
 .login-logo .logo,
 .frame-header .logo {
 	position: absolute;
-    --left: 10px;
     top: 10px;
 }
 .login-logo .logo img,
 .frame-header .logo img {
     width: auto;
-    --height: 35px;
 }
 .login-main {
     width: 1075px;
@@ -122,8 +120,7 @@
 .menu-isshow_n {
 	color: #c2c2c2;
 }
-.tree-table__children {
-}
+
 .tree-table__nbsp {
 	margin-left: 26px;
 }

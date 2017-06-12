@@ -15,6 +15,10 @@ namespace Vino.Core.CMS.Data.Common
         {
         }
 
-        public DbSet<Operator> Operators { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Menu> Menus { get; set; }
     }
 }

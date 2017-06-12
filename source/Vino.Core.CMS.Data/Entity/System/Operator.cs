@@ -19,6 +19,12 @@ namespace Vino.Core.CMS.Data.Entity.System
         public string Account { set; get; }
 
         /// <summary>
+        /// 账号密码
+        /// </summary>
+        [Required, MaxLength(20)]
+        public string Password { set; get; }
+
+        /// <summary>
         /// 名称
         /// </summary>
         [Required, MaxLength(40)]

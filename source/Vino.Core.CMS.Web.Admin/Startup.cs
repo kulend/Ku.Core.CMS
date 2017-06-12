@@ -7,10 +7,12 @@ using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Vino.Core.CMS.Web.Admin.Controllers;
 
 namespace Vino.Core.CMS.Web.Admin
 {
@@ -32,10 +34,12 @@ namespace Vino.Core.CMS.Web.Admin
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Admin")));
+            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
             //services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
             services.AddMvc();
+            //加入身份认证
+            services.AddAuthorization();
             return IoC.InitializeWith(new DependencyResolverFactory(), services);
         }
 
@@ -45,17 +49,29 @@ namespace Vino.Core.CMS.Web.Admin
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UsePageErrorHandling();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                //app.UseDeveloperExceptionPage();
+                //app.UseBrowserLink();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
+
+            //身份认证
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookie",
+                LoginPath = new PathString("/Account/Login"),
+                AccessDeniedPath = new PathString("/Account/Forbidden"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseMvc(routes =>
             {

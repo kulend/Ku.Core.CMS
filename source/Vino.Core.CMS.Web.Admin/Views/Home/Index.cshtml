@@ -1,11 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
     Layout = null;
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>首页 -  Powered By AAAAAAAAAAAA</title>
+    <title>首页 -  Powered By Vinotec</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,13 +40,13 @@
                 </li>
                 <li class="layui-nav-item layui-nav-item-xsm">
                     <a href="javascript:;"><i class="layui-icon">&#xe60c;</i>
-                        欢迎，AAAAAAAAAAAAA<span class="layui-nav-more"></span></a>
+                        欢迎，@ViewData["LoginUserName"]<span class="layui-nav-more"></span></a>
                     <dl class="layui-nav-child">
                         <dd>
                             <a href="javascript:;" class="do-open-nav" data-url="/sys/user/update-pwd" data-id="user_update_pwd"><i class="fa fa-lock"></i><cite>修改密码</cite></a>
                         </dd>
                         <dd>
-                            <a href="~/logout"><i class="fa fa-sign-out"></i><cite>退出</cite></a>
+                            <a href="~/Account/Logout"><i class="fa fa-sign-out"></i><cite>退出</cite></a>
                         </dd>
                     </dl>
                 </li>

@@ -23,7 +23,7 @@ namespace Vino.Core.CMS.Core.DependencyResolver
         {
             _builder = new ContainerBuilder();
 
-            var assemblys = new string[] { "Ku.BLL"};
+            var assemblys = new string[] { "Vino.Core.CMS.Service" };
             var loadedAssemblys = new List<Assembly>();
             foreach (var ass in assemblys)
             {

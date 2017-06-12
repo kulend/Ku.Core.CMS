@@ -1,0 +1,35 @@
+﻿@model Vino.Core.CMS.Web.Admin.Models.System.LoginFormData
+<form id="inputForm" action="Login" method="post">
+    <table>
+        <tr>
+            <td>UserName</td>
+            <td>@Html.TextBoxFor(m => m.Account)</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>@Html.PasswordFor(m => m.Password)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a class="action-submit">Login</a></td>
+        </tr>
+    </table>
+</form>
+@section Scripts
+{
+    <script>
+        $(function() {
+            $("#inputForm").vinoForm({
+                onAfter: function (reply, options) {
+                    if (reply.code === 0) {
+                        vino.page.navigateTo("@ViewData["ReturnUrl"]", true);
+                    }
+                }
+            });
+
+            $(".action-submit").on("click", function () {
+                $("#inputForm").vinoForm("submit");
+            });
+        });
+    </script>
+}

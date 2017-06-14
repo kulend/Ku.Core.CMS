@@ -56,28 +56,18 @@
     <div class="layui-side layui-side-xsm layui-bg-black">
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree index-nav" lay-filter="F_index_nav">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">
-                        <i class="fa caacacacacacac"></i><cite>AAAAA</cite>
-                        <span class="layui-nav-more"></span>
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd data-url="#" data-id="111">
-                            <a href="javascript:;">BBBBB</a>
-                        </dd>
-                    </dl>
-                </li>
+                @await Component.InvokeAsync("Navigation");
             </ul>
         </div>
     </div>
-    <div class="layui-body layui-body-xsm">
+    <div class="layui-body layui-body-xsm" style="bottom: 35px;">
         <div class="layui-tab layui-tab-card main-index-tab" lay-filter="F_index_tab">
             <ul class="layui-tab-title" id="J_index_tab_title">
                 <li class="layui-this">首页</li>
             </ul>
-            <div class="layui-tab-content">
+            <div class="layui-tab-content" style="padding: 0;">
                 <div class="layui-tab-item layui-show">
-                    <iframe name="mainFrame" frameborder="0" src=""></iframe>
+                    <iframe name="mainFrame" frameborder="0" src="" ></iframe>
                 </div>
             </div>
         </div>
@@ -100,7 +90,7 @@
                 ,headHeight = $(".frame-header").height()
                 ,tabHeight = $(".layui-tab-title").height()
                 ,footHeight = $(".main-index-footer").outerHeight();
-            $content.height($(this).height() - headHeight - tabHeight - footHeight - 30);
+            $content.height($(this).height() - headHeight - tabHeight - footHeight - 10);
         }).resize();
 	
         function _openNav() {
@@ -111,7 +101,7 @@
             // 是否已经存在iframe
             if(!$tabTitle.children("li[lay-id='"+id+"']").length) {
                 var title = elem.text() + '<i class="layui-icon layui-unselect layui-tab-close" data-id="'+id+'">&#x1006;</i>'
-                    ,content = '<iframe id="J_iframe_'+id+'" data-id="'+id+'" frameborder="0" src="${__ADMIN__ }'+url+'"></iframe>';
+                    ,content = '<iframe id="J_iframe_'+id+'" data-id="'+id+'" frameborder="0" src="'+url+'"></iframe>';
                 element.tabAdd('F_index_tab', {
                     title: title
                     ,content: content
@@ -122,7 +112,7 @@
                     element.tabDelete('F_index_tab', $(this).data('id'));
                 });
             }else {
-                $('#J_iframe_' + id).attr('src', "${__ADMIN__ }"+url);  
+                $('#J_iframe_' + id).attr('src', url);  
             }
             // 切换到当前选项卡
             element.tabChange('F_index_tab', id);

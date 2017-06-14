@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Vino.Core.CMS.Core.Helper;
+using Vino.Core.CMS.Service;
 using Vino.Core.CMS.Web.Admin.Controllers;
 
 namespace Vino.Core.CMS.Web.Admin
@@ -26,6 +28,10 @@ namespace Vino.Core.CMS.Web.Admin
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            //系统相关初始化
+            VinoMapper.Initialize();
+            IdHelper.Initialize(Configuration, env);
         }
 
         public IConfigurationRoot Configuration { get; }

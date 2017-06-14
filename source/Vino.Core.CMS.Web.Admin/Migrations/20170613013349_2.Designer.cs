@@ -8,8 +8,8 @@ using Vino.Core.CMS.Data.Common;
 namespace Vino.Core.CMS.Web.Admin.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    [Migration("20170612072515_initial")]
-    partial class initial
+    [Migration("20170613013349_2")]
+    partial class _2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,10 +26,14 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
+                    b.Property<bool>("HasSubMenu");
+
                     b.Property<string>("Icon")
                         .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsShow");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -72,6 +76,19 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.ToTable("system_role");
                 });
 
+            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.RoleMenu", b =>
+                {
+                    b.Property<long>("RoleId");
+
+                    b.Property<long>("MenuId");
+
+                    b.HasKey("RoleId", "MenuId");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("system_role_menu");
+                });
+
             modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.User", b =>
                 {
                     b.Property<long>("Id");
@@ -108,6 +125,45 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("system_user");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.UserRole", b =>
+                {
+                    b.Property<long>("UserId");
+
+                    b.Property<long>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("system_user_role");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.RoleMenu", b =>
+                {
+                    b.HasOne("Vino.Core.CMS.Data.Entity.System.Menu", "Menu")
+                        .WithMany()
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Vino.Core.CMS.Data.Entity.System.Role", "Role")
+                        .WithMany("RoleMenus")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.UserRole", b =>
+                {
+                    b.HasOne("Vino.Core.CMS.Data.Entity.System.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Vino.Core.CMS.Data.Entity.System.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

@@ -70,7 +70,7 @@
 .layui-layout-admin .main-index-footer {
 	z-index: 501;
     height: auto;
-    padding: 15px 0;
+    padding: 10px 0;
     text-align: center;
     background-color: #eee;
     color: #666;
@@ -187,7 +187,7 @@
 	}
 	.layui-layout-admin .layui-side-xsm,
 	.layui-layout-admin .layui-body-xsm  {
-		top: 110px;
+		top: 100px;
 	}
 	.layui-body-xsm {
 		left: 0;
@@ -205,7 +205,7 @@
 	}
 	.main-index-tab .layui-tab-content .layui-tab-item {
 		-webkit-overflow-scrolling: touch;
-		overflow: scroll;	
+		/*overflow: scroll;*/	
 	}
 	.layui-form-item .layui-form-label {
 		text-overflow: inherit;

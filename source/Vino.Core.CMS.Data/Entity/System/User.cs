@@ -11,7 +11,6 @@ namespace Vino.Core.CMS.Data.Entity.System
     [Table("system_user")]
     public class User : BaseProtectedEntity
     {
-
         /// <summary>
         /// 账号
         /// </summary>
@@ -69,9 +68,9 @@ namespace Vino.Core.CMS.Data.Entity.System
         ///// </summary>
         //public virtual User CreateUser { get; set; }
 
-        ///// <summary>
-        ///// 角色集合
-        ///// </summary>
-        //public virtual ICollection<Role> Roles { get; set; }
+        /// <summary>
+        /// 用户角色集合
+        /// </summary>
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

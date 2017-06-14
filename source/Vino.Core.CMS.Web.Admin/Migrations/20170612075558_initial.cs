@@ -64,12 +64,44 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                 {
                     table.PrimaryKey("PK_system_user", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "system_user_role",
+                columns: table => new
+                {
+                    UserId = table.Column<long>(nullable: false),
+                    RoleId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_system_user_role", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_system_user_role_system_role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "system_role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_system_user_role_system_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "system_user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_system_user_role_RoleId",
+                table: "system_user_role",
+                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "system_menu");
+
+            migrationBuilder.DropTable(
+                name: "system_user_role");
 
             migrationBuilder.DropTable(
                 name: "system_role");

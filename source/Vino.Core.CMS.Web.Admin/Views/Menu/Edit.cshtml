@@ -1,0 +1,89 @@
+﻿@model Vino.Core.CMS.Service.System.Dto.MenuDto
+<div class="sub-page">
+    <div class="layui-tab layui-tab-brief sub-page-tab" lay-filter="F_sub_tab">
+        <ul class="layui-tab-title">
+            <li data-url="Index">菜单列表</li>
+            @if ("Edit".Equals(ViewData["Mode"]))
+            {
+                <li data-url="Edit">添加菜单</li>
+                <li class="layui-this" data-url="@Url">编辑菜单</li>
+            }
+            else
+            {
+                <li class="layui-this" data-url="Edit">添加菜单</li>
+            }
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form" id="inputForm" action="Save" method="post">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.HiddenFor(x => x.ParentId)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上级菜单</label>
+                        <div class="layui-input-inline">
+                            <div class="layui-form-mid layui-word-aux">@ViewData["ParentMenuName"]</div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="Name" value="@Model.Name" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">链接</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="Url" value="@Model.Url" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">图标</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="Icon" value="@Model.Icon" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux"> <a href="http://www.fontawesome.com.cn/" target="_blank">font-awesome</a>图标名（例如：fa-user）
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否显示</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" asp-for="IsShow" lay-skin="switch" lay-text="ON|OFF">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">排序值</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="OrderIndex" autocomplete="off" class="layui-input" value="@Model.OrderIndex">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">菜单备注</label>
+                        <div class="layui-input-block">
+                            <textarea name="Remarks" placeholder="" class="layui-textarea">@Model.Remarks</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit>确认提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#inputForm").vinoForm({
+                onAfter: function (reply, options) {
+                }
+            });
+        });
+
+        layui.use('form', function(){
+            var form = layui.form();
+        });
+    </script>
+}

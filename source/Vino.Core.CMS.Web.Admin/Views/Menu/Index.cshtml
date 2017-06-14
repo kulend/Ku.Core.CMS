@@ -1,0 +1,75 @@
+﻿<div class="sub-page">
+    <div class="layui-tab layui-tab-brief sub-page-tab" lay-filter="F_sub_tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this" data-url="Index">菜单列表</li>
+            <li data-url="Edit">添加菜单</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="140">
+                            <col width="30%">
+                            <col width="15%">
+                            <col width="90" align="center">
+                            <col width="60" align="center">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>编码</th>
+                            <th>菜单名称</th>
+                            <th>权限标识</th>
+                            <th>是否显示</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="J_tree">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tp:list-item" type="text/html">
+    {{each items as value i}}
+    <tr data-parentid="">
+        <td data-id="{{value.id}}" class="menu-open-tree" title="展开子菜单">
+            <% for(var i = 1; i < (value.code.length/3); i++){ %>
+            <span class="menu-tree-nbsp"></span>
+            <% } %>
+            {{if value.hasSunMenu}}
+            <i class="layui-icon">&#xe623;</i>
+            {{/if}}
+            {{value.code}}
+        </td>
+        <td><i class="fa {{value.icon}}"></i> {{value.name}}</td>
+        <td></td>
+        <td>
+            <i class="fa fa-toggle-on fa-2x"></i>
+        </td>
+        <td>{{value.orderIndex}}</td>
+        <td>
+            <div class="layui-btn-group">
+                <a href="Edit?pid={{value.id}}" class="layui-btn layui-btn-small">添加子项</a>
+                <a href="Edit?id={{value.id}}" class="layui-btn layui-btn-small">编辑</a>
+                <button data-url="" class="layui-btn layui-btn-small">删除</button>
+            </div>
+        </td>
+    </tr>
+    {{/each}}
+</script>
+@section Scripts
+{
+    <script>
+        $(function() {
+            vino.ajax.get("GetMenuByParentId", { pid: 0 }, function(data) {
+                var html = template('tp:list-item', { items: data.data });
+                $("#J_tree").html(html);
+            });
+        });
+    </script>
+}

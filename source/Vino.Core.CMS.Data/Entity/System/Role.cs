@@ -27,8 +27,11 @@ namespace Vino.Core.CMS.Data.Entity.System
         [MaxLength(200)]
         public string Remarks { get; set; }
 
-        //public virtual ICollection<User> Users { get; set; }
+        /// <summary>
+        /// 用户角色集合
+        /// </summary>
+        public virtual ICollection<UserRole> UserRoles { get; set; }
 
-        //public virtual ICollection<Menu> Menus { get; set; }
+        public virtual ICollection<RoleMenu> RoleMenus { get; set; }
     }
 }

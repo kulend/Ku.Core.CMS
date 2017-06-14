@@ -19,8 +19,17 @@
     <Content Include="wwwroot\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="wwwroot\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="wwwroot\images\logo.png" />
+    <Content Include="wwwroot\js\admin.js" />
+    <Content Include="wwwroot\js\admin.min.js" />
+    <Content Include="wwwroot\js\vino\vino.ajax" />
+    <Content Include="wwwroot\js\vino\vino.ajax.js" />
     <Content Include="wwwroot\js\vino\vino.from.js" />
     <Content Include="wwwroot\js\vino\vino.page.js" />
+    <Content Include="wwwroot\lib\artTemplate\template-debug.js" />
+    <Content Include="wwwroot\lib\artTemplate\template-native-debug.js" />
+    <Content Include="wwwroot\lib\artTemplate\template-native.js" />
+    <Content Include="wwwroot\lib\artTemplate\template-web.js" />
+    <Content Include="wwwroot\lib\artTemplate\template.js" />
     <Content Include="wwwroot\lib\jquery-form\jquery.form.js" />
     <Content Include="wwwroot\lib\layui\css\layui.css" />
     <Content Include="wwwroot\lib\layui\css\layui.mobile.css" />
@@ -149,6 +158,8 @@
     <ProjectReference Include="..\Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

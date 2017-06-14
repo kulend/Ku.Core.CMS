@@ -57,4 +57,17 @@ namespace Vino.Core.CMS.Core.Exceptions
         {
         }
     }
+
+    public class VinoDataNotFoundException : VinoException
+    {
+        public VinoDataNotFoundException()
+            : base(903, "无法取得相关数据！")
+        {
+        }
+
+        public VinoDataNotFoundException(string msg)
+            : base(903, msg)
+        {
+        }
+    }
 }

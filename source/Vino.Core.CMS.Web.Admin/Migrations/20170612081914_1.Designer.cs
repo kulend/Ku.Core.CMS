@@ -8,9 +8,10 @@ using Vino.Core.CMS.Data.Common;
 namespace Vino.Core.CMS.Web.Admin.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170612081914_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -25,14 +26,10 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<bool>("HasSubMenu");
-
                     b.Property<string>("Icon")
                         .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
-
-                    b.Property<bool>("IsShow");
 
                     b.Property<string>("Name")
                         .IsRequired()

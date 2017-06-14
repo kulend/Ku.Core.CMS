@@ -47,6 +47,11 @@ namespace Vino.Core.CMS.Service.System
                         throw new VinoDataNotFoundException("无法取得父菜单数据!");
                     }
                     pCode = pModel.Code;
+                    if (!pModel.HasSubMenu)
+                    {
+                        pModel.HasSubMenu = true;
+                        _context.Menus.Update(pModel);
+                    }
                 }
                 //取得code
                 string newCode = "";
@@ -67,7 +72,7 @@ namespace Vino.Core.CMS.Service.System
                 model.HasSubMenu = false;
                 model.IsDeleted = false;
                 model.CreateTime= DateTime.Now;
-                _context.Menus.AddAsync(model);
+                _context.Menus.Add(model);
             }
             else
             {

@@ -1,4 +1,7 @@
-﻿@model Vino.Core.CMS.Service.System.Dto.MenuDto
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Vino.Core.CMS.Service.System.Dto.MenuDto
 <div class="sub-page">
     <div class="layui-tab layui-tab-brief sub-page-tab" lay-filter="F_sub_tab">
         <ul class="layui-tab-title">
@@ -47,7 +50,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">是否显示</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" asp-for="IsShow" lay-skin="switch" lay-text="ON|OFF">
+                            <input type="checkbox" name="IsShow" @(Model.IsShow ? "checked" : "") lay-skin="switch" lay-text="ON|OFF">
                         </div>
                     </div>
                     <div class="layui-form-item">

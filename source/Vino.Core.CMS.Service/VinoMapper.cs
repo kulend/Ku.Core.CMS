@@ -15,6 +15,10 @@ namespace Vino.Core.CMS.Service
             {
                 cfg.CreateMap<Menu, MenuDto>();
                 cfg.CreateMap<MenuDto, Menu>();
+                cfg.CreateMap<User, UserDto>();
+                cfg.CreateMap<UserDto, User>();
+                cfg.CreateMap<Role, RoleDto>();
+                cfg.CreateMap<RoleDto, Role>();
             });
         }
     }

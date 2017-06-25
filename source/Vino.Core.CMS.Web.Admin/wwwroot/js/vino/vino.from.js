@@ -1,9 +1,7 @@
 ﻿if (!window.vino) {
     window.vino = {};
 }
-if (!vino.page) {
-    vino.page = {};
-}
+
 (function ($) {
     function _handleMessage(reply, options) {
         vino.page.msg.hideLoad();
@@ -36,7 +34,18 @@ if (!vino.page) {
                             return false;
                         }
                     }
-                    //isValid = $from.form("validate");
+                    //isValid = $from.validate({
+                    //    onfocusout: false,
+                    //    errorPlacement: function (error, element) {//错误提示，错误对象
+                    //        alert(error);
+                    //        layui.use('layer', function () {
+                    //            var layer = layui.layer;
+                    //            layer.tips(error[0].innerText, element, {//1.错误信息，2提示位置，3同时提示多个错误
+                    //                tipsMore: true//错误信息可以同时提示多个，...
+                    //            });
+                    //        });
+                    //    }
+                    //}).valid();
                     //if (!isValid) {
                     //    return false;
                     //}
@@ -51,6 +60,17 @@ if (!vino.page) {
                 }
             };
             $target.ajaxForm(options);
+            //$target.validate({
+            //    errorPlacement: function (error, element) {//错误提示，错误对象
+            //        alert(error);
+            //        layui.use('layer', function () {
+            //            var layer = layui.layer;
+            //            layer.tips(error[0].innerText, element, {//1.错误信息，2提示位置，3同时提示多个错误
+            //                tipsMore: true//错误信息可以同时提示多个，...
+            //            });
+            //        });
+            //    }
+            //});
         }).fail(function () {
             alert("脚本加载出错,请刷新页面重试!");
         });

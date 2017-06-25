@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Web.Admin", "Vino.Core.CMS.Web.Admin\Vino.Core.CMS.Web.Admin.csproj", "{E723CB95-286B-4243-98BD-1472C35B58F5}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{55C35987-B209-43DB-A627-3E77CC97586F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Service", "Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj", "{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.Cache", "Vino.Core.Cache\Vino.Core.Cache.csproj", "{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Web", "Vino.Core.CMS.Web\Vino.Core.CMS.Web.csproj", "{865F844C-DD2F-4F05-B534-B7EA154DF883}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,14 @@ Global
 		{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{865F844C-DD2F-4F05-B534-B7EA154DF883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{865F844C-DD2F-4F05-B534-B7EA154DF883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{865F844C-DD2F-4F05-B534-B7EA154DF883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{865F844C-DD2F-4F05-B534-B7EA154DF883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,5 +62,7 @@ Global
 		{73C2FAAC-7BCB-420E-913E-37CE2F21470F} = {38AE7166-6167-4D42-A479-647797CD1A83}
 		{02FBBBAB-95BC-4C92-BABA-B0F1F84EA50B} = {710A57A2-44CD-4A89-A01A-1AF755B90113}
 		{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB} = {55C35987-B209-43DB-A627-3E77CC97586F}
+		{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C} = {710A57A2-44CD-4A89-A01A-1AF755B90113}
+		{865F844C-DD2F-4F05-B534-B7EA154DF883} = {5F420258-0110-494B-98DA-94B5B61B2E5F}
 	EndGlobalSection
 EndGlobal

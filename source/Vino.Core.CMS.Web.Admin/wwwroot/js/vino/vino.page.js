@@ -23,9 +23,7 @@ if (!vino.page) {
             if (icon) {
                 pm.icon = icon;
             }
-            if (delay) {
-                pm.time = delay;
-            }
+            pm.time = delay || 2000;
             layui.use('layer', function () {
                 var layer = layui.layer;
                 layer.msg(msg, pm, callback);

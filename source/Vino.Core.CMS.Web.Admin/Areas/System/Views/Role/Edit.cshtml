@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Vino.Core.CMS.Service.System.Dto.RoleDto
+<div class="sub-page">
+    <div class="layui-tab layui-tab-brief sub-page-tab" lay-filter="F_sub_tab">
+        <ul class="layui-tab-title">
+            <li data-url="Index">角色列表</li>
+            @if ("Edit".Equals(ViewData["Mode"]))
+            {
+                <li data-url="Edit">添加角色</li>
+                <li class="layui-this" data-url="">编辑角色</li>
+            }
+            else
+            {
+                <li class="layui-this" data-url="Edit">添加角色</li>
+            }
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form" id="inputForm" action="Save" method="post">
+                    @Html.HiddenFor(x => x.Id)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">角色名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="Name" value="@Model.Name" autocomplete="off" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <textarea name="Remarks" placeholder="" class="layui-textarea">@Model.Remarks</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit>确认提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        layui.use('form',
+            function() {
+                var form = layui.form();
+                var layer = layui.layer;
+
+            });
+    </script>
+}

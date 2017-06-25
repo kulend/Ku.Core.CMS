@@ -1,0 +1,9 @@
+﻿@model List<Vino.Core.CMS.Service.System.Dto.MenuDto>
+<dl class="layui-nav-child">
+    @foreach (var menu in Model)
+    {
+        <dd data-url="@menu.Url" data-id="@menu.Code">
+            <a href="javascript:;">@menu.Name</a>
+        </dd>
+    }
+</dl>

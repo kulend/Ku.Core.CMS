@@ -67,7 +67,7 @@ namespace Vino.Core.CMS.Service.System
                     newCode = pCode + "001";
                 }
                 model.Code = newCode;
-                model.Id = IdHelper.GetNextId();
+                model.Id = ID.NewID();
                 model.Type = 0;
                 model.HasSubMenu = false;
                 model.IsDeleted = false;

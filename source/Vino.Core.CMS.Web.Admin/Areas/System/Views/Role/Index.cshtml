@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Vino.Core.CMS.Service.System.Dto.RoleDto>
+<div class="sub-page">
+    <div class="layui-tab layui-tab-brief sub-page-tab" lay-filter="F_sub_tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this" data-url="Index">角色列表</li>
+            <li data-url="Edit">添加角色</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="50%">
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>角色名</th>
+                                <th>备注</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td>@role.Name</td>
+                                <td>@role.Remarks</td>
+                                <td>
+                                    <div class="layui-btn-group">
+                                        <a href="Edit?id=@role.Id" class="layui-btn layui-btn-small">编辑</a>
+                                        <button data-url="" data-action="" class="layui-btn layui-btn-small">冻结</button>
+                                        <button data-url="Delete?id=@role.Id" data-action="delete" class="layui-btn layui-btn-small">删除</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div id="pages"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['laypage', 'element'], function () {
+            var $ = layui.jquery
+                , layer = layui.layer
+                , laypage = layui.laypage
+                , element = layui.element();
+
+            laypage({
+                cont: 'pages'
+                , pages: @ViewData["pages"]
+                , groups: 5
+                , curr: @ViewData["page"]
+                , jump: function (obj, first) {
+                    first || (window.location.href = "Index?page=" + obj.curr);
+                }
+            });
+        });
+    </script>
+}

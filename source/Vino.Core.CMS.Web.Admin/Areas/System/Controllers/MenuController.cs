@@ -6,18 +6,22 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Vino.Core.Cache;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Service.System.Dto;
 
-namespace Vino.Core.CMS.Web.Admin.Controllers.System
+namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
 {
+    [Area("System")]
     public class MenuController : Controller
     {
         [Authorize]
         public IActionResult Index()
         {
+            var cacheService = IoC.Resolve<ICacheService>();
+            cacheService.Add("aaa", "AAAAAAAAAAAAAAAAAA");
             return View();
         }
 

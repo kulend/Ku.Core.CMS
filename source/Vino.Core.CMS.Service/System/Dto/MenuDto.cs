@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Vino.Core.CMS.Core.Common;
 
 namespace Vino.Core.CMS.Service.System.Dto
 {
-    public class MenuDto
+    public class MenuDto : BaseDto
     {
-        public long Id { get; set; }
-
-        public DateTime CreateTime { set; get; }
-
-        public bool IsDeleted { set; get; } = false;
-
         /// <summary>
         /// 父级ID
         /// </summary>

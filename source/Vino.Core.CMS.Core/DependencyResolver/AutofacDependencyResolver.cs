@@ -23,7 +23,7 @@ namespace Vino.Core.CMS.Core.DependencyResolver
         {
             _builder = new ContainerBuilder();
 
-            var assemblys = new string[] { "Vino.Core.CMS.Service" };
+            var assemblys = new string[] { "Vino.Core.CMS.Service" , "Vino.Core.Cache" };
             var loadedAssemblys = new List<Assembly>();
             foreach (var ass in assemblys)
             {

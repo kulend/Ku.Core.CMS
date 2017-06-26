@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Vino.Core.CMS.Core.Exceptions;
 
-namespace Vino.Core.CMS.Web.Admin.Controllers
+namespace Vino.Core.CMS.Web.Middleware
 {
     public class PageErrorHandlingMiddleware
     {

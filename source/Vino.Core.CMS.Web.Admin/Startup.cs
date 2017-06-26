@@ -39,7 +39,7 @@ namespace Vino.Core.CMS.Web.Admin
 
             //应用相关初始化
             vinoApp = new VinoAdminApp();
-            vinoApp.Startup(Configuration);
+            vinoApp.Startup(Configuration, env);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

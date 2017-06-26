@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
@@ -15,6 +16,8 @@ using Vino.Core.CMS.Core.Log;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Service;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace Vino.Core.CMS.Web.Application
 {
@@ -22,7 +25,7 @@ namespace Vino.Core.CMS.Web.Application
     {
         protected IConfiguration _configuration;
 
-        public virtual void Startup(IConfiguration configuration)
+        public virtual void Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             this._configuration = configuration;
 
@@ -31,9 +34,11 @@ namespace Vino.Core.CMS.Web.Application
             //缓存初始化
             CacheConfig.Initialize(_configuration);
             //日志初始化
-            VinoLogger.Initialize();
+            VinoLogger.Initialize(env);
             //VinoMapper初始化
             VinoMapper.Initialize();
+
+            //env.ConfigureNLog("nlog.config");
         }
 
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
@@ -59,13 +64,20 @@ namespace Vino.Core.CMS.Web.Application
                     }));
             services.AddSession();
 
+            //为NLog.web注入HttpContextAccessor
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             var provider = IoC.InitializeWith(new DependencyResolverFactory(), services);
             return provider;
         }
 
         public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-
+            //Nlog
+            loggerFactory.AddNLog();
+            app.AddNLogWeb();
+            env.ConfigureNLog("nlog.config");
+            loggerFactory.CreateLogger("AAA").LogInformation("AAAAAAAAA");
         }
     }
 }

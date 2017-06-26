@@ -18,7 +18,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
     [Area("System")]
     public class MenuController : Controller
     {
-        private ILog log = VinoLogger.GetLogger(typeof(MenuController));
+        private ILog log = VinoLogger.GetLogger(nameof(MenuController));
 
         [Authorize]
         public IActionResult Index()

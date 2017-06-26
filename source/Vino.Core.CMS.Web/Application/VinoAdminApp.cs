@@ -14,9 +14,9 @@ namespace Vino.Core.CMS.Web.Application
 {
     public class VinoAdminApp: VinoApp
     {
-        public override void Startup(IConfiguration configuration)
+        public override void Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            base.Startup(configuration);
+            base.Startup(configuration, env);
             //这里做其他的初始化
         }
 
@@ -28,9 +28,6 @@ namespace Vino.Core.CMS.Web.Application
         public override void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             base.Configure(app, env, loggerFactory);
-
-            loggerFactory.AddConsole(_configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
 
             app.UsePageErrorHandling();
 

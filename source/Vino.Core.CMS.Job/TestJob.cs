@@ -8,7 +8,6 @@ namespace Vino.Core.CMS.Job
     public class TestJob: VinoJob
     {
         [Invoke(Interval = 5000)]
-        [Invoke(Interval = 3000)]
         [SingleTask]
         public void Run()
         {

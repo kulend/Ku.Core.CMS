@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -20,8 +21,8 @@ namespace Vino.Core.TimedTask
         private IServiceProvider services { get; set; }
         private List<TypeInfo> JobTypeCollection { get; set; } = new List<TypeInfo>();
 
-        public Dictionary<string, bool> TaskStatus { get; private set; } = new Dictionary<string, bool>();
-        private readonly List<Timer> StaticTimers = new List<Timer>();
+        public static Dictionary<string, bool> TaskStatus { get; private set; } = new Dictionary<string, bool>();
+        public static Dictionary<string, Timer> StaticTimers { get; private set; } = new Dictionary<string, Timer>();
 
         public TimedTaskService(IAssemblyLocator locator, IServiceProvider services)
         {
@@ -68,18 +69,32 @@ namespace Vino.Core.TimedTask
                         }
                         Task.Factory.StartNew(() =>
                         {
-                            var timer = new Timer(t => {
-                                Execute(clazz, method, invoke);
-                            }, null, delta, invoke.Interval);
-                            StaticTimers.Add(timer);
+                            var timerId = new Guid().ToString();
+                            var timer = new Timer(t =>
+                            {
+                                Execute(timerId, clazz, method, invoke);
+                            }, null, delta, invoke.AutoReset ? invoke.Interval : 0);
+                            StaticTimers.Add(timerId, timer);
                         });
                     }
                 }
             }
         }
 
-        public bool Execute(TypeInfo clazz, MethodInfo method, InvokeAttribute invoke)
+        public bool Execute(string timerId, TypeInfo clazz, MethodInfo method, InvokeAttribute invoke)
         {
+            var identifier = clazz.FullName + "." + method.Name;
+
+            if (invoke != null && invoke.ExpireTime != default(DateTime)
+                && invoke.ExpireTime <= DateTime.Now)
+            {
+                //已过期失效
+                StaticTimers[timerId].Dispose();
+                TaskStatus[timerId] = false;
+                StaticTimers.Remove(timerId);
+                TaskStatus.Remove(timerId);
+                return false;
+            }
             var argtypes = clazz.GetConstructors()
                 .First()
                 .GetParameters()
@@ -94,28 +109,34 @@ namespace Vino.Core.TimedTask
             var job = Activator.CreateInstance(clazz.AsType(), argtypes);
             var paramtypes = method.GetParameters().Select(x => services.GetService(x.ParameterType)).ToArray();
 
-            var identifier = clazz.FullName + "." + method.Name;
-
+            var taskAttr = clazz.GetCustomAttribute<VinoTimedTaskAttribute>();
+            var taskName = (taskAttr != null && !string.IsNullOrEmpty(taskAttr.Name)) ? taskAttr.Name : clazz.Name;
             var singleTaskAttr = method.GetCustomAttribute<SingleTaskAttribute>(true);
             lock (this)
             {
                 if (singleTaskAttr != null && singleTaskAttr.IsSingleTask 
-                    && TaskStatus.ContainsKey(identifier) && TaskStatus[identifier])
+                    && TaskStatus.ContainsKey(timerId) && TaskStatus[timerId])
                 {
                     return false;
                 }
-                TaskStatus[identifier] = true;
+                TaskStatus[timerId] = true;
             }
             try
             {
-                logger?.LogInformation($"Invoking {identifier} ...");
+                logger?.LogInformation($"[事务]{taskName} 开始执行...");
+                Debug.WriteLine($"[事务]{taskName} 开始执行...");
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
                 method.Invoke(job, paramtypes);
+                sw.Stop();
+                logger?.LogInformation($"[事务]{taskName} 执行结束，耗时{sw.ElapsedMilliseconds}毫秒。");
+                Debug.WriteLine($"[事务]{taskName} 执行结束，耗时{sw.ElapsedMilliseconds}毫秒。");
             }
             catch (Exception ex)
             {
                 logger?.LogError(ex.ToString());
             }
-            TaskStatus[identifier] = false;
+            TaskStatus[timerId] = false;
             return true;
         }
     }

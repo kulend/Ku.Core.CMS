@@ -9,13 +9,12 @@ namespace Vino.Core.TimedTask.Attribute
     {
         public bool IsEnabled { get; set; } = true;
 
-        public ScheduleType ScheduleType { set; get; } = ScheduleType.Cycle;
+        /// <summary>
+        /// //设置是执行一次（false）还是一直执行(true)，默认为true
+        /// </summary>
+        public bool AutoReset { set; get; } = true;
 
-        public int Interval { get; set; } = 1000 * 60 * 60 * 24; // 24 hours
-
-        public string RunTime { set; get; }
-
-        public bool SkipWhileExecuting { get; set; } = false;
+        public int Interval { get; set; } = 1000 * 60; // 1分钟
 
         public DateTime BeginTime { set; get; }
 

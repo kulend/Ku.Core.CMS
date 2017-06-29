@@ -155,6 +155,7 @@
     <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Core\Vino.Core.CMS.Core.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Job\Vino.Core.CMS.Job.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Web\Vino.Core.CMS.Web.csproj" />
   </ItemGroup>

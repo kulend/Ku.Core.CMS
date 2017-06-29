@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
+    <PackageReference Include="Pomelo.AspNetCore.TimedJob" Version="1.1.0-rtm-10032" />
   </ItemGroup>
 
   <ItemGroup>

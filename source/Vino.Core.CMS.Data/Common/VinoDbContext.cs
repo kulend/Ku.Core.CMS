@@ -5,10 +5,11 @@ using Vino.Core.CMS.Core.Common;
 using Vino.Core.CMS.Data.Entity;
 using Vino.Core.CMS.Data.Entity.System;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.AspNetCore.TimedJob.EntityFramework;
 
 namespace Vino.Core.CMS.Data.Common
 {
-    public class VinoDbContext: DbContext, IDbContext
+    public class VinoDbContext: DbContext, IDbContext, ITimedJobContext
     {
         public VinoDbContext(DbContextOptions<VinoDbContext> options)
             : base(options)
@@ -36,6 +37,9 @@ namespace Vino.Core.CMS.Data.Common
                 .HasForeignKey(pt => pt.RoleId);
 
             base.OnModelCreating(modelBuilder);
+
+            //定时任务相关
+            modelBuilder.SetupTimedJobs();
         }
 
         public DbSet<User> Users { get; set; }
@@ -46,5 +50,8 @@ namespace Vino.Core.CMS.Data.Common
 
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RoleMenu> RoleMenus { get; set; }
+
+        //定时任务相关
+        public DbSet<TimedJob> TimedJobs { get; set; }
     }
 }

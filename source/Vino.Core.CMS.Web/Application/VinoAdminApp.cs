@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Web.Middleware;
 
 namespace Vino.Core.CMS.Web.Application
@@ -22,12 +24,21 @@ namespace Vino.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //定时任务
+            //services.AddTimedJob().AddEntityFrameworkDynamicTimedJob<VinoDbContext>();
+            services.AddTimedTask();
             return base.ConfigureServices(services);
         }
 
         public override void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             base.Configure(app, env, loggerFactory);
+
+            //定时任务
+            app.UseTimedTask();
+
+            //var TimedJobService = app.ApplicationServices.GetRequiredService<TimedJobService>();
+            //TimedJobService.RestartDynamicTimers();
 
             app.UsePageErrorHandling();
 

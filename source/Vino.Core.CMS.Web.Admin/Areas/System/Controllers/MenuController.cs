@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
@@ -18,7 +19,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
     [Area("System")]
     public class MenuController : Controller
     {
-        private ILog log = VinoLogger.GetLogger(nameof(MenuController));
+        private readonly ILog log = VinoLogger.GetLogger(nameof(MenuController));
 
         [Authorize]
         public IActionResult Index()

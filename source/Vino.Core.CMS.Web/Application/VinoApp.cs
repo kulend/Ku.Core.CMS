@@ -9,6 +9,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Helper;
@@ -43,6 +44,8 @@ namespace Vino.Core.CMS.Web.Application
 
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             string connection = _configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
             //services.AddApplicationInsightsTelemetry(Configuration);
@@ -64,9 +67,6 @@ namespace Vino.Core.CMS.Web.Application
                     }));
             services.AddSession();
 
-            //为NLog.web注入HttpContextAccessor
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             var provider = IoC.InitializeWith(new DependencyResolverFactory(), services);
             return provider;
         }
@@ -76,7 +76,7 @@ namespace Vino.Core.CMS.Web.Application
             //Nlog
             loggerFactory.AddNLog();
             app.AddNLogWeb();
-            env.ConfigureNLog("nlog.config");
+            env.ConfigureNLog("nlog.config").Reload();
             loggerFactory.CreateLogger("AAA").LogInformation("AAAAAAAAA");
         }
     }

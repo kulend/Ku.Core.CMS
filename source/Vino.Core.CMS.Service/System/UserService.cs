@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Data.Common;
@@ -31,8 +32,9 @@ namespace Vino.Core.CMS.Service.System
 
         public UserDto GetById(long id)
         {
-            var menu = _context.Users.SingleOrDefault(x => x.Id == id);
-            return Mapper.Map<UserDto>(menu);
+            var user = _context.Users.Include(x=>x.UserRoles).ThenInclude(x=>x.Role).SingleOrDefault(x => x.Id == id);
+            var roles = user.UserRoles;
+            return Mapper.Map<UserDto>(user);
         }
 
         public void SaveUser(UserDto dto)

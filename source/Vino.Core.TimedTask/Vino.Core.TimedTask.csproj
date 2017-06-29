@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <Company>www.vinotec.cn</Company>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>.net core timed task manage.</Description>
+    <Copyright>Copyright © vinotec.cn</Copyright>
+    <Authors>kulend</Authors>
+    <Product>Vino.Core</Product>
+    <PackageReleaseNotes>.net core timed task manage.</PackageReleaseNotes>
+    <PackageTags>Vino</PackageTags>
+    <Version>1.0.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.2" />
+  </ItemGroup>
+
+</Project>

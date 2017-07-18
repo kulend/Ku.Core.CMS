@@ -8,7 +8,7 @@
     if ($("#inputForm").length) {
         $("#inputForm").vinoForm({
             onAfter: function (reply, options) {
-                vino.page.msg.tip('保存成功！', null, 1500, function () {
+                vino.page.msg.tip('保存成功！', function () {
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                     var fn = parent.winfns[index];

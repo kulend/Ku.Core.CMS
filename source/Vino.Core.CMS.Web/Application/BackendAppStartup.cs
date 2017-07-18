@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,14 +57,19 @@ namespace Vino.Core.CMS.Web.Application
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationScheme = "Cookie",
-                LoginPath = new PathString("/Account/Login"),
-                AccessDeniedPath = new PathString("/Account/Forbidden"),
+                LoginPath = new PathString("/Login"),
+                AccessDeniedPath = new PathString("/Forbidden"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
             });
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "login",
+                    template: "Login",
+                    defaults: new { controller = "Home", action = "Login" });
+
                 routes.MapRoute(
                     name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

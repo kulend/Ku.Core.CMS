@@ -9,11 +9,17 @@
         { return false; }
         var success = reply.code === 0;
         if (success) {
-            if (options.onAfter && typeof options.onAfter == "function") {
-                return options.onAfter(reply, options);
+            if (options.onSuccess && typeof options.onSuccess == "function") {
+                return options.onSuccess(reply, options);
             }
             return true;
         } else {
+            if (options.onError && typeof options.onError == "function") {
+                var ret = options.onError(reply, options);
+                if (ret) {
+                    return false;
+                }
+            }
             vino.page.msg.tip(reply.message);
             return false;
         }
@@ -34,45 +40,20 @@
                             return false;
                         }
                     }
-                    //isValid = $from.validate({
-                    //    onfocusout: false,
-                    //    errorPlacement: function (error, element) {//错误提示，错误对象
-                    //        alert(error);
-                    //        layui.use('layer', function () {
-                    //            var layer = layui.layer;
-                    //            layer.tips(error[0].innerText, element, {//1.错误信息，2提示位置，3同时提示多个错误
-                    //                tipsMore: true//错误信息可以同时提示多个，...
-                    //            });
-                    //        });
-                    //    }
-                    //}).valid();
-                    //if (!isValid) {
-                    //    return false;
-                    //}
                     vino.page.msg.showLoad();
                     return true;
                 },
-                error: function (reply) {
-                    _handleMessage(reply, opts);
+                error: function (data) {
+                    vino.page.msg.hideLoad();
+                    vino.page.msg.alert(`有错误发生：(${data.status})${data.statusText}`, null, { icon: 5 });
                 },
                 success: function (reply) {
                     _handleMessage(reply, opts);
                 }
             };
             $target.ajaxForm(options);
-            //$target.validate({
-            //    errorPlacement: function (error, element) {//错误提示，错误对象
-            //        alert(error);
-            //        layui.use('layer', function () {
-            //            var layer = layui.layer;
-            //            layer.tips(error[0].innerText, element, {//1.错误信息，2提示位置，3同时提示多个错误
-            //                tipsMore: true//错误信息可以同时提示多个，...
-            //            });
-            //        });
-            //    }
-            //});
         }).fail(function () {
-            alert("脚本加载出错,请刷新页面重试!");
+            vino.page.msg.alert(`脚本加载出错,请刷新页面重试！`, null, { icon: 5 });
         });
     }
     

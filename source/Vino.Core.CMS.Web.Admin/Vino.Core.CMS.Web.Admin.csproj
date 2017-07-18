@@ -13,12 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\css\admin.css" />
-    <Content Include="wwwroot\css\admin.min.css" />
     <Content Include="wwwroot\css\index.css" />
     <Content Include="wwwroot\css\index.min.css" />
-    <Content Include="wwwroot\css\list.css" />
-    <Content Include="wwwroot\css\list.min.css" />
     <Content Include="wwwroot\css\main.css">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -33,8 +29,6 @@
     <Content Include="wwwroot\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="wwwroot\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="wwwroot\images\logo.png" />
-    <Content Include="wwwroot\js\admin.js" />
-    <Content Include="wwwroot\js\admin.min.js" />
     <Content Include="wwwroot\js\index.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

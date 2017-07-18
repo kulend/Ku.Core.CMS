@@ -32,8 +32,7 @@ namespace Vino.Core.CMS.Service.System
 
         public UserDto GetById(long id)
         {
-            var user = _context.Users.Include(x=>x.UserRoles).ThenInclude(x=>x.Role).SingleOrDefault(x => x.Id == id);
-            var roles = user.UserRoles;
+            var user = _context.Users.SingleOrDefault(x => x.Id == id);
             return Mapper.Map<UserDto>(user);
         }
 

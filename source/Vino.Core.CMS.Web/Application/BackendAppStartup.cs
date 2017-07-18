@@ -14,19 +14,18 @@ using Vino.Core.CMS.Web.Middleware;
 
 namespace Vino.Core.CMS.Web.Application
 {
-    public class VinoAdminApp: VinoApp
+    public class BackendAppStartup: VinoAppStartup
     {
-        public override void Startup(IConfiguration configuration, IHostingEnvironment env)
+        public BackendAppStartup(IHostingEnvironment env) : base(env)
         {
-            base.Startup(configuration, env);
-            //这里做其他的初始化
+
         }
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //定时任务
-            //services.AddTimedJob().AddEntityFrameworkDynamicTimedJob<VinoDbContext>();
-            services.AddTimedTask();
+            services.AddTimedTask().AddEntityFrameworkTimedTask<VinoDbContext>();
+
             return base.ConfigureServices(services);
         }
 
@@ -36,9 +35,6 @@ namespace Vino.Core.CMS.Web.Application
 
             //定时任务
             app.UseTimedTask();
-
-            //var TimedJobService = app.ApplicationServices.GetRequiredService<TimedJobService>();
-            //TimedJobService.RestartDynamicTimers();
 
             app.UsePageErrorHandling();
 

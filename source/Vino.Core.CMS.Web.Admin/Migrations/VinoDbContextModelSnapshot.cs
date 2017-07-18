@@ -15,30 +15,6 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
 
-            modelBuilder.Entity("Pomelo.AspNetCore.TimedJob.DynamicTimedJob", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(512);
-
-                    b.Property<DateTime>("Begin");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<int>("Interval");
-
-                    b.Property<bool>("IsEnabled");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsEnabled");
-
-                    b.ToTable("DynamicTimedJob");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("DynamicTimedJob");
-                });
-
             modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.Menu", b =>
                 {
                     b.Property<long>("Id");
@@ -165,14 +141,28 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.ToTable("system_user_role");
                 });
 
-            modelBuilder.Entity("Pomelo.AspNetCore.TimedJob.EntityFramework.TimedJob", b =>
+            modelBuilder.Entity("Vino.Core.TimedTask.TimedTask", b =>
                 {
-                    b.HasBaseType("Pomelo.AspNetCore.TimedJob.DynamicTimedJob");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(32);
 
+                    b.Property<bool>("AutoReset");
 
-                    b.ToTable("AspNetTimedJobs");
+                    b.Property<DateTime>("BeginTime");
 
-                    b.HasDiscriminator().HasValue("TimedJob");
+                    b.Property<DateTime>("ExpireTime");
+
+                    b.Property<string>("Identifier")
+                        .HasMaxLength(256);
+
+                    b.Property<int>("Interval");
+
+                    b.Property<bool>("IsEnabled");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("timed_task");
                 });
 
             modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.RoleMenu", b =>

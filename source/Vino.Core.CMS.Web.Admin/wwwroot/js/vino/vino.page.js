@@ -18,15 +18,12 @@ if (!vino.page) {
     }
 
     vino.page.msg = {
-        tip: function (msg, icon, delay, callback) {
-            var pm = {};
-            if (icon) {
-                pm.icon = icon;
-            }
-            pm.time = delay || 2000;
+        tip: function (msg, callback, delay, options) {
+            var opts = $.extend({}, options);
+            opts.time = delay || 1500;
             layui.use('layer', function () {
                 var layer = layui.layer;
-                layer.msg(msg, pm, callback);
+                layer.msg(msg, opts, callback);
             });   
         },
         showLoad: function () {
@@ -39,6 +36,24 @@ if (!vino.page) {
             layui.use('layer', function () {
                 var layer = layui.layer;
                 loadIndex = layer.close(loadIndex);
+            });
+        },
+        //询问框
+        confirm: function (content, yes, cancel, options) {
+            layui.use("layer", function () {
+                var layer = layui.layer;
+                layer.confirm(content, options, function(index) {
+                    layer.close(index);
+                    if (typeof (yes) == "function") {
+                        yes();
+                    }
+                }, cancel);
+            });
+        },
+        alert: function (content, yes, options) {
+            layui.use("layer", function () {
+                var layer = layui.layer;
+                layer.alert(content, options, yes);
             });
         }
     };

@@ -76,6 +76,8 @@
                 error: function (xhr, status, errorThrown) {
                     if (errorCallBack) {
                         errorCallBack(xhr, status, errorThrown);
+                    } else {
+                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, {icon:5});
                     }
                 }
             });
@@ -101,6 +103,8 @@
                 error: function (xhr, status, errorThrown) {
                     if (errorCallBack) {
                         errorCallBack(xhr, status, errorThrown);
+                    } else {
+                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                     }
                 }
             });
@@ -134,6 +138,8 @@
                 error: function (xhr, status, errorThrown) {
                     if (errorCallBack) {
                         errorCallBack(xhr, status, errorThrown);
+                    } else {
+                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                     }
                 }
             });

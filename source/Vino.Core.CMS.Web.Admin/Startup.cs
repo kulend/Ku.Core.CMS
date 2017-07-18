@@ -5,27 +5,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Vino.Core.CMS.Web.Application;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace Vino.Core.CMS.Web.Admin
 {
     public class Startup
     {
-        public IConfigurationRoot Configuration { get; }
-
-        public VinoAdminApp vinoApp;
+        public BackendAppStartup vinoApp;
 
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-
             //应用相关初始化
-            vinoApp = new VinoAdminApp();
-            vinoApp.Startup(Configuration, env);
+            vinoApp = new BackendAppStartup(env);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

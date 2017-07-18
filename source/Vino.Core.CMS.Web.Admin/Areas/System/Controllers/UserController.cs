@@ -10,34 +10,36 @@ using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Service.System.Dto;
+using Vino.Core.CMS.Web.Base;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
 {
     [Area("System")]
     [Authorize]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
-        public IActionResult Index(int? page, int? size)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult GetUserList(int? page, int? rows)
         {
             if (!page.HasValue || page.Value < 1)
             {
                 page = 1;
             }
-            if (!size.HasValue || size.Value < 1)
+            if (!rows.HasValue || rows.Value < 1)
             {
-                size = 10;
+                rows = 10;
             }
 
             var service = IoC.Resolve<IUserService>();
-            var list = service.GetUserList(page.Value, size.Value, out int count);
-            ViewData["page"] = page;
-            ViewData["size"] = size;
-            ViewData["count"] = count;
-            ViewData["pages"] = Math.Ceiling(count * 1.0 / size.Value);
-            return View(list);
+            var list = service.GetUserList(page.Value, rows.Value, out int count);
+            return PagerData(list, page.Value, rows.Value, count);
         }
 
-        public IActionResult Edit(long? id, long? pid)
+        public IActionResult Edit(long? id)
         {
             var service = IoC.Resolve<IUserService>();
             if (id.HasValue)
@@ -69,6 +71,17 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
         {
             var service = IoC.Resolve<IUserService>();
             service.SaveUser(model);
+            return Json(new { code = 0 });
+        }
+
+        /// <summary>
+        /// 禁用用户
+        /// </summary>
+        [HttpPost]
+        public IActionResult Disable(long id)
+        {
+            var service = IoC.Resolve<IUserService>();
+
             return Json(new { code = 0 });
         }
     }

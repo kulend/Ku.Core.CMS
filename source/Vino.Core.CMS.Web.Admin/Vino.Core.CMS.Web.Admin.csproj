@@ -14,6 +14,16 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\admin.css" />
+    <Content Include="wwwroot\css\admin.min.css" />
+    <Content Include="wwwroot\css\index.css" />
+    <Content Include="wwwroot\css\index.min.css" />
+    <Content Include="wwwroot\css\list.css" />
+    <Content Include="wwwroot\css\list.min.css" />
+    <Content Include="wwwroot\css\main.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\css\main.min.css" />
+    <Content Include="wwwroot\css\window.css" />
     <Content Include="wwwroot\font-awesome\css\font-awesome.css" />
     <Content Include="wwwroot\font-awesome\css\font-awesome.min.css" />
     <Content Include="wwwroot\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -25,14 +35,144 @@
     <Content Include="wwwroot\images\logo.png" />
     <Content Include="wwwroot\js\admin.js" />
     <Content Include="wwwroot\js\admin.min.js" />
+    <Content Include="wwwroot\js\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\js\main.js" />
+    <Content Include="wwwroot\js\main.min.js" />
+    <Content Include="wwwroot\js\vino\vino.grid.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="wwwroot\js\vino\vino.ajax.js" />
     <Content Include="wwwroot\js\vino\vino.from.js" />
     <Content Include="wwwroot\js\vino\vino.page.js" />
+    <Content Include="wwwroot\js\window.js" />
     <Content Include="wwwroot\lib\artTemplate\template-debug.js" />
     <Content Include="wwwroot\lib\artTemplate\template-native-debug.js" />
     <Content Include="wwwroot\lib\artTemplate\template-native.js" />
     <Content Include="wwwroot\lib\artTemplate\template-web.js" />
     <Content Include="wwwroot\lib\artTemplate\template.js" />
+    <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid-bootstrap-ui.css" />
+    <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid-bootstrap.css" />
+    <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid.css" />
+    <Content Include="wwwroot\lib\jqGrid\js\Changes.txt" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-ar.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-bg.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-ca.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-cn.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-cs.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-de.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-dk.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-el.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-en.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-es.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-fa.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-fi.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-fr.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-gl.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-he.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-hr.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-hu.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-id.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-is.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-it.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-ja.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-kr.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-lt.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-me.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-nl.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-no.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-pl.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-pt-br.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-pt.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-ro.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-ru.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-sk.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-sq.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-sr-latin.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-sr.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-sv.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-th.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-tr.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-tw.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-uk.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\i18n\grid.locale-vi.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\install.txt" />
+    <Content Include="wwwroot\lib\jqGrid\js\jquery-1.11.0.min.js" />
+    <Content Include="wwwroot\lib\jqGrid\js\jquery.jqGrid.min.js" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\grid.addons.js" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\grid.postext.js" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\grid.setcolumns.js" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\jquery.contextmenu.js" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\jquery.searchFilter.js" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\jquery.tablednd.js" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\searchFilter.css" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\ui.multiselect.css" />
+    <Content Include="wwwroot\lib\jqGrid\plugins\ui.multiselect.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\css\ui.jqgrid-bootstrap-ui.css" />
+    <Content Include="wwwroot\lib\jqGrid\src\css\ui.jqgrid-bootstrap.css" />
+    <Content Include="wwwroot\lib\jqGrid\src\css\ui.jqgrid.css" />
+    <Content Include="wwwroot\lib\jqGrid\src\css\ui.multiselect.css" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.base.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.celledit.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.common.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.export.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.filter.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.formedit.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.grouping.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.import.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.inlinedit.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.jqueryui.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.pivot.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.subgrid.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.treegrid.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\grid.utils.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-ar.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-bg.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-ca.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-cn.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-cs.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-de.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-dk.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-el.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-en.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-es.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-fa.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-fi.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-fr.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-gl.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-he.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-hr.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-hu.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-id.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-is.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-it.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-ja.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-kr.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-lt.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-me.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-nl.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-no.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-pl.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-pt-br.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-pt.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-ro.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-ru.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-sk.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-sq.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-sr-latin.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-sr.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-sv.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-th.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-tr.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-tw.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-uk.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\i18n\grid.locale-vi.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\jqDnR.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\jqModal.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\jquery.fmatter.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\jquery.jqGrid.js" />
+    <Content Include="wwwroot\lib\jqGrid\src\jquery.sortable.js" />
     <Content Include="wwwroot\lib\jquery-form\jquery.form.js" />
     <Content Include="wwwroot\lib\layui\css\layui.css" />
     <Content Include="wwwroot\lib\layui\css\layui.mobile.css" />
@@ -160,10 +300,14 @@
     <ProjectReference Include="..\Vino.Core.CMS.Web\Vino.Core.CMS.Web.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="logs\" />
     <Folder Include="Migrations\" />
     <Folder Include="Migrations\" />
     <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

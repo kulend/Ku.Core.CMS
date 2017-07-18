@@ -227,3 +227,12 @@
     display: none !important;
   }
 }
+
+blockquote {
+    font-size: 14px;
+    margin: 10px;
+}
+
+blockquote .title {
+    font-size: 16px;
+}

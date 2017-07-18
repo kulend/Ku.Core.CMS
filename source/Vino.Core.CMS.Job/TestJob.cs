@@ -13,5 +13,11 @@ namespace Vino.Core.CMS.Job
         {
             Debug.WriteLine(DateTime.Now + " Test dynamic invoke...");
         }
+
+        [SingleTask]
+        public void RunXXXX()
+        {
+            Debug.WriteLine(DateTime.Now + " Test RunXXXX invoke...");
+        }
     }
 }

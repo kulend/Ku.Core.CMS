@@ -5,7 +5,7 @@ using Vino.Core.TimedTask.Attribute;
 
 namespace Vino.Core.CMS.Job
 {
-    [VinoTimedTask]
+    [TimedTask]
     public class VinoJob
     {
 

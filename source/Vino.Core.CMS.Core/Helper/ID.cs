@@ -12,28 +12,60 @@ namespace Vino.Core.CMS.Core.Helper
     /// </summary>
     public class ID
     {
-        //数据中心ID
-        private static long datacenterId;
-        //机器ID
-        private static long workerId;
-        private static long sequence = 0L;
+        /// <summary>
+        /// zone 占据long（64位）中的位数
+        /// </summary>
+        private const int ZONEBITS = 5;
+        /// <summary>
+        /// machine 占据long（64位）中的位数
+        /// </summary>
+        private const int MACHINEBITS = 5;
+        /// <summary>
+        /// 流水号占据long（64位）中的位数
+        /// </summary>
+        private const int SEQUENCEBITS = 12;
+        /// <summary>
+        /// zone允许的最大值
+        /// </summary>
+        private const int MAXZONEID = -1 ^ (-1 << ZONEBITS);
+        /// <summary>
+        /// machine允许的最大值
+        /// </summary>
+        private const int MAXMACHINEID = -1 ^ (-1 << MACHINEBITS);
+        /// <summary>
+        /// 流水号的最大值
+        /// </summary>
+        private const int MAXSEQUENCE = -1 ^ (-1 << SEQUENCEBITS);
+        /// <summary>
+        /// 时间左移位数
+        /// </summary>
+        private const int TICKSSHIFT = ZONEBITS + MACHINEBITS + SEQUENCEBITS;
+        /// <summary>
+        /// 区域左移位数
+        /// </summary>
+        private const int ZONESHIFT = MACHINEBITS + SEQUENCEBITS;
+        /// <summary>
+        /// 机器左移位数
+        /// </summary>
+        private const int MACHINESHIFT = SEQUENCEBITS;
+        /// <summary>
+        /// 起始时间的ticks
+        /// [2017-06-14 15:50:47] - new DateTime(1970, 1, 1, 0, 0, 0).Ticks /10000
+        /// </summary>
+        private const long STARTTICKS = 1497455447582L;
+        /// <summary>
+        /// 1970-1-1 的ticks
+        /// </summary>
+        private const long TICKS1970 = 621355968000000000L;
 
-        private static long twepoch = 687888001020L; //唯一时间，这是一个避免重复的随机量，自行设定不要大于当前时间戳      
-
-        private static readonly int workerIdBits = 5; //机器码字节数。4个字节用来保存机器码
-        private static readonly int datacenterIdBits = 3;
-        private static readonly long maxWorkerId = -1L ^ -1L << workerIdBits; //最大机器ID
-        private static readonly long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);//最大数据中心ID
-        private static readonly int sequenceBits = 10; //计数器字节数，10个字节用来保存计数码
-
-        private static readonly int workerIdShift = sequenceBits; //机器码数据左移位数，就是后面计数器占用的位数
-        private static readonly int datacenterIdShift = sequenceBits + workerIdBits;
-        private static readonly int timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits; //时间戳左移动位数就是机器码和计数器总字节数  
-        private static readonly long sequenceMask = -1L ^ -1L << sequenceBits; //一微秒内可以产生计数，如果达到该值则等到下一微妙在进行生成  
-
-        private long lastTimestamp = -1L;
         private static object syncRoot = new object();
 
+        private long _currentSequence = 0L;
+        private long _lastTicks = 0L;
+        private long _zoneMachineValue = 0L;
+
+        private static int _zoneId;
+        private static int _machineId;
         private static ID instance = null;
 
         public static void Initialize(IConfiguration configuration)
@@ -50,24 +82,24 @@ namespace Vino.Core.CMS.Core.Helper
             {
                 throw new VinoException("IdWorker生成规则中的Zone未进行配置。");
             }
-            var datacenterId = int.Parse(zoneSetting);
-            if (datacenterId > maxDatacenterId || datacenterId < 0)
+            var zoneId = int.Parse(zoneSetting);
+            if (zoneId > MAXZONEID || zoneId < 0)
             {
-                throw new VinoException($"IdWorker生成规则中的Zone配置应在0~{maxDatacenterId}之间。");
+                throw new VinoException($"IdWorker生成规则中的Zone配置应在0~{MAXZONEID}之间。");
             }
             var machineSetting = section["Machine"];
-            var workerId = int.Parse(machineSetting);
             if (string.IsNullOrEmpty(machineSetting))
             {
                 throw new VinoException("IdWorker生成规则中的Machine未进行配置。");
             }
-            if (workerId > maxWorkerId || workerId < 0)
+            var machineId = int.Parse(machineSetting);
+            if (machineId > MAXMACHINEID || machineId < 0)
             {
-                throw new VinoException($"IdWorker生成规则中的Machine配置应在0~{maxWorkerId}之间。");
+                throw new VinoException($"IdWorker生成规则中的Machine配置应在0~{MAXMACHINEID}之间。");
             }
 
-            ID.datacenterId = datacenterId;
-            ID.workerId = workerId;
+            ID._zoneId = zoneId;
+            ID._machineId = machineId;
         }
 
         public static long NewID()
@@ -84,56 +116,43 @@ namespace Vino.Core.CMS.Core.Helper
         {
             lock (syncRoot)
             {
-                long timestamp = timeGen();
-                if (this.lastTimestamp == timestamp)
-                { 
-                    //同一微妙中生成ID
-                    ID.sequence = (ID.sequence + 1) & ID.sequenceMask; //用&运算计算该微秒内产生的计数是否已经到达上限  
-                    if (ID.sequence == 0)
+                var currentTicks = GetNowTicks();
+                if (currentTicks < _lastTicks)
+                {
+                    throw new VinoException("系统时间出现错误");
+                }
+
+                if (currentTicks == _lastTicks)
+                {
+                    _currentSequence = (_currentSequence + 1) & MAXSEQUENCE;
+                    if (_currentSequence == 0) //超过了流水号的最大值，则重置时间
                     {
-                        //一微妙内产生的ID计数已达上限，等待下一微妙  
-                        timestamp = tillNextMillis(this.lastTimestamp);
+                        currentTicks = UtilNextTicks();
                     }
                 }
                 else
-                { 
-                    //不同微秒生成ID  
-                    ID.sequence = 0; //计数清0
-                }
-                if (timestamp < lastTimestamp)
                 {
-                    //如果当前时间戳比上一次生成ID时时间戳还小，抛出异常，因为不能保证现在生成的ID之前没有生成过  
-                    throw new VinoException(string.Format("Clock moved backwards.  Refusing to generate id for {0} milliseconds",
-                        this.lastTimestamp - timestamp));
+                    _currentSequence = 0L;
                 }
-                this.lastTimestamp = timestamp; //把当前时间戳保存为最后生成ID的时间戳  
-                long nextId = (timestamp - twepoch << timestampLeftShift) | (ID.datacenterId << datacenterIdShift) | ID.workerId << ID.workerIdShift | ID.sequence;
-                return nextId;
+                _lastTicks = currentTicks;
+
+                return (currentTicks - STARTTICKS) << TICKSSHIFT | _zoneMachineValue | _currentSequence;
             }
         }
 
-        /// <summary>  
-        /// 获取下一微秒时间戳  
-        /// </summary>  
-        /// <param name="lastTimestamp"></param>  
-        /// <returns></returns>  
-        private long tillNextMillis(long lastTimestamp)
+        private long UtilNextTicks()
         {
-            long timestamp = timeGen();
-            while (timestamp <= lastTimestamp)
+            long ticks = GetNowTicks();
+            while (ticks <= _lastTicks)
             {
-                timestamp = timeGen();
+                ticks = GetNowTicks();
             }
-            return timestamp;
+            return ticks;
         }
 
-        /// <summary>  
-        /// 生成当前时间戳  
-        /// </summary>  
-        /// <returns></returns>  
-        private long timeGen()
+        private long GetNowTicks()
         {
-            return (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+            return (DateTime.Now.Ticks - TICKS1970) / 10000;
         }
     }
 }

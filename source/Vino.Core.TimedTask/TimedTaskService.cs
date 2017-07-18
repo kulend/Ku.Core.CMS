@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Vino.Core.TimedTask.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Vino.Core.TimedTask.Attribute;
+using Vino.Core.TimedTask.EntityFramework;
 
 namespace Vino.Core.TimedTask
 {
@@ -19,6 +20,9 @@ namespace Vino.Core.TimedTask
 
         private IAssemblyLocator locator { get; set; }
         private IServiceProvider services { get; set; }
+
+        private ITimedTaskProvider timedTaskProvider { get; set; }
+
         private List<TypeInfo> JobTypeCollection { get; set; } = new List<TypeInfo>();
 
         public static Dictionary<string, bool> TaskStatus { get; private set; } = new Dictionary<string, bool>();
@@ -29,6 +33,7 @@ namespace Vino.Core.TimedTask
             this.services = services;
             this.locator = locator;
             this.logger = services.GetService<ILogger>();
+            this.timedTaskProvider = services.GetService<ITimedTaskProvider>();
             var asm = locator.GetAssemblies();
             foreach (var x in asm)
             {

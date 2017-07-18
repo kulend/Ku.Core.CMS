@@ -17,40 +17,58 @@ using Vino.Core.CMS.Core.Log;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Service;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 using NLog.Web;
 
 namespace Vino.Core.CMS.Web.Application
 {
-    public class VinoApp
+    public class VinoAppStartup
     {
-        protected IConfiguration _configuration;
+        protected IConfiguration Configuration;
 
-        public virtual void Startup(IConfiguration configuration, IHostingEnvironment env)
+        public VinoAppStartup(IHostingEnvironment env)
         {
-            this._configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            env.ConfigureNLog("nlog.config");
+
+            Configuration = builder.Build();
 
             //ID生成器初始化
-            ID.Initialize(_configuration);
+            ID.Initialize(Configuration);
             //缓存初始化
-            CacheConfig.Initialize(_configuration);
+            CacheConfig.Initialize(Configuration);
             //日志初始化
             VinoLogger.Initialize(env);
             //VinoMapper初始化
             VinoMapper.Initialize();
-
-            //env.ConfigureNLog("nlog.config");
         }
 
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            string connection = _configuration.GetConnectionString("MysqlDatabase");
+            string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
             //services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+            .AddJsonOptions(json =>
+            {
+                // 忽略循环引用
+                json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                //不使用驼峰样式的key
+                json.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                //设置时间格式
+                json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            });
+
             //加入身份认证
             services.AddAuthorization();
             //添加options
@@ -76,8 +94,6 @@ namespace Vino.Core.CMS.Web.Application
             //Nlog
             loggerFactory.AddNLog();
             app.AddNLogWeb();
-            env.ConfigureNLog("nlog.config").Reload();
-            loggerFactory.CreateLogger("AAA").LogInformation("AAAAAAAAA");
         }
     }
 }

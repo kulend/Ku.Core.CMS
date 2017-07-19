@@ -7,17 +7,33 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Extensions;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Admin.Models;
 using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Configs;
+using Vino.Core.Tokens.Jwt;
 
 namespace Vino.Core.CMS.Web.Admin.Controllers.System
 {
     public class HomeController : BaseController
     {
+        private IJwtProvider _jwtProvider;
+        private JwtSecKey _jwtSecKey;
+        private JwtAuthConfig _jwtAuthConfig;
+
+        public HomeController(IJwtProvider jwtProvider,
+            IOptions<JwtSecKey> jwtSecKey,
+            IOptions<JwtAuthConfig> jwtAuthConfig)
+        {
+            _jwtProvider = jwtProvider;
+            _jwtSecKey = jwtSecKey.Value;
+            _jwtAuthConfig = jwtAuthConfig.Value;
+        }
+
         [Authorize]
         public IActionResult Index()
         {
@@ -37,7 +53,7 @@ namespace Vino.Core.CMS.Web.Admin.Controllers.System
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginData data)
+        public IActionResult Login(LoginData data)
         {
             //图片验证码
 #if !DEBUG
@@ -58,26 +74,19 @@ namespace Vino.Core.CMS.Web.Admin.Controllers.System
             var service = IoC.Resolve<ILoginService>();
             var user = service.DoLogin(data.Account, data.Password);
 
-            //you can add all of ClaimTypes in this collection 
             var claims = new List<Claim>()
             {
                 new Claim("Account",user.Account)
                 ,new Claim(ClaimTypes.Name,user.Name)
-                ,new Claim("ID", user.Id.ToString())
-                //,new Claim(ClaimTypes.Email,"emailaccount@microsoft.com") 
+                ,new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-            //init the identity instances 
-            var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, "SuperSecureLogin"));
-
-            //signin
-            await HttpContext.Authentication.SignInAsync("Cookie", userPrincipal, new AuthenticationProperties
+            var token = _jwtProvider.CreateToken(_jwtSecKey.Key, _jwtAuthConfig.Issuer, _jwtAuthConfig.Audience, claims,
+                DateTime.Now.AddMinutes(_jwtSecKey.ExpiredMinutes));
+            base.Response.Cookies.Append(_jwtAuthConfig.CookieName, token, new CookieOptions
             {
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
-                IsPersistent = false,
-                AllowRefresh = false
+                HttpOnly = true
             });
-
             return JsonData(true);
         }
 

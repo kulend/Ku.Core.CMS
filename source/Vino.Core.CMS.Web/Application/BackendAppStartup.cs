@@ -27,6 +27,9 @@ namespace Vino.Core.CMS.Web.Application
             //定时任务
             services.AddTimedTask().AddEntityFrameworkTimedTask<VinoDbContext>();
 
+            services.AddJwtToken(Configuration);
+            services.AddJwtAuth(Configuration);
+
             return base.ConfigureServices(services);
         }
 
@@ -41,7 +44,7 @@ namespace Vino.Core.CMS.Web.Application
 
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
                 //app.UseBrowserLink();
             }
             else
@@ -54,14 +57,7 @@ namespace Vino.Core.CMS.Web.Application
             app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromMinutes(30) });
 
             //身份认证
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = "Cookie",
-                LoginPath = new PathString("/Login"),
-                AccessDeniedPath = new PathString("/Forbidden"),
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true
-            });
+            app.UseJwtAuth(Configuration);
 
             app.UseMvc(routes =>
             {

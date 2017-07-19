@@ -21,12 +21,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using Vino.Core.Tokens.Jwt;
 
 namespace Vino.Core.CMS.Web.Application
 {
     public class VinoAppStartup
     {
-        protected IConfiguration Configuration;
+        protected IConfigurationRoot Configuration;
 
         public VinoAppStartup(IHostingEnvironment env)
         {
@@ -56,6 +57,7 @@ namespace Vino.Core.CMS.Web.Application
 
             string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
+
             //services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
             services.AddMvc()

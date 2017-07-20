@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +23,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using Vino.Core.CMS.Web.AutoMapper;
 using Vino.Core.Tokens.Jwt;
 
 namespace Vino.Core.CMS.Web.Application
@@ -87,8 +90,12 @@ namespace Vino.Core.CMS.Web.Application
                     }));
             services.AddSession();
 
-            var provider = IoC.InitializeWith(new DependencyResolverFactory(), services);
-            return provider;
+            //Autofac依赖注入
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            builder.RegisterModule(new AppModule());
+            var container = builder.Build();
+            return new AutofacServiceProvider(container);
         }
 
         public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

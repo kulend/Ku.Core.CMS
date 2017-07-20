@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Vino.Core.CMS.Core.Common;
+using Vino.Core.CMS.Core.Data;
 
-namespace Vino.Core.CMS.Service.System.Dto
+namespace Vino.Core.CMS.Domain.Dto.System
 {
     public class UserDto : BaseDto
     {

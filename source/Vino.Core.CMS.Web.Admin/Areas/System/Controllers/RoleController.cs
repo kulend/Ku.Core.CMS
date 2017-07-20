@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
+using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Service.System;
-using Vino.Core.CMS.Service.System.Dto;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
 {
@@ -17,6 +17,13 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
     [Authorize]
     public class RoleController : Controller
     {
+        private IIocResolver _ioc;
+
+        public RoleController(IIocResolver ioc)
+        {
+            this._ioc = ioc;
+        }
+
         public IActionResult Index(int? page, int? size)
         {
             if (!page.HasValue || page.Value < 1)
@@ -28,7 +35,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
                 size = 10;
             }
 
-            var service = IoC.Resolve<IRoleService>();
+            var service = _ioc.Resolve<IRoleService>();
             var list = service.GetList(page.Value, size.Value, out int count);
             ViewData["page"] = page;
             ViewData["size"] = size;
@@ -39,7 +46,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
 
         public IActionResult Edit(long? id, long? pid)
         {
-            var service = IoC.Resolve<IRoleService>();
+            var service = _ioc.Resolve<IRoleService>();
             if (id.HasValue)
             {
                 //编辑
@@ -67,7 +74,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
         [HttpPost]
         public IActionResult Save(RoleDto model)
         {
-            var service = IoC.Resolve<IRoleService>();
+            var service = _ioc.Resolve<IRoleService>();
             service.Save(model);
             return Json(new { code = 0 });
         }
@@ -75,7 +82,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
         [HttpPost]
         public IActionResult Delete(long id)
         {
-            var service = IoC.Resolve<IRoleService>();
+            var service = _ioc.Resolve<IRoleService>();
             service.Delete(id);
             return Json(new { code = 0 });
         }

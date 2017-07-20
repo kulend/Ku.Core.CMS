@@ -5,11 +5,11 @@ using System.Text;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Data.Entity.System;
+using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public class LoginService : ILoginService
+    public class LoginService: ILoginService
     {
         private VinoDbContext _context;
 

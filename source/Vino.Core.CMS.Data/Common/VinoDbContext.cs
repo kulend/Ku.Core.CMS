@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.CMS.Core.Common;
-using Vino.Core.CMS.Data.Entity;
-using Vino.Core.CMS.Data.Entity.System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.TimedTask.EntityFramework;
-
+using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Data.Common
 {
@@ -15,6 +13,11 @@ namespace Vino.Core.CMS.Data.Common
         public VinoDbContext(DbContextOptions<VinoDbContext> options)
             : base(options)
         {
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await base.SaveChangesAsync();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,5 +57,7 @@ namespace Vino.Core.CMS.Data.Common
 
         //定时任务相关
         public DbSet<TimedTask.TimedTask> TimedTasks { get; set; }
+
+
     }
 }

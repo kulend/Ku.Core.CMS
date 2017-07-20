@@ -17,21 +17,24 @@ using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Configs;
 using Vino.Core.Tokens.Jwt;
 
-namespace Vino.Core.CMS.Web.Admin.Controllers.System
+namespace Vino.Core.CMS.Web.Admin.Controllers
 {
     public class HomeController : BaseController
     {
+        private IIocResolver _ioc;
         private IJwtProvider _jwtProvider;
         private JwtSecKey _jwtSecKey;
         private JwtAuthConfig _jwtAuthConfig;
 
         public HomeController(IJwtProvider jwtProvider,
             IOptions<JwtSecKey> jwtSecKey,
-            IOptions<JwtAuthConfig> jwtAuthConfig)
+            IOptions<JwtAuthConfig> jwtAuthConfig,
+            IIocResolver ioc)
         {
             _jwtProvider = jwtProvider;
             _jwtSecKey = jwtSecKey.Value;
             _jwtAuthConfig = jwtAuthConfig.Value;
+            this._ioc = ioc;
         }
 
         [Authorize]
@@ -53,6 +56,7 @@ namespace Vino.Core.CMS.Web.Admin.Controllers.System
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginData data)
         {
             //图片验证码
@@ -65,13 +69,14 @@ namespace Vino.Core.CMS.Web.Admin.Controllers.System
             if (!data.ImageCode.IsNullOrEmpty())
             {
                 var code = HttpContext.Session.GetString($"ImageValidateCode_login");
+                HttpContext.Session.Remove("ImageValidateCode_login");
                 if (!data.ImageCode.EqualOrdinalIgnoreCase(code))
                 {
                     throw new VinoException(1, "验证码出错!");
                 }
             }
 
-            var service = IoC.Resolve<ILoginService>();
+            var service = _ioc.Resolve<ILoginService>();
             var user = service.DoLogin(data.Account, data.Password);
 
             var claims = new List<Claim>()

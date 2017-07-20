@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.CMS.Core.Common;
+using Vino.Core.CMS.Core.Data;
 
-namespace Vino.Core.CMS.Data.Entity.System
+namespace Vino.Core.CMS.Domain.Entity.System
 {
     [Table("system_user")]
     public class User : BaseProtectedEntity

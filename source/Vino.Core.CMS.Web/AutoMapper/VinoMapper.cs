@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.CMS.Data.Entity.System;
-using Vino.Core.CMS.Service.System.Dto;
+using Vino.Core.CMS.Domain.Dto.System;
+using Vino.Core.CMS.Domain.Entity.System;
 
-namespace Vino.Core.CMS.Service
+namespace Vino.Core.CMS.Web.AutoMapper
 {
     public static class VinoMapper
     {

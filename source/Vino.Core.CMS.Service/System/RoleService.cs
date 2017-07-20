@@ -6,8 +6,8 @@ using AutoMapper;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Data.Entity.System;
-using Vino.Core.CMS.Service.System.Dto;
+using Vino.Core.CMS.Domain.Dto.System;
+using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Service.System
 {

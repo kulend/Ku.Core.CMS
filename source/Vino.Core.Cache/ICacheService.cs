@@ -5,7 +5,7 @@ using Vino.Core.CMS.Core.DependencyResolver;
 
 namespace Vino.Core.Cache
 {
-    public interface ICacheService : IDependency
+    public interface ICacheService
     {
         /// <summary>
         /// 添加缓存

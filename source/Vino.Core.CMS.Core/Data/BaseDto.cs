@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.CMS.Core.Common
+namespace Vino.Core.CMS.Core.Data
 {
     public abstract partial class BaseDto
     {

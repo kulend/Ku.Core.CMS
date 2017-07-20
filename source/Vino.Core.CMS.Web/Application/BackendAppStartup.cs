@@ -40,8 +40,6 @@ namespace Vino.Core.CMS.Web.Application
             //定时任务
             app.UseTimedTask();
 
-            app.UsePageErrorHandling();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,6 +49,8 @@ namespace Vino.Core.CMS.Web.Application
             {
                 //app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UsePageErrorHandling();
 
             app.UseStaticFiles();
 

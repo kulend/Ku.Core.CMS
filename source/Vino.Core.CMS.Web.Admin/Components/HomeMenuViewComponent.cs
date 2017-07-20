@@ -7,16 +7,18 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Service.System;
-using Vino.Core.CMS.Service.System.Dto;
+using Vino.Core.CMS.Domain.Dto.System;
 
 namespace Vino.Core.CMS.Web.Admin.Components
 {
     [ViewComponent(Name = "HomeMenu")]
     public class HomeMenuViewComponent : ViewComponent
     {
-        public HomeMenuViewComponent()
-        {
+        private IIocResolver _ioc;
 
+        public HomeMenuViewComponent(IIocResolver ioc)
+        {
+            this._ioc = ioc;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(MenuDto pDto)
@@ -39,7 +41,7 @@ namespace Vino.Core.CMS.Web.Admin.Components
         {
             List<MenuDto> GetItems(long parentId)
             {
-                var service = IoC.Resolve<IMenuService>();
+                var service = _ioc.Resolve<IMenuService>();
                 return service.GetMenusByParentId(parentId);
             }
 

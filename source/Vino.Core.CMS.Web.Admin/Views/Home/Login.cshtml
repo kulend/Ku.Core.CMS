@@ -52,6 +52,7 @@
                         <div class="layui-tab-item layui-show">
                             <div class="layui-form layui-form-pane">
                                 <form id="loginForm" class="layui-form" action="Login" method="post">
+                                    @Html.AntiForgeryToken()
                                     <div class="layui-form-item">
                                         <label for="Account" class="layui-form-label">账号</label>
                                         <div class="layui-input-inline">

@@ -1,12 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Vino.Core.CMS.Web.Application;
-using NLog.Extensions.Logging;
-using NLog.Web;
 
 namespace Vino.Core.CMS.Web.Admin
 {

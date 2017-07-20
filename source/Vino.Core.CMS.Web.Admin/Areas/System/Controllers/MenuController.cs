@@ -11,8 +11,8 @@ using Vino.Core.Cache;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Log;
+using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Service.System;
-using Vino.Core.CMS.Service.System.Dto;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
 {
@@ -21,22 +21,23 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
     {
         private readonly ILog log = VinoLogger.GetLogger(nameof(MenuController));
 
+        private IIocResolver _ioc;
+
+        public MenuController (IIocResolver ioc)
+        {
+            this._ioc = ioc;
+        }
+
         [Authorize]
         public IActionResult Index()
         {
-            var cacheService = IoC.Resolve<ICacheService>();
-            cacheService.Add("aaa", "AAAAAAAAAAAAAAAAAA");
-            log.Debug("AAAAAAAAAAAAAAAAAA");
-            log.Info("BBBBBBBBBBBBBBBBBBBBB");
-            log.Warn("CCCCCCCCCCCCCCCCCCCCC");
-            log.Error("DDDDDDDDDDDDDDDDDDDDD");
             return View();
         }
 
         [Authorize]
         public IActionResult GetMenuByParentId(long pid)
         {
-            var service = IoC.Resolve<IMenuService>();
+            var service = _ioc.Resolve<IMenuService>();
             var menus = service.GetMenusByParentId(pid);
             return Json(new {code = 0, data = menus});
         }
@@ -44,7 +45,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
         [Authorize]
         public IActionResult Edit(long? id, long? pid)
         {
-            var service = IoC.Resolve<IMenuService>();
+            var service = _ioc.Resolve<IMenuService>();
             if (id.HasValue)
             {
                 //编辑
@@ -100,7 +101,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
         [Authorize, HttpPost]
         public IActionResult Save(MenuDto model)
         {
-            var service = IoC.Resolve<IMenuService>();
+            var service = _ioc.Resolve<IMenuService>();
             service.SaveMenu(model);
             return Json(new { code = 0 });
         }

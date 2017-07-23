@@ -8,32 +8,39 @@ using Vino.Core.CMS.Core.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
+    [DisplayName("系统-角色")]
     [Table("system_role")]
     public class Role : BaseProtectedEntity
     {
         /// <summary>
         /// 名称
         /// </summary>
-        [Required, MaxLength(40)]
+        [Required, MaxLength(20), DisplayName("名称")]
         public string Name { set; get; }
 
         /// <summary>
-        /// 是否可用
+        /// 名称(英文)
+        /// </summary>
+        [Required, MaxLength(40), DisplayName("英文名")]
+        public string NameEn { set; get; }
+
+        /// <summary>
+        /// 是否启用
         /// </summary>
         [DefaultValue(true)]
+        [Display(Name = "是否启用", Prompt = "是|否")]
         public bool IsEnable { set; get; } = true;
 
         /// <summary>
         /// 备注
         /// </summary>
         [MaxLength(200)]
+        [Display(Name = "备注")]
         public string Remarks { get; set; }
 
         /// <summary>
         /// 用户角色集合
         /// </summary>
         public virtual ICollection<UserRole> UserRoles { get; set; }
-
-        public virtual ICollection<RoleMenu> RoleMenus { get; set; }
     }
 }

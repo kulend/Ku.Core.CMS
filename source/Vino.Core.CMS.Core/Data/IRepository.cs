@@ -12,6 +12,9 @@ namespace Vino.Core.CMS.Core.Data
     /// </summary>
     public interface IRepository
     {
+        void Save();
+
+        Task SaveAsync();
     }
 
     /// <summary>
@@ -22,24 +25,24 @@ namespace Vino.Core.CMS.Core.Data
     public interface IRepository<TEntity, TPrimaryKey> : IRepository where TEntity : Entity<TPrimaryKey>
     {
         /// <summary>
-        /// 获取实体集合
+        /// 获取检索对象
         /// </summary>
         /// <returns></returns>
-        List<TEntity> GetAllList();
-
-        /// <summary>
-        /// 根据lambda表达式条件获取实体集合
-        /// </summary>
-        /// <param name="predicate">lambda表达式条件</param>
-        /// <returns></returns>
-        List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> GetQueryable(params Expression<Func<TEntity, object>>[] propertySelectors);
 
         /// <summary>
         /// 根据主键获取实体
         /// </summary>
         /// <param name="id">实体主键</param>
         /// <returns></returns>
-        TEntity Get(TPrimaryKey id);
+        TEntity GetById(TPrimaryKey id);
+
+        /// <summary>
+        /// 根据主键获取实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        /// <returns></returns>
+        Task<TEntity> GetByIdAsync(TPrimaryKey id);
 
         /// <summary>
         /// 根据lambda表达式条件获取单个实体
@@ -56,28 +59,29 @@ namespace Vino.Core.CMS.Core.Data
         TEntity Insert(TEntity entity);
 
         /// <summary>
+        /// 新增实体
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns></returns>
+        Task<TEntity> InsertAsync(TEntity entity);
+
+        /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity">实体</param>
-        TEntity Update(TEntity entity);
-
-        /// <summary>
-        /// 新增或更新实体
-        /// </summary>
-        /// <param name="entity">实体</param>
-        TEntity InsertOrUpdate(TEntity entity);
-
-        /// <summary>
-        /// 删除实体
-        /// </summary>
-        /// <param name="entity">要删除的实体</param>
-        bool Delete(TEntity entity);
+        void Update(TEntity entity);
 
         /// <summary>
         /// 删除实体
         /// </summary>
         /// <param name="id">实体主键</param>
         bool Delete(TPrimaryKey id);
+
+        /// <summary>
+        /// 删除实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        Task<bool> DeleteAsync(TPrimaryKey id);
     }
 
     /// <summary>

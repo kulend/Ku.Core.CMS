@@ -33,12 +33,15 @@ namespace Vino.Core.CMS.Data.Common
                    .WithMany(t => t.UserRoles)
                    .HasForeignKey(pt => pt.RoleId);
 
-            //创建RoleMenu关系
-            modelBuilder.Entity<RoleMenu>().HasKey(t => new { t.RoleId, t.MenuId });
-            modelBuilder.Entity<RoleMenu>()
-                .HasOne(pt => pt.Role)
-                .WithMany(t => t.RoleMenus)
-                .HasForeignKey(pt => pt.RoleId);
+            ////创建RoleMenu关系
+            //modelBuilder.Entity<RoleMenu>().HasKey(t => new { t.RoleId, t.MenuId });
+            //modelBuilder.Entity<RoleMenu>()
+            //    .HasOne(pt => pt.Role)
+            //    .WithMany(t => t.RoleMenus)
+            //    .HasForeignKey(pt => pt.RoleId);
+
+            modelBuilder.Entity<FunctionModule>().HasMany(m => m.Childrens).WithOne(m => m.Parent);
+            modelBuilder.Entity<FunctionModuleAction>().HasOne(c => c.Module).WithMany(m => m.Actions);
 
             base.OnModelCreating(modelBuilder);
 
@@ -53,11 +56,15 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Menu> Menus { get; set; }
 
         public DbSet<UserRole> UserRoles { get; set; }
-        public DbSet<RoleMenu> RoleMenus { get; set; }
 
         //定时任务相关
         public DbSet<TimedTask.TimedTask> TimedTasks { get; set; }
 
+        public DbSet<FunctionModule> FunctionModules { get; set; }
+
+        public DbSet<FunctionModuleAction> FunctionModuleActions { get; set; }
+
+        public DbSet<Function> Functions { get; set; }
 
     }
 }

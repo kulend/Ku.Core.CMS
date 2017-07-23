@@ -19,10 +19,12 @@
     <link rel="stylesheet" href="~/lib/jqGrid/css/ui.jqgrid-bootstrap.css" />
     @RenderSection("Css", required: false)
     <environment names="Development">
-        <link rel="stylesheet" href="~/css/main.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/main.css"/>
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/css/main.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/main.min.css" asp-append-version="true"/>
     </environment>
     <script src="~/lib/layui/layui.js"></script>
 </head>

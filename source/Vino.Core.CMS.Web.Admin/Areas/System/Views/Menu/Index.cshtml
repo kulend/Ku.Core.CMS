@@ -1,115 +1,70 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="sub-page">
-    <div class="layui-tab layui-tab-brief sub-page-tab" lay-filter="F_sub_tab">
-        <ul class="layui-tab-title">
-            <li class="layui-this" data-url="Index">菜单列表</li>
-            <li data-url="Edit">添加菜单</li>
-        </ul>
-        <div class="layui-tab-content">
-            <div class="layui-tab-item layui-show">
-                <div class="layui-form">
-                    <table class="layui-table">
-                        <colgroup>
-                            <col width="140">
-                            <col width="30%">
-                            <col width="15%">
-                            <col width="90" align="center">
-                            <col width="60" align="center">
-                            <col>
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th>编码</th>
-                            <th>菜单名称</th>
-                            <th>权限标识</th>
-                            <th>是否显示</th>
-                            <th>排序</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody id="J_tree">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+@using Vino.Core.CMS.Domain.Dto.System
+@model List<MenuDto>
+<div class="main-content">
+    <blockquote class="layui-elem-quote low">
+        <span class="layui-breadcrumb">
+            <a href="Index">顶级菜单</a>
+            @foreach (var dto in Model)
+            {
+                <a href="Index?parentId=@dto.Id">@dto.Name</a>
+            }
+        </span>
+    </blockquote>
+    <div class="toolbar">
+        @if (Model != null)
+        {
+            if (Model.Count > 1)
+            {
+                <action text="返回上级" size="small" icon="&#xe619;" action="Index?parentId=@Model[Model.Count - 2].Id" />
+            }
+            else if(Model.Count == 1)
+            {
+                <action text="返回上级" size="small" icon="&#xe619;" action="Index" />
+            }
+        }
+        <action text="添加" size="small" icon="&#xe608;" action="window:System/Menu/Edit?pid=@ViewData["ParentId"]"/>
+        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()"/>
     </div>
+    <table id="list">
+    </table>
+    <div id="pager"></div>
 </div>
-<script id="tp:list-item" type="text/html">
-    {{each items as value i}}
-    <tr data-id="{{value.id}}" data-parentid="{{value.parentId}}">
-        <td class="menu-open-tree" data-sub="{{value.hasSubMenu}}" title="展开子菜单">
-            {{if value.hasSubMenu}}
-            <i class="layui-icon">&#xe623;</i>
-            {{else}}
-            <span class="menu-tree-nbsp"></span>
-            {{/if}}
-            {{value.code}}
-        </td>
-        <td>
-            <% for(var i = 1; i < (value.code.length/3); i++){ %>
-            <span class="menu-tree-nbsp"></span>
-            <% } %>
-            <i class="fa {{value.icon}}"></i> {{value.name}}
-        </td>
-        <td></td>
-        <td>
-            <i class="fa fa-toggle-on fa-2x"></i>
-        </td>
-        <td>{{value.orderIndex}}</td>
-        <td>
-            <div class="layui-btn-group">
-                <a href="Edit?pid={{value.id}}" class="layui-btn layui-btn-small">添加子项</a>
-                <a href="Edit?id={{value.id}}" class="layui-btn layui-btn-small">编辑</a>
-                <button data-url="" class="layui-btn layui-btn-small">删除</button>
-            </div>
-        </td>
-    </tr>
-    {{/each}}
-</script>
 @section Scripts
 {
     <script>
-        $(function() {
-            vino.ajax.get("GetMenuByParentId",
-                { pid: 0 },
-                function(data) {
-                    var html = template('tp:list-item', { items: data.data });
-                    $("#J_tree").html(html);
-                });
+        layui.use(['layer'], function() {
+            var $ = layui.jquery, layer = layui.layer;
 
-            // 展开子菜单
-            $('#J_tree').on('click', '.menu-open-tree[data-sub="true"]', function() {
-                _showSubMenus($(this).parent());
-            });
         });
 
-        function _showSubMenus($row) {
-            var id = $row.data('id');
-            var $subs = $("#J_tree tr[data-parentid='" + id + "']");
-            if ($row.attr("data-sub-show") == "1") {
-                //隐藏
-                $subs.hide();
-                $row.attr("data-sub-show", "0");
-                $row.find(".layui-icon").html('&#xe623;');
-            } else {
-                if ($row.attr("data-sub-loaded") == "1") {
-                    $subs.show();
-                    $row.attr("data-sub-show", "1");
-                    $row.find(".layui-icon").html('&#xe625;');
-                } else {
-                    vino.ajax.get("GetMenuByParentId", { pid: id },
-                        function(data) {
-                            var html = template('tp:list-item', { items: data.data });
-                            $row.after(html);
-                            $row.attr("data-sub-loaded", "1");
-                            $row.attr("data-sub-show", "1");
-                            $row.find(".layui-icon").html('&#xe625;');
-                        });
-                }
-            }
-        }
+        $(function() {
+            $("#list").vinoGrid({
+                url: 'List?parentId=@ViewData["ParentId"]',
+                colModel: [
+                    { label: '名称', name: 'Name', width: 60 },
+                    { label: '权限编码', name: 'AuthCode', width: 50 },
+                    { label: '菜单链接', name: 'Url', width: 100 },
+                    { label: '图标', name: 'Icon', width: 40 },
+                    { label: '是否显示', name: 'IsShow', width: 40 },
+                    { label: '子菜单', name: 'HasSubMenu', width: 40 },
+                    { label: '排序值', name: 'OrderIndex', width: 40 },
+                    {
+                        label: '操作', name: 'Id', width: 100,
+                        formatter: function (value, options, row) {
+                            var html = '<div class="layui-btn-group">';
+                            html += '<button title="子菜单" class="layui-btn layui-btn-mini" action="Index?parentId=' + row.Id + '">子菜单</button>';
+                            html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/Menu/Edit?id=' + row.Id + '">编辑</button>';
+                            html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" action="post:Delete?id=' + row.Id + '">删除</button>';
+                            html += '</div>';
+                            return html;
+                        }
+                    }
+                ],
+                pager: "#pager"
+            });
+        });
     </script>
 }

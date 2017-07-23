@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Domain.Dto.System;
 
@@ -14,39 +10,27 @@ namespace Vino.Core.CMS.Web.Admin.Components
     [ViewComponent(Name = "HomeMenu")]
     public class HomeMenuViewComponent : ViewComponent
     {
-        private IIocResolver _ioc;
+        private IMenuService service;
 
-        public HomeMenuViewComponent(IIocResolver ioc)
+        public HomeMenuViewComponent(IMenuService _service)
         {
-            this._ioc = ioc;
+            this.service = _service;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(MenuDto pDto)
+        public async Task<IViewComponentResult> InvokeAsync(long? pid)
         {
             List<MenuDto> list;
             var layout = "Default";
-            if (pDto == null)
+            if (pid.HasValue)
             {
-                 list = await GetItemsAsync(0);
+                list = await service.GetSubsAsync(pid.Value);
+                layout = "Sub";
             }
             else
             {
-                list = await GetItemsAsync(pDto.Id);
-                layout = "Sub";
+                list = await service.GetSubsAsync(null);
             }
             return View(layout, list);
         }
-
-        private Task<List<MenuDto>> GetItemsAsync(long pid)
-        {
-            List<MenuDto> GetItems(long parentId)
-            {
-                var service = _ioc.Resolve<IMenuService>();
-                return service.GetMenusByParentId(parentId);
-            }
-
-            return Task.FromResult(GetItems(pid));
-        }
-
     }
 }

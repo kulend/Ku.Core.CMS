@@ -1,69 +1,47 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model List<Vino.Core.CMS.Service.System.Dto.RoleDto>
-<div class="sub-page">
-    <div class="layui-tab layui-tab-brief sub-page-tab" lay-filter="F_sub_tab">
-        <ul class="layui-tab-title">
-            <li class="layui-this" data-url="Index">角色列表</li>
-            <li data-url="Edit">添加角色</li>
-        </ul>
-        <div class="layui-tab-content">
-            <div class="layui-tab-item layui-show">
-                <div class="layui-form">
-                    <table class="layui-table">
-                        <colgroup>
-                            <col width="20%">
-                            <col width="50%">
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>角色名</th>
-                                <th>备注</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var role in Model)
-                        {
-                            <tr>
-                                <td>@role.Name</td>
-                                <td>@role.Remarks</td>
-                                <td>
-                                    <div class="layui-btn-group">
-                                        <a href="Edit?id=@role.Id" class="layui-btn layui-btn-small">编辑</a>
-                                        <button data-url="" data-action="" class="layui-btn layui-btn-small">冻结</button>
-                                        <button data-url="Delete?id=@role.Id" data-action="delete" class="layui-btn layui-btn-small">删除</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
-                <div id="pages"></div>
-            </div>
-        </div>
+<div class="main-content">
+    <div class="toolbar">
+        <action text="添加" size="small" icon="&#xe608;" action="window:System/Role/Edit" />
+        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
     </div>
+    <table id="list"></table>
+    <div id="pager"></div>
 </div>
 @section Scripts
 {
     <script>
-        layui.use(['laypage', 'element'], function () {
-            var $ = layui.jquery
-                , layer = layui.layer
-                , laypage = layui.laypage
-                , element = layui.element();
+        layui.use(['layer'], function () {
+            var $ = layui.jquery, layer = layui.layer;
 
-            laypage({
-                cont: 'pages'
-                , pages: @ViewData["pages"]
-                , groups: 5
-                , curr: @ViewData["page"]
-                , jump: function (obj, first) {
-                    first || (window.location.href = "Index?page=" + obj.curr);
-                }
+        });
+
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                colModel: [
+                    { label: '名称', name: 'Name', width: 50 },
+                    { label: '英文名', name: 'NameEn', width: 50 },
+                    {
+                        label: '是否启用', name: 'IsEnable', width: 30,
+                        formatter: function (value, options, row) {
+                            return value ? "正常" : "禁用";
+                        }
+                    },
+                    {
+                        label: '操作', name: 'Id', width: 100,
+                        formatter: function (value, options, row) {
+                            var html = '<div class="layui-btn-group">';
+                            html += '<button title="权限" class="layui-btn layui-btn-mini" action="window:System/Role/RoleAuth?id=' + row.Id + '">权限</button>';
+                            html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/Role/Edit?id=' + row.Id + '">编辑</button>';
+                            html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" action="post:Delete?id=' + row.Id + '">删除</button>';
+                            html += '</div>';
+                            return html;
+                        }
+                    }
+                ],
+                pager: "#pager"
             });
         });
     </script>

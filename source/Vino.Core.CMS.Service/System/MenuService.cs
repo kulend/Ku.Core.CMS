@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 
@@ -12,88 +15,131 @@ namespace Vino.Core.CMS.Service.System
 {
     public class MenuService: IMenuService
     {
-        private VinoDbContext _context;
+        private IMenuRepository repository;
 
-        public MenuService(VinoDbContext context)
+        public MenuService(IMenuRepository _repository)
         {
-            this._context = context;
+            this.repository = _repository;
         }
 
-        public MenuDto GetById(long id)
+        public Task<(int count, List<MenuDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize)
         {
-            var menu = _context.Menus.SingleOrDefault(x => x.Id == id);
-            return Mapper.Map<MenuDto>(menu);
+            (int, List<MenuDto>) Gets()
+            {
+                int startRow = (pageIndex - 1) * pageSize;
+                var queryable = repository.GetQueryable();
+                if (parentId.HasValue)
+                {
+                    queryable = queryable.Where(u => u.ParentId == parentId);
+                }
+                else
+                {
+                    queryable = queryable.Where(u => u.ParentId == null);
+                }
+                var count = queryable.Count();
+                var query = queryable.OrderBy(x=>x.OrderIndex).ThenBy(x => x.CreateTime).Skip(startRow).Take(pageSize);
+                return (count, Mapper.Map<List<MenuDto>>(query.ToList()));
+            }
+            return Task.FromResult(Gets());
         }
 
-        public List<MenuDto> GetMenusByParentId(long parentId)
-        {
-            List<Menu> menus = _context.Menus.Where(x => x.ParentId == parentId).OrderBy(x => x.OrderIndex).ToList();
-            return Mapper.Map<List<MenuDto>>(menus);
-        }
-
-        public void SaveMenu(MenuDto dto)
+        public async Task SaveAsync(MenuDto dto)
         {
             Menu model = Mapper.Map<Menu>(dto);
             if (model.Id == 0)
             {
                 //新增
-                string pCode = "";
-                //取得父菜单               
-                if (model.ParentId != 0)
+                //取得父级
+                if (model.ParentId.HasValue)
                 {
-                    var pModel = _context.Menus.SingleOrDefault(x => x.Id == model.ParentId);
+                    var pModel = await repository.GetByIdAsync(model.ParentId.Value);
                     if (pModel == null)
                     {
-                        throw new VinoDataNotFoundException("无法取得父菜单数据!");
+                        throw new VinoDataNotFoundException("无法取得父级菜单数据!");
                     }
-                    pCode = pModel.Code;
-                    if (!pModel.HasSubMenu)
-                    {
-                        pModel.HasSubMenu = true;
-                        _context.Menus.Update(pModel);
-                    }
-                }
-                //取得code
-                string newCode = "";
-                var maxCode = _context.Menus.Where(x => x.ParentId == model.ParentId).Max(x => x.Code);
-                if (!string.IsNullOrEmpty(maxCode))
-                {
-                    int.TryParse(maxCode, out int code);
-                    code++;
-                    newCode = code.ToString().PadLeft(maxCode.Length, '0');
                 }
                 else
                 {
-                    newCode = pCode + "001";
+                    model.ParentId = null;
                 }
-                model.Code = newCode;
+
                 model.Id = ID.NewID();
-                model.Type = 0;
-                model.HasSubMenu = false;
-                model.IsDeleted = false;
-                model.CreateTime= DateTime.Now;
-                _context.Menus.Add(model);
+                model.CreateTime = DateTime.Now;
+                await repository.InsertAsync(model);
             }
             else
             {
                 //更新
-                var menu = _context.Menus.SingleOrDefault(x => x.Id == model.Id);
+                var menu = await repository.GetByIdAsync(model.Id);
                 if (menu == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得菜单数据!");
+                    throw new VinoDataNotFoundException("无法取得数据!");
                 }
 
-                menu.Type = model.Type;
                 menu.Name = model.Name;
-                menu.Url = model.Url;
-                menu.Icon = model.Icon;
+                menu.AuthCode = model.AuthCode;
                 menu.IsShow = model.IsShow;
                 menu.OrderIndex = model.OrderIndex;
-                menu.Remarks = model.Remarks;
-                _context.Menus.Update(menu);
+                menu.Icon = model.Icon;
+                menu.Url = model.Url;
+                repository.Update(menu);
             }
-            _context.SaveChanges();
+            await repository.SaveAsync();
         }
 
+        public Task<List<MenuDto>> GetParentsAsync(long parentId)
+        {
+            List<MenuDto> Gets()
+            {
+                return GetParents(parentId);
+            }
+            return Task.FromResult(Gets());
+        }
+
+        public async Task<MenuDto> GetByIdAsync(long id)
+        {
+            return Mapper.Map<MenuDto>(await this.repository.GetByIdAsync(id));
+        }
+
+        public async Task DeleteAsync(long id)
+        {
+            await repository.DeleteAsync(id);
+            await repository.SaveAsync();
+        }
+
+        private List<MenuDto> GetParents(long parentId)
+        {
+            var list = new List<Menu>();
+            void GetModel(long pid)
+            {
+                var model = repository.FirstOrDefault(x => x.Id == pid);
+                if (model != null)
+                {
+                    if (model.ParentId.HasValue)
+                    {
+                        GetModel(model.ParentId.Value);
+                    }
+                    list.Add(model);
+                }
+            }
+            GetModel(parentId);
+            return Mapper.Map<List<MenuDto>>(list);
+        }
+
+        public async Task<List<MenuDto>> GetSubsAsync(long? parentId)
+        {
+            var queryable = repository.GetQueryable();
+            if (parentId.HasValue)
+            {
+                queryable = queryable.Where(u => u.ParentId == parentId);
+            }
+            else
+            {
+                queryable = queryable.Where(u => u.ParentId == null);
+            }
+
+            var query = queryable.OrderBy(x=>x.OrderIndex).ThenBy(x => x.CreateTime);
+            return Mapper.Map<List<MenuDto>>(await query.ToListAsync());
+        }
     }
 }

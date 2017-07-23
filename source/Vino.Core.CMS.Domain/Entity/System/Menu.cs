@@ -9,35 +9,30 @@ using Vino.Core.CMS.Core.Data;
 namespace Vino.Core.CMS.Domain.Entity.System
 {
     [Table("system_menu")]
-    public class Menu : BaseProtectedEntity
+    public class Menu : BaseEntity
     {
         /// <summary>
         /// 父级ID
         /// </summary>
-        public long ParentId { get; set; }
+        public long? ParentId { get; set; }
 
         /// <summary>
         /// 菜单名称
         /// </summary>
-        [Required, MaxLength(40)]
+        [Required, MaxLength(20)]
         public string Name { get; set; }
 
         /// <summary>
         /// 菜单编码
         /// </summary>
-        [Required, MaxLength(20)]
-        public string Code { get; set; }
+        [Required, MaxLength(64)]
+        public string AuthCode { get; set; }
 
         /// <summary>
         /// 菜单地址
         /// </summary>
         [MaxLength(256)]
         public string Url { get; set; }
-
-        /// <summary>
-        /// 类型：0导航菜单；1操作按钮。
-        /// </summary>
-        public short Type { get; set; }
 
         /// <summary>
         /// 菜单图标
@@ -50,12 +45,6 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// </summary>
         [DefaultValue(0)]
         public int OrderIndex { get; set; } = 0;
-
-        /// <summary>
-        /// 菜单备注
-        /// </summary>
-        [MaxLength(200)]
-        public string Remarks { get; set; }
 
         /// <summary>
         /// 是否显示

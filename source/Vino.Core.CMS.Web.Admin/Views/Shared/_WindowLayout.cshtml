@@ -17,10 +17,12 @@
     <link rel="stylesheet" href="~/lib/layui/css/layui.css" />
     @RenderSection("Css", required: false)
     <environment names="Development">
-        <link rel="stylesheet" href="~/css/window.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/window.css" asp-append-version="true"/>
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/css/window.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/window.min.css" asp-append-version="true"/>
     </environment>
     <script src="~/lib/layui/layui.js"></script>
 </head>

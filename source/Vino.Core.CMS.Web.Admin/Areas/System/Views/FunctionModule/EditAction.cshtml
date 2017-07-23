@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.System
+@model FunctionModuleActionDto
+<div class="window-content">
+    @using (Html.LayuiBeginForm<FunctionModuleActionDto>("SaveAction"))
+    {
+        @Html.LayuiHiddenFor(x => x.Id)
+        @Html.LayuiHiddenFor(x => x.ModuleId)
+        @Html.LayuiTextBoxFor(x => x.Name)
+        @Html.LayuiTextBoxFor(x => x.Code)
+        @Html.LayuiFormSubmitAndClose()
+    }
+</div>

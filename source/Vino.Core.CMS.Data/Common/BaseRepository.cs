@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Core.Data;
 
@@ -12,6 +14,11 @@ namespace Vino.Core.CMS.Data.Common
     {
         //定义数据访问上下文对象
         protected readonly VinoDbContext _dbContext;
+
+        /// <summary>
+        /// 获取DbSet
+        /// </summary>
+        protected virtual DbSet<TEntity> Table => _dbContext.Set<TEntity>();
 
         /// <summary>
         /// 通过构造函数注入得到数据上下文对象实例
@@ -26,19 +33,22 @@ namespace Vino.Core.CMS.Data.Common
         /// 获取实体集合
         /// </summary>
         /// <returns></returns>
-        public List<TEntity> GetAllList()
+        public IQueryable<TEntity> GetQueryable(params Expression<Func<TEntity, object>>[] propertySelectors)
         {
-            return _dbContext.Set<TEntity>().ToList();
-        }
-
-        /// <summary>
-        /// 根据lambda表达式条件获取实体集合
-        /// </summary>
-        /// <param name="predicate">lambda表达式条件</param>
-        /// <returns></returns>
-        public List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _dbContext.Set<TEntity>().Where(predicate).ToList();
+            var query = Table.AsQueryable();
+            //处理有IsDelete字段表
+            if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
+            {
+                query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
+            }
+            if (propertySelectors != null && propertySelectors.Length > 0)
+            {
+                foreach (var propertySelector in propertySelectors)
+                {
+                    query = query.Include(propertySelector);
+                }
+            }
+            return query;
         }
 
         /// <summary>
@@ -46,9 +56,19 @@ namespace Vino.Core.CMS.Data.Common
         /// </summary>
         /// <param name="id">实体主键</param>
         /// <returns></returns>
-        public TEntity Get(TPrimaryKey id)
+        public TEntity GetById(TPrimaryKey id)
         {
-            return _dbContext.Set<TEntity>().FirstOrDefault(CreateEqualityExpressionForId(id));
+            return Table.FirstOrDefault(CreateEqualityExpressionForId(id));
+        }
+
+        /// <summary>
+        /// 根据主键获取实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        /// <returns></returns>
+        public async Task<TEntity> GetByIdAsync(TPrimaryKey id)
+        {
+            return await Table.FirstOrDefaultAsync(CreateEqualityExpressionForId(id));
         }
 
         /// <summary>
@@ -58,7 +78,7 @@ namespace Vino.Core.CMS.Data.Common
         /// <returns></returns>
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbContext.Set<TEntity>().FirstOrDefault(predicate);
+            return Table.FirstOrDefault(predicate);
         }
 
         /// <summary>
@@ -68,7 +88,18 @@ namespace Vino.Core.CMS.Data.Common
         /// <returns></returns>
         public TEntity Insert(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Add(entity);
+            Table.Add(entity);
+            return entity;
+        }
+
+        /// <summary>
+        /// 新增实体
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns></returns>
+        public async Task<TEntity> InsertAsync(TEntity entity)
+        {
+            await Table.AddAsync(entity);
             return entity;
         }
 
@@ -76,32 +107,10 @@ namespace Vino.Core.CMS.Data.Common
         /// 更新实体
         /// </summary>
         /// <param name="entity">实体</param>
-        public TEntity Update(TEntity entity)
+        public void Update(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Attach(entity);
+            Table.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
-            return entity;
-        }
-
-        /// <summary>
-        /// 新增或更新实体
-        /// </summary>
-        /// <param name="entity">实体</param>
-        public TEntity InsertOrUpdate(TEntity entity)
-        {
-            if (Get(entity.Id) != null)
-                return Update(entity);
-            return Insert(entity);
-        }
-
-        /// <summary>
-        /// 删除实体
-        /// </summary>
-        /// <param name="entity">要删除的实体</param>
-        public bool Delete(TEntity entity)
-        {
-            _dbContext.Set<TEntity>().Remove(entity);
-            return true;
         }
 
         /// <summary>
@@ -110,7 +119,32 @@ namespace Vino.Core.CMS.Data.Common
         /// <param name="id">实体主键</param>
         public bool Delete(TPrimaryKey id)
         {
-            _dbContext.Set<TEntity>().Remove(Get(id));
+            Table.Remove(GetById(id));
+            return true;
+        }
+
+        /// <summary>
+        /// 删除实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        public async Task<bool> DeleteAsync(TPrimaryKey id)
+        {
+            var entity = await GetByIdAsync(id);
+            if (entity == null)
+            {
+                return false;
+            }
+            if (entity is BaseProtectedEntity)
+            {
+                //假删除
+                var protectedEntity = entity as BaseProtectedEntity;
+                protectedEntity.IsDeleted = true;
+                Update(entity);
+            }
+            else
+            {
+                Table.Remove(entity);
+            }
             return true;
         }
 
@@ -120,6 +154,14 @@ namespace Vino.Core.CMS.Data.Common
         public void Save()
         {
             _dbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// 事务性保存
+        /// </summary>
+        public async Task SaveAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
 
         /// <summary>

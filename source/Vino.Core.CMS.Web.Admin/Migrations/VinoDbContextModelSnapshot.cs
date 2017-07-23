@@ -15,7 +15,65 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
 
-            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.Menu", b =>
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.Function", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<string>("AuthCode")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<bool>("IsEnable");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<long?>("ParentId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("system_function");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.FunctionModule", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<int>("Depth");
+
+                    b.Property<bool>("HasCode");
+
+                    b.Property<string>("Icon")
+                        .HasMaxLength(20);
+
+                    b.Property<bool>("IsLeaf");
+
+                    b.Property<bool>("IsMenu");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("OrderIndex");
+
+                    b.Property<long?>("ParentId");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("system_function_module");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.FunctionModuleAction", b =>
                 {
                     b.Property<long>("Id");
 
@@ -25,27 +83,43 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
+                    b.Property<long>("ModuleId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("system_function_module_action");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.Menu", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<string>("AuthCode")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<DateTime>("CreateTime");
+
                     b.Property<bool>("HasSubMenu");
 
                     b.Property<string>("Icon")
                         .HasMaxLength(20);
 
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<bool>("IsShow");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(40);
+                        .HasMaxLength(20);
 
                     b.Property<int>("OrderIndex");
 
-                    b.Property<long>("ParentId");
-
-                    b.Property<string>("Remarks")
-                        .HasMaxLength(200);
-
-                    b.Property<short>("Type");
+                    b.Property<long?>("ParentId");
 
                     b.Property<string>("Url")
                         .HasMaxLength(256);
@@ -55,7 +129,7 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.ToTable("system_menu");
                 });
 
-            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.Role", b =>
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.Role", b =>
                 {
                     b.Property<long>("Id");
 
@@ -67,6 +141,10 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
                         .HasMaxLength(40);
 
                     b.Property<string>("Remarks")
@@ -77,20 +155,7 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.ToTable("system_role");
                 });
 
-            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.RoleMenu", b =>
-                {
-                    b.Property<long>("RoleId");
-
-                    b.Property<long>("MenuId");
-
-                    b.HasKey("RoleId", "MenuId");
-
-                    b.HasIndex("MenuId");
-
-                    b.ToTable("system_role_menu");
-                });
-
-            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.User", b =>
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.User", b =>
                 {
                     b.Property<long>("Id");
 
@@ -128,7 +193,7 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.ToTable("system_user");
                 });
 
-            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.UserRole", b =>
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.UserRole", b =>
                 {
                     b.Property<long>("UserId");
 
@@ -165,27 +230,29 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.ToTable("timed_task");
                 });
 
-            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.RoleMenu", b =>
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.FunctionModule", b =>
                 {
-                    b.HasOne("Vino.Core.CMS.Data.Entity.System.Menu", "Menu")
-                        .WithMany()
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("Vino.Core.CMS.Domain.Entity.System.FunctionModule", "Parent")
+                        .WithMany("Childrens")
+                        .HasForeignKey("ParentId");
+                });
 
-                    b.HasOne("Vino.Core.CMS.Data.Entity.System.Role", "Role")
-                        .WithMany("RoleMenus")
-                        .HasForeignKey("RoleId")
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.FunctionModuleAction", b =>
+                {
+                    b.HasOne("Vino.Core.CMS.Domain.Entity.System.FunctionModule", "Module")
+                        .WithMany("Actions")
+                        .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Vino.Core.CMS.Data.Entity.System.UserRole", b =>
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.UserRole", b =>
                 {
-                    b.HasOne("Vino.Core.CMS.Data.Entity.System.Role", "Role")
+                    b.HasOne("Vino.Core.CMS.Domain.Entity.System.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Vino.Core.CMS.Data.Entity.System.User", "User")
+                    b.HasOne("Vino.Core.CMS.Domain.Entity.System.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

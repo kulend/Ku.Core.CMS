@@ -1,37 +1,28 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿.input-length-long {
+    width: 400px;
+}
+.input-length-short {
+    width: 100px;
+}
+.input-length-middle {
+    width: 200px;
+}
+.input-length-num {
+    width: 100px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.layui-textarea {
+    width: 400px;
+    min-height: 75px;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+.layui-elem-quote.low {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    line-height: 13px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.toolbar {
+    margin-bottom: 10px;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
-}

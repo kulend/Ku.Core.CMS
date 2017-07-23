@@ -11,7 +11,7 @@
         </a>
         @if (menu.HasSubMenu)
         {
-            @await Component.InvokeAsync("HomeMenu", menu);
+            @await Component.InvokeAsync("HomeMenu", menu.Id);
         }
     </li>
 }

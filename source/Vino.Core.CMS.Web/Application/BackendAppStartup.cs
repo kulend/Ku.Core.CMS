@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Web.Middleware;
 
@@ -29,6 +32,8 @@ namespace Vino.Core.CMS.Web.Application
 
             services.AddJwtToken(Configuration);
             services.AddJwtAuth(Configuration);
+
+            services.TryAddTransient(typeof(IHtmlHelper<>), typeof(VinoHtmlHelper<>));
 
             return base.ConfigureServices(services);
         }

@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_WindowLayout.cshtml";
 }
-@model Vino.Core.CMS.Service.System.Dto.UserDto
+@model Vino.Core.CMS.Domain.Dto.System.UserDto
 <div class="window-content">
     <form class="layui-form" id="inputForm" action="Save" method="post">
         @Html.HiddenFor(x => x.Id)

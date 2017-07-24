@@ -16,5 +16,9 @@ namespace Vino.Core.CMS.Service.System
         Task SaveAsync(RoleDto dto);
 
         Task DeleteAsync(long id);
+
+        Task<List<FunctionDto>> GetFunctionsWithRoleAuthAsync(long roleId, long? parentFunctionId);
+
+        Task SaveRoleAuthAsync(long RoleId, long FunctionId, bool hasAuth);
     }
 }

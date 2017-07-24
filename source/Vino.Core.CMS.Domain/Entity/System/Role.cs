@@ -42,5 +42,10 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// 用户角色集合
         /// </summary>
         public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        /// <summary>
+        /// 用户功能权限集合
+        /// </summary>
+        public virtual ICollection<RoleFunction> RoleFunctions { get; set; }
     }
 }

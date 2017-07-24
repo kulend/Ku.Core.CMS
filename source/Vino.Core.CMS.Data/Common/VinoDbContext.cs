@@ -33,12 +33,12 @@ namespace Vino.Core.CMS.Data.Common
                    .WithMany(t => t.UserRoles)
                    .HasForeignKey(pt => pt.RoleId);
 
-            ////创建RoleMenu关系
-            //modelBuilder.Entity<RoleMenu>().HasKey(t => new { t.RoleId, t.MenuId });
-            //modelBuilder.Entity<RoleMenu>()
-            //    .HasOne(pt => pt.Role)
-            //    .WithMany(t => t.RoleMenus)
-            //    .HasForeignKey(pt => pt.RoleId);
+            //创建RoleFunction关系
+            modelBuilder.Entity<RoleFunction>().HasKey(t => new { t.RoleId, t.FunctionId });
+            modelBuilder.Entity<RoleFunction>()
+                .HasOne(pt => pt.Role)
+                .WithMany(t => t.RoleFunctions)
+                .HasForeignKey(pt => pt.RoleId);
 
             modelBuilder.Entity<FunctionModule>().HasMany(m => m.Childrens).WithOne(m => m.Parent);
             modelBuilder.Entity<FunctionModuleAction>().HasOne(c => c.Module).WithMany(m => m.Actions);
@@ -65,6 +65,8 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<FunctionModuleAction> FunctionModuleActions { get; set; }
 
         public DbSet<Function> Functions { get; set; }
+
+        public DbSet<RoleFunction> RoleFunctions { get; set; }
 
     }
 }

@@ -35,10 +35,11 @@
 @section Scripts
 {
     <script>
-        layui.use(['layer'], function() {
-            var $ = layui.jquery, layer = layui.layer;
+        layui.use(['layer'],
+            function() {
+                var $ = layui.jquery, layer = layui.layer;
 
-        });
+            });
 
         $(function() {
             $("#list").vinoGrid({
@@ -47,13 +48,17 @@
                     { label: '名称', name: 'Name', width: 60 },
                     { label: '权限编码', name: 'AuthCode', width: 50 },
                     { label: '菜单链接', name: 'Url', width: 100 },
-                    { label: '图标', name: 'Icon', width: 40 },
-                    { label: '是否显示', name: 'IsShow', width: 40 },
-                    { label: '子菜单', name: 'HasSubMenu', width: 40 },
+                    { label: '图标', name: 'Icon', width: 30,
+                        formatter: function(value, options, row) {
+                            return `<i class="fa ${value}"></i>`;
+                        }
+                    },
+                    { label: '是否显示', name: 'IsShow', width: 40, formatter: gridFormatter_Is },
+                    { label: '子菜单', name: 'HasSubMenu', width: 40, formatter: gridFormatter_Is },
                     { label: '排序值', name: 'OrderIndex', width: 40 },
                     {
                         label: '操作', name: 'Id', width: 100,
-                        formatter: function (value, options, row) {
+                        formatter: function(value, options, row) {
                             var html = '<div class="layui-btn-group">';
                             html += '<button title="子菜单" class="layui-btn layui-btn-mini" action="Index?parentId=' + row.Id + '">子菜单</button>';
                             html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/Menu/Edit?id=' + row.Id + '">编辑</button>';

@@ -8,9 +8,10 @@ using Vino.Core.CMS.Data.Common;
 namespace Vino.Core.CMS.Web.Admin.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170723024526_12")]
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -25,11 +26,7 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<bool>("HasSub");
-
                     b.Property<bool>("IsEnable");
-
-                    b.Property<int>("Level");
 
                     b.Property<string>("Name")
                         .IsRequired()

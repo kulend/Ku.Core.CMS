@@ -9,7 +9,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Base;
 
-namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
+namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
 {
     [Area("System")]
     [Authorize]
@@ -79,16 +79,24 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
         }
 
         [Authorize]
-        public IActionResult RoleAuth()
+        public IActionResult RoleFunction(long RoleId)
         {
+            ViewData["RoleId"] = RoleId;
             return View();
         }
 
         [Authorize]
-        public IActionResult GetRoleAuth(long pid)
+        public async Task<IActionResult> GetFunctionsWithRoleAuth(long RoleId, long? pid)
         {
-            //var menus = service.GetMenusByParentId(pid);
-            return JsonData(null);
+            var functions = await service.GetFunctionsWithRoleAuthAsync(RoleId, pid);
+            return JsonData(functions);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> SaveRoleAuth(long RoleId, long FunctionId, bool HasAuth)
+        {
+            await service.SaveRoleAuthAsync(RoleId, FunctionId, HasAuth);
+            return JsonData(true);
         }
     }
 }

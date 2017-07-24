@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <Content Remove="wwwroot/js\vino\vino.ajax.js" />
+    <Content Remove="wwwroot/lib\artTemplate\template-debug.js" />
+    <Content Remove="wwwroot/lib\artTemplate\template-native-debug.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,9 +45,7 @@
     <Content Include="wwwroot\js\window.js" />
     <Content Include="wwwroot\lib\artTemplate\template-debug.js" />
     <Content Include="wwwroot\lib\artTemplate\template-native-debug.js" />
-    <Content Include="wwwroot\lib\artTemplate\template-native.js" />
     <Content Include="wwwroot\lib\artTemplate\template-web.js" />
-    <Content Include="wwwroot\lib\artTemplate\template.js" />
     <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid-bootstrap-ui.css" />
     <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid-bootstrap.css" />
     <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid.css" />

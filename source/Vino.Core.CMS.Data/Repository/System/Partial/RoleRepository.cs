@@ -4,7 +4,7 @@ using System.Text;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain.Entity.System;
 
-namespace Vino.Core.CMS.Data.Repository.System.Partial
+namespace Vino.Core.CMS.Data.Repository.System
 {
     public partial class RoleRepository : BaseRepository<Role>, IRoleRepository
     {

@@ -23,17 +23,12 @@
                 colModel: [
                     { label: '名称', name: 'Name', width: 50 },
                     { label: '英文名', name: 'NameEn', width: 50 },
-                    {
-                        label: '是否启用', name: 'IsEnable', width: 30,
-                        formatter: function (value, options, row) {
-                            return value ? "正常" : "禁用";
-                        }
-                    },
+                    { label: '是否启用', name: 'IsEnable', width: 30,  formatter: gridFormatter_Is },
                     {
                         label: '操作', name: 'Id', width: 100,
                         formatter: function (value, options, row) {
                             var html = '<div class="layui-btn-group">';
-                            html += '<button title="权限" class="layui-btn layui-btn-mini" action="window:System/Role/RoleAuth?id=' + row.Id + '">权限</button>';
+                            html += '<button title="权限" class="layui-btn layui-btn-mini" action="window:System/Role/RoleFunction?RoleId=' + row.Id + '">权限</button>';
                             html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/Role/Edit?id=' + row.Id + '">编辑</button>';
                             html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" action="post:Delete?id=' + row.Id + '">删除</button>';
                             html += '</div>';

@@ -26,3 +26,10 @@
     margin-bottom: 10px;
 }
 
+.menu-open-tree {
+    cursor: pointer;
+}
+.menu-tree-nbsp {
+    margin-left: 20px;
+}
+

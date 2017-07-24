@@ -61,3 +61,11 @@ function OpenWindow(title, src, options, onClose) {
 function gridReload() {
     $(".vino-grid").vinoGrid("reload");
 }
+
+function gridFormatter_Is(value, options, row) {
+    if (value) {
+        return '<i class="layui-icon">&#xe605;</i>';
+    } else {
+        return '<i class="layui-icon">&#x1006;</i>';
+    }
+}

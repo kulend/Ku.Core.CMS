@@ -37,19 +37,16 @@
     <script>
         layui.use(['layer'], function() {
             var $ = layui.jquery, layer = layui.layer;
-
         });
 
         $(function() {
             $("#list").vinoGrid({
                 url: 'List?parentId=@ViewData["ParentId"]',
                 colModel: [
-                    { label: '名称', name: 'Name', width: 75 },
-                    { label: '相对路径', name: 'Url', width: 100 },
-                    { label: '菜单层级', name: 'Depth', width: 40 },
-                    { label: '导航菜单', name: 'IsMenu', width: 40 },
-                    { label: '子级', name: 'IsLeaf', width: 40 },
-                    { label: '排序值', name: 'OrderIndex', width: 40 },
+                    { label: '功能名称', name: 'Name', width: 75 },
+                    { label: '权限码', name: 'AuthCode', width: 60 },
+                    { label: '是否可用', name: 'IsEnable', width: 40, formatter: gridFormatter_Is },
+                    { label: '子功能', name: 'HasSub', width: 40, formatter: gridFormatter_Is },
                     {
                         label: '操作', name: 'Id', width: 100,
                         formatter: function (value, options, row) {

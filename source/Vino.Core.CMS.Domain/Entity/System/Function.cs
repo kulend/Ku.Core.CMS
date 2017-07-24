@@ -35,5 +35,15 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// </summary>
         [Display(Name = "是否可用")]
         public bool IsEnable { set; get; }
+
+        /// <summary>
+        /// 是否有子功能
+        /// </summary>
+        public bool HasSub { set; get; } = false;
+
+        /// <summary>
+        /// 层级
+        /// </summary>
+        public int Level { set; get; }
     }
 }

@@ -19,7 +19,7 @@ namespace Vino.Core.CMS.Service.System
 
         Task DeleteAsync(long id);
 
-        Task<List<FunctionDto>> GetSubModulesAsync(long? parentId);
+        Task<List<FunctionDto>> GetSubsAsync(long? parentId);
 
     }
 }

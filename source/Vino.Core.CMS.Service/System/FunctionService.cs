@@ -59,10 +59,17 @@ namespace Vino.Core.CMS.Service.System
                     {
                         throw new VinoDataNotFoundException("无法取得父模块数据!");
                     }
+                    if (!pModel.HasSub)
+                    {
+                        pModel.HasSub = true;
+                        repository.Update(pModel);
+                    }
+                    model.Level = pModel.Level + 1;
                 }
                 else
                 {
                     model.ParentId = null;
+                    model.Level = 1;
                 }
 
                 model.Id = ID.NewID();
@@ -125,7 +132,7 @@ namespace Vino.Core.CMS.Service.System
             return Mapper.Map<List<FunctionDto>>(list);
         }
 
-        public async Task<List<FunctionDto>> GetSubModulesAsync(long? parentId)
+        public async Task<List<FunctionDto>> GetSubsAsync(long? parentId)
         {
             var queryable = repository.GetQueryable();
             if (parentId.HasValue)

@@ -42,6 +42,13 @@ namespace Vino.Core.CMS.Service.System
             return Task.FromResult(Gets());
         }
 
+        public async Task<List<RoleDto>> GetAllAsync()
+        {
+            var queryable = repository.GetQueryable();
+            var items = Mapper.Map<List<RoleDto>>(await queryable.ToListAsync());
+            return items;
+        }
+
         public async Task<RoleDto> GetByIdAsync(long id)
         {
             return Mapper.Map<RoleDto>(await this.repository.GetByIdAsync(id));

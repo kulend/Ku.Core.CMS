@@ -28,25 +28,25 @@ namespace Vino.Core.CMS.Core.Extensions
             return sp.ToList();
         }
 
-		public static long[] SplitRemoveEmptyToInt64(this string obj, char split)
+		public static long[] SplitToInt64(this string obj, char split = ',')
 		{
 			if (obj == null)
 			{
 				return new long[0];
 			}
 			return obj.Split(new char[1] { split }, StringSplitOptions.RemoveEmptyEntries)
-						.Select(i => Int64.Parse(i))
-						.ToArray(); ;
+						.Select(Int64.Parse)
+						.ToArray();
 		}
 
-		public static int[] SplitRemoveEmptyToInt32(this string obj, char split)
+		public static int[] SplitToInt32(this string obj, char split = ',')
 		{
 			if (obj == null)
 			{
 				return new int[0];
 			}
 			return obj.Split(new char[1] { split }, StringSplitOptions.RemoveEmptyEntries)
-						.Select(i => Int32.Parse(i))
+						.Select(Int32.Parse)
 						.ToArray();
 		}
 

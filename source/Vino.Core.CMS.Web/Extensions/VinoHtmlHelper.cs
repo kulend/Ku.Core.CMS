@@ -243,5 +243,61 @@ namespace Microsoft.AspNetCore.Mvc.Rendering
             return input;
         }
 
+        public IHtmlContent LayuiPasswordFor<TResult>(Expression<Func<TModel, TResult>> expression)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
+            var tag = new TagBuilder("div");
+            tag.AddCssClass("layui-form-item");
+
+            var modelExplorer = GetModelExplorer(expression);
+            var metadata = modelExplorer.Metadata;
+            var displayName = metadata.GetDisplayName();
+            var isRequired = metadata.IsRequired;
+            var placeholder = metadata.Placeholder;
+            var name = GetExpressionName(expression);
+            //取得最大长度
+            var maxLength = 20;
+            var maxLengthAttribute = metadata.ValidatorMetadata.SingleOrDefault(x => x.GetType() == typeof(MaxLengthAttribute));
+            if (maxLengthAttribute != null)
+            {
+                maxLength = (maxLengthAttribute as MaxLengthAttribute).Length;
+            }
+
+            var input = new TagBuilder("input");
+
+            //长度标签
+            input.AddCssClass("input-length-short");
+
+            input.AddCssClass("layui-input");
+            input.TagRenderMode = TagRenderMode.SelfClosing;
+            input.MergeAttribute("type", InputType.Password.ToString());
+            input.MergeAttribute("name", name, replaceExisting: true);
+            if (placeholder.IsNotNullOrEmpty())
+            {
+                input.MergeAttribute("placeholder", placeholder);
+            }
+            if (isRequired)
+            {
+                input.MergeAttribute("lay-verify", "required");
+            }
+
+            input.MergeAttribute("maxlength", maxLength.ToString());
+
+            if (modelExplorer.Model != null)
+            {
+                input.MergeAttribute("value", modelExplorer.Model.ToString());
+            }
+
+            tag.InnerHtml.AppendHtml($"<label class=\"layui-form-label\">{displayName}</label>");
+            tag.InnerHtml.AppendHtml("<div class=\"layui-input-block\">");
+            tag.InnerHtml.AppendHtml(input);
+            tag.InnerHtml.AppendHtml("</div>");
+            return tag;
+        }
+
     }
 }

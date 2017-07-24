@@ -3,8 +3,8 @@
 }
 <div class="main-content">
     <div class="toolbar">
-        <action text="添加" size="small" icon="&#xe608;" data-action="window:System/User/Edit"/>
-        <action text="刷新" size="small" icon="&#x1002;" data-action="javascript:reload()" />
+        <action text="添加" size="small" icon="&#xe608;" action="window:System/User/Edit"/>
+        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
     </div>
     <table id="list">
     </table>
@@ -20,26 +20,20 @@
 
         $(function() {
             $("#list").vinoGrid({
-                url: 'GetUserList',
+                url: 'GetList',
                 colModel: [
                     { label: '账户', name: 'Account', width: 45 },
                     { label: '姓名', name: 'Name', width: 75 },
                     { label: '手机', name: 'Mobile', width: 100 },
-                    {
-                        label: '状态', name: 'IsEnable', width: 90,
-                        formatter: function (value, options, row) {
-                            return value ? "正常" : "禁用";
-                        }
-                    },
+                    { label: '状态', name: 'IsEnable', width: 90, formatter: gridFormatter_Is },
                     { label: '创建时间', name: 'CreateTime', width: 100 },
                     { label: '登陆时间', name: 'LastLoginTime', width: 100 },
                     {
                         label: '操作', name: 'Id', width: 100,
                         formatter: function (value, options, row) {
                             var html = '<div class="layui-btn-group">';
-                            html += '<button title="编辑" class="layui-btn layui-btn-mini" data-action="window:System/User/Edit?id=' + row.Id + '">编辑</button>';
-                            html += '<button title="禁用" class="layui-btn layui-btn-mini" data-action="post:Disable?id=' + row.Id + '">禁用</button>';
-                            html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" data-action="post:Delete?id=' + row.Id + '">删除</button>';
+                            html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/User/Edit?id=' + row.Id + '">编辑</button>';
+                            html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" action="post:Delete?id=' + row.Id + '">删除</button>';
                             html += '</div>';
                             return html;
                         }

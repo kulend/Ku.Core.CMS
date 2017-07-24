@@ -103,9 +103,37 @@ namespace Vino.Core.CMS.Service.System
 
         public async Task DeleteAsync(long id)
         {
+            //取得菜单信息
+            var menu = await repository.GetByIdAsync(id);
+            if (menu == null)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
+            }
             await repository.DeleteAsync(id);
+            if (menu.ParentId.HasValue)
+            {
+                await UpdateMenuHasSub(menu.ParentId.Value);
+            }
             await repository.SaveAsync();
         }
+
+        public async Task<List<MenuDto>> GetSubsAsync(long? parentId)
+        {
+            var queryable = repository.GetQueryable();
+            if (parentId.HasValue)
+            {
+                queryable = queryable.Where(u => u.ParentId == parentId);
+            }
+            else
+            {
+                queryable = queryable.Where(u => u.ParentId == null);
+            }
+
+            var query = queryable.OrderBy(x=>x.OrderIndex).ThenBy(x => x.CreateTime);
+            return Mapper.Map<List<MenuDto>>(await query.ToListAsync());
+        }
+
+        #region private
 
         private List<MenuDto> GetParents(long parentId)
         {
@@ -126,20 +154,25 @@ namespace Vino.Core.CMS.Service.System
             return Mapper.Map<List<MenuDto>>(list);
         }
 
-        public async Task<List<MenuDto>> GetSubsAsync(long? parentId)
+        private async Task UpdateMenuHasSub(long id)
         {
-            var queryable = repository.GetQueryable();
-            if (parentId.HasValue)
+            var menu = await repository.GetByIdAsync(id);
+            if (menu != null)
             {
-                queryable = queryable.Where(u => u.ParentId == parentId);
+                var cnt = await repository.GetQueryable().Where(u => u.ParentId == menu.Id).CountAsync();
+                if (cnt == 0 && menu.HasSubMenu)
+                {
+                    menu.HasSubMenu = false;
+                    repository.Update(menu);
+                }
+                else if (cnt > 0 && !menu.HasSubMenu)
+                {
+                    menu.HasSubMenu = true;
+                    repository.Update(menu);
+                }
             }
-            else
-            {
-                queryable = queryable.Where(u => u.ParentId == null);
-            }
-
-            var query = queryable.OrderBy(x=>x.OrderIndex).ThenBy(x => x.CreateTime);
-            return Mapper.Map<List<MenuDto>>(await query.ToListAsync());
         }
+
+        #endregion
     }
 }

@@ -11,6 +11,8 @@ namespace Vino.Core.CMS.Service.System
     {
         Task<(int count, List<RoleDto> items)> GetListAsync(int pageIndex, int pageSize);
 
+        Task<List<RoleDto>> GetAllAsync();
+
         Task<RoleDto> GetByIdAsync(long id);
 
         Task SaveAsync(RoleDto dto);

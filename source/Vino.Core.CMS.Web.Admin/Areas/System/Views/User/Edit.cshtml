@@ -1,51 +1,32 @@
 ﻿@{
     Layout = "~/Views/Shared/_WindowLayout.cshtml";
 }
-@model Vino.Core.CMS.Domain.Dto.System.UserDto
+@using Vino.Core.CMS.Domain.Dto.System
+@model UserDto
 <div class="window-content">
-    <form class="layui-form" id="inputForm" action="Save" method="post">
-        @Html.HiddenFor(x => x.Id)
+    @using (Html.LayuiBeginForm<UserDto>("Save"))
+    {
+        @Html.LayuiHiddenFor(x => x.Id)
+        @Html.LayuiTextBoxFor(x => x.Account)
+        @Html.LayuiPasswordFor(x => x.Password)
+        @Html.LayuiTextBoxFor(x => x.Name)
+        @Html.LayuiTextBoxFor(x => x.Mobile)
+        @Html.LayuiSwitchFor(x => x.IsEnable)
+        @Html.LayuiTextAreaFor(x => x.Remarks)
+
         <div class="layui-form-item">
-            <label class="layui-form-label">账户</label>
-            <div class="layui-input-inline">
-                <input type="text" name="Account" value="@Model.Account" autocomplete="off" lay-verify="required" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="Password" value="@Model.Password" autocomplete="off" lay-verify="required" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">名称</label>
-            <div class="layui-input-inline">
-                <input type="text" name="Name" value="@Model.Name" lay-verify="required" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">手机号</label>
-            <div class="layui-input-inline">
-                <input type="text" name="Mobile" value="@Model.Mobile" lay-verify="phone" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
+            <label class="layui-form-label">用户角色</label>
             <div class="layui-input-block">
-                <input type="checkbox" name="IsEnable" @(Model.IsEnable? "checked" : "") lay-skin="switch" lay-text="正常|禁用">
+                @{
+                    List<RoleDto> userRoles = ViewBag.UserRoles;
+                }
+                @foreach (RoleDto role in ViewBag.Roles)
+                {
+                    <input type="checkbox" name="UserRoles" value="@role.Id" title="@role.Name" lay-skin="primary" @(role.IsEnable ? "" : "disabled") @(userRoles.Any(x=>x.Id == role.Id)?"checked":"") />
+                }
             </div>
         </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-block">
-                <textarea name="Remarks" placeholder="" class="layui-textarea">@Model.Remarks</textarea>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit>保存</button>
-                <button type="button" class="layui-btn layui-btn-warm acton-close">关闭</button>
-            </div>
-        </div>
-    </form>
+
+        @Html.LayuiFormSubmitAndClose()
+    }
 </div>

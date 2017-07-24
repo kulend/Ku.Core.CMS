@@ -24,9 +24,8 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// <summary>
         /// 是否启用
         /// </summary>
-        [DefaultValue(true)]
         [Display(Name = "是否启用", Prompt = "是|否")]
-        public bool IsEnable { set; get; } = true;
+        public bool IsEnable { set; get; }
 
         /// <summary>
         /// 备注

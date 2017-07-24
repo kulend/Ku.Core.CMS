@@ -12,56 +12,55 @@ using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Domain.Dto.System;
 
-namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
+namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
 {
     [Area("System")]
     [Authorize]
     public class UserController : BaseController
     {
-        private IIocResolver _ioc;
-
-        public UserController(IIocResolver ioc)
+        private IUserService service;
+        private IRoleService roleService;
+        public UserController(IUserService _service, IRoleService _roleService)
         {
-            this._ioc = ioc;
+            this.service = _service;
+            this.roleService = _roleService;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult GetUserList(int? page, int? rows)
+        [Authorize]
+        public async Task<IActionResult> GetList(int page, int rows)
         {
-            if (!page.HasValue || page.Value < 1)
-            {
-                page = 1;
-            }
-            if (!rows.HasValue || rows.Value < 1)
-            {
-                rows = 10;
-            }
-
-            var service = _ioc.Resolve<IUserService>();
-            var list = service.GetUserList(page.Value, rows.Value, out int count);
-            return PagerData(list, page.Value, rows.Value, count);
+            var data = await service.GetListAsync(page, rows);
+            return PagerData(data.items, page, rows, data.count);
         }
 
-        public IActionResult Edit(long? id)
+        public async Task<IActionResult> Edit(long? id)
         {
-            var service = _ioc.Resolve<IUserService>();
+            //取得角色列表
+            var roles = await roleService.GetAllAsync();
+            ViewBag.Roles = roles;
+
             if (id.HasValue)
             {
                 //编辑
-                var model = service.GetById(id.Value);
+                var model = await service.GetByIdAsync(id.Value);
                 if (model == null)
                 {
                     throw new VinoDataNotFoundException("无法取得用户数据!");
                 }
+                var userRoles = await service.GetUserRolesAsync(model.Id);
+                ViewBag.UserRoles = userRoles;
                 ViewData["Mode"] = "Edit";
                 return View(model);
             }
             else
             {
+                ViewBag.UserRoles = new List<RoleDto>();
                 //新增
                 UserDto dto = new UserDto();
                 dto.IsEnable = true;
@@ -69,27 +68,24 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Controllers
                 return View(dto);
             }
         }
-
+        
         /// <summary>
-        /// 保存用户
+        /// 保存角色
         /// </summary>
         [HttpPost]
-        public IActionResult Save(UserDto model)
+        [Authorize]
+        public async Task<IActionResult> Save(UserDto model, long[] UserRoles)
         {
-            var service = _ioc.Resolve<IUserService>();
-            service.SaveUser(model);
-            return Json(new { code = 0 });
+            await service.SaveAsync(model, UserRoles);
+            return JsonData(true);
         }
 
-        /// <summary>
-        /// 禁用用户
-        /// </summary>
         [HttpPost]
-        public IActionResult Disable(long id)
+        [Authorize]
+        public async Task<IActionResult> Delete(long id)
         {
-            var service = _ioc.Resolve<IUserService>();
-
-            return Json(new { code = 0 });
+            await service.DeleteAsync(id);
+            return JsonData(true);
         }
     }
 }

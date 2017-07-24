@@ -296,6 +296,7 @@
     <ProjectReference Include="..\Vino.Core.CMS.Web\Vino.Core.CMS.Web.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\System\Controllers\" />
     <Folder Include="Migrations\" />
     <Folder Include="Migrations\" />
     <Folder Include="Migrations\" />

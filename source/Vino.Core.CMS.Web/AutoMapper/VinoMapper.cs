@@ -19,10 +19,6 @@ namespace Vino.Core.CMS.Web.AutoMapper
                 cfg.CreateMap<UserDto, User>();
                 cfg.CreateMap<Role, RoleDto>();
                 cfg.CreateMap<RoleDto, Role>();
-                cfg.CreateMap<FunctionModule, FunctionModuleDto>();
-                cfg.CreateMap<FunctionModuleDto, FunctionModule>();
-                cfg.CreateMap<FunctionModuleAction, FunctionModuleActionDto>();
-                cfg.CreateMap<FunctionModuleActionDto, FunctionModuleAction>();
                 cfg.CreateMap<Function, FunctionDto>();
                 cfg.CreateMap<FunctionDto, Function>();
             });

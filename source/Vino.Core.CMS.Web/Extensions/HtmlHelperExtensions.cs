@@ -97,5 +97,20 @@ namespace Microsoft.AspNetCore.Mvc.Rendering
             return helper.LayuiHiddenFor(expression);
         }
 
+        public static IHtmlContent LayuiPasswordFor<TModel, TResult>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TResult>> expression)
+        {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+            var helper = htmlHelper as VinoHtmlHelper<TModel>;
+            return helper.LayuiPasswordFor(expression);
+        }
+
     }
 }

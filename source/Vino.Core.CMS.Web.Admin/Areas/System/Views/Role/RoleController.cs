@@ -15,12 +15,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
     [Authorize]
     public class RoleController : BaseController
     {
-        private IRoleService service;
-        private IFunctionModuleService fmService;
-        public RoleController(IRoleService _service, IFunctionModuleService _fmService)
+        private readonly IRoleService service;
+        public RoleController(IRoleService _service)
         {
             this.service = _service;
-            this.fmService = _fmService;
         }
 
         [Authorize]

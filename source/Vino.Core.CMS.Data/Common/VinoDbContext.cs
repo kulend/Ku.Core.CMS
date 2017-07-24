@@ -40,9 +40,6 @@ namespace Vino.Core.CMS.Data.Common
                 .WithMany(t => t.RoleFunctions)
                 .HasForeignKey(pt => pt.RoleId);
 
-            modelBuilder.Entity<FunctionModule>().HasMany(m => m.Childrens).WithOne(m => m.Parent);
-            modelBuilder.Entity<FunctionModuleAction>().HasOne(c => c.Module).WithMany(m => m.Actions);
-
             base.OnModelCreating(modelBuilder);
 
             //定时任务相关
@@ -59,10 +56,6 @@ namespace Vino.Core.CMS.Data.Common
 
         //定时任务相关
         public DbSet<TimedTask.TimedTask> TimedTasks { get; set; }
-
-        public DbSet<FunctionModule> FunctionModules { get; set; }
-
-        public DbSet<FunctionModuleAction> FunctionModuleActions { get; set; }
 
         public DbSet<Function> Functions { get; set; }
 

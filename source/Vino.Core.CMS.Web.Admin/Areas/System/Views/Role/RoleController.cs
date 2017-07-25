@@ -8,11 +8,12 @@ using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Security;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
 {
     [Area("System")]
-    [Authorize]
+    [Auth("sys.role")]
     public class RoleController : BaseController
     {
         private readonly IRoleService service;
@@ -21,19 +22,20 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
             this.service = _service;
         }
 
-        [Authorize]
+        [Auth("view")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
+        [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
             var data = await service.GetListAsync(page, rows);
             return PagerData(data.items, page, rows, data.count);
         }
 
+        [Auth("edit")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id.HasValue)
@@ -61,7 +63,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
         /// 保存角色
         /// </summary>
         [HttpPost]
-        [Authorize]
+        [Auth("edit")]
         public async Task<IActionResult> Save(RoleDto model)
         {
             await service.SaveAsync(model);
@@ -69,28 +71,28 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
         }
 
         [HttpPost]
-        [Authorize]
+        [Auth("delete")]
         public async Task<IActionResult> Delete(long id)
         {
             await service.DeleteAsync(id);
             return JsonData(true);
         }
 
-        [Authorize]
+        [Auth("function")]
         public IActionResult RoleFunction(long RoleId)
         {
             ViewData["RoleId"] = RoleId;
             return View();
         }
 
-        [Authorize]
+        [Auth("function")]
         public async Task<IActionResult> GetFunctionsWithRoleAuth(long RoleId, long? pid)
         {
             var functions = await service.GetFunctionsWithRoleAuthAsync(RoleId, pid);
             return JsonData(functions);
         }
 
-        [Authorize]
+        [Auth("function")]
         public async Task<IActionResult> SaveRoleAuth(long RoleId, long FunctionId, bool HasAuth)
         {
             await service.SaveRoleAuthAsync(RoleId, FunctionId, HasAuth);

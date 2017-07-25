@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Vino.Core.Cache;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Extensions;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Admin.Models;
 using Vino.Core.CMS.Web.Base;
@@ -25,16 +27,19 @@ namespace Vino.Core.CMS.Web.Admin.Controllers
         private IJwtProvider _jwtProvider;
         private JwtSecKey _jwtSecKey;
         private JwtAuthConfig _jwtAuthConfig;
+        private ICacheService cacheService;
 
         public HomeController(IJwtProvider jwtProvider,
             IOptions<JwtSecKey> jwtSecKey,
             IOptions<JwtAuthConfig> jwtAuthConfig,
-            IIocResolver ioc)
+            IIocResolver ioc,
+            ICacheService _cacheService)
         {
             _jwtProvider = jwtProvider;
             _jwtSecKey = jwtSecKey.Value;
             _jwtAuthConfig = jwtAuthConfig.Value;
             this._ioc = ioc;
+            this.cacheService = _cacheService;
         }
 
         [Authorize]
@@ -92,6 +97,8 @@ namespace Vino.Core.CMS.Web.Admin.Controllers
             {
                 HttpOnly = true
             });
+            //清楚用户权限缓存
+            cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCode, user.Id));
             return JsonData(true);
         }
 

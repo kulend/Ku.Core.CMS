@@ -20,15 +20,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddAuthorization(config =>
             {
-                config.AddPolicy("permission", policy =>
+                config.AddPolicy("auth", policy =>
                 {
                     policy.Requirements.Add(new ValidJtiRequirement());
-                    policy.Requirements.Add(new PermissionAuthorizationRequirement());
+                    policy.Requirements.Add(new AuthAuthorizationRequirement());
                 });
             });
 
             services.AddScoped<IAuthorizationHandler, ValidJtiHandler>();
-            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, AuthAuthorizationHandler>();
             return services;
         }
     }

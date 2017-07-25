@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -10,16 +11,25 @@ using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
+using Vino.Core.Cache;
+using Vino.Core.CMS.Core.Extensions;
+using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.Domain;
 
 namespace Vino.Core.CMS.Service.System
 {
     public class FunctionService : IFunctionService
     {
         private IFunctionRepository repository;
+        private ICacheService cacheService;
+        private VinoDbContext context;
 
-        public FunctionService(IFunctionRepository _repository)
+        public FunctionService(VinoDbContext _context, 
+            IFunctionRepository _repository, ICacheService _cacheService)
         {
             this.repository = _repository;
+            this.cacheService = _cacheService;
+            this.context = _context;
         }
 
         #region 功能模块
@@ -146,6 +156,76 @@ namespace Vino.Core.CMS.Service.System
 
             var query = queryable.OrderBy(x => x.CreateTime);
             return Mapper.Map<List<FunctionDto>>(await query.ToListAsync());
+        }
+
+        #endregion
+
+        #region 权限认证
+
+        public async Task<bool> CheckUserAuth(long userId, string authCode)
+        {
+            if (authCode.IsNullOrEmpty())
+            {
+                return true;
+            }
+            var key = string.Format(CacheKeyDefinition.UserAuthCode, userId);
+            var authcodes  = cacheService.Get<List<string>>(key);
+            if (authcodes == null)
+            {
+                //取得用户所有权限码
+                List<string> codes = new List<string>();
+                //取得所有角色
+                var roles = await context.UserRoles.Include(t=>t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
+                foreach (var role in roles)
+                {
+                    var cds = await GetRoleAuthCodes(role.RoleId);
+                    codes.AddRange(cds);
+                }
+                //去重
+                authcodes = codes.Distinct().ToList();
+                //缓存
+                cacheService.Add(key, authcodes);
+            }
+            //验证
+            //去除空格
+            string tagnobk = authCode.Replace(" ", "");
+            //去除括号和操作符
+            string tagnofh = tagnobk.Replace("(", ",").Replace(")", ",").Replace("&&", ",").Replace("||", ",");
+            //取得所有code
+            string[] codeSplits = tagnofh.Split(',');
+            if (codeSplits.Length == 1)
+            {
+                return authcodes.Contains(codeSplits[0]);
+            }
+            //TODO:以后扩展
+            //foreach (var cd in codeSplits)
+            //{
+            //    if (cd.IsNullOrEmpty())
+            //    {
+            //        continue;
+            //    }
+
+            //    bool auth = authcodes.Contains(cd);
+            //    if (auth)
+            //    {
+            //        Regex reg = new Regex(cd);
+            //        tagnobk = reg.Replace(tagnobk, "true", 1);
+            //    }
+            //    else
+            //    {
+            //        Regex reg = new Regex(cd);
+            //        tagnobk = reg.Replace(tagnobk, "false", 1);
+            //    }
+            //}
+
+            return authcodes.Contains(authCode);
+        }
+
+        private async Task<List<string>> GetRoleAuthCodes(long roleId)
+        {
+            var functions = await context.RoleFunctions.Include(t => t.Function)
+                .Where(x => x.RoleId == roleId && x.Function.IsEnable).ToListAsync();
+            return functions.Select(x => x.Function.AuthCode).ToList();
         }
 
         #endregion

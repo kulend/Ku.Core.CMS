@@ -11,11 +11,12 @@ using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Domain.Dto.System;
+using Vino.Core.CMS.Web.Security;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
 {
     [Area("System")]
-    [Authorize]
+    [Auth("sys.user")]
     public class UserController : BaseController
     {
         private IUserService service;
@@ -26,19 +27,20 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
             this.roleService = _roleService;
         }
 
-        [Authorize]
+        [Auth("view")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
+        [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
             var data = await service.GetListAsync(page, rows);
             return PagerData(data.items, page, rows, data.count);
         }
 
+        [Auth("edit")]
         public async Task<IActionResult> Edit(long? id)
         {
             //取得角色列表
@@ -73,7 +75,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
         /// 保存角色
         /// </summary>
         [HttpPost]
-        [Authorize]
+        [Auth("edit")]
         public async Task<IActionResult> Save(UserDto model, long[] UserRoles)
         {
             await service.SaveAsync(model, UserRoles);
@@ -81,7 +83,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
         }
 
         [HttpPost]
-        [Authorize]
+        [Auth("delete")]
         public async Task<IActionResult> Delete(long id)
         {
             await service.DeleteAsync(id);

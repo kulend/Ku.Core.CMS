@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Vino.Core.CMS.Core.Data;
+using Vino.Core.CMS.Core.Extensions;
+using Vino.Core.CMS.Core.Helper;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -20,7 +22,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// <summary>
         /// 账号密码
         /// </summary>
-        [Required, MaxLength(20)]
+        [Required, MaxLength(128)]
         public string Password { set; get; }
 
         /// <summary>
@@ -58,19 +60,31 @@ namespace Vino.Core.CMS.Domain.Entity.System
         [MaxLength(200)]
         public string Remarks { get; set; }
 
-        ///// <summary>
-        ///// 创建人
-        ///// </summary>
-        //public long CreateUserId { get; set; }
-
-        ///// <summary>
-        ///// 创建人实体
-        ///// </summary>
-        //public virtual User CreateUser { get; set; }
+        /// <summary>
+        /// 随机因子
+        /// </summary>
+        public int? Factor { set; get; }
 
         /// <summary>
         /// 用户角色集合
         /// </summary>
         public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        public bool CheckPassword(string pwd)
+        {
+            if (pwd.IsNullOrEmpty())
+            {
+                return false;
+            }
+
+            var result = CryptHelper.EncryptMD5(pwd);
+            if (this.Factor.HasValue)
+            {
+                result = CryptHelper.EncryptMD5(result + this.Factor.Value);
+            }
+            result = CryptHelper.EncryptSha256(result);
+
+            return result.EqualOrdinalIgnoreCase(this.Password);
+        }
     }
 }

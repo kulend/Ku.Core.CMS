@@ -18,5 +18,7 @@ namespace Vino.Core.CMS.Service.System
         Task DeleteAsync(long id);
 
         Task<List<RoleDto>> GetUserRolesAsync(long userId);
+
+        Task<UserDto> LoginAsync(string account, string password);
     }
 }

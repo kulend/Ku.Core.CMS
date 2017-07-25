@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
+using Vino.Core.CMS.Core.Extensions;
 using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Service.System
@@ -12,10 +17,11 @@ namespace Vino.Core.CMS.Service.System
     public class LoginService: ILoginService
     {
         private VinoDbContext _context;
-
-        public LoginService(VinoDbContext context)
+        private IUserRepository repository;
+        public LoginService(VinoDbContext context, IUserRepository _repository)
         {
             this._context = context;
+            this.repository = _repository;
         }
 
         /// <summary>
@@ -46,6 +52,8 @@ namespace Vino.Core.CMS.Service.System
 
             return entity;
         }
+
+
 
         public User Create(string account, string password)
         {

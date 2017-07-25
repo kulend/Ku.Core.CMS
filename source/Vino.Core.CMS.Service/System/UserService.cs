@@ -114,8 +114,37 @@ namespace Vino.Core.CMS.Service.System
             var queryable = context.UserRoles.Include(x => x.Role).Where(x => x.UserId == userId);
             var items = Mapper.Map<List<RoleDto>>((await queryable.ToListAsync()).Select(x=>x.Role));
             return items;
-        } 
+        }
 
         #endregion
+
+        #region 登陆
+
+        public async Task<UserDto> LoginAsync(string account, string password)
+        {
+            if (account.IsNullOrEmpty())
+                throw new VinoArgNullException("账户名不能为空！");
+
+            if (password.IsNullOrEmpty())
+                throw new VinoArgNullException("密码不能为空！");
+
+            var entity = await context.Users.SingleOrDefaultAsync(x => x.Account.Equals(account,
+                StringComparison.OrdinalIgnoreCase));
+            if (entity == null)
+            {
+                throw new VinoException("账户不存在!");
+            }
+
+            if (!entity.CheckPassword(password))
+            {
+                throw new VinoException("账户或密码出错!");
+            }
+            var dto = Mapper.Map<UserDto>(entity);
+            dto.Password = "";
+            return dto;
+        }
+
+        #endregion
+
     }
 }

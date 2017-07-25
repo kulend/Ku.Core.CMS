@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Vino.Core.Cache;
-using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Extensions;
 using Vino.Core.CMS.Service.System;
@@ -22,23 +21,23 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
 {
     public class HomeController : BaseController
     {
-        private IIocResolver _ioc;
         private IJwtProvider _jwtProvider;
         private JwtSecKey _jwtSecKey;
         private JwtAuthConfig _jwtAuthConfig;
         private ICacheService cacheService;
+        private IUserService userService;
 
         public HomeController(IJwtProvider jwtProvider,
             IOptions<JwtSecKey> jwtSecKey,
             IOptions<JwtAuthConfig> jwtAuthConfig,
-            IIocResolver ioc,
-            ICacheService _cacheService)
+            ICacheService _cacheService,
+            IUserService _userService)
         {
             _jwtProvider = jwtProvider;
             _jwtSecKey = jwtSecKey.Value;
             _jwtAuthConfig = jwtAuthConfig.Value;
-            this._ioc = ioc;
             this.cacheService = _cacheService;
+            this.userService = _userService;
         }
 
         [Authorize]
@@ -54,14 +53,16 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
             var url = Request.Query["ReturnUrl"];
             ViewData["ReturnUrl"] = string.IsNullOrEmpty(url) ? "/" : url.ToString();
             LoginData data = new LoginData();
+#if DEBUG
             data.Account = "admin";
             data.Password = "123456";
+#endif
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginData data)
+        public async Task<IActionResult> Login(LoginData data)
         {
             //图片验证码
 #if !DEBUG
@@ -79,10 +80,11 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
                     throw new VinoException(1, "验证码出错!");
                 }
             }
-
-            var service = _ioc.Resolve<ILoginService>();
-            var user = service.DoLogin(data.Account, data.Password);
-
+            var user = await userService.LoginAsync(data.Account, data.Password);
+            if (user == null)
+            {
+                throw new VinoException("登陆出错!");
+            }
             var claims = new List<Claim>()
             {
                 new Claim("Account",user.Account)
@@ -99,7 +101,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
             //清楚用户权限缓存
             cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCode, user.Id));
             cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCodeEncrypt, user.Id));
-            return JsonData(true);
+            return Json(true);
         }
 
         public async Task<IActionResult> Logout()

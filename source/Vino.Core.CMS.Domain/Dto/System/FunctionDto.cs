@@ -32,7 +32,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// <summary>
         /// 是否可用
         /// </summary>
-        [Display(Name = "是否可用")]
+        [Display(Name = "是否可用", Prompt = "可用|禁用")]
         public bool IsEnable { set; get; }
 
         /// <summary>

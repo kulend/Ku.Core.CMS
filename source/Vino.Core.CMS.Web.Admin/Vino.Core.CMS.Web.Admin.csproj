@@ -46,6 +46,7 @@
     <Content Include="wwwroot\lib\artTemplate\template-debug.js" />
     <Content Include="wwwroot\lib\artTemplate\template-native-debug.js" />
     <Content Include="wwwroot\lib\artTemplate\template-web.js" />
+    <Content Include="wwwroot\lib\encrypt\md5.js" />
     <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid-bootstrap-ui.css" />
     <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid-bootstrap.css" />
     <Content Include="wwwroot\lib\jqGrid\css\ui.jqgrid.css" />

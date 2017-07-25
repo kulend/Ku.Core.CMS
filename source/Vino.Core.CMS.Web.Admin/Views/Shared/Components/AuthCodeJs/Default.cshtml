@@ -1,0 +1,6 @@
+﻿@using Microsoft.EntityFrameworkCore.Internal
+@model System.Collections.Generic.List<string>
+<script src="~/lib/encrypt/md5.js"></script>
+<script>
+    var authCodes = "@Model.Join(",")";
+</script>

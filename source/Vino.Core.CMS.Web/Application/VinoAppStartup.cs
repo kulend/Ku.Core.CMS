@@ -23,6 +23,7 @@ using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Core.Log;
 using Vino.Core.CMS.Web.AutoMapper;
 using Autofac.Extensions.DependencyInjection;
+using Vino.Core.CMS.Web.Filters;
 
 namespace Vino.Core.CMS.Web.Application
 {
@@ -61,16 +62,21 @@ namespace Vino.Core.CMS.Web.Application
 
             //services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
-            services.AddMvc()
-            .AddJsonOptions(json =>
-            {
-                // 忽略循环引用
-                json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                //不使用驼峰样式的key
-                json.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                //设置时间格式
-                json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-            });
+            services.AddMvc(opts =>
+                {
+                    opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
+                    opts.Filters.Add(typeof(JsonWrapperResultFilter));
+                    opts.Filters.Add(typeof(ExceptionFilter));
+                })
+                .AddJsonOptions(json =>
+                {
+                    // 忽略循环引用
+                    json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    //不使用驼峰样式的key
+                    json.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    //设置时间格式
+                    json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                });
 
             //加入身份认证
             services.AddAuthorization();

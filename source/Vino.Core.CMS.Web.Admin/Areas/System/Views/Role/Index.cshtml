@@ -3,7 +3,7 @@
 }
 <div class="main-content">
     <div class="toolbar">
-        <action text="添加" size="small" icon="&#xe608;" action="window:System/Role/Edit" />
+        <action auth-code="sys.role.edit" text="添加" size="small" icon="&#xe608;" action="window:System/Role/Edit" />
         <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
     </div>
     <table id="list"></table>
@@ -23,16 +23,15 @@
                 colModel: [
                     { label: '名称', name: 'Name', width: 50 },
                     { label: '英文名', name: 'NameEn', width: 50 },
-                    { label: '是否启用', name: 'IsEnable', width: 30,  formatter: gridFormatter_Is },
+                    { label: '是否启用', name: 'IsEnable', width: 30, formatter: gridFormatter_Is },
                     {
-                        label: '操作', name: 'Id', width: 100,
-                        formatter: function (value, options, row) {
-                            var html = '<div class="layui-btn-group">';
-                            html += '<button title="权限分配" class="layui-btn layui-btn-mini" action="window:System/Role/RoleFunction?RoleId=' + row.Id + '">权限分配</button>';
-                            html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/Role/Edit?id=' + row.Id + '">编辑</button>';
-                            html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" action="post:Delete?id=' + row.Id + '">删除</button>';
-                            html += '</div>';
-                            return html;
+                        label: '操作', name: 'Id', width: 100
+                        , formatter: function (value, options, row) {
+                            return gridFormatter_Operate([
+                                { code: "sys.role.edit", title: "编辑", action: `window:System/Role/Edit?id=${row.Id}` },
+                                { code: "", title: "权限分配", action: `window:System/Role/RoleFunction?RoleId=${row.Id}` },
+                                { code: "sys.role.delete", title: "删除", action: `post:Delete?id=${row.Id}` }
+                            ]);
                         }
                     }
                 ],

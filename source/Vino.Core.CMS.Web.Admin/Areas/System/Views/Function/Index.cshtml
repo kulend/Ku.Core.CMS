@@ -25,7 +25,7 @@
                 <action text="返回上级" size="small" icon="&#xe619;" action="Index" />
             }
         }
-        <action text="添加" size="small" icon="&#xe608;" action="window:System/Function/Edit?pid=@ViewData["ParentId"]"/>
+        <action auth-code="sys.function.edit" text="添加" size="small" icon="&#xe608;" action="window:System/Function/Edit?pid=@ViewData["ParentId"]"/>
         <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()"/>
     </div>
     <table id="list">
@@ -48,14 +48,13 @@
                     { label: '是否可用', name: 'IsEnable', width: 40, formatter: gridFormatter_Is },
                     { label: '子功能', name: 'HasSub', width: 40, formatter: gridFormatter_Is },
                     {
-                        label: '操作', name: 'Id', width: 100,
-                        formatter: function (value, options, row) {
-                            var html = '<div class="layui-btn-group">';
-                            html += '<button title="子模块" class="layui-btn layui-btn-mini" action="Index?parentId=' + row.Id + '">子功能</button>';
-                            html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/Function/Edit?id=' + row.Id + '">编辑</button>';
-                            html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" action="post:Delete?id=' + row.Id + '">删除</button>';
-                            html += '</div>';
-                            return html;
+                        label: '操作', name: 'Id', width: 100
+                        , formatter: function (value, options, row) {
+                            return gridFormatter_Operate([
+                                { code: "", title: "子模块", action: `Index?parentId=${row.Id}` },
+                                { code: "sys.function.edit", title: "编辑", action: `window:System/Function/Edit?id=${row.Id}` },
+                                { code: "sys.function.delete", title: "删除", action: `post:Delete?id=${row.Id}` }
+                            ]);
                         }
                     }
                 ],

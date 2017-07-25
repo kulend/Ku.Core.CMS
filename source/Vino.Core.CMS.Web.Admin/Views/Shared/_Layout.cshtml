@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="~/css/main.min.css" asp-append-version="true"/>
     </environment>
     <script src="~/lib/layui/layui.js"></script>
+    @await Component.InvokeAsync("AuthCodeJs")
 </head>
 <body>
 

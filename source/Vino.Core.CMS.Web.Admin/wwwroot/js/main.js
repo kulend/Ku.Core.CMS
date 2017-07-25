@@ -69,3 +69,31 @@ function gridFormatter_Is(value, options, row) {
         return '<i class="layui-icon">&#x1006;</i>';
     }
 }
+
+function gridFormatter_Operate(btns) {
+    var html = '<div class="layui-btn-group">';
+    for (var i = 0; i < btns.length; i++) {
+        html += createOperateBtn(btns[i]);
+    }
+    html += '</div>';
+    return html;
+}
+
+function createOperateBtn(btn) {
+    var authcode = btn.code;
+    if (authcode) {
+        if (!authCodes) {
+            return "";
+        }
+        //检查权限
+        var md5Code = hex_md5(authcode);
+        if (authCodes.indexOf(md5Code) < 0) {
+            return "";
+        }     
+    }
+    var isWarn = false;
+    if (authcode && authcode.indexOf("delete") > 0) {
+        isWarn = true;
+    }
+    return `<button title="${btn.title}" class="layui-btn layui-btn-mini ${isWarn?'layui-btn-danger':''}" action="${btn.action}">${btn.title}</button>`;
+}

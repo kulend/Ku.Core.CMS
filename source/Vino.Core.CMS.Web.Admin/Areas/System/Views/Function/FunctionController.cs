@@ -64,6 +64,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
             {
                 //新增
                 FunctionDto dto = new FunctionDto();
+                dto.IsEnable = true;
                 if (pid.HasValue)
                 {
                     dto.ParentId = pid.Value;

@@ -74,10 +74,14 @@
                     vino.page.msg.hideLoad();
                 },
                 error: function (xhr, status, errorThrown) {
-                    if (errorCallBack) {
-                        errorCallBack(xhr, status, errorThrown);
+                    if (xhr.status == 403) {
+                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
-                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, {icon:5});
+                        if (errorCallBack) {
+                            errorCallBack(xhr, status, errorThrown);
+                        } else {
+                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        }
                     }
                 }
             });
@@ -101,10 +105,14 @@
                     _getLoading().hide();
                 },
                 error: function (xhr, status, errorThrown) {
-                    if (errorCallBack) {
-                        errorCallBack(xhr, status, errorThrown);
+                    if (xhr.status == 403) {
+                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
-                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        if (errorCallBack) {
+                            errorCallBack(xhr, status, errorThrown);
+                        } else {
+                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        }
                     }
                 }
             });
@@ -136,10 +144,14 @@
                     _getLoading().hide();
                 },
                 error: function (xhr, status, errorThrown) {
-                    if (errorCallBack) {
-                        errorCallBack(xhr, status, errorThrown);
+                    if (xhr.status == 403) {
+                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
-                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        if (errorCallBack) {
+                            errorCallBack(xhr, status, errorThrown);
+                        } else {
+                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        }
                     }
                 }
             });

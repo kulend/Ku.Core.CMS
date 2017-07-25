@@ -22,5 +22,7 @@ namespace Vino.Core.CMS.Service.System
         Task<List<FunctionDto>> GetSubsAsync(long? parentId);
 
         Task<bool> CheckUserAuth(long userId, string authCode);
+
+        Task<List<string>> GetUserAuthCodesAsync(long userId, bool encrypt = false);
     }
 }

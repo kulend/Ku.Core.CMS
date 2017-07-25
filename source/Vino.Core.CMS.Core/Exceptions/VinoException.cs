@@ -70,4 +70,12 @@ namespace Vino.Core.CMS.Core.Exceptions
         {
         }
     }
+
+    public class VinoAccessDeniedException : VinoException
+    {
+        public VinoAccessDeniedException()
+            : base(904, "无权操作！")
+        {
+        }
+    }
 }

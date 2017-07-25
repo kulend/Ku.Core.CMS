@@ -78,21 +78,21 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
             return JsonData(true);
         }
 
-        [Auth("function")]
+        [Auth("")]
         public IActionResult RoleFunction(long RoleId)
         {
             ViewData["RoleId"] = RoleId;
             return View();
         }
 
-        [Auth("function")]
+        [Auth("")]
         public async Task<IActionResult> GetFunctionsWithRoleAuth(long RoleId, long? pid)
         {
             var functions = await service.GetFunctionsWithRoleAuthAsync(RoleId, pid);
             return JsonData(functions);
         }
 
-        [Auth("function")]
+        [Auth("")]
         public async Task<IActionResult> SaveRoleAuth(long RoleId, long FunctionId, bool HasAuth)
         {
             await service.SaveRoleAuthAsync(RoleId, FunctionId, HasAuth);

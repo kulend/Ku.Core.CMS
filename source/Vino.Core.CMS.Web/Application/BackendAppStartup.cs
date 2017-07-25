@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Web.Middleware;
 
 namespace Vino.Core.CMS.Web.Application
 {
@@ -54,8 +53,6 @@ namespace Vino.Core.CMS.Web.Application
             {
                 //app.UseExceptionHandler("/Home/Error");
             }
-
-            app.UsePageErrorHandling();
 
             app.UseStaticFiles();
 

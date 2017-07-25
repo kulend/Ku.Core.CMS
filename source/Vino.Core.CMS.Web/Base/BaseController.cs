@@ -22,12 +22,12 @@ namespace Vino.Core.CMS.Web.Base
 
         protected IActionResult JsonData(object data)
         {
-            var result = new JsonResult
-            {
-                Code = 0,
-                Data = data
-            };
-            return Json(result);
+            //var result = new JsonResult
+            //{
+            //    Code = 0,
+            //    Data = data
+            //};
+            return Json(data);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Vino.Core.CMS.Web.Base
         protected IActionResult PagerData<T>(IEnumerable<T> items, int page, int size, int total)
         {
             var result = new PagerResult<T>(items, page, size, total);
-            return JsonData(result);
+            return Json(result);
         }
     }
 }

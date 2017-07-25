@@ -25,7 +25,7 @@
                 <action text="返回上级" size="small" icon="&#xe619;" action="Index" />
             }
         }
-        <action text="添加" size="small" icon="&#xe608;" action="window:System/Menu/Edit?pid=@ViewData["ParentId"]"/>
+        <action auth-code="sys.menu.edit" text="添加" size="small" icon="&#xe608;" action="window:System/Menu/Edit?pid=@ViewData["ParentId"]"/>
         <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()"/>
     </div>
     <table id="list">
@@ -57,14 +57,13 @@
                     { label: '子菜单', name: 'HasSubMenu', width: 40, formatter: gridFormatter_Is },
                     { label: '排序值', name: 'OrderIndex', width: 40 },
                     {
-                        label: '操作', name: 'Id', width: 100,
-                        formatter: function(value, options, row) {
-                            var html = '<div class="layui-btn-group">';
-                            html += '<button title="子菜单" class="layui-btn layui-btn-mini" action="Index?parentId=' + row.Id + '">子菜单</button>';
-                            html += '<button title="编辑" class="layui-btn layui-btn-mini" action="window:System/Menu/Edit?id=' + row.Id + '">编辑</button>';
-                            html += '<button title="删除" class="layui-btn layui-btn-mini layui-btn-danger" action="post:Delete?id=' + row.Id + '">删除</button>';
-                            html += '</div>';
-                            return html;
+                        label: '操作', name: 'Id', width: 100
+                        , formatter: function (value, options, row) {
+                            return gridFormatter_Operate([
+                                { code: "", title: "子菜单", action: `Index?parentId=${row.Id}` },
+                                { code: "sys.menu.edit", title: "编辑", action: `window:System/Menu/Edit?id=${row.Id}` },
+                                { code: "sys.menu.delete", title: "删除", action: `post:Delete?id=${row.Id}` }
+                            ]);
                         }
                     }
                 ],

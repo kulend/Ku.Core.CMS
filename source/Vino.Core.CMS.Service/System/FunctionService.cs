@@ -228,6 +228,33 @@ namespace Vino.Core.CMS.Service.System
             return functions.Select(x => x.Function.AuthCode).ToList();
         }
 
+        public async Task<List<string>> GetUserAuthCodesAsync(long userId, bool encrypt = false)
+        {
+            var key = string.Format(encrypt?CacheKeyDefinition.UserAuthCodeEncrypt:CacheKeyDefinition.UserAuthCode, userId);
+            var authcodes = cacheService.Get<List<string>>(key);
+            if (authcodes == null)
+            {
+                //取得用户所有权限码
+                List<string> codes = new List<string>();
+                //取得所有角色
+                var roles = await context.UserRoles.Include(t => t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
+                foreach (var role in roles)
+                {
+                    var cds = await GetRoleAuthCodes(role.RoleId);
+                    codes.AddRange(cds);
+                }
+                //去重
+                authcodes = codes.Distinct().ToList();
+                if (encrypt)
+                {
+                    authcodes = authcodes.Select(CryptHelper.EncryptMD5).ToList();
+                }
+                //缓存
+                cacheService.Add(key, authcodes);
+            }
+            return authcodes;
+        }
+
         #endregion
 
     }

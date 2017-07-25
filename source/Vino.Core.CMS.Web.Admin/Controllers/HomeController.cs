@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Vino.Core.Cache;
@@ -99,6 +98,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
             });
             //清楚用户权限缓存
             cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCode, user.Id));
+            cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCodeEncrypt, user.Id));
             return JsonData(true);
         }
 
@@ -114,7 +114,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
         {
             if (base.IsJsonRequest())
             {
-                return Json("您无权操作");
+                throw new VinoAccessDeniedException();
             }
 
             return View();

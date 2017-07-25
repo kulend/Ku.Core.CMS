@@ -13,5 +13,7 @@ namespace Vino.Core.CMS.Web.Configs
         public string Audience { set; get; }
 
         public string LoginPath { set; get; }
+
+        public string AccessDeniedPath { set; get; }
     }
 }

@@ -26,7 +26,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// <summary>
         /// 权限码
         /// </summary>
-        [Required, MaxLength(20)]
+        [Required, MaxLength(64)]
         [Display(Name = "权限码")]
         public string AuthCode { get; set; }
 

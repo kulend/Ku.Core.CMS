@@ -12,14 +12,14 @@ using Vino.Core.Cache;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Extensions;
-using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Admin.Models;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Configs;
 using Vino.Core.Tokens.Jwt;
+using Vino.Core.CMS.Web.Configs;
+using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Domain;
 
-namespace Vino.Core.CMS.Web.Admin.Controllers
+namespace Vino.Core.CMS.Web.Admin.Views.Home
 {
     public class HomeController : BaseController
     {
@@ -107,6 +107,17 @@ namespace Vino.Core.CMS.Web.Admin.Controllers
             await HttpContext.Authentication.SignOutAsync("Cookie");
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet, HttpPost]
+        public IActionResult AccessDenied()
+        {
+            if (base.IsJsonRequest())
+            {
+                return Json("您无权操作");
+            }
+
+            return View();
         }
     }
 }

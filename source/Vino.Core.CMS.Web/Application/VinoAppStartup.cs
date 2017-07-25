@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Vino.Core.Cache;
-using Vino.Core.CMS.Core.DependencyResolver;
-using Vino.Core.CMS.Core.Helper;
-using Vino.Core.CMS.Core.Log;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Service;
 using Microsoft.Extensions.Logging;
@@ -23,8 +19,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using Vino.Core.CMS.Core.Helper;
+using Vino.Core.CMS.Core.Log;
 using Vino.Core.CMS.Web.AutoMapper;
-using Vino.Core.Tokens.Jwt;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Vino.Core.CMS.Web.Application
 {

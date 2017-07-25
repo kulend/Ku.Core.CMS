@@ -76,6 +76,7 @@ namespace Microsoft.AspNetCore.Builder
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 LoginPath = new PathString(jwtAuthConfig.LoginPath),
+                AccessDeniedPath = new PathString(jwtAuthConfig.AccessDeniedPath),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 AuthenticationScheme = "Cookie",

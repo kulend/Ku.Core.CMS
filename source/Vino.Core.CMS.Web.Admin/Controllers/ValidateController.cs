@@ -8,7 +8,7 @@ using Vino.Core.Cache;
 using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Web.Tools;
 
-namespace Vino.Core.CMS.Web.Admin.Controllers.Common
+namespace Vino.Core.CMS.Web.Admin.Controllers
 {
     public class ValidateController: Controller
     {

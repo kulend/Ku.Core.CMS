@@ -72,6 +72,11 @@ namespace Vino.Core.CMS.Web.Application
                     defaults: new { controller = "Home", action = "Login" });
 
                 routes.MapRoute(
+                    name: "accessDenied",
+                    template: "AccessDenied",
+                    defaults: new { controller = "Home", action = "AccessDenied" });
+
+                routes.MapRoute(
                     name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 

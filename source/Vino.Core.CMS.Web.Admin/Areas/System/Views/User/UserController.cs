@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Base;
@@ -55,6 +50,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
                 {
                     throw new VinoDataNotFoundException("无法取得用户数据!");
                 }
+                model.Password = "the password has not changed";
                 var userRoles = await service.GetUserRolesAsync(model.Id);
                 ViewBag.UserRoles = userRoles;
                 ViewData["Mode"] = "Edit";

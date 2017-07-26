@@ -8,10 +8,12 @@ using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Security;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
 {
     [Area("System")]
+    [Auth("sys.menu")]
     public class MenuController : BaseController
     {
         private IMenuService service;
@@ -22,7 +24,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
 
         #region 菜单
 
-        [Authorize]
+        [Auth("view")]
         public async Task<IActionResult> Index(long? parentId)
         {
             var Parents = new List<MenuDto>();
@@ -34,14 +36,14 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
             return View(Parents);
         }
 
-        [Authorize]
+        [Auth("view")]
         public async Task<IActionResult> List(long? parentId, int page = 1, int rows = 10)
         {
             var data = await service.GetListAsync(parentId, page, rows);
             return PagerData(data.list, page, rows, data.count);
         }
 
-        [Authorize]
+        [Auth("edit")]
         public async Task<IActionResult> Edit(long? id, long? pid)
         {
             if (id.HasValue)
@@ -80,7 +82,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
         /// <summary>
         /// 保存
         /// </summary>
-        [Authorize, HttpPost]
+        [Auth("edit"), HttpPost]
         public async Task<IActionResult> Save(MenuDto model)
         {
             await service.SaveAsync(model);
@@ -90,7 +92,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
         /// <summary>
         /// 删除
         /// </summary>
-        [Authorize, HttpPost]
+        [Auth("delete"), HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
             await service.DeleteAsync(id);

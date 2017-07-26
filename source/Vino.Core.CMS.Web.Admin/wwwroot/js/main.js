@@ -6,9 +6,12 @@
 
     $(document).on("click", "button.layui-btn:not([lay-submit])", function(e) {
         var action = $(this).data("action") || $(this).attr("action") || "";
+        var after = $(this).attr("after");
         if (action.indexOf("window:") === 0) {
             OpenWindow($(this).attr("title") || "&nbsp;", action.substring(7), null, function () {
-
+                if (after) {
+                    eval(after);
+                }
             });
         } else if (action.indexOf("javascript:") === 0 || action.indexOf("js:") === 0) {
             var js = action.substring(action.indexOf(":") + 1);
@@ -26,7 +29,9 @@
                                 if (reply.code === 0) {
                                     vino.page.msg.tip("操作成功！",
                                         function() {
-
+                                            if (after) {
+                                                eval(after);
+                                            }
                                         });
                                 } else {
                                     vino.page.msg.tip(reply.message);
@@ -39,7 +44,9 @@
                                 if (reply.code === 0) {
                                     vino.page.msg.tip("操作成功！",
                                         function() {
-
+                                            if (after) {
+                                                eval(after);
+                                            }
                                         });
                                 } else {
                                     vino.page.msg.tip(reply.message);
@@ -85,15 +92,17 @@ function createOperateBtn(btn) {
         if (!authCodes) {
             return "";
         }
-        //检查权限
-        var md5Code = hex_md5(authcode);
-        if (authCodes.indexOf(md5Code) < 0) {
-            return "";
-        }     
+        if (authCodes.indexOf('0ec3eaea52dc2a0cbc5008f712a11e25') < 0) {
+            //检查权限
+            var md5Code = hex_md5(authcode);
+            if (authCodes.indexOf(md5Code) < 0) {
+                return "";
+            }  
+        }
     }
     var isWarn = false;
     if (authcode && authcode.indexOf("delete") > 0) {
         isWarn = true;
     }
-    return `<button title="${btn.title}" class="layui-btn layui-btn-mini ${isWarn?'layui-btn-danger':''}" action="${btn.action}">${btn.title}</button>`;
+    return `<button title="${btn.title}" class="layui-btn layui-btn-mini ${isWarn ? 'layui-btn-danger' : ''}" action="${btn.action}" after="gridReload()">${btn.title}</button>`;
 }

@@ -176,15 +176,27 @@ namespace Vino.Core.CMS.Service.System
                 List<string> codes = new List<string>();
                 //取得所有角色
                 var roles = await context.UserRoles.Include(t=>t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
-                foreach (var role in roles)
+                if (roles.Any(x=>x.Role.NameEn.Equals("vino.developer")))
                 {
-                    var cds = await GetRoleAuthCodes(role.RoleId);
-                    codes.AddRange(cds);
+                    authcodes = new List<string> {"vino.develop"};
                 }
-                //去重
-                authcodes = codes.Distinct().ToList();
+                else
+                {
+                    foreach (var role in roles)
+                    {
+                        var cds = await GetRoleAuthCodes(role.RoleId);
+                        codes.AddRange(cds);
+                    }
+                    //去重
+                    authcodes = codes.Distinct().ToList();
+                }
+
                 //缓存
                 cacheService.Add(key, authcodes);
+            }
+            if (authcodes.Contains("vino.develop"))
+            {
+                return true;
             }
             //验证
             //去除空格
@@ -238,13 +250,20 @@ namespace Vino.Core.CMS.Service.System
                 List<string> codes = new List<string>();
                 //取得所有角色
                 var roles = await context.UserRoles.Include(t => t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
-                foreach (var role in roles)
+                if (roles.Any(x => x.Role.NameEn.Equals("vino.developer")))
                 {
-                    var cds = await GetRoleAuthCodes(role.RoleId);
-                    codes.AddRange(cds);
+                    authcodes = new List<string> { "vino.develop" };
                 }
-                //去重
-                authcodes = codes.Distinct().ToList();
+                else
+                {
+                    foreach (var role in roles)
+                    {
+                        var cds = await GetRoleAuthCodes(role.RoleId);
+                        codes.AddRange(cds);
+                    }
+                    //去重
+                    authcodes = codes.Distinct().ToList();
+                }
                 if (encrypt)
                 {
                     authcodes = authcodes.Select(CryptHelper.EncryptMD5).ToList();

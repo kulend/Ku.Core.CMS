@@ -3,7 +3,7 @@
 }
 <div class="main-content">
     <div class="toolbar">
-        <action auth-code="sys.user.edit" text="添加" size="small" icon="&#xe608;" action="window:System/User/Edit"/>
+        <action auth-code="sys.user.edit" text="添加" size="small" icon="&#xe608;" action="window:System/User/Edit" after="gridReload()"/>
         <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
     </div>
     <table id="list">

@@ -37,7 +37,9 @@ namespace Vino.Core.CMS.Service.System
                 var queryable = repository.GetQueryable();
                 var count = queryable.Count();
                 var query = queryable.OrderBy(x => x.CreateTime).Skip(startRow).Take(pageSize);
-                return (count, Mapper.Map<List<UserDto>>(query.ToList()));
+                var list = query.ToList();
+                list.ForEach(x => x.Password = "");
+                return (count, Mapper.Map<List<UserDto>>(list));
             }
             return Task.FromResult(Gets());
         }
@@ -53,9 +55,35 @@ namespace Vino.Core.CMS.Service.System
             if (model.Id == 0)
             {
                 //新增
+                //检查账户是否重复
+                var cnt = await repository.GetQueryable().Where(x => x.Account.EqualOrdinalIgnoreCase(model.Account)).CountAsync();
+                if (cnt > 0)
+                {
+                    throw new VinoDataNotFoundException("账户名重复！");
+                }
+                //检查手机号
+                if (model.Mobile.IsNotNullOrEmpty())
+                {
+                    //格式
+                    if (!model.Mobile.IsMobile())
+                    {
+                        throw new VinoDataNotFoundException("手机号格式不正确！");
+                    }
+                    //是否重复
+                    cnt = await repository.GetQueryable().Where(x => x.Mobile.EqualOrdinalIgnoreCase(model.Mobile)).CountAsync();
+                    if (cnt > 0)
+                    {
+                        throw new VinoDataNotFoundException("手机号重复！");
+                    }
+                }
+
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
+                var random = new Random();
+                model.Factor = random.Next(9999);
+                //密码设置
+                model.EncryptPassword();
                 await repository.InsertAsync(model);
 
                 //角色处理
@@ -73,14 +101,20 @@ namespace Vino.Core.CMS.Service.System
                 var item = await repository.GetByIdAsync(model.Id);
                 if (item == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得用户数据!");
+                    throw new VinoDataNotFoundException("无法取得用户数据！");
                 }
 
                 item.Account = model.Account;
                 item.Name = model.Name;
                 item.Mobile = model.Mobile;
                 item.IsEnable = model.IsEnable;
-                item.Password = model.Password;
+                if (!model.Password.EqualOrdinalIgnoreCase("the password has not changed"))
+                {
+                    item.Password = model.Password;
+                    //密码设置
+                    item.EncryptPassword();
+                }
+                
                 item.Remarks = model.Remarks;
                 repository.Update(item);
 
@@ -130,14 +164,18 @@ namespace Vino.Core.CMS.Service.System
 
             var entity = await context.Users.SingleOrDefaultAsync(x => x.Account.Equals(account,
                 StringComparison.OrdinalIgnoreCase));
-            if (entity == null)
+            if (entity == null || entity.IsDeleted)
             {
-                throw new VinoException("账户不存在!");
+                throw new VinoException("账户不存在！");
             }
 
             if (!entity.CheckPassword(password))
             {
-                throw new VinoException("账户或密码出错!");
+                throw new VinoException("账户或密码出错！");
+            }
+            if (!entity.IsEnable)
+            {
+                throw new VinoException("该账号已被禁止登陆！");
             }
             var dto = Mapper.Map<UserDto>(entity);
             dto.Password = "";

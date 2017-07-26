@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Core.Helper;
 
 namespace Vino.Core.CMS.Core.Extensions
 {
@@ -103,6 +104,11 @@ namespace Vino.Core.CMS.Core.Extensions
 	    public static bool IsNotNullOrEmpty(this string self)
 	    {
 	        return !string.IsNullOrEmpty(self);
+	    }
+
+	    public static bool IsMobile(this string self)
+	    {
+	        return StringHelper.IsMobile(self);
 	    }
     }
 }

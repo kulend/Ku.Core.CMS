@@ -29,7 +29,7 @@
                         , formatter: function (value, options, row) {
                             return gridFormatter_Operate([
                                 { code: "sys.role.edit", title: "编辑", action: `window:System/Role/Edit?id=${row.Id}` },
-                                { code: "", title: "权限分配", action: `window:System/Role/RoleFunction?RoleId=${row.Id}` },
+                                { code: "sys.role.function", title: "权限分配", action: `window:System/Role/RoleFunction?RoleId=${row.Id}` },
                                 { code: "sys.role.delete", title: "删除", action: `post:Delete?id=${row.Id}` }
                             ]);
                         }

@@ -22,7 +22,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// <summary>
         /// 账号密码
         /// </summary>
-        [Required, MaxLength(128)]
+        [Required, MaxLength(64)]
         public string Password { set; get; }
 
         /// <summary>
@@ -69,6 +69,22 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// 用户角色集合
         /// </summary>
         public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        public void EncryptPassword()
+        {
+            if (Password.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var result = CryptHelper.EncryptMD5(Password);
+            if (this.Factor.HasValue)
+            {
+                result = CryptHelper.EncryptMD5(result + this.Factor.Value);
+            }
+            result = CryptHelper.EncryptSha256(result);
+            Password = result;
+        }
 
         public bool CheckPassword(string pwd)
         {

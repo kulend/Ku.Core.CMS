@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.TimedTask.EntityFramework;
 using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Data.Common
 {
-    public class VinoDbContext: DbContext, IDbContext, ITimedTaskContext
+    public class VinoDbContext: DbContext, IDbContext
     {
         public VinoDbContext(DbContextOptions<VinoDbContext> options)
             : base(options)
@@ -54,8 +53,8 @@ namespace Vino.Core.CMS.Data.Common
 
         public DbSet<UserRole> UserRoles { get; set; }
 
-        //定时任务相关
-        public DbSet<TimedTask.TimedTask> TimedTasks { get; set; }
+        ////定时任务相关
+        //public DbSet<TimedTask.TimedTask> TimedTasks { get; set; }
 
         public DbSet<Function> Functions { get; set; }
 

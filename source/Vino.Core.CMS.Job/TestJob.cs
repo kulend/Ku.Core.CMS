@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using Vino.Core.CMS.Core.DependencyResolver;
+using Vino.Core.CMS.Service.System;
 using Vino.Core.TimedTask.Attribute;
 
 namespace Vino.Core.CMS.Job
@@ -11,12 +13,12 @@ namespace Vino.Core.CMS.Job
         [SingleTask]
         public void Run()
         {
-            Debug.WriteLine(DateTime.Now + " Test dynamic invoke...");
         }
 
         [SingleTask]
-        public void RunXXXX()
+        public void RunXXXX(IUserService service)
         {
+            var aa = service.GetListAsync(0, 10);
             Debug.WriteLine(DateTime.Now + " Test RunXXXX invoke...");
         }
     }

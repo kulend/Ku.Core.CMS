@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Vino.Core.TimedTask" Version="1.0.1.4" />
+    <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask\Vino.Core.TimedTask.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,20 +8,21 @@ using Vino.Core.CMS.Core.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
-    [DisplayName("系统-角色")]
     [Table("system_role")]
     public class Role : BaseProtectedEntity
     {
         /// <summary>
         /// 名称
         /// </summary>
-        [Required, MaxLength(20), DisplayName("名称")]
+        [Required, MaxLength(20)]
+        [Display(Name = "名称")]
         public string Name { set; get; }
 
         /// <summary>
         /// 名称(英文)
         /// </summary>
-        [Required, MaxLength(40), DisplayName("英文名")]
+        [Required, MaxLength(40)]
+        [Display(Name = "英文名")]
         public string NameEn { set; get; }
 
         /// <summary>

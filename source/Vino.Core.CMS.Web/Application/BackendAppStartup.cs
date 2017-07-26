@@ -5,15 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Vino.Core.CMS.Data.Common;
 
 namespace Vino.Core.CMS.Web.Application
 {
@@ -26,9 +21,6 @@ namespace Vino.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            //定时任务
-            services.AddTimedTask().AddEntityFrameworkTimedTask<VinoDbContext>();
-
             services.AddJwtToken(Configuration);
             services.AddJwtAuth(Configuration);
 
@@ -40,9 +32,6 @@ namespace Vino.Core.CMS.Web.Application
         public override void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             base.Configure(app, env, loggerFactory);
-
-            //定时任务
-            app.UseTimedTask();
 
             if (env.IsDevelopment())
             {

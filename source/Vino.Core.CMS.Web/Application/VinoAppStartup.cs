@@ -48,7 +48,7 @@ namespace Vino.Core.CMS.Web.Application
             //缓存初始化
             CacheConfig.Initialize(Configuration);
             //日志初始化
-            VinoLogger.Initialize(env);
+            //VinoLogger.Initialize(env);
             //VinoMapper初始化
             VinoMapper.Initialize();
         }

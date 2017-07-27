@@ -4,10 +4,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Domain.Entity.System;
+using Vino.Core.TimedTask.Database;
+using Vino.Core.TimedTask.EntityFramework;
 
 namespace Vino.Core.CMS.Data.Common
 {
-    public class VinoDbContext: DbContext, IDbContext
+    public class VinoDbContext: DbContext, IDbContext, ITimedTaskContext
     {
         public VinoDbContext(DbContextOptions<VinoDbContext> options)
             : base(options)
@@ -42,7 +44,7 @@ namespace Vino.Core.CMS.Data.Common
             base.OnModelCreating(modelBuilder);
 
             //定时任务相关
-            //modelBuilder.SetupTimedJobs();
+            modelBuilder.SetupTimedTask();
         }
 
         public DbSet<User> Users { get; set; }
@@ -53,8 +55,9 @@ namespace Vino.Core.CMS.Data.Common
 
         public DbSet<UserRole> UserRoles { get; set; }
 
-        ////定时任务相关
-        //public DbSet<TimedTask.TimedTask> TimedTasks { get; set; }
+        //定时任务相关
+        public DbSet<TimedTask.TimedTask> TimedTasks { get; set; }
+        public DbSet<TimedTask.TimedTaskLog> TimedTaskLogs { get; set; }
 
         public DbSet<Function> Functions { get; set; }
 

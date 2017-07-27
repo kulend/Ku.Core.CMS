@@ -41,9 +41,9 @@ namespace Vino.Core.CMS.TaskApp
             services.AddLogging();
 
             string connection = Configuration.GetConnectionString("Default");
-            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")));
+            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")), ServiceLifetime.Transient);
 
-            services.AddTimedTask();
+            services.AddTimedTask().AddEntityFrameworkTimedTask<VinoDbContext>();
 
             var builder = new ContainerBuilder();
             builder.RegisterModule(new AppModule());

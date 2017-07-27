@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask.EntityFramework\Vino.Core.TimedTask.EntityFramework.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Core\Vino.Core.CMS.Core.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
   </ItemGroup>

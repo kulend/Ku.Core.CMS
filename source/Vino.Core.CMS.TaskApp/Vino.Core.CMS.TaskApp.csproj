@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask.EntityFramework\Vino.Core.TimedTask.EntityFramework.csproj" />
     <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask\Vino.Core.TimedTask.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Job\Vino.Core.CMS.Job.csproj" />

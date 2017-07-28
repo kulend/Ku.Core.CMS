@@ -12,8 +12,15 @@ namespace Vino.Core.CMS.Core.Data
     /// </summary>
     public interface IRepository
     {
+        /// <summary>
+        /// 保存
+        /// </summary>
         void Save();
 
+        /// <summary>
+        /// 异步保存
+        /// </summary>
+        /// <returns></returns>
         Task SaveAsync();
     }
 
@@ -22,13 +29,9 @@ namespace Vino.Core.CMS.Core.Data
     /// </summary>
     /// <typeparam name="TEntity">实体类型</typeparam>
     /// <typeparam name="TPrimaryKey">主键类型</typeparam>
-    public interface IRepository<TEntity, TPrimaryKey> : IRepository where TEntity : Entity<TPrimaryKey>
+    public interface IRepository<TEntity, in TPrimaryKey> : IRepository where TEntity : Entity<TPrimaryKey>
     {
-        /// <summary>
-        /// 获取检索对象
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<TEntity> GetQueryable(params Expression<Func<TEntity, object>>[] propertySelectors);
+        #region 主键查询
 
         /// <summary>
         /// 根据主键获取实体
@@ -44,32 +47,66 @@ namespace Vino.Core.CMS.Core.Data
         /// <returns></returns>
         Task<TEntity> GetByIdAsync(TPrimaryKey id);
 
+        #endregion
+
+        #region 通用查询
+
+        /// <summary>
+        /// 获取检索对象
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<TEntity> GetQueryable(params Expression<Func<TEntity, object>>[] propertySelectors);
+
         /// <summary>
         /// 根据lambda表达式条件获取单个实体
         /// </summary>
-        /// <param name="predicate">lambda表达式条件</param>
+        /// <param name="where">lambda表达式条件</param>
         /// <returns></returns>
-        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate);
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where);
+
+        #endregion
+
+        #region 插入
 
         /// <summary>
         /// 新增实体
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns></returns>
         TEntity Insert(TEntity entity);
 
         /// <summary>
         /// 新增实体
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns></returns>
         Task<TEntity> InsertAsync(TEntity entity);
+
+        /// <summary>
+        /// 普通批量插入
+        /// </summary>
+        void InsertRange(List<TEntity> entitys);
+
+        /// <summary>
+        /// 异步批量插入
+        /// </summary>
+        Task InsertRangeAsync(List<TEntity> entitys);
+
+        #endregion
+
+        #region 更新
 
         /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity">实体</param>
         void Update(TEntity entity);
+
+        /// <summary>
+        /// 单个对象指定列修改
+        /// </summary>
+        /// <param name="entity">实体</param>
+        void Update(TEntity entity, List<string> proNames);
+
+        #endregion
+
+        #region 删除
 
         /// <summary>
         /// 删除实体
@@ -83,7 +120,9 @@ namespace Vino.Core.CMS.Core.Data
         /// <param name="id">实体主键</param>
         Task<bool> DeleteAsync(TPrimaryKey id);
 
-        #region Any
+        #endregion
+
+        #region 是否存在
 
         /// <summary>
         /// 判断对象是否存在
@@ -95,6 +134,20 @@ namespace Vino.Core.CMS.Core.Data
         /// </summary>
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where);
 
+        #endregion
+
+        #region 件数
+
+        /// <summary>
+        /// 取得件数
+        /// </summary>
+        int Count(Expression<Func<TEntity, bool>> where);
+
+        /// <summary>
+        /// 异步取得件数
+        /// </summary>
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> where);
+        
         #endregion
 
         #region 分页查询

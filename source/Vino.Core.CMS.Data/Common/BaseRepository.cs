@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Core.Data;
@@ -26,9 +24,45 @@ namespace Vino.Core.CMS.Data.Common
         /// 通过构造函数注入得到数据上下文对象实例
         /// </summary>
         /// <param name="dbContext"></param>
-        public BaseRepository(VinoDbContext dbContext)
+        protected BaseRepository(VinoDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        #region 主键查询
+
+        /// <summary>
+        /// 根据主键获取实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        /// <returns></returns>
+        public TEntity GetById(TPrimaryKey id)
+        {
+            return Table.FirstOrDefault(CreateEqualityExpressionForId(id));
+        }
+
+        /// <summary>
+        /// 根据主键获取实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        /// <returns></returns>
+        public async Task<TEntity> GetByIdAsync(TPrimaryKey id)
+        {
+            return await Table.FirstOrDefaultAsync(CreateEqualityExpressionForId(id));
+        }
+
+        #endregion
+
+        #region 通用查询
+
+        /// <summary>
+        /// 根据lambda表达式条件获取单个实体
+        /// </summary>
+        /// <param name="predicate">lambda表达式条件</param>
+        /// <returns></returns>
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Table.FirstOrDefault(predicate);
         }
 
         /// <summary>
@@ -53,40 +87,7 @@ namespace Vino.Core.CMS.Data.Common
             return query;
         }
 
-        #region GetById
-
-        /// <summary>
-        /// 根据主键获取实体
-        /// </summary>
-        /// <param name="id">实体主键</param>
-        /// <returns></returns>
-        public TEntity GetById(TPrimaryKey id)
-        {
-            return Table.FirstOrDefault(CreateEqualityExpressionForId(id));
-        }
-
-        /// <summary>
-        /// 根据主键获取实体
-        /// </summary>
-        /// <param name="id">实体主键</param>
-        /// <returns></returns>
-        public async Task<TEntity> GetByIdAsync(TPrimaryKey id)
-        {
-            return await Table.FirstOrDefaultAsync(CreateEqualityExpressionForId(id));
-        }
-
         #endregion
-
-
-        /// <summary>
-        /// 根据lambda表达式条件获取单个实体
-        /// </summary>
-        /// <param name="predicate">lambda表达式条件</param>
-        /// <returns></returns>
-        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
-        {
-            return Table.FirstOrDefault(predicate);
-        }
 
         #region 插入
 
@@ -204,7 +205,7 @@ namespace Vino.Core.CMS.Data.Common
 
         #endregion
 
-        #region Any
+        #region 是否存在
 
         /// <summary>
         /// 判断对象是否存在
@@ -220,6 +221,26 @@ namespace Vino.Core.CMS.Data.Common
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where)
         {
             return await Table.AnyAsync(where);
+        }
+
+        #endregion
+
+        #region 件数
+
+        /// <summary>
+        /// 取得件数
+        /// </summary>
+        public int Count(Expression<Func<TEntity, bool>> where)
+        {
+            return Table.Count(where);
+        }
+
+        /// <summary>
+        /// 异步取得件数
+        /// </summary>
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> where)
+        {
+            return await Table.CountAsync(where);
         }
 
         #endregion
@@ -350,7 +371,7 @@ namespace Vino.Core.CMS.Data.Common
     /// <typeparam name="TEntity">实体类型</typeparam>
     public abstract class BaseRepository<TEntity> : BaseRepository<TEntity, long> where TEntity : BaseEntity
     {
-        public BaseRepository(VinoDbContext dbContext) : base(dbContext)
+        protected BaseRepository(VinoDbContext dbContext) : base(dbContext)
         {
         }
     }

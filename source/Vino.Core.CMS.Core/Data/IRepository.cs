@@ -82,6 +82,48 @@ namespace Vino.Core.CMS.Core.Data
         /// </summary>
         /// <param name="id">实体主键</param>
         Task<bool> DeleteAsync(TPrimaryKey id);
+
+        #region Any
+
+        /// <summary>
+        /// 判断对象是否存在
+        /// </summary>
+        bool Any(Expression<Func<TEntity, bool>> where);
+
+        /// <summary>
+        /// 判断对象是否存在
+        /// </summary>
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where);
+
+        #endregion
+
+        #region 分页查询
+
+        /// <summary>
+        /// 异步分页查询
+        /// </summary>
+        /// <param name="page">查询页码</param>
+        /// <param name="size">查询条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="order">排序条件，格式类似【 Name asc, CreateTime desc】</param>
+        /// <returns></returns>
+        Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size,
+                    Expression<Func<TEntity, bool>> where, string order);
+
+        /// <summary>
+        /// 异步分页查询
+        /// </summary>
+        /// <param name="page">查询页码</param>
+        /// <param name="size">查询条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="order">排序条件</param>
+        /// <param name="isDesc">排序方式</param>
+        /// <returns></returns>
+        Task<(int count, List<TEntity> items)> PageQueryAsync<Tkey>(int page, int size,
+            Expression<Func<TEntity, bool>> where,
+            Expression<Func<TEntity, Tkey>> order, bool isDesc = false);
+
+        #endregion
     }
 
     /// <summary>

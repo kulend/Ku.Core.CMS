@@ -29,19 +29,10 @@ namespace Vino.Core.CMS.Service.System
             this.roleRepository = _roleRepository;
         }
 
-        public Task<(int count, List<UserDto> items)> GetListAsync(int pageIndex, int pageSize)
+        public async Task<(int count, List<UserDto> items)> GetListAsync(int page, int size)
         {
-            (int, List<UserDto>) Gets()
-            {
-                int startRow = (pageIndex - 1) * pageSize;
-                var queryable = repository.GetQueryable();
-                var count = queryable.Count();
-                var query = queryable.OrderBy(x => x.CreateTime).Skip(startRow).Take(pageSize);
-                var list = query.ToList();
-                list.ForEach(x => x.Password = "");
-                return (count, Mapper.Map<List<UserDto>>(list));
-            }
-            return Task.FromResult(Gets());
+            var data = await repository.PageQueryAsync(page, size, null, "CreateTime asc");
+            return (data.count, Mapper.Map<List<UserDto>>(data.items));
         }
 
         public async Task<UserDto> GetByIdAsync(long id)

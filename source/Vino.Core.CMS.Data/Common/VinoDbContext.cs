@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.TimedTask.Database;
 using Vino.Core.TimedTask.EntityFramework;
 
 namespace Vino.Core.CMS.Data.Common
@@ -63,5 +62,6 @@ namespace Vino.Core.CMS.Data.Common
 
         public DbSet<RoleFunction> RoleFunctions { get; set; }
 
+        public DbSet<UserActionLog> UserActionLogs { get; set; }
     }
 }

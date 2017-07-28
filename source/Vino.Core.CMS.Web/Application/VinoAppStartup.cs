@@ -60,24 +60,6 @@ namespace Vino.Core.CMS.Web.Application
             string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
 
-            //services.AddApplicationInsightsTelemetry(Configuration);
-            // Add framework services.
-            services.AddMvc(opts =>
-                {
-                    opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
-                    opts.Filters.Add(typeof(JsonWrapperResultFilter));
-                    opts.Filters.Add(typeof(ExceptionFilter));
-                })
-                .AddJsonOptions(json =>
-                {
-                    // 忽略循环引用
-                    json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    //不使用驼峰样式的key
-                    json.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                    //设置时间格式
-                    json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                });
-
             //加入身份认证
             services.AddAuthorization();
             //添加options

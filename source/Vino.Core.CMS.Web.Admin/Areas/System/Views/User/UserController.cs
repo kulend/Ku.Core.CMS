@@ -6,6 +6,7 @@ using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Domain.Dto.System;
+using Vino.Core.CMS.Web.Filters;
 using Vino.Core.CMS.Web.Security;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
@@ -23,12 +24,14 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
         }
 
         [Auth("view")]
+        [UserAction("查看用户列表")]
         public IActionResult Index()
         {
             return View();
         }
 
         [Auth("view")]
+        [UserAction("用户列表数据")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
             var data = await service.GetListAsync(page, rows);

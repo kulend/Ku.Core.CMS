@@ -6,7 +6,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Helper;
-using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
@@ -22,25 +21,11 @@ namespace Vino.Core.CMS.Service.System
             this.repository = _repository;
         }
 
-        public Task<(int count, List<MenuDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize)
+        public async Task<(int count, List<MenuDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize)
         {
-            (int, List<MenuDto>) Gets()
-            {
-                int startRow = (pageIndex - 1) * pageSize;
-                var queryable = repository.GetQueryable();
-                if (parentId.HasValue)
-                {
-                    queryable = queryable.Where(u => u.ParentId == parentId);
-                }
-                else
-                {
-                    queryable = queryable.Where(u => u.ParentId == null);
-                }
-                var count = queryable.Count();
-                var query = queryable.OrderBy(x=>x.OrderIndex).ThenBy(x => x.CreateTime).Skip(startRow).Take(pageSize);
-                return (count, Mapper.Map<List<MenuDto>>(query.ToList()));
-            }
-            return Task.FromResult(Gets());
+            var data = await repository.PageQueryAsync(pageIndex, pageSize, function => function.ParentId == parentId, "");
+
+            return (data.count, Mapper.Map<List<MenuDto>>(data.items));
         }
 
         public async Task SaveAsync(MenuDto dto)

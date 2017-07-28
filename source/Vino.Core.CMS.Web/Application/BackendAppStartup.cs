@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Vino.Core.CMS.Web.Filters;
 
 namespace Vino.Core.CMS.Web.Application
 {
@@ -25,6 +28,23 @@ namespace Vino.Core.CMS.Web.Application
             services.AddJwtAuth(Configuration);
 
             services.TryAddTransient(typeof(IHtmlHelper<>), typeof(VinoHtmlHelper<>));
+
+            services.AddMvc(opts =>
+                {
+                    opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
+                    opts.Filters.Add(typeof(JsonWrapperResultFilter));
+                    opts.Filters.Add(typeof(ExceptionFilter));
+                    opts.Filters.Add(typeof(UserActionLogFilter));
+                })
+                .AddJsonOptions(json =>
+                {
+                    // 忽略循环引用
+                    json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    //不使用驼峰样式的key
+                    json.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    //设置时间格式
+                    json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                });
 
             return base.ConfigureServices(services);
         }

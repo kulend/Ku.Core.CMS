@@ -8,9 +8,10 @@ using Vino.Core.CMS.Data.Common;
 namespace Vino.Core.CMS.Web.Admin.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170727065002_21")]
+    partial class _21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -161,19 +162,13 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.Property<string>("ActionName")
                         .HasMaxLength(30);
 
-                    b.Property<string>("ActionResult")
-                        .HasMaxLength(500);
-
                     b.Property<string>("ControllerName")
-                        .HasMaxLength(30);
+                        .HasMaxLength(60);
 
                     b.Property<DateTime>("CreateTime");
 
                     b.Property<string>("Ip")
                         .HasMaxLength(46);
-
-                    b.Property<string>("Operation")
-                        .HasMaxLength(40);
 
                     b.Property<string>("Url")
                         .HasMaxLength(256);

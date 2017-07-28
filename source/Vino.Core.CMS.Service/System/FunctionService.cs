@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -34,25 +35,11 @@ namespace Vino.Core.CMS.Service.System
 
         #region 功能模块
 
-        public Task<(int count, List<FunctionDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize)
+        public async Task<(int count, List<FunctionDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize)
         {
-            (int, List<FunctionDto>) Gets()
-            {
-                int startRow = (pageIndex - 1) * pageSize;
-                var queryable = repository.GetQueryable();
-                if (parentId.HasValue)
-                {
-                    queryable = queryable.Where(u => u.ParentId == parentId);
-                }
-                else
-                {
-                    queryable = queryable.Where(u => u.ParentId == null);
-                }
-                var count = queryable.Count();
-                var query = queryable.OrderBy(x => x.CreateTime).Skip(startRow).Take(pageSize);
-                return (count, Mapper.Map<List<FunctionDto>>(query.ToList()));
-            }
-            return Task.FromResult(Gets());
+            var data = await repository.PageQueryAsync(pageIndex, pageSize, function => function.ParentId == parentId, "");
+
+            return (data.count, Mapper.Map<List<FunctionDto>>(data.items));
         }
 
         public async Task SaveAsync(FunctionDto dto)

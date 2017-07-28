@@ -174,6 +174,38 @@ namespace Vino.Core.CMS.Service.System
         }
 
         #endregion
+        
+        #region 修改密码
 
+        public async Task ChangePassword(long userId, string currentPwd, string newPwd)
+        {
+            if (currentPwd.IsNullOrEmpty())
+            {
+                //当前密码不能为空
+                throw new VinoArgNullException("当前密码不能为空！");
+            }
+            if (newPwd.IsNullOrEmpty())
+            {
+                //新密码不能为空
+                throw new VinoArgNullException("新密码不能为空！");
+            }
+            var item = await repository.GetByIdAsync(userId);
+            if (item == null)
+            {
+                throw new VinoDataNotFoundException("无法取得用户数据！");
+            }
+
+            if (!item.CheckPassword(currentPwd))
+            {
+                throw new VinoArgNullException("当前密码出错！");
+            }
+            item.Password = newPwd;
+            item.EncryptPassword();
+            repository.Update(item);
+            await repository.SaveAsync();
+        }
+
+
+        #endregion
     }
 }

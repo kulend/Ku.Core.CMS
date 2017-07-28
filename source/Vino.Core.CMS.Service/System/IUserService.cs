@@ -20,5 +20,7 @@ namespace Vino.Core.CMS.Service.System
         Task<List<RoleDto>> GetUserRolesAsync(long userId);
 
         Task<UserDto> LoginAsync(string account, string password);
+
+        Task ChangePassword(long userId, string currentPwd, string newPwd);
     }
 }

@@ -1,5 +1,10 @@
 ﻿layui.use(['layer'], function () {
     var $ = layui.jquery, layer = layui.layer;
+
+    //修改密码
+    $("#pwd_edit").on("click", function() {
+        OpenWindow("修改密码", "Account/PasswordEdit", { area:['600px', '300px']});
+    });
 });
 
 if (!window.winfns) {

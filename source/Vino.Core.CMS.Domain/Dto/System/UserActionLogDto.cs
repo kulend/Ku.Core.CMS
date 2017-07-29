@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Vino.Core.CMS.Core.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
-    public class UserActionLogDto
+    public class UserActionLogDto : BaseDto
     {
         [MaxLength(40)]
         public string Operation { set; get; }
@@ -28,5 +29,9 @@ namespace Vino.Core.CMS.Domain.Dto.System
 
         [MaxLength(500)]
         public string ActionResult { set; get; }
+
+        public string UserName { set; get; }
+
+        public UserDto User { set; get; }
     }
 }

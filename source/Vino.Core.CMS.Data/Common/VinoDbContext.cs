@@ -23,7 +23,7 @@ namespace Vino.Core.CMS.Data.Common
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //创建UserRole关系
-            modelBuilder.Entity<UserRole>() .HasKey(t => new { t.UserId, t.RoleId });
+            modelBuilder.Entity<UserRole>().HasKey(t => new { t.UserId, t.RoleId });
             modelBuilder.Entity<UserRole>()
                    .HasOne(pt => pt.User)
                    .WithMany(p => p.UserRoles)
@@ -39,6 +39,8 @@ namespace Vino.Core.CMS.Data.Common
                 .HasOne(pt => pt.Role)
                 .WithMany(t => t.RoleFunctions)
                 .HasForeignKey(pt => pt.RoleId);
+
+            
 
             base.OnModelCreating(modelBuilder);
 

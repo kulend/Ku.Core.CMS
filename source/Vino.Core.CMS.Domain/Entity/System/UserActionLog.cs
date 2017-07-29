@@ -32,5 +32,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
 
         [MaxLength(500)]
         public string ActionResult { set; get; }
+
+        public User User { set; get; }
     }
 }

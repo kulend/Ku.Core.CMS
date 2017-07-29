@@ -51,7 +51,7 @@
                         label: '操作', name: 'Id', width: 100
                         , formatter: function (value, options, row) {
                             return gridFormatter_Operate([
-                                { code: "", title: "子模块", action: `Index?parentId=${row.Id}` },
+                                { code: "", title: "子功能", action: `Index?parentId=${row.Id}` },
                                 { code: "sys.function.edit", title: "编辑", action: `window:System/Function/Edit?id=${row.Id}` },
                                 { code: "sys.function.delete", title: "删除", action: `post:Delete?id=${row.Id}` }
                             ]);

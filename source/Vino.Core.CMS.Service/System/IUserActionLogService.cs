@@ -9,5 +9,7 @@ namespace Vino.Core.CMS.Service.System
     public interface IUserActionLogService
     {
         void AddAsync(UserActionLogDto dto);
+
+        Task<(int count, List<UserActionLogDto> items)> GetListAsync(int page, int size);
     }
 }

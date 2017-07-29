@@ -31,4 +31,8 @@
     <ProjectReference Include="..\Vino.Core.Tokens.Jwt\Vino.Core.Tokens.Jwt.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>

@@ -8,11 +8,22 @@ using System.Text;
 
 namespace Vino.Core.CMS.Core.Data
 {
+    public interface IEntity
+    {
+
+    }
+
+    public abstract class MultiKeyEntity : IEntity
+    {
+
+    }
+
+
     /// <summary>
     /// 泛型实体基类
     /// </summary>
     /// <typeparam name="TPrimaryKey">主键类型</typeparam>
-    public abstract class Entity<TPrimaryKey>
+    public abstract class Entity<TPrimaryKey> : IEntity
     {
         /// <summary>
         /// 主键

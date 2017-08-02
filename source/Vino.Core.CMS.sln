@@ -37,7 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.TimedTask", "..\.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.TimedTask.EntityFramework", "..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask.EntityFramework\Vino.Core.TimedTask.EntityFramework.csproj", "{00A492FB-10A7-433D-8374-95D0329D6C16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.TaskApp", "Vino.Core.CMS.TaskApp\Vino.Core.CMS.TaskApp.csproj", "{2BE05EA2-E672-401A-98F5-519CE4088AEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.TaskApp", "Vino.Core.CMS.TaskApp\Vino.Core.CMS.TaskApp.csproj", "{2BE05EA2-E672-401A-98F5-519CE4088AEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.CodeGenerator", "Vino.Core.CMS.CodeGenerator\Vino.Core.CMS.CodeGenerator.csproj", "{1D36842E-C60C-460A-905E-8E8B604B04D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{2BE05EA2-E672-401A-98F5-519CE4088AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BE05EA2-E672-401A-98F5-519CE4088AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BE05EA2-E672-401A-98F5-519CE4088AEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D36842E-C60C-460A-905E-8E8B604B04D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D36842E-C60C-460A-905E-8E8B604B04D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D36842E-C60C-460A-905E-8E8B604B04D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D36842E-C60C-460A-905E-8E8B604B04D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,5 +116,6 @@ Global
 		{EE0DB9D1-1226-430E-9BB2-1B1B680D0DF5} = {AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}
 		{00A492FB-10A7-433D-8374-95D0329D6C16} = {AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}
 		{2BE05EA2-E672-401A-98F5-519CE4088AEC} = {AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}
+		{1D36842E-C60C-460A-905E-8E8B604B04D1} = {38AE7166-6167-4D42-A479-647797CD1A83}
 	EndGlobalSection
 EndGlobal

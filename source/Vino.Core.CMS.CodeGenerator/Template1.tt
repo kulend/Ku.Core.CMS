@@ -1,0 +1,115 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #> 
+<#@ include file="manager.ttinclude"#>
+<# var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = Path.GetDirectoryName(Host.TemplateFile)}; #>
+<#
+   var RootPath = Path.GetDirectoryName(Host.TemplateFile) + "/output";
+   var files = new List<string[]>();
+   files.Add(new string[]{"System", "User", "用户"});
+   files.Add(new string[]{"System", "Role", "角色"});
+   files.Add(new string[]{"System", "UserActionLog", "用户操作日志"});
+   files.Add(new string[]{"System", "Function", "功能"});
+   files.Add(new string[]{"System", "Menu", "菜单"});
+
+   foreach (var item in files)
+   {
+	   var area = item[0];
+	   var name = item[1];
+	   var desc = item[2];
+	   var path = RootPath + "/Vino.Core.CMS.Data/Repository";
+	   if(!Directory.Exists(path))
+       {
+		   Directory.CreateDirectory(path);
+	   }
+	   path = path + "/" + area + "/Partial";
+      if(!Directory.Exists(path))
+      {
+		Directory.CreateDirectory(path);
+      }
+     manager.OutputPath = path;
+     manager.StartBlock(name +"Repository.cs");
+#>
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Vino.Core.CMS.Core.Data;
+using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.Domain.Entity.<#=area#>;
+
+namespace Vino.Core.CMS.Data.Repository.<#=area#>
+{
+    /// <summary>
+    /// <#=desc#> 仓储接口
+    /// </summary>
+    public partial interface I<#=name#>Repository : IRepository<<#=name#>>
+    {
+    }
+
+    /// <summary>
+    /// <#=desc#> 仓储接口实现
+    /// </summary>
+    public partial class <#=name#>Repository : BaseRepository<<#=name#>>, I<#=name#>Repository
+    {
+        public <#=name#>Repository(VinoDbContext dbcontext) : base(dbcontext)
+        {
+        }
+    }
+}
+<# manager.EndBlock();#>
+<# } #>
+<# manager.Process(true); #>
+
+<#
+   foreach (var item in files)
+   {
+	   var area = item[0];
+	   var name = item[1];
+	   var desc = item[2];
+	   var path = RootPath + "/Vino.Core.CMS.Service";
+	   if(!Directory.Exists(path))
+       {
+		   Directory.CreateDirectory(path);
+	   }
+	   path = path + "/" + area + "/Partial";
+      if(!Directory.Exists(path))
+      {
+		Directory.CreateDirectory(path);
+      }
+     manager.OutputPath = path;
+     manager.StartBlock(name +"Service.cs");
+#>
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Vino.Core.CMS.Core.Data;
+using Vino.Core.CMS.Data.Repository.<#=area#>;
+
+namespace Vino.Core.CMS.Service.<#=area#>
+{
+    public partial interface I<#=name#>Service
+    {
+    }
+
+    public partial class <#=name#>Service : I<#=name#>Service
+    {
+        protected readonly I<#=name#>Repository repository;
+
+        public <#=name#>Service(I<#=name#>Repository _repository)
+        {
+            this.repository = _repository;
+        }
+    }
+}
+<# manager.EndBlock();#>
+<# } #>
+<# manager.Process(true); #>

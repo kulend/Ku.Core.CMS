@@ -60,6 +60,12 @@ namespace Vino.Core.CMS.Web.Application
             string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
 
+            //注册非主线DbContext
+            var dbOptions = new DbContextOptionsBuilder<SecondaryVinoDbContext>()
+                .UseMySql(connection)
+                .Options;
+            SecondaryVinoDbContext.Options = dbOptions;
+
             //加入身份认证
             services.AddAuthorization();
             //添加options

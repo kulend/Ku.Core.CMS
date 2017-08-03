@@ -1,57 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Helper;
-using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.Cache;
 using Vino.Core.CMS.Core.Extensions;
-using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public class FunctionService : IFunctionService
+    public partial class FunctionService
     {
-        private IFunctionRepository repository;
-        private ICacheService cacheService;
-        private VinoDbContext context;
-
-        public FunctionService(VinoDbContext _context, 
-            IFunctionRepository _repository, ICacheService _cacheService)
-        {
-            this.repository = _repository;
-            this.cacheService = _cacheService;
-            this.context = _context;
-        }
-
         #region 功能模块
 
         public async Task<(int count, List<FunctionDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize)
         {
-            var data = await repository.PageQueryAsync(pageIndex, pageSize, function => function.ParentId == parentId, "");
+            var data = await _repository.PageQueryAsync(pageIndex, pageSize, function => function.ParentId == parentId, "");
 
-            return (data.count, Mapper.Map<List<FunctionDto>>(data.items));
+            return (data.count, _mapper.Map<List<FunctionDto>>(data.items));
         }
 
         public async Task SaveAsync(FunctionDto dto)
         {
-            Function model = Mapper.Map<Function>(dto);
+            Function model = _mapper.Map<Function>(dto);
             if (model.Id == 0)
             {
                 //新增
                 //取得父功能              
                 if (model.ParentId.HasValue)
                 {
-                    var pModel = await repository.GetByIdAsync(model.ParentId.Value);
+                    var pModel = await _repository.GetByIdAsync(model.ParentId.Value);
                     if (pModel == null)
                     {
                         throw new VinoDataNotFoundException("无法取得父模块数据!");
@@ -59,7 +41,7 @@ namespace Vino.Core.CMS.Service.System
                     if (!pModel.HasSub)
                     {
                         pModel.HasSub = true;
-                        repository.Update(pModel);
+                        _repository.Update(pModel);
                     }
                     model.Level = pModel.Level + 1;
                 }
@@ -71,12 +53,12 @@ namespace Vino.Core.CMS.Service.System
 
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
-                await repository.InsertAsync(model);
+                await _repository.InsertAsync(model);
             }
             else
             {
                 //更新
-                var function = await repository.GetByIdAsync(model.Id);
+                var function = await _repository.GetByIdAsync(model.Id);
                 if (function == null)
                 {
                     throw new VinoDataNotFoundException("无法取得数据!");
@@ -85,9 +67,9 @@ namespace Vino.Core.CMS.Service.System
                 function.Name = model.Name;
                 function.AuthCode = model.AuthCode;
                 function.IsEnable = model.IsEnable;
-                repository.Update(function);
+                _repository.Update(function);
             }
-            await repository.SaveAsync();
+            await _repository.SaveAsync();
         }
 
         public Task<List<FunctionDto>> GetParentsAsync(long parentId)
@@ -101,13 +83,13 @@ namespace Vino.Core.CMS.Service.System
 
         public async Task<FunctionDto> GetByIdAsync(long id)
         {
-            return Mapper.Map<FunctionDto>(await this.repository.GetByIdAsync(id));
+            return _mapper.Map<FunctionDto>(await this._repository.GetByIdAsync(id));
         }
 
         public async Task DeleteAsync(long id)
         {
-            await repository.DeleteAsync(id);
-            await repository.SaveAsync();
+            await _repository.DeleteAsync(id);
+            await _repository.SaveAsync();
         }
 
         private List<FunctionDto> GetParents(long parentId)
@@ -115,7 +97,7 @@ namespace Vino.Core.CMS.Service.System
             var list = new List<Function>();
             void GetModel(long pid)
             {
-                var model = repository.FirstOrDefault(x => x.Id == pid);
+                var model = _repository.FirstOrDefault(x => x.Id == pid);
                 if (model != null)
                 {
                     if (model.ParentId.HasValue)
@@ -126,12 +108,12 @@ namespace Vino.Core.CMS.Service.System
                 }
             }
             GetModel(parentId);
-            return Mapper.Map<List<FunctionDto>>(list);
+            return _mapper.Map<List<FunctionDto>>(list);
         }
 
         public async Task<List<FunctionDto>> GetSubsAsync(long? parentId)
         {
-            var queryable = repository.GetQueryable();
+            var queryable = _repository.GetQueryable();
             if (parentId.HasValue)
             {
                 queryable = queryable.Where(u => u.ParentId == parentId);
@@ -142,7 +124,7 @@ namespace Vino.Core.CMS.Service.System
             }
 
             var query = queryable.OrderBy(x => x.CreateTime);
-            return Mapper.Map<List<FunctionDto>>(await query.ToListAsync());
+            return _mapper.Map<List<FunctionDto>>(await query.ToListAsync());
         }
 
         #endregion
@@ -156,7 +138,7 @@ namespace Vino.Core.CMS.Service.System
                 return true;
             }
             var key = string.Format(CacheKeyDefinition.UserAuthCode, userId);
-            var authcodes  = cacheService.Get<List<string>>(key);
+            var authcodes  = _cache.Get<List<string>>(key);
             if (authcodes == null)
             {
                 //取得用户所有权限码
@@ -179,7 +161,7 @@ namespace Vino.Core.CMS.Service.System
                 }
 
                 //缓存
-                cacheService.Add(key, authcodes);
+                _cache.Add(key, authcodes);
             }
             if (authcodes.Contains("vino.develop"))
             {
@@ -230,7 +212,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<string>> GetUserAuthCodesAsync(long userId, bool encrypt = false)
         {
             var key = string.Format(encrypt?CacheKeyDefinition.UserAuthCodeEncrypt:CacheKeyDefinition.UserAuthCode, userId);
-            var authcodes = cacheService.Get<List<string>>(key);
+            var authcodes = _cache.Get<List<string>>(key);
             if (authcodes == null)
             {
                 //取得用户所有权限码
@@ -256,7 +238,7 @@ namespace Vino.Core.CMS.Service.System
                     authcodes = authcodes.Select(CryptHelper.EncryptMD5).ToList();
                 }
                 //缓存
-                cacheService.Add(key, authcodes);
+                _cache.Add(key, authcodes);
             }
             return authcodes;
         }

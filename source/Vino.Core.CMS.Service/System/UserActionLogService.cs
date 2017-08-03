@@ -5,31 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Vino.Core.CMS.Core.Helper;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public class UserActionLogService : IUserActionLogService
+    public partial class UserActionLogService
     {
-        private IUserActionLogRepository repository;
-
-        public UserActionLogService(IUserActionLogRepository repository)
-        {
-            this.repository = repository;
-        }
-
         public void AddAsync(UserActionLogDto dto)
         {
-            UserActionLog model = Mapper.Map<UserActionLog>(dto);
+            UserActionLog model = _mapper.Map<UserActionLog>(dto);
             if (model != null)
             {
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
-                 this.repository.Insert(model);
-                 this.repository.Save();
+                 this._repository.Insert(model);
+                 this._repository.Save();
             }
         }
 
@@ -38,11 +29,11 @@ namespace Vino.Core.CMS.Service.System
             (int, List<UserActionLogDto>) Gets()
             {
                 int startRow = (page - 1) * size;
-                var queryable = repository.GetQueryable(x=>x.User);
+                var queryable = _repository.GetQueryable(x=>x.User);
                 var count = queryable.Count();
                 var query = queryable.OrderByDescending(x => x.CreateTime).Skip(startRow).Take(size);
                 var list = query.ToList();
-                var dtos = Mapper.Map<List<UserActionLogDto>>(list);
+                var dtos = _mapper.Map<List<UserActionLogDto>>(list);
                 foreach (var item in dtos)
                 {
                     if (item.User != null)

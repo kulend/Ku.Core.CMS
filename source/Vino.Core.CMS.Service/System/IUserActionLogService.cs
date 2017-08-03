@@ -6,7 +6,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public interface IUserActionLogService
+    public partial interface IUserActionLogService
     {
         void AddAsync(UserActionLogDto dto);
 

@@ -5,7 +5,7 @@
 //     重新生成代码，这些更改将会丢失。
 // </auto-generated>
 //
-// <copyright file="IUserService.cs">
+// <copyright file="IUserActionLogService.cs">
 //        最后生成时间：2017-08-03 12:01
 // </copyright>
 //------------------------------------------------------------------------------
@@ -20,15 +20,15 @@ using Vino.Core.CMS.Data.Repository.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial interface IUserService
+    public partial interface IUserActionLogService
     {
     }
 
-    public partial class UserService : BaseService, IUserService
+    public partial class UserActionLogService : BaseService, IUserActionLogService
     {
-        protected readonly IUserRepository _repository;
+        protected readonly IUserActionLogRepository _repository;
 
-        public UserService(VinoDbContext context, ICacheService cache, IMapper mapper, IUserRepository repository)
+        public UserActionLogService(VinoDbContext context, ICacheService cache, IMapper mapper, IUserActionLogRepository repository)
             : base(context, cache, mapper)
         {
             this._repository = repository;

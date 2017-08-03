@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Vino.Core.Cache;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Data.Common;
@@ -14,55 +15,51 @@ using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public class RoleService : IRoleService
+    public partial class RoleService
     {
-        private VinoDbContext context;
-        private IRoleRepository repository;
-        private IFunctionRepository functionRepository;
+        private readonly IFunctionRepository functionRepository;
 
-        public RoleService(IRoleRepository _repository, 
-            IFunctionRepository _functionRepository,
-            VinoDbContext _context)
+        public RoleService(VinoDbContext context, ICacheService cache, IMapper mapper, IRoleRepository repository, 
+            IFunctionRepository _functionRepository)
+            : this(context, cache, mapper, repository)
         {
-            this.repository = _repository;
             this.functionRepository = _functionRepository;
-            this.context = _context;
         }
 
         public async Task<(int count, List<RoleDto> items)> GetListAsync(int pageIndex, int pageSize)
         {
-            var data = await repository.PageQueryAsync(pageIndex, pageSize, null, "");
+            var data = await _repository.PageQueryAsync(pageIndex, pageSize, null, "");
 
-            return (data.count, Mapper.Map<List<RoleDto>>(data.items));
+            return (data.count, _mapper.Map<List<RoleDto>>(data.items));
         }
 
         public async Task<List<RoleDto>> GetAllAsync()
         {
-            var queryable = repository.GetQueryable();
-            var items = Mapper.Map<List<RoleDto>>(await queryable.ToListAsync());
+            var queryable = _repository.GetQueryable();
+            var items = _mapper.Map<List<RoleDto>>(await queryable.ToListAsync());
             return items;
         }
 
         public async Task<RoleDto> GetByIdAsync(long id)
         {
-            return Mapper.Map<RoleDto>(await this.repository.GetByIdAsync(id));
+            return _mapper.Map<RoleDto>(await this._repository.GetByIdAsync(id));
         }
 
         public async Task SaveAsync(RoleDto dto)
         {
-            Role model = Mapper.Map<Role>(dto);
+            Role model = _mapper.Map<Role>(dto);
             if (model.Id == 0)
             {
                 //新增
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
-                await repository.InsertAsync(model);
+                await _repository.InsertAsync(model);
             }
             else
             {
                 //更新
-                var role = await repository.GetByIdAsync(model.Id);
+                var role = await _repository.GetByIdAsync(model.Id);
                 if (role == null)
                 {
                     throw new VinoDataNotFoundException("无法取得角色数据!");
@@ -72,15 +69,15 @@ namespace Vino.Core.CMS.Service.System
                 role.NameEn = model.NameEn;
                 role.IsEnable = model.IsEnable;
                 role.Remarks = model.Remarks;
-                repository.Update(role);
+                _repository.Update(role);
             }
-            await repository.SaveAsync();
+            await _repository.SaveAsync();
         }
 
         public async Task DeleteAsync(long id)
         {
-            await repository.DeleteAsync(id);
-            await repository.SaveAsync();
+            await _repository.DeleteAsync(id);
+            await _repository.SaveAsync();
         }
 
         #region 功能权限
@@ -95,7 +92,7 @@ namespace Vino.Core.CMS.Service.System
                 //取得功能列表
                 var queryable = functionRepository.GetQueryable();
                 queryable = parentFunctionId.HasValue ? queryable.Where(x => x.ParentId == parentFunctionId.Value) : queryable.Where(x => x.ParentId == null);
-                var functions = Mapper.Map<List<FunctionDto>>(queryable.ToList());
+                var functions = _mapper.Map<List<FunctionDto>>(queryable.ToList());
 
                 //取得角色功能列表
                 var roleFunctions = context.RoleFunctions.Where(x => x.RoleId == roleId).ToList();

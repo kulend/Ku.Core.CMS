@@ -13,23 +13,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Service;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Vino.Core.CMS.Core.Helper;
-using Vino.Core.CMS.Core.Log;
 using Vino.Core.CMS.Web.AutoMapper;
 using Autofac.Extensions.DependencyInjection;
-using Vino.Core.CMS.Web.Filters;
+using AutoMapper;
 
 namespace Vino.Core.CMS.Web.Application
 {
     public class VinoAppStartup
     {
         protected IConfigurationRoot Configuration;
+        protected MapperConfiguration _mapperConfiguration { get; set; }
 
         public VinoAppStartup(IHostingEnvironment env)
         {
@@ -49,13 +46,14 @@ namespace Vino.Core.CMS.Web.Application
             CacheConfig.Initialize(Configuration);
             //日志初始化
             //VinoLogger.Initialize(env);
-            //VinoMapper初始化
-            VinoMapper.Initialize();
         }
 
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //AutoMapper
+            services.AddAutoMapper();
 
             string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));

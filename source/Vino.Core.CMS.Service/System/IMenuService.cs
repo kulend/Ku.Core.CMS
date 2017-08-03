@@ -5,7 +5,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public interface IMenuService
+    public partial interface IMenuService
     {
         Task<(int count, List<MenuDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize);
 

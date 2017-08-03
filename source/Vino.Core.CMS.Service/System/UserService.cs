@@ -15,39 +15,27 @@ using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public class UserService : IUserService
+    public partial class UserService
     {
-        private VinoDbContext context;
-        private IUserRepository repository;
-        private IRoleRepository roleRepository;
-        public UserService(VinoDbContext _context, 
-            IUserRepository _repository
-            , IRoleRepository _roleRepository)
-        {
-            this.context = _context;
-            this.repository = _repository;
-            this.roleRepository = _roleRepository;
-        }
-
         public async Task<(int count, List<UserDto> items)> GetListAsync(int page, int size)
         {
-            var data = await repository.PageQueryAsync(page, size, null, "CreateTime asc");
-            return (data.count, Mapper.Map<List<UserDto>>(data.items));
+            var data = await _repository.PageQueryAsync(page, size, null, "CreateTime asc");
+            return (data.count, _mapper.Map<List<UserDto>>(data.items));
         }
 
         public async Task<UserDto> GetByIdAsync(long id)
         {
-            return Mapper.Map<UserDto>(await this.repository.GetByIdAsync(id));
+            return _mapper.Map<UserDto>(await this._repository.GetByIdAsync(id));
         }
 
         public async Task SaveAsync(UserDto dto, long[] UserRoleIds)
         {
-            User model = Mapper.Map<User>(dto);
+            User model = _mapper.Map<User>(dto);
             if (model.Id == 0)
             {
                 //新增
                 //检查账户是否重复
-                var cnt = await repository.GetQueryable().Where(x => x.Account.EqualOrdinalIgnoreCase(model.Account)).CountAsync();
+                var cnt = await _repository.GetQueryable().Where(x => x.Account.EqualOrdinalIgnoreCase(model.Account)).CountAsync();
                 if (cnt > 0)
                 {
                     throw new VinoDataNotFoundException("账户名重复！");
@@ -61,7 +49,7 @@ namespace Vino.Core.CMS.Service.System
                         throw new VinoDataNotFoundException("手机号格式不正确！");
                     }
                     //是否重复
-                    cnt = await repository.GetQueryable().Where(x => x.Mobile.EqualOrdinalIgnoreCase(model.Mobile)).CountAsync();
+                    cnt = await _repository.GetQueryable().Where(x => x.Mobile.EqualOrdinalIgnoreCase(model.Mobile)).CountAsync();
                     if (cnt > 0)
                     {
                         throw new VinoDataNotFoundException("手机号重复！");
@@ -75,7 +63,7 @@ namespace Vino.Core.CMS.Service.System
                 model.Factor = random.Next(9999);
                 //密码设置
                 model.EncryptPassword();
-                await repository.InsertAsync(model);
+                await _repository.InsertAsync(model);
 
                 //角色处理
                 foreach (var roleId in UserRoleIds)
@@ -89,7 +77,7 @@ namespace Vino.Core.CMS.Service.System
             else
             {
                 //更新
-                var item = await repository.GetByIdAsync(model.Id);
+                var item = await _repository.GetByIdAsync(model.Id);
                 if (item == null)
                 {
                     throw new VinoDataNotFoundException("无法取得用户数据！");
@@ -107,7 +95,7 @@ namespace Vino.Core.CMS.Service.System
                 }
                 
                 item.Remarks = model.Remarks;
-                repository.Update(item);
+                _repository.Update(item);
 
                 //角色处理
                 var currentRoles = await context.UserRoles.Where(x => x.UserId == item.Id).ToListAsync();
@@ -120,13 +108,13 @@ namespace Vino.Core.CMS.Service.System
                 }
                 context.UserRoles.RemoveRange(currentRoles.Where(x => !UserRoleIds.Contains(x.RoleId)));
             }
-            await repository.SaveAsync();
+            await _repository.SaveAsync();
         }
 
         public async Task DeleteAsync(long id)
         {
-            await repository.DeleteAsync(id);
-            await repository.SaveAsync();
+            await _repository.DeleteAsync(id);
+            await _repository.SaveAsync();
         }
 
         #region 用户角色
@@ -137,7 +125,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<RoleDto>> GetUserRolesAsync(long userId)
         {
             var queryable = context.UserRoles.Include(x => x.Role).Where(x => x.UserId == userId);
-            var items = Mapper.Map<List<RoleDto>>((await queryable.ToListAsync()).Select(x=>x.Role));
+            var items = _mapper.Map<List<RoleDto>>((await queryable.ToListAsync()).Select(x=>x.Role));
             return items;
         }
 
@@ -168,7 +156,7 @@ namespace Vino.Core.CMS.Service.System
             {
                 throw new VinoException("该账号已被禁止登陆！");
             }
-            var dto = Mapper.Map<UserDto>(entity);
+            var dto = _mapper.Map<UserDto>(entity);
             dto.Password = "";
             return dto;
         }
@@ -189,7 +177,7 @@ namespace Vino.Core.CMS.Service.System
                 //新密码不能为空
                 throw new VinoArgNullException("新密码不能为空！");
             }
-            var item = await repository.GetByIdAsync(userId);
+            var item = await _repository.GetByIdAsync(userId);
             if (item == null)
             {
                 throw new VinoDataNotFoundException("无法取得用户数据！");
@@ -201,8 +189,8 @@ namespace Vino.Core.CMS.Service.System
             }
             item.Password = newPwd;
             item.EncryptPassword();
-            repository.Update(item);
-            await repository.SaveAsync();
+            _repository.Update(item);
+            await _repository.SaveAsync();
         }
 
 

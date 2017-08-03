@@ -7,7 +7,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public interface IRoleService
+    public partial interface IRoleService
     {
         Task<(int count, List<RoleDto> items)> GetListAsync(int pageIndex, int pageSize);
 

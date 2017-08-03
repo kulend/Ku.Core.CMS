@@ -6,8 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="output\**" />
+    <EmbeddedResource Remove="output\**" />
+    <None Remove="output\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Vino.Core.CMS.Core\Vino.Core.CMS.Core.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

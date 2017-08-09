@@ -6,18 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Vino.Core.CMS.Core.Helper;
-using Vino.Core.CMS.Web.AutoMapper;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 
@@ -42,8 +38,7 @@ namespace Vino.Core.CMS.Web.Application
 
             //ID生成器初始化
             ID.Initialize(Configuration);
-            //缓存初始化
-            CacheConfig.Initialize(Configuration);
+
             //日志初始化
             //VinoLogger.Initialize(env);
         }
@@ -64,21 +59,13 @@ namespace Vino.Core.CMS.Web.Application
                 .Options;
             SecondaryVinoDbContext.Options = dbOptions;
 
+            //缓存
+            services.AddCache(Configuration);
+            //事件消息发送订阅
+            services.AddEventBus();
+
             //加入身份认证
             services.AddAuthorization();
-            //添加options
-            //services.AddOptions();
-            //services.Configure<RedisConfig>(Configuration.GetSection("RedisConfig"));
-
-            //使用redis存储session
-            services.AddSingleton<IDistributedCache>(
-                serviceProvider =>
-                    new RedisCache(new RedisCacheOptions
-                    {
-                        Configuration = CacheConfig.RedisConfig.ConnectionString,
-                        InstanceName = CacheConfig.RedisConfig.ApplicationKey
-                    }));
-            services.AddSession();
 
             //Autofac依赖注入
             var builder = new ContainerBuilder();

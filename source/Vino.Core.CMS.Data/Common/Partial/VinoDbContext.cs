@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="VinoDbContext.cs">
-//        最后生成时间：2017-08-03 10:37
+//        最后生成时间：2017-08-03 15:48
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.Data.Common
 {
@@ -38,27 +37,42 @@ namespace Vino.Core.CMS.Data.Common
         /// <summary>
         /// 用户
         /// </summary>
-        public DbSet<User> Users { get; set; }
+        public DbSet<Domain.Entity.System.User> Users { get; set; }
 
         /// <summary>
         /// 角色
         /// </summary>
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Domain.Entity.System.Role> Roles { get; set; }
 
         /// <summary>
         /// 用户操作日志
         /// </summary>
-        public DbSet<UserActionLog> UserActionLogs { get; set; }
+        public DbSet<Domain.Entity.System.UserActionLog> UserActionLogs { get; set; }
 
         /// <summary>
         /// 功能
         /// </summary>
-        public DbSet<Function> Functions { get; set; }
+        public DbSet<Domain.Entity.System.Function> Functions { get; set; }
 
         /// <summary>
         /// 菜单
         /// </summary>
-        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Domain.Entity.System.Menu> Menus { get; set; }
+
+        /// <summary>
+        /// 会员
+        /// </summary>
+        public DbSet<Domain.Entity.Membership.Member> Members { get; set; }
+
+        /// <summary>
+        /// 会员类型
+        /// </summary>
+        public DbSet<Domain.Entity.Membership.MemberType> MemberTypes { get; set; }
+
+        /// <summary>
+        /// 公众号
+        /// </summary>
+        public DbSet<Domain.Entity.WeChat.WxAccount> WxAccounts { get; set; }
 
     }
 }

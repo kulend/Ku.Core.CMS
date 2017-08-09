@@ -112,5 +112,19 @@ namespace Microsoft.AspNetCore.Mvc.Rendering
             return helper.LayuiPasswordFor(expression);
         }
 
+        public static IHtmlContent LayuiEnumRadioFor<TModel, TResult>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TResult>> expression)
+        {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+            var helper = htmlHelper as VinoHtmlHelper<TModel>;
+            return helper.LayuiEnumRadioFor(expression);
+        }
     }
 }

@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.WeChat
+@model WxAccountDto
+<div class="window-content">
+    @using (Html.LayuiBeginForm<WxAccountDto>("Save"))
+    {
+        @Html.LayuiHiddenFor(x => x.Id)
+        @Html.LayuiEnumRadioFor(x => x.Type)
+        @Html.LayuiTextBoxFor(x => x.Name)
+        @Html.LayuiTextBoxFor(x => x.OriginalId)
+        @Html.LayuiTextBoxFor(x => x.WeixinId)
+        @Html.LayuiTextBoxFor(x => x.AppId)
+        @Html.LayuiTextBoxFor(x => x.AppSecret)
+        @Html.LayuiTextBoxFor(x => x.Token)
+        @Html.LayuiFormSubmitAndClose()
+    }
+</div>

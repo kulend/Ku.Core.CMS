@@ -39,7 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.TimedTask.EntityF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.TaskApp", "Vino.Core.CMS.TaskApp\Vino.Core.CMS.TaskApp.csproj", "{2BE05EA2-E672-401A-98F5-519CE4088AEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.CodeGenerator", "Vino.Core.CMS.CodeGenerator\Vino.Core.CMS.CodeGenerator.csproj", "{1D36842E-C60C-460A-905E-8E8B604B04D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.CodeGenerator", "Vino.Core.CMS.CodeGenerator\Vino.Core.CMS.CodeGenerator.csproj", "{1D36842E-C60C-460A-905E-8E8B604B04D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.测试", "5.测试", "{90D6C3DB-5BAC-4192-B281-6F553849024E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Tests", "Vino.Core.CMS.Tests\Vino.Core.CMS.Tests.csproj", "{63ED8391-D0AA-43B1-B0CD-3628F89895E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +103,10 @@ Global
 		{1D36842E-C60C-460A-905E-8E8B604B04D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D36842E-C60C-460A-905E-8E8B604B04D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D36842E-C60C-460A-905E-8E8B604B04D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63ED8391-D0AA-43B1-B0CD-3628F89895E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63ED8391-D0AA-43B1-B0CD-3628F89895E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63ED8391-D0AA-43B1-B0CD-3628F89895E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63ED8391-D0AA-43B1-B0CD-3628F89895E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,5 +125,6 @@ Global
 		{00A492FB-10A7-433D-8374-95D0329D6C16} = {AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}
 		{2BE05EA2-E672-401A-98F5-519CE4088AEC} = {AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}
 		{1D36842E-C60C-460A-905E-8E8B604B04D1} = {38AE7166-6167-4D42-A479-647797CD1A83}
+		{63ED8391-D0AA-43B1-B0CD-3628F89895E9} = {90D6C3DB-5BAC-4192-B281-6F553849024E}
 	EndGlobalSection
 EndGlobal

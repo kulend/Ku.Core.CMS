@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Vino.Core.Cache;
 using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Core.Extensions;
 using Vino.Core.CMS.Core.Helper;
@@ -12,11 +13,22 @@ using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
+using Vino.Core.CMS.Service.Events;
+using Vino.Core.CMS.Service.Events.System;
 
 namespace Vino.Core.CMS.Service.System
 {
     public partial class UserService
     {
+        private readonly IEventPublisher _eventPublisher;
+
+        public UserService(VinoDbContext context, ICacheService cache, IMapper mapper, IUserRepository repository,
+            IEventPublisher _eventPublisher)
+            : this(context, cache, mapper, repository)
+        {
+            this._eventPublisher = _eventPublisher;
+        }
+
         public async Task<(int count, List<UserDto> items)> GetListAsync(int page, int size)
         {
             var data = await _repository.PageQueryAsync(page, size, null, "CreateTime asc");
@@ -158,6 +170,9 @@ namespace Vino.Core.CMS.Service.System
             }
             var dto = _mapper.Map<UserDto>(entity);
             dto.Password = "";
+
+            //发送消息
+            await _eventPublisher.PublishAsync(new UserLoginEvent {UserId = entity.Id});
             return dto;
         }
 

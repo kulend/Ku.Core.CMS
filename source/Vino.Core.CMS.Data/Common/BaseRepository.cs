@@ -69,12 +69,12 @@ namespace Vino.Core.CMS.Data.Common
         /// 获取实体集合
         /// </summary>
         /// <returns></returns>
-        public IQueryable<TEntity> GetQueryable(params Expression<Func<TEntity, object>>[] propertySelectors)
+        public IQueryable<TEntity> GetQueryable(params Expression<Func<TEntity, object>>[] includes)
         {
             var query = Table.AsQueryable();
-            if (propertySelectors != null && propertySelectors.Length > 0)
+            if (includes != null && includes.Length > 0)
             {
-                foreach (var propertySelector in propertySelectors)
+                foreach (var propertySelector in includes)
                 {
                     query = query.Include(propertySelector);
                 }
@@ -85,6 +85,71 @@ namespace Vino.Core.CMS.Data.Common
                 query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
             }
             return query;
+        }
+
+        public async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> where, string order)
+        {
+            var query = Table.AsQueryable();
+            if (where != null)
+            {
+                query = query.Where(where);
+            }
+            //处理有IsDelete字段表
+            if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
+            {
+                query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
+            }
+
+            if (order.IsNotNullOrEmpty())
+            {
+                var orderFileds = order.SplitRemoveEmpty(',').Select(x => x.Trim()).ToArray();
+                var filedFirst = orderFileds.First();
+
+                var orderFiledFirstParts = filedFirst.SplitRemoveEmpty(' ').Select(x => x.Trim()).ToArray();
+                var nameFirst = orderFiledFirstParts[0];
+                var isDescFirst = false;
+                if (orderFiledFirstParts.Length > 1)
+                {
+                    isDescFirst = orderFiledFirstParts[1].EqualOrdinalIgnoreCase("desc");
+                }
+                query = isDescFirst ? query.OrderByDescending(nameFirst) : query.OrderBy(nameFirst);
+
+                if (orderFileds.Count() > 1)
+                {
+                    for (int i = 1; i < orderFileds.Length; i++)
+                    {
+                        var orderFiledParts = orderFileds[i].SplitRemoveEmpty(' ').Select(x => x.Trim()).ToArray();
+                        var name = orderFiledParts[0];
+                        var isDesc = false;
+                        if (orderFiledParts.Length > 1)
+                        {
+                            isDesc = orderFiledParts[1].EqualOrdinalIgnoreCase("desc");
+                        }
+                        query = isDesc ? ((IOrderedQueryable<TEntity>)query).ThenByDescending(name) : ((IOrderedQueryable<TEntity>)query).ThenBy(name);
+                    }
+                }
+            }
+            return await query.ToListAsync();
+        }
+
+        public async Task<List<TEntity>> QueryAsync<Tkey>(Expression<Func<TEntity, bool>> where,
+            Expression<Func<TEntity, Tkey>> order, bool isDesc = false)
+        {
+            var query = Table.AsQueryable();
+            if (where != null)
+            {
+                query = query.Where(where);
+            }
+            //处理有IsDelete字段表
+            if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
+            {
+                query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
+            }
+            if (order != null)
+            {
+                query = isDesc ? query.OrderByDescending(order) : query.OrderBy(order);
+            }
+            return await query.ToListAsync();
         }
 
         #endregion
@@ -254,7 +319,24 @@ namespace Vino.Core.CMS.Data.Common
             Expression<Func<TEntity, bool>> where,
             string order)
         {
+            return await PageQueryAsync(page, size, where, order, null);
+        }
+
+        /// <summary>
+        /// 异步分页查询
+        /// </summary>
+        public async Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size,
+            Expression<Func<TEntity, bool>> where,
+            string order, Expression<Func<TEntity, object>>[] includes)
+        {
             var query = Table.AsQueryable();
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
             if (where != null)
             {
                 query = query.Where(where);

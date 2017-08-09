@@ -33,6 +33,11 @@ namespace Vino.Core.CMS.Service.System
                     {
                         throw new VinoDataNotFoundException("无法取得父级菜单数据!");
                     }
+                    if (!pModel.HasSubMenu)
+                    {
+                        pModel.HasSubMenu = true;
+                        _repository.Update(pModel);
+                    }
                 }
                 else
                 {

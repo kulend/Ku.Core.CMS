@@ -8,5 +8,7 @@ namespace Vino.Core.CMS.Domain
     {
         public static readonly string UserAuthCode = "vino.cache.user.authcode:{0}";
         public static readonly string UserAuthCodeEncrypt = "vino.cache.user.authcode.encrypt:{0}";
+
+        public static readonly string EventSubscribers = "vino.cache.event.subscribers:{0}";
     }
 }

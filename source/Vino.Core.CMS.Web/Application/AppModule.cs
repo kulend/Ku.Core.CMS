@@ -30,7 +30,6 @@ namespace Vino.Core.CMS.Web.Application
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<SystemJwtProvider>().As<IJwtProvider>().SingleInstance();
-            builder.RegisterType<RedisCacheService>().As<ICacheService>().SingleInstance();
         }
     }
 }

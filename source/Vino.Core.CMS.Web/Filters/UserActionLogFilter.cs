@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using NLog.Filters;
 using Vino.Core.CMS.Core.Extensions;
@@ -54,6 +55,9 @@ namespace Vino.Core.CMS.Web.Filters
                     log.UserId = userId;
                     log.Ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
                     log.Url = context.HttpContext.Request.Path;
+                    var headersDictionary = context.HttpContext.Request.Headers;
+                    var urlReferrer = headersDictionary[HeaderNames.Referer].ToString();
+                    log.UrlReferrer = urlReferrer;
                     if (result != null)
                     {
                         var json = JsonConvert.SerializeObject(result.Value);

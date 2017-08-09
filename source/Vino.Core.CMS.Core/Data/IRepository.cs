@@ -64,6 +64,19 @@ namespace Vino.Core.CMS.Core.Data
         /// <returns></returns>
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where);
 
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <returns></returns>
+        Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> where, string order);
+
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <returns></returns>
+        Task<List<TEntity>> QueryAsync<Tkey>(Expression<Func<TEntity, bool>> where,
+            Expression<Func<TEntity, Tkey>> order, bool isDesc = false);
+
         #endregion
 
         #region 插入
@@ -162,6 +175,18 @@ namespace Vino.Core.CMS.Core.Data
         /// <returns></returns>
         Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size,
                     Expression<Func<TEntity, bool>> where, string order);
+
+        /// <summary>
+        /// 异步分页查询
+        /// </summary>
+        /// <param name="page">查询页码</param>
+        /// <param name="size">查询条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="order">排序条件，格式类似【 Name asc, CreateTime desc】</param>
+        /// <param name="includes">连接其他表</param>
+        /// <returns></returns>
+        Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size,
+            Expression<Func<TEntity, bool>> where, string order, Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
         /// 异步分页查询

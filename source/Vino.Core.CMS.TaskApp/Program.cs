@@ -32,8 +32,6 @@ namespace Vino.Core.CMS.TaskApp
             
             //ID生成器初始化
             ID.Initialize(Configuration);
-            //缓存初始化
-            CacheConfig.Initialize(Configuration);
 
             VinoMapper.Initialize();
 

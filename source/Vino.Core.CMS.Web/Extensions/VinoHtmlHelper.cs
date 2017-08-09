@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.AspNetCore.Html;
 using NLog.Web.LayoutRenderers;
 using Vino.Core.CMS.Core.Extensions;
@@ -295,6 +296,57 @@ namespace Microsoft.AspNetCore.Mvc.Rendering
             tag.InnerHtml.AppendHtml($"<label class=\"layui-form-label\">{displayName}</label>");
             tag.InnerHtml.AppendHtml("<div class=\"layui-input-block\">");
             tag.InnerHtml.AppendHtml(input);
+            tag.InnerHtml.AppendHtml("</div>");
+            return tag;
+        }
+
+        public IHtmlContent LayuiEnumRadioFor<TResult>(Expression<Func<TModel, TResult>> expression)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
+            var tag = new TagBuilder("div");
+            tag.AddCssClass("layui-form-item");
+
+            var modelExplorer = GetModelExplorer(expression);
+            var metadata = modelExplorer.Metadata;
+            if (!metadata.IsEnum)
+            {
+                throw new Exception("type is not enum.");
+            }
+            var displayName = metadata.GetDisplayName();
+            var name = GetExpressionName(expression);
+
+            tag.InnerHtml.AppendHtml($"<label class=\"layui-form-label\">{displayName}</label>");
+            tag.InnerHtml.AppendHtml("<div class=\"layui-input-block\">");
+
+            string value = "";
+            if (modelExplorer.Model != null)
+            {
+                value = Convert.ToInt32(modelExplorer.Model).ToString();
+            }
+
+            var displays = metadata.EnumGroupedDisplayNamesAndValues ?? new List<KeyValuePair<EnumGroupAndName, string>>();
+            foreach (var enumItem in displays)
+            {
+                var itemName = enumItem.Key.Name;
+                var itemValue = enumItem.Value;
+                var input = new TagBuilder("input");
+                input.GenerateId(name + "_" + itemValue, "");
+                input.TagRenderMode = TagRenderMode.SelfClosing;
+                input.MergeAttribute("type", InputType.Radio.ToString());
+                input.MergeAttribute("name", name, replaceExisting: true);
+                input.MergeAttribute("value", itemValue);
+                input.MergeAttribute("title", itemName);
+                if (itemValue.Equals(value))
+                {
+                    input.MergeAttribute("checked", "checked");
+                }
+                tag.InnerHtml.AppendHtml(input);
+            }
+ 
             tag.InnerHtml.AppendHtml("</div>");
             return tag;
         }

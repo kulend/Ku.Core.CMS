@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.Domain.Enum;
+using Vino.Core.CMS.Domain.Enum.WeChat;
 
 namespace Vino.Core.CMS.Web.Admin.Migrations
 {
@@ -14,6 +16,68 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Membership.Member", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<int?>("Factor");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsEnable");
+
+                    b.Property<string>("LastLoginIp")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("LastLoginTime");
+
+                    b.Property<int>("Level");
+
+                    b.Property<long?>("MemberTypeId");
+
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(11);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<int>("Points");
+
+                    b.Property<short>("Sex");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberTypeId");
+
+                    b.ToTable("membership_member");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Membership.MemberType", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("OrderIndex");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("membership_member_type");
+                });
 
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.Function", b =>
                 {
@@ -185,6 +249,8 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("system_action_log");
                 });
 
@@ -199,6 +265,43 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("system_user_role");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.WeChat.WxAccount", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<string>("AppId")
+                        .HasMaxLength(32);
+
+                    b.Property<string>("AppSecret")
+                        .HasMaxLength(512);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<string>("OriginalId")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Token")
+                        .HasMaxLength(30);
+
+                    b.Property<short>("Type");
+
+                    b.Property<string>("WeixinId")
+                        .HasMaxLength(128);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wechat_account");
                 });
 
             modelBuilder.Entity("Vino.Core.TimedTask.TimedTask", b =>
@@ -254,6 +357,13 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                     b.ToTable("TimedTaskLogs");
                 });
 
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Membership.Member", b =>
+                {
+                    b.HasOne("Vino.Core.CMS.Domain.Entity.Membership.MemberType", "MemberType")
+                        .WithMany()
+                        .HasForeignKey("MemberTypeId");
+                });
+
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.RoleFunction", b =>
                 {
                     b.HasOne("Vino.Core.CMS.Domain.Entity.System.Function", "Function")
@@ -265,6 +375,13 @@ namespace Vino.Core.CMS.Web.Admin.Migrations
                         .WithMany("RoleFunctions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.UserActionLog", b =>
+                {
+                    b.HasOne("Vino.Core.CMS.Domain.Entity.System.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.UserRole", b =>

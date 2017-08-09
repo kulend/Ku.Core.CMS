@@ -8,11 +8,9 @@ namespace Vino.Core.Cache.Redis
 {
     public class RedisCacheService: ICacheService
     {
-        private static readonly string _ApplicationKey = CacheConfig.RedisConfig.ApplicationKey;
-
         private string GetKey(string key)
         {
-            return $"{_ApplicationKey ?? ""}.{key}";
+            return $"{RedisConnectionMultiplexer.RedisConfig.ApplicationKey ?? ""}.{key}";
         }
 
         public void Add(string key, object value, TimeSpan time)

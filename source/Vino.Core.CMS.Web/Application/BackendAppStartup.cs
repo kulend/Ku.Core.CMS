@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Vino.Core.CMS.Core.Json;
 using Vino.Core.CMS.Web.Filters;
 
 namespace Vino.Core.CMS.Web.Application
@@ -44,6 +45,8 @@ namespace Vino.Core.CMS.Web.Application
                     json.SerializerSettings.ContractResolver = new DefaultContractResolver();
                     //设置时间格式
                     json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                    json.SerializerSettings.Converters.Add(new LongToStringConverter());
+                    json.SerializerSettings.Converters.Add(new EnumDisplayConverter());
                 });
 
             return base.ConfigureServices(services);

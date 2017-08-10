@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vino.Core.CMS.Core.Data
+namespace Vino.Core.Infrastructure.Data
 {
     /// <summary>
     /// 仓储接口定义

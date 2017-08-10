@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.CMS.Core.DependencyResolver
+namespace Vino.Core.Infrastructure.DependencyResolver
 {
     public interface IIocResolver
     {

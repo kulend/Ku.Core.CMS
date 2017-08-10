@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using Autofac;
-using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Service.System;
+using Vino.Core.Infrastructure.DependencyResolver;
 
 namespace Vino.Core.CMS.TaskApp.Application
 {

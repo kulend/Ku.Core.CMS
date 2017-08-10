@@ -13,9 +13,9 @@ using Vino.Core.CMS.Data.Common;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
-using Vino.Core.CMS.Core.Helper;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using Vino.Core.Infrastructure.Helper;
 
 namespace Vino.Core.CMS.Web.Application
 {

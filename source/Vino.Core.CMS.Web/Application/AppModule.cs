@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using Autofac;
-using Vino.Core.Cache;
-using Vino.Core.Cache.Redis;
-using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.Tokens.Jwt;
+using Vino.Core.Infrastructure.DependencyResolver;
 
 namespace Vino.Core.CMS.Web.Application
 {

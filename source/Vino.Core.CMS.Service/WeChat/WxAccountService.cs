@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.CMS.Core.Exceptions;
-using Vino.Core.CMS.Core.Extensions;
-using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
+using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.Infrastructure.Extensions;
+using Vino.Core.Infrastructure.Helper;
 
 namespace Vino.Core.CMS.Service.WeChat
 {

@@ -4,18 +4,13 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Core.DependencyResolver;
-using Vino.Core.CMS.Core.Extensions;
-using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Data.Repository.System;
-using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.TaskApp.Application;
 using Vino.Core.CMS.TaskApp.AutoMapper;
+using Vino.Core.Infrastructure.Extensions;
+using Vino.Core.Infrastructure.Helper;
 
 namespace Vino.Core.CMS.TaskApp
 {

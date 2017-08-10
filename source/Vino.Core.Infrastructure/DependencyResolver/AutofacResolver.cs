@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Autofac;
 
-namespace Vino.Core.CMS.Core.DependencyResolver
+namespace Vino.Core.Infrastructure.DependencyResolver
 {
     public class AutofacResolver : IIocResolver
     {

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Options;
 using StackExchange.Redis;
-using Vino.Core.CMS.Core.Extensions;
+using Vino.Core.Infrastructure.Extensions;
 
 namespace Vino.Core.Cache.Redis
 {

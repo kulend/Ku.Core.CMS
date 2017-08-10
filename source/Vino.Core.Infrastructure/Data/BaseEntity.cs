@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text;
 
-namespace Vino.Core.CMS.Core.Data
+namespace Vino.Core.Infrastructure.Data
 {
     public interface IEntity
     {

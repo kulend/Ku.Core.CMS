@@ -4,8 +4,8 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Web.Extensions;
+using Vino.Core.Infrastructure.Exceptions;
 
 namespace Vino.Core.CMS.Web.Filters
 {

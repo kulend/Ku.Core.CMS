@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Vino.Core.CMS.Core.Helper
+namespace Vino.Core.Infrastructure.Helper
 {
     public class CryptHelper
     {

@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Vino.Core.CMS.Core.Json;
 using Vino.Core.CMS.Web.Filters;
+using Vino.Core.Infrastructure.Json;
 
 namespace Vino.Core.CMS.Web.Application
 {

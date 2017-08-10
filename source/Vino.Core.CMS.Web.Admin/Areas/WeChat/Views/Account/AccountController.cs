@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Core.Exceptions;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 using Vino.Core.CMS.Service.WeChat;
 using Vino.Core.CMS.Web.Security;
+using Vino.Core.Infrastructure.Exceptions;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
 {

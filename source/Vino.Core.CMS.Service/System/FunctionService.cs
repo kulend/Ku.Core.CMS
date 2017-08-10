@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.CMS.Core.Exceptions;
-using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.CMS.Core.Extensions;
 using Vino.Core.CMS.Domain;
+using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.Infrastructure.Helper;
+using Vino.Core.Infrastructure.Extensions;
 
 namespace Vino.Core.CMS.Service.System
 {

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Core.DependencyResolver;
 using Vino.Core.CMS.Web.Tools;
 
 namespace Vino.Core.CMS.Web.Admin.Controllers

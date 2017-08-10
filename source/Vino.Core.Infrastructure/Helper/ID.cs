@@ -2,9 +2,9 @@
 using System.IO;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using Vino.Core.CMS.Core.Exceptions;
+using Vino.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Core.Helper
+namespace Vino.Core.Infrastructure.Helper
 {
     /// <summary>
     /// ID 生成帮助类

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Core.Exceptions;
+using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Service.Membership;

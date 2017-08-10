@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.CMS.Core.Data;
+using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {

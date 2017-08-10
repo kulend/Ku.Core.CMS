@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Vino.Core.CMS.Core.Data;
+using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Vino.Core.Cache;
 using Vino.Core.Cache.Redis;
-using Vino.Core.CMS.Core.DependencyResolver;
+using Vino.Core.Infrastructure.DependencyResolver;
 
 namespace Vino.Core.CMS.Service.Events
 {

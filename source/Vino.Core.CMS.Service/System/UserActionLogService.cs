@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using Vino.Core.CMS.Core.Helper;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
+using Vino.Core.Infrastructure.Helper;
 
 namespace Vino.Core.CMS.Service.System
 {

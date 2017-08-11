@@ -53,6 +53,16 @@ namespace Vino.Core.CMS.Web.Application
             string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
 
+            //CAP
+            services.AddCap(x =>
+            {
+                // If your SqlServer is using EF for data operations, you need to add the following configuration：
+                x.UseEntityFramework<VinoDbContext>();
+                //x.UseMySql(connection);
+                // If your Message Queue is using RabbitMQ you need to add the config：
+                x.UseRabbitMQ("localhost");
+            });
+
             //注册非主线DbContext
             var dbOptions = new DbContextOptionsBuilder<SecondaryVinoDbContext>()
                 .UseMySql(connection)
@@ -80,6 +90,8 @@ namespace Vino.Core.CMS.Web.Application
             //Nlog
             loggerFactory.AddNLog();
             app.AddNLogWeb();
+
+            app.UseCap();
         }
     }
 }

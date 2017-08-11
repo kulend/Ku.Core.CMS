@@ -11,15 +11,14 @@ namespace Vino.Core.CMS.Service.System
 {
     public partial class UserActionLogService
     {
-        public void AddAsync(UserActionLogDto dto)
+        public async Task AddAsync(UserActionLogDto dto)
         {
             UserActionLog model = _mapper.Map<UserActionLog>(dto);
             if (model != null)
             {
                 model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                 this._repository.Insert(model);
-                 this._repository.Save();
+                await this._repository.InsertAsync(model);
+                await this._repository.SaveAsync();
             }
         }
 

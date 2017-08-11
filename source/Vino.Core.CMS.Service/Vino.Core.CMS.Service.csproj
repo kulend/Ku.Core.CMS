@@ -5,12 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Events\BaseEvent.cs" />
+    <Compile Remove="Events\EventPublisher.cs" />
+    <Compile Remove="Events\EventSubscriber.cs" />
+    <Compile Remove="Events\IEventPublisher.cs" />
+    <Compile Remove="Events\IEventSubscriber.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
-    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
+    <ProjectReference Include="..\Vino.Core.EventBus\Vino.Core.EventBus.csproj" />
     <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />

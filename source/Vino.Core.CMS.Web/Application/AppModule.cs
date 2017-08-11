@@ -14,6 +14,7 @@ namespace Vino.Core.CMS.Web.Application
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<VinoDbContext>().As<IDbContext>().InstancePerLifetimeScope();
             builder.RegisterType<AutofacResolver>().As<IIocResolver>().InstancePerLifetimeScope();
 
             //Repository

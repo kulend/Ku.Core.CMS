@@ -16,7 +16,6 @@ namespace Vino.Core.CMS.Web.Admin
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseApplicationInsights()
                 .Build();
 
             host.Run();

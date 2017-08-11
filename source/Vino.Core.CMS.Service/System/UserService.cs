@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
@@ -12,6 +13,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.CMS.Service.Events;
 using Vino.Core.CMS.Service.Events.System;
+using Vino.Core.EventBus;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.Helper;
@@ -171,8 +173,24 @@ namespace Vino.Core.CMS.Service.System
             var dto = _mapper.Map<UserDto>(entity);
             dto.Password = "";
 
-            //发送消息
-            await _eventPublisher.PublishAsync(new UserLoginEvent {UserId = entity.Id});
+            UserActionLogDto log = new UserActionLogDto();
+            log.Operation = "用户登陆";
+            log.ControllerName = "Home";
+            log.ActionName = "Login";
+            log.UserId = entity.Id;
+            log.Ip = "";
+            log.Url = "";
+            log.UrlReferrer = "";
+            log.CreateTime = DateTime.Now;
+
+            using (var trans = context.Database.BeginTransaction())
+            {
+                //发送消息
+                await _eventPublisher.PublishAsync(new UserLoginEvent { UserId = entity.Id });
+                await _eventPublisher.PublishAsync(log);
+
+                trans.Commit();
+            }
             return dto;
         }
 

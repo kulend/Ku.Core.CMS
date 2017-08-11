@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Vino.Core.EventBus;
 using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
+    [Event("backend_user_action_log")]
     public class UserActionLogDto : BaseDto
     {
         [MaxLength(40)]

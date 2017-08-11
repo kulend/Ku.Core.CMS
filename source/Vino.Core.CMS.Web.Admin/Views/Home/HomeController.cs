@@ -14,6 +14,7 @@ using Vino.Core.Tokens.Jwt;
 using Vino.Core.CMS.Web.Configs;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Domain;
+using Vino.Core.CMS.Web.Filters;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
 

@@ -24,14 +24,12 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
         }
 
         [Auth("view")]
-        [UserAction("查看用户列表")]
         public IActionResult Index()
         {
             return View();
         }
 
         [Auth("view")]
-        [UserAction("用户列表数据")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
             var data = await service.GetListAsync(page, rows);
@@ -75,6 +73,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
         /// </summary>
         [HttpPost]
         [Auth("edit")]
+        [UserAction("编辑用户")]
         public async Task<IActionResult> Save(UserDto model, long[] UserRoles)
         {
             await service.SaveAsync(model, UserRoles);
@@ -83,6 +82,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
 
         [HttpPost]
         [Auth("delete")]
+        [UserAction("删除用户")]
         public async Task<IActionResult> Delete(long id)
         {
             await service.DeleteAsync(id);

@@ -8,7 +8,7 @@ namespace Vino.Core.CMS.Service.System
 {
     public partial interface IUserActionLogService
     {
-        void AddAsync(UserActionLogDto dto);
+        Task AddAsync(UserActionLogDto dto);
 
         Task<(int count, List<UserActionLogDto> items)> GetListAsync(int page, int size);
     }

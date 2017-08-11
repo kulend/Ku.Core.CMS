@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Vino.Core.Cache;
 using Vino.Core.Cache.Redis;
 using Vino.Core.CMS.Service.Events;
+using Vino.Core.EventBus;
+using Vino.Core.EventBus.CAP;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -48,8 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddEventBus(this IServiceCollection services)
         {
-            services.AddSingleton<IEventPublisher, EventPublisher>();
-            services.AddSingleton<IEventSubscriber, EventSubscriber>();
+            services.AddScoped<IEventPublisher, CapEventPublisher>();
             return services;
         }
     }

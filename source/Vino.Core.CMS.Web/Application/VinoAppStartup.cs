@@ -50,6 +50,9 @@ namespace Vino.Core.CMS.Web.Application
             //AutoMapper
             services.AddAutoMapper();
 
+            //Tools
+            services.AddTools();
+
             string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Admin")));
 

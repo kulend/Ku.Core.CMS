@@ -7,9 +7,9 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
-    <PackageReference Include="DotNetCore.CAP" Version="1.1.0" />
-    <PackageReference Include="DotNetCore.CAP.MySql" Version="1.1.0" />
-    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="1.1.0" />
+    <PackageReference Include="DotNetCore.CAP" Version="1.2.0-preview-00019208119" />
+    <PackageReference Include="DotNetCore.CAP.MySql" Version="1.2.0-preview-00019208119" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="1.2.0-preview-00019208119" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.2" />
@@ -33,10 +33,12 @@
     <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj" />
     <ProjectReference Include="..\Vino.Core.Tokens.Jwt\Vino.Core.Tokens.Jwt.csproj" />
+    <ProjectReference Include="..\Vino.Core.Tools\Vino.Core.Tools.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Middlewares\" />
+    <Folder Include="Tools\" />
   </ItemGroup>
 
 </Project>

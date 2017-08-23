@@ -30,7 +30,7 @@
                 <img src="~/images/logo.png">
             </a>
             <div class="layui-main">
-                <a class="logo hidden-xs hidden-sm" href="#">
+                <a class="logo hidden-xs hidden-sm" href="javascript:;">
                     <img src="~/images/logo.png" alt="jsyso-admin">
                 </a>
                 <ul class="layui-nav layui-nav-xsm">
@@ -40,14 +40,14 @@
                     <li class="layui-nav-item layui-nav-item-xsm">
                         <a href="javascript:;">
                             <i class="layui-icon">&#xe60c;</i>
-                            欢迎，@ViewData["LoginUserName"]<span class="layui-nav-more"></span>
+                            欢迎您，@ViewData["LoginUserName"]<span class="layui-nav-more"></span>
                         </a>
                         <dl class="layui-nav-child">
                             <dd>
                                 <a id="pwd_edit" href="javascript:;"><i class="fa fa-lock"></i><cite>修改密码</cite></a>
                             </dd>
                             <dd>
-                                <a href="~/Home/Logout"><i class="fa fa-sign-out"></i><cite>退出</cite></a>
+                                <a href="~/Account/Logout"><i class="fa fa-sign-out"></i><cite>退出</cite></a>
                             </dd>
                         </dl>
                     </li>
@@ -56,7 +56,7 @@
         </div>
         <div class="layui-side layui-side-xsm layui-bg-black">
             <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree index-nav" lay-filter="F_index_nav">
+                <ul class="layui-nav layui-nav-tree index-nav" lay-filter="index_nav_menu">
                     @await Component.InvokeAsync("HomeMenu");
                 </ul>
             </div>
@@ -93,6 +93,8 @@
 
     <script type="text/javascript">
         $(function () {
+            var element = layui.element;
+
             //iframe自适应
             $(window).on('resize', function () {
                 var $content = $('.main-index-tab .layui-tab-content')
@@ -102,7 +104,10 @@
                 $content.height($(this).height() - headHeight - tabHeight - footHeight - 10);
             }).resize();
 
-            function _openNav() {
+            // 菜单点击
+            element.on('nav(index_nav_menu)', _openNavMenu);
+
+            function _openNavMenu() {
                 var elem = $(this)
                     , url = elem.data('url')
                     , id = elem.data('id')
@@ -116,7 +121,7 @@
                         , content: content
                         , id: id
                     });
-                    //监听关闭事件
+                    //监听Tab关闭事件
                     $tabTitle.find('i.layui-tab-close').on('click', function () {
                         element.tabDelete('F_index_tab', $(this).data('id'));
                     });
@@ -129,10 +134,6 @@
                 $(".layui-side-xsm").hide();
             }
 
-            var element = layui.element;
-            // 菜单点击打开iframe
-            element.on('nav(F_index_nav)', _openNav);
-            $(".do-open-nav").on('click', _openNav);
             $("#J_open_nav").on('click', function () {
                 $(".layui-side-xsm").toggle();
             });

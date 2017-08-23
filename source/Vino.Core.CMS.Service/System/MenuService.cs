@@ -115,6 +115,15 @@ namespace Vino.Core.CMS.Service.System
             return _mapper.Map<List<MenuDto>>(await query.ToListAsync());
         }
 
+        public async Task<List<MenuDto>> GetMenuTreeAsync()
+        {
+            var queryable = _repository.GetQueryable();
+            queryable = queryable.Where(u => u.ParentId == null);
+            queryable = queryable.Include(x=>x.SubMenus);
+            var query = queryable.OrderBy(x => x.OrderIndex);
+            return _mapper.Map<List<MenuDto>>(await query.ToListAsync());
+        }
+
         #region private
 
         private List<MenuDto> GetParents(long parentId)

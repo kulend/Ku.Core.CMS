@@ -15,7 +15,7 @@ namespace Vino.Core.CMS.Web.Security
 
     }
 
-    public class BackendAuthAuthorizationHandler : BackendAttributeAuthorizationHandler<AuthAuthorizationRequirement, AuthAttribute>
+    public class BackendAuthAuthorizationHandler : BackendAttributeAuthorizationHandler<BackendAuthAuthorizationRequirement, AuthAttribute>
     {
         private IFunctionService service;
 
@@ -24,7 +24,7 @@ namespace Vino.Core.CMS.Web.Security
             this.service = _service;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AuthAuthorizationRequirement requirement, List<AuthAttribute> attributes, List<AuthAttribute> controllAttributes)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, BackendAuthAuthorizationRequirement requirement, List<AuthAttribute> attributes, List<AuthAttribute> controllAttributes)
         {
             //var action = (context.Resource as AuthorizationFilterContext)?.ActionDescriptor as ControllerActionDescriptor;
             //if (action == null)
@@ -65,7 +65,7 @@ namespace Vino.Core.CMS.Web.Security
             }
             if (attribute.AuthCode.IsNullOrEmpty())
             {
-                return context.User != null;
+                return context.User != null && context.User.GetUserIdOrZero() != 0;
             }
             var userId = context.User.GetUserIdOrZero();
             if (userId == 0)

@@ -19,18 +19,8 @@ namespace Vino.Core.CMS.Web.Admin.Components
 
         public async Task<IViewComponentResult> InvokeAsync(long? pid)
         {
-            List<MenuDto> list;
-            var layout = "Default";
-            if (pid.HasValue)
-            {
-                list = await service.GetSubsAsync(pid.Value);
-                layout = "Sub";
-            }
-            else
-            {
-                list = await service.GetSubsAsync(null);
-            }
-            return View(layout, list);
+            List<MenuDto> list = await service.GetMenuTreeAsync();
+            return View(list);
         }
     }
 }

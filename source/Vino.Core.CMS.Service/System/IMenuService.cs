@@ -18,5 +18,7 @@ namespace Vino.Core.CMS.Service.System
         Task DeleteAsync(long id);
 
         Task<List<MenuDto>> GetSubsAsync(long? parentId);
+
+        Task<List<MenuDto>> GetMenuTreeAsync();
     }
 }

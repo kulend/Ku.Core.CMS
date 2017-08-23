@@ -30,6 +30,9 @@ namespace Vino.Core.CMS.Data.Common
                 .WithMany(t => t.RoleFunctions)
                 .HasForeignKey(pt => pt.RoleId);
 
+            //菜单
+            modelBuilder.Entity<Menu>().HasMany(m => m.SubMenus).WithOne(m => m.Parent);
+
             base.OnModelCreating(modelBuilder);
 
             //定时任务相关

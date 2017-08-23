@@ -41,16 +41,6 @@ namespace Vino.Core.CMS.Web.Filters
             }
             else
             {
-                //if (exception is VinoException ex)
-                //{
-                //    context.HttpContext.Response.StatusCode = 500;
-                //}
-                context.Exception = null;
-                context.Result = new ContentResult
-                {
-                    Content = "<script>alert(1);</script>",
-                    ContentType = "text/html"
-                };
             }
         }
 

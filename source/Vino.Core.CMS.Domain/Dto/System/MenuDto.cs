@@ -13,6 +13,8 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// </summary>
         public long? ParentId { get; set; }
 
+        public MenuDto Parent { get; set; }
+
         /// <summary>
         /// 菜单名称
         /// </summary>
@@ -58,5 +60,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// 是否有子菜单
         /// </summary>
         public bool HasSubMenu { set; get; }
+
+        public ICollection<MenuDto> SubMenus { set; get; }
     }
 }

@@ -50,7 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.AddPolicy("auth", policy =>
                 {
                     policy.Requirements.Add(new ValidJtiRequirement());
-                    policy.Requirements.Add(new AuthAuthorizationRequirement());
+                    policy.Requirements.Add(new BackendAuthAuthorizationRequirement());
                 });
             });
 

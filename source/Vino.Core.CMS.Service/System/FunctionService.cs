@@ -9,6 +9,7 @@ using Vino.Core.CMS.Domain;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Helper;
 using Vino.Core.Infrastructure.Extensions;
+using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.System
 {

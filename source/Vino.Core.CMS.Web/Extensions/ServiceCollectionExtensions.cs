@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCache(this IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
         {
             var section = configuration.GetSection("Cache");
             var type = section["Type"] ?? "redis";
@@ -45,12 +45,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException("不存在此缓存插件");
             }
 
-            return services;
-        }
-
-        public static IServiceCollection AddEventBus(this IServiceCollection services)
-        {
-            services.AddScoped<IEventPublisher, CapEventPublisher>();
             return services;
         }
     }

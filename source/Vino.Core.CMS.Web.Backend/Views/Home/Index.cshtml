@@ -1,0 +1,142 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 -  Powered By Vinotec</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css" />
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/index.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/index.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <div class="layui-layout main-index layui-layout-admin">
+        <div class="layui-header frame-header-xsm frame-header header">
+            <a class="logo-xsm logo hidden-md hidden-lg" href="javascript:;">
+                <img src="~/images/logo.png">
+            </a>
+            <div class="layui-main">
+                <a class="logo hidden-xs hidden-sm" href="#">
+                    <img src="~/images/logo.png" alt="jsyso-admin">
+                </a>
+                <ul class="layui-nav layui-nav-xsm">
+                    <li class="layui-nav-item layui-nav-item-xsm hidden-md hidden-lg">
+                        <a href="javascript:;" id="J_open_nav"><i class="fa fa-bars"></i></a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-item-xsm">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe60c;</i>
+                            欢迎，@ViewData["LoginUserName"]<span class="layui-nav-more"></span>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a id="pwd_edit" href="javascript:;"><i class="fa fa-lock"></i><cite>修改密码</cite></a>
+                            </dd>
+                            <dd>
+                                <a href="~/Home/Logout"><i class="fa fa-sign-out"></i><cite>退出</cite></a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-side layui-side-xsm layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree index-nav" lay-filter="F_index_nav">
+                    @await Component.InvokeAsync("HomeMenu");
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body layui-body-xsm" style="bottom: 35px;">
+            <div class="layui-tab layui-tab-card main-index-tab" lay-filter="F_index_tab">
+                <ul class="layui-tab-title" id="J_index_tab_title">
+                    <li class="layui-this">首页</li>
+                </ul>
+                <div class="layui-tab-content" style="padding: 0;">
+                    <div class="layui-tab-item layui-show">
+                        <iframe name="mainFrame" frameborder="0" src=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer layui-footer-xsm main-index-footer">
+            <div class="layui-main">
+                <p>© 2017 kulend </p>
+            </div>
+        </div>
+    </div>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/layui/layui.all.js"></script>
+        <script src="~/js/index.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/layui/layui.all.js"></script>
+        <script src="~/js/index.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script type="text/javascript">
+        $(function () {
+            //iframe自适应
+            $(window).on('resize', function () {
+                var $content = $('.main-index-tab .layui-tab-content')
+                    , headHeight = $(".frame-header").height()
+                    , tabHeight = $(".layui-tab-title").height()
+                    , footHeight = $(".main-index-footer").outerHeight();
+                $content.height($(this).height() - headHeight - tabHeight - footHeight - 10);
+            }).resize();
+
+            function _openNav() {
+                var elem = $(this)
+                    , url = elem.data('url')
+                    , id = elem.data('id')
+                    , $tabTitle = $("#J_index_tab_title");
+                // 是否已经存在iframe
+                if (!$tabTitle.children("li[lay-id='" + id + "']").length) {
+                    var title = elem.text() + '<i class="layui-icon layui-unselect layui-tab-close" data-id="' + id + '">&#x1006;</i>'
+                        , content = '<iframe id="J_iframe_' + id + '" data-id="' + id + '" frameborder="0" src="' + url + '"></iframe>';
+                    element.tabAdd('F_index_tab', {
+                        title: title
+                        , content: content
+                        , id: id
+                    });
+                    //监听关闭事件
+                    $tabTitle.find('i.layui-tab-close').on('click', function () {
+                        element.tabDelete('F_index_tab', $(this).data('id'));
+                    });
+                } else {
+                    $('#J_iframe_' + id).attr('src', url);
+                }
+                // 切换到当前选项卡
+                element.tabChange('F_index_tab', id);
+                // 关闭菜单
+                $(".layui-side-xsm").hide();
+            }
+
+            var element = layui.element;
+            // 菜单点击打开iframe
+            element.on('nav(F_index_nav)', _openNav);
+            $(".do-open-nav").on('click', _openNav);
+            $("#J_open_nav").on('click', function () {
+                $(".layui-side-xsm").toggle();
+            });
+        });
+    </script>
+</body>
+</html>

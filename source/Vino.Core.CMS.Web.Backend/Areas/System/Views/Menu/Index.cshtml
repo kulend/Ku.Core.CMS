@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.System
+@model List<MenuDto>
+<div class="main-content">
+    <blockquote class="layui-elem-quote low">
+        <span class="layui-breadcrumb">
+            <a href="Index">顶级菜单</a>
+            @foreach (var dto in Model)
+            {
+                <a href="Index?parentId=@dto.Id">@dto.Name</a>
+            }
+        </span>
+    </blockquote>
+    <div class="toolbar">
+        @if (Model != null)
+        {
+            if (Model.Count > 1)
+            {
+                <action text="返回上级" size="small" icon="&#xe619;" action="Index?parentId=@Model[Model.Count - 2].Id" />
+            }
+            else if(Model.Count == 1)
+            {
+                <action text="返回上级" size="small" icon="&#xe619;" action="Index" />
+            }
+        }
+        <action auth-code="sys.menu.edit" text="添加" size="small" icon="&#xe608;" action="window:System/Menu/Edit?pid=@ViewData["ParentId"]"/>
+        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()"/>
+    </div>
+    <table id="list">
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'List?parentId=@ViewData["ParentId"]',
+                cols: [[
+                    { field: 'Name', fixed: 'left', title: '名称', width: 100 },
+                    { field: 'AuthCode', title: '权限编码', width: 140 },
+                    { field: 'Url', title: '菜单链接', width: 200 },
+                    { field: 'Icon', title: '图标', width: 100, align: 'center', templet:'<div><i class="fa {{d.Icon}}"></i></div>'},
+                    { field: 'IsShow', title: '是否显示', width: 100, align: 'center', templet: grid_templet_bool("IsShow")},
+                    { field: 'HasSubMenu', title: '子菜单', width: 80, align: 'center', templet: grid_templet_bool("HasSubMenu") },
+                    { field: 'OrderIndex', title: '排序值',  width: 80 },
+                    {
+                        title: '操作', fixed: 'right', width: 165, align: 'center',
+                        templet: grid_templet_operate([
+                            { code: "", title: "子菜单", action: `Index?parentId={{d.Id}}`, css:"layui-btn-primary" },
+                            { code: "sys.menu.edit", title: "编辑", action: `window:System/Menu/Edit?id={{d.Id}}` },
+                            { code: "sys.menu.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

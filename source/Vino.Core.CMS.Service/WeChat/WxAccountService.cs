@@ -9,6 +9,7 @@ using Vino.Core.CMS.Domain.Entity.WeChat;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.Helper;
+using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.WeChat
 {

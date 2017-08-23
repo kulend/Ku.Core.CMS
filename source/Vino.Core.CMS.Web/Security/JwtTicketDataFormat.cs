@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
@@ -55,7 +56,9 @@ namespace Vino.Core.CMS.Web.Security
             }
 
             // 验证通过
-            return new AuthenticationTicket(principal, new AuthenticationProperties(), "Cookie");
+            return new AuthenticationTicket(principal, 
+                new Microsoft.AspNetCore.Authentication.AuthenticationProperties(), 
+                CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         #region 不实现其他接口，生成在另外的地方处理

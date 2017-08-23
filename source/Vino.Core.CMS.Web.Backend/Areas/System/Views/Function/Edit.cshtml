@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.System
+@model FunctionDto
+<div class="window-content">
+    <blockquote class="layui-elem-quote low">
+        <span class="layui-breadcrumb">
+            <a href="javascript:;">顶级功能</a>
+            @if (ViewBag.Parents != null)
+            {
+                foreach (var dto in ViewBag.Parents)
+                 {
+                     <a href="javascript:;">@dto.Name</a>
+                 }
+            }
+        </span>
+    </blockquote>
+    @using (Html.LayuiBeginForm<FunctionDto>("Save"))
+    {
+        @Html.LayuiHiddenFor(x => x.Id)
+        @Html.LayuiHiddenFor(x => x.ParentId)
+        @Html.LayuiTextBoxFor(x => x.Name)
+        @Html.LayuiTextBoxFor(x => x.AuthCode)
+        @Html.LayuiSwitchFor(x => x.IsEnable)
+        @Html.LayuiFormSubmitAndClose()
+    }
+</div>

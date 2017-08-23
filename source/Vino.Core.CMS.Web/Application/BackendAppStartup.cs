@@ -25,9 +25,11 @@ namespace Vino.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //JWT
             services.AddJwtToken(Configuration);
-            services.AddJwtAuth(Configuration);
+            services.AddJwtAuth(Configuration, null);
 
+            //替代系统提供的HtmlHelper
             services.TryAddTransient(typeof(IHtmlHelper<>), typeof(VinoHtmlHelper<>));
 
             services.AddMvc(opts =>

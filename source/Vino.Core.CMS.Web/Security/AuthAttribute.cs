@@ -27,5 +27,6 @@ namespace Vino.Core.CMS.Web.Security
             this.AuthCode = authCode;
             this.IsFullAuthCode = isFullAuthCode;
         }
+
     }
 }

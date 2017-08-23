@@ -1,0 +1,17 @@
+﻿@model List<Vino.Core.CMS.Domain.Dto.System.MenuDto>
+@foreach (var menu in Model)
+{
+    <li class="layui-nav-item">
+        <a href="@menu.Url">
+            <i class="fa @menu.Icon"></i><cite>@menu.Name</cite>
+            @if (menu.HasSubMenu)
+            {
+                <span class="layui-nav-more"></span>
+            }
+        </a>
+        @if (menu.HasSubMenu)
+        {
+            @await Component.InvokeAsync("HomeMenu", menu.Id);
+        }
+    </li>
+}

@@ -7,6 +7,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Helper;
+using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.System
 {

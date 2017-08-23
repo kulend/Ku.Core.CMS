@@ -1,0 +1,63 @@
+﻿html {
+    background-color: #eee;
+}
+
+html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+    html body {
+        margin-top: 80px;
+    }
+
+body {
+    line-height: 24px;
+}
+
+.header {
+    height: 60px;
+    border-bottom: none;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.login-header {
+    position: fixed;
+}
+
+.login-logo {
+    width: 1075px;
+    margin: 0 auto;
+    position: relative;
+}
+
+    .login-logo .logo,
+    .frame-header .logo {
+        position: absolute;
+        top: 10px;
+    }
+
+        .login-logo .logo img,
+        .frame-header .logo img {
+            width: auto;
+        }
+
+.login-main {
+    width: 1075px;
+    min-height: 600px;
+    margin: 0 auto 15px;
+}
+
+.login-panel {
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.login-panel-user {
+    padding-top: 5px;
+}

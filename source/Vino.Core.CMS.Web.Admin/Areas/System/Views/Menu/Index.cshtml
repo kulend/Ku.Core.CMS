@@ -61,8 +61,8 @@
                         , formatter: function (value, options, row) {
                             return gridFormatter_Operate([
                                 { code: "", title: "子菜单", action: `Index?parentId=${row.Id}` },
-                                { code: "sys.menu.edit", title: "编辑", action: `window:System/Menu/Edit?id=${row.Id}` },
-                                { code: "sys.menu.delete", title: "删除", action: `post:Delete?id=${row.Id}` }
+                                { code: title: "编辑", action: `window:System/Menu/Edit?id=${row.Id}` },
+                                { code: title: "删除", action: `post:Delete?id=${row.Id}` }
                             ]);
                         }
                     }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -95,6 +97,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
 
             var token = _jwtProvider.CreateToken(_jwtSecKey.Key, _jwtAuthConfig.Issuer, _jwtAuthConfig.Audience, claims,
                 DateTime.Now.AddMinutes(_jwtSecKey.ExpiredMinutes));
+  
             base.Response.Cookies.Append(_jwtAuthConfig.CookieName, token, new CookieOptions
             {
                 HttpOnly = true
@@ -107,7 +110,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.Authentication.SignOutAsync("Cookie");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
         }

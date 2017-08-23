@@ -35,8 +35,8 @@ namespace Vino.Core.CMS.Web.Base
         /// </summary>
         protected IActionResult PagerData<T>(IEnumerable<T> items, int page, int size, int total)
         {
-            var result = new PagerResult<T>(items, page, size, total);
-            return Json(result);
+            var result = new LayuiPagerResult<T>(items, page, size, total);
+            return new LayuiJsonResult(result);
         }
     }
 }

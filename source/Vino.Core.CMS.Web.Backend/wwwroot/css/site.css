@@ -1,0 +1,34 @@
+.input-length-long {
+    width: 400px;
+}
+
+.input-length-short {
+    width: 120px;
+}
+
+.input-length-middle {
+    width: 200px;
+}
+
+.input-length-num {
+    width: 100px;
+}
+
+.layui-textarea {
+    width: 400px;
+    min-height: 75px;
+}
+
+.layui-elem-quote.low {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    line-height: 13px;
+}
+
+.menu-open-tree {
+    cursor: pointer;
+}
+
+.menu-tree-nbsp {
+    margin-left: 20px;
+}

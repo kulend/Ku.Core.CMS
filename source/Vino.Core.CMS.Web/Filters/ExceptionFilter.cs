@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Http;
 
 namespace Vino.Core.CMS.Web.Filters
 {
@@ -20,9 +21,10 @@ namespace Vino.Core.CMS.Web.Filters
 
         public void OnException(ExceptionContext context)
         {
+            var exception = context.Exception;
+
             if (context.HttpContext.Request.IsJsonRequest())
             {
-                var exception = context.Exception;
                 var code = 500;
                 var message = exception.Message;
 
@@ -36,6 +38,19 @@ namespace Vino.Core.CMS.Web.Filters
                 {
                     handleVinoException(context, new VinoException("有错误发生！"));
                 }
+            }
+            else
+            {
+                //if (exception is VinoException ex)
+                //{
+                //    context.HttpContext.Response.StatusCode = 500;
+                //}
+                context.Exception = null;
+                context.Result = new ContentResult
+                {
+                    Content = "<script>alert(1);</script>",
+                    ContentType = "text/html"
+                };
             }
         }
 

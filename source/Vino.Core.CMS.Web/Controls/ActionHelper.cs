@@ -35,19 +35,19 @@ namespace Vino.Core.CMS.Web.Controls
         public override async Task ProcessAsync(TagHelperContext context,TagHelperOutput output)
         {
             //检查权限
-            if (AuthCode.IsNotNullOrEmpty())
-            {
-                var userId = ViewContext.HttpContext.User.GetUserIdOrZero();
-                if (userId == 0)
-                {
-                    return;
-                }
-                var result = await service.CheckUserAuth(userId, AuthCode);
-                if (!result)
-                {
-                    return;
-                }
-            }
+            //if (AuthCode.IsNotNullOrEmpty())
+            //{
+            //    var userId = ViewContext.HttpContext.User.GetUserIdOrZero();
+            //    if (userId == 0)
+            //    {
+            //        return;
+            //    }
+            //    var result = await service.CheckUserAuth(userId, AuthCode);
+            //    if (!result)
+            //    {
+            //        return;
+            //    }
+            //}
 
             output.TagName = "button";
             output.TagMode = TagMode.StartTagAndEndTag;

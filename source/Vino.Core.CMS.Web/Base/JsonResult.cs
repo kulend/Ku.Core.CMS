@@ -2,19 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Vino.Core.CMS.Web.Base
 {
-    public class JsonResult
-    {
-        [JsonProperty("code")]
-        public int Code { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "message")]
-        public string Message { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "data")]
-        public object Data { get; set; }
-    }
-
     public class PagerResult<T>
     {
         [JsonProperty("pager")]
@@ -54,6 +45,35 @@ namespace Vino.Core.CMS.Web.Base
             Rows = rows;
             TotalPage = Convert.ToInt32(Math.Ceiling((total * 1.00) / rows));
             Total = total;
+        }
+    }
+
+    public class LayuiPagerResult<T>
+    {
+        [JsonProperty("code")]
+        public int Code { set; get; } = 0;
+
+        [JsonProperty("msg")]
+        public string Message { set; get; } = "";
+
+        [JsonProperty("count")]
+        public int Count { set; get; }
+
+        [JsonProperty("data")]
+        public IEnumerable<T> Items { set; get; }
+
+        public LayuiPagerResult(IEnumerable<T> items, int page, int size, int total)
+        {
+            this.Items = items;
+            this.Count = total;
+        }
+    }
+
+    public class LayuiJsonResult : JsonResult
+    {
+        public LayuiJsonResult(object value):base(value)
+        {
+
         }
     }
 }

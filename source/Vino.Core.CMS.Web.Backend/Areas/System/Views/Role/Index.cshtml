@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+    <div class="toolbar">
+        <action auth-code="sys.role.edit" text="添加" size="small" icon="&#xe608;" action="window:System/Role/Edit" />
+        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
+    </div>
+    <table id="list"></table>
+</div>
+@section Scripts
+{
+    <script>
+            $(function () {
+                $("#list").vinoGrid({
+                    url: 'GetList',
+                    cols: [[
+                        { field: 'Name', fixed: 'left', title: '名称', width: 100 },
+                        { field: 'NameEn', title: '英文名', width: 140 },
+                        { field: 'IsEnable', title: '是否启用', width: 100, align: 'center', templet: grid_templet_bool("IsEnable")},
+                        {
+                            title: '操作', fixed: 'right', width: 165, align: 'center',
+                            templet: grid_templet_operate([
+                                { code: "sys.role.function", title: "权限分配", action: `window:System/Role/RoleFunction?RoleId={{d.Id}}`, css: "layui-btn-primary" },
+                                { code: "sys.role.edit", title: "编辑", action: `window:System/Role/Edit?id={{d.Id}}` },
+                                { code: "sys.role.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            ])
+                        }
+                    ]]
+                });
+            });
+    </script>
+}

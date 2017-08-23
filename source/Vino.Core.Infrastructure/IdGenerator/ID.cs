@@ -3,8 +3,21 @@ using System.IO;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.Infrastructure.IdGenerator;
 
-namespace Vino.Core.Infrastructure.Helper
+namespace Microsoft.Extensions.DependencyInjection
+{
+    public static class IdGeneratorExtensions
+    {
+        public static IServiceCollection AddIdGenerator(this IServiceCollection services, IConfiguration Configuration)
+        {
+            ID.Initialize(Configuration);
+            return services;
+        }
+    }
+}
+
+namespace Vino.Core.Infrastructure.IdGenerator
 {
     /// <summary>
     /// ID 生成帮助类

@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class JwtExtensions
     {
-        public static IServiceCollection AddJwtToken(this IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddJwtToken(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IJwtProvider, SystemJwtProvider>();
             return services.Configure<JwtSecKey>(configuration.GetSection("JwtSecKey"));

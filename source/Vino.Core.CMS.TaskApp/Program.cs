@@ -11,6 +11,7 @@ using Vino.Core.CMS.TaskApp.Application;
 using Vino.Core.CMS.TaskApp.AutoMapper;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.Helper;
+using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.TaskApp
 {

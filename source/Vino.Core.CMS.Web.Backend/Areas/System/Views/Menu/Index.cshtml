@@ -47,7 +47,7 @@
                     { field: 'OrderIndex', title: '排序值',  width: 80 },
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
-                        templet: grid_templet_operate([
+                        toolbar: grid_templet_operate([
                             { code: "", title: "子菜单", action: `Index?parentId={{d.Id}}`, css:"layui-btn-primary" },
                             { code: "sys.menu.edit", title: "编辑", action: `window:System/Menu/Edit?id={{d.Id}}` },
                             { code: "sys.menu.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }

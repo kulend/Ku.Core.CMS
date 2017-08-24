@@ -8,39 +8,30 @@
     </div>
     <table id="list">
     </table>
-    <div id="pager"></div>
 </div>
 @section Scripts
 {
     <script>
-        layui.use(['layer'],
-            function() {
-                var $ = layui.jquery, layer = layui.layer;
-            });
-
-        $(function() {
+        $(function () {
             $("#list").vinoGrid({
                 url: 'GetList',
-                colModel: [
-                    { label: '姓名', name: 'Name', width: 75 },
-                    { label: '手机', name: 'Mobile', width: 100 },
-                    { label: '状态', name: 'IsEnable', width: 40, formatter: gridFormatter_Is },
-                    { label: '会员类型', name: 'MemberType.Name', width: 50 },
-                    { label: '积分', name: 'Points', width: 40 },
-                    { label: '等级', name: 'Level', width: 40 },
-                    { label: '创建时间', name: 'CreateTime', width: 100 },
-                    { label: '登陆时间', name: 'LastLoginTime', width: 100 },
+                cols: [[
+                    { field: 'Name', title: '姓名', width: 150 },
+                    { field: 'Mobile', title: '手机', width: 130 },
+                    { field: 'MemberType.Name', title: '会员类型', width: 130 },
+                    { field: 'Points', title: '积分', width: 70 },
+                    { field: 'Level', title: '等级', width: 70 },
+                    { field: 'IsEnable', title: '是否可用', width: 100, align: 'center', templet: grid_templet_bool("IsEnable") },
+                    { field: 'CreateTime', title: '创建时间', width: 160 },
+                    { field: 'LastLoginTime', title: '登陆时间', width: 160 },
                     {
-                        label: '操作', name: 'Id', width: 100
-                        , formatter: function(value, options, row) {
-                            return gridFormatter_Operate([
-                                { code: "membership.member.edit", title: "编辑", action: `window:Membership/Member/Edit?id=${row.Id}` },
-                                { code: "membership.member.delete", title: "删除", action: `post:Delete?id=${row.Id}` }
-                            ]);
-                        }
+                        title: '操作', fixed: 'right', width: 165, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "membership.member.edit", title: "编辑", action: `window:Membership/Member/Edit?id={{d.Id}}` },
+                            { code: "membership.member.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
                     }
-                ],
-                pager: "#pager"
+                ]]
             });
         });
     </script>

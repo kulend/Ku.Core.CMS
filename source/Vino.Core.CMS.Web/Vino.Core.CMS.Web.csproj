@@ -6,13 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
-    <PackageReference Include="DotNetCore.CAP" Version="2.0.0-preview-19793485" />
-    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.0.0-preview-19793485" />
-    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="2.0.0-preview-19793485" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
+    <PackageReference Include="DotNetCore.CAP" Version="2.0.0-preview-20091963" />
+    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.0.0-preview-20091963" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="2.0.0-preview-20091963" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.4.1" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-10056" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-10058" />
     <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
   </ItemGroup>
 

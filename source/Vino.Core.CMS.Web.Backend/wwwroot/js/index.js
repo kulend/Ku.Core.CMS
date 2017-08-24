@@ -1,9 +1,52 @@
-﻿layui.use(['layer'], function () {
-    var $ = layui.jquery, layer = layui.layer;
+﻿$(function () {
+    var element = layui.element;
+
+    //iframe自适应
+    $(window).on('resize', function () {
+        var $content = $('.main-index-tab .layui-tab-content')
+            , headHeight = $(".frame-header").height()
+            , tabHeight = $(".layui-tab-title").height()
+            , footHeight = $(".main-index-footer").outerHeight();
+        $content.height($(this).height() - headHeight - tabHeight - footHeight - 10);
+    }).resize();
+
+    // 菜单点击
+    element.on('nav(index_nav_menu)', _openNavMenu);
+
+    function _openNavMenu() {
+        var elem = $(this)
+            , url = elem.data('url')
+            , id = elem.data('id')
+            , $tabTitle = $("#J_index_tab_title");
+        // 是否已经存在iframe
+        if (!$tabTitle.children("li[lay-id='" + id + "']").length) {
+            var title = elem.text() + '<i class="layui-icon layui-unselect layui-tab-close" data-id="' + id + '">&#x1006;</i>'
+                , content = '<iframe id="J_iframe_' + id + '" data-id="' + id + '" frameborder="0" src="' + url + '"></iframe>';
+            element.tabAdd('F_index_tab', {
+                title: title
+                , content: content
+                , id: id
+            });
+            //监听Tab关闭事件
+            $tabTitle.find('i.layui-tab-close').on('click', function () {
+                element.tabDelete('F_index_tab', $(this).data('id'));
+            });
+        } else {
+            $('#J_iframe_' + id).attr('src', url);
+        }
+        // 切换到当前选项卡
+        element.tabChange('F_index_tab', id);
+        // 关闭菜单
+        $(".layui-side-xsm").hide();
+    }
+
+    $("#J_open_nav").on('click', function () {
+        $(".layui-side-xsm").toggle();
+    });
 
     //修改密码
-    $("#pwd_edit").on("click", function() {
-        OpenWindow("修改密码", "Account/PasswordEdit", { area:['600px', '300px']});
+    $("#pwd_edit").on("click", function () {
+        OpenWindow("修改密码", "Account/PasswordEdit", { area: ['600px', '300px'] });
     });
 });
 

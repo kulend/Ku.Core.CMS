@@ -9,6 +9,18 @@
         $target.addClass("vino-grid");
         var opts = $target.data("options");
         opts.elem = $target;
+        if (opts.checkbox)
+        {
+            opts.cols[0].unshift(
+                { checkbox: true, fixed: true, align: 'center' }
+            );
+        }
+        if (opts.rownumber)
+        {
+            opts.cols[0].unshift(
+                { rownumbers: true, fixed: true, align: 'center' }
+            );
+        }
         var table = layui.table;
         var id = $target.attr("id");
         //执行渲染
@@ -58,9 +70,11 @@
     $.fn.vinoGrid.defaults = {
         method: "get",
         page: true,
-        limits: [10, 20, 30, 40, 50, 70, 80, 90],
+        limits: [10, 20, 30, 40, 50],
         loading: true,
-        even: true
+        even: false,
+        rownumber: false,
+        checkbox: true
     };
 
 })(jQuery);

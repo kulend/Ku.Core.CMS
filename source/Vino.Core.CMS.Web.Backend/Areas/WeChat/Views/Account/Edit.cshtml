@@ -6,14 +6,14 @@
 <div class="window-content">
     @using (Html.LayuiBeginForm<WxAccountDto>("Save"))
     {
-        @Html.LayuiHiddenFor(x => x.Id)
-        @Html.LayuiEnumRadioFor(x => x.Type)
-        @Html.LayuiTextBoxFor(x => x.Name)
-        @Html.LayuiTextBoxFor(x => x.OriginalId)
-        @Html.LayuiTextBoxFor(x => x.WeixinId)
-        @Html.LayuiTextBoxFor(x => x.AppId)
-        @Html.LayuiTextBoxFor(x => x.AppSecret)
-        @Html.LayuiTextBoxFor(x => x.Token)
-        @Html.LayuiFormSubmitAndClose()
+        @Html.LayuiInputFor(x => x.Id)
+        @Html.LayuiInputFor(x => x.Type)
+        @Html.LayuiInputFor(x => x.Name)
+        @Html.LayuiInputFor(x => x.OriginalId)
+        @Html.LayuiInputFor(x => x.WeixinId)
+        @Html.LayuiInputFor(x => x.AppId)
+        @Html.LayuiInputFor(x => x.AppSecret)
+        @Html.LayuiInputFor(x => x.Token)
+        @Html.LayuiFormActionsForSubmitAndClose()
     }
 </div>

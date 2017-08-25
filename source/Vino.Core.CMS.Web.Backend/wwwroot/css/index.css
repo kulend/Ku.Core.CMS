@@ -48,6 +48,12 @@
     padding: 0;
     background: none;
 }
+
+.layui-body {
+    z-index: 99999;
+    background:#FFF;
+}
+
 .main-index cite {
 	padding: 0 5px;
 } 
@@ -69,7 +75,7 @@
 }
 .layui-layout-admin .main-index-footer {
 	z-index: 501;
-    height: auto;
+    height: 44px;
     text-align: center;
     background-color: #eee;
     color: #666;
@@ -234,4 +240,37 @@ blockquote {
 
 blockquote .title {
     font-size: 16px;
+}
+
+.layui-tab-action {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    z-index: 9;
+    height: 16px;
+    width: 16px;
+}
+
+.layui-tab-action .layui-layer-ico {
+    height: 16px;
+    width: 16px;
+    font-size: 12px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.layui-tab-action .layui-layer-max {
+    background-position: -32px -40px;
+}
+
+.layui-tab-action .layui-layer-max:hover {
+    background-position: -16px -40px;
+}
+
+.layui-tab-action .layui-layer-maxmin {
+    background-position: -65px -40px;
+}
+
+.layui-tab-action .layui-layer-maxmin:hover {
+    background-position: -49px -40px;
 }

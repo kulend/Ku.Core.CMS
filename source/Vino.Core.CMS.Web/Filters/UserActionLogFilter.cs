@@ -34,7 +34,6 @@ namespace Vino.Core.CMS.Web.Filters
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            string aa = "";
         }
 
         public void OnActionExecuted(ActionExecutedContext context)

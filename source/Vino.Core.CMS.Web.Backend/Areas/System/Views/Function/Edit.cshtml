@@ -18,11 +18,11 @@
     </blockquote>
     @using (Html.LayuiBeginForm<FunctionDto>("Save"))
     {
-        @Html.LayuiHiddenFor(x => x.Id)
-        @Html.LayuiHiddenFor(x => x.ParentId)
-        @Html.LayuiTextBoxFor(x => x.Name)
-        @Html.LayuiTextBoxFor(x => x.AuthCode)
-        @Html.LayuiSwitchFor(x => x.IsEnable)
-        @Html.LayuiFormSubmitAndClose()
+        @Html.LayuiInputFor(x => x.Id)
+        @Html.LayuiInputFor(x => x.ParentId)
+        @Html.LayuiInputFor(x => x.Name)
+        @Html.LayuiInputFor(x => x.AuthCode)
+        @Html.LayuiInputFor(x => x.IsEnable)
+        @Html.LayuiFormActionsForSubmitAndClose()
     }
 </div>

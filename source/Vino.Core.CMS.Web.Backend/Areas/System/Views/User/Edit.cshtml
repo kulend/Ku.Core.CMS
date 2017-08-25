@@ -6,13 +6,13 @@
 <div class="window-content">
     @using (Html.LayuiBeginForm<UserDto>("Save"))
     {
-        @Html.LayuiHiddenFor(x => x.Id)
-        @Html.LayuiTextBoxFor(x => x.Account)
-        @Html.LayuiPasswordFor(x => x.Password)
-        @Html.LayuiTextBoxFor(x => x.Name)
-        @Html.LayuiTextBoxFor(x => x.Mobile)
-        @Html.LayuiSwitchFor(x => x.IsEnable)
-        @Html.LayuiTextAreaFor(x => x.Remarks)
+        @Html.LayuiInputFor(x => x.Id)
+        @Html.LayuiInputFor(x => x.Account)
+        @Html.LayuiInputFor(x => x.Password)
+        @Html.LayuiInputFor(x => x.Name)
+        @Html.LayuiInputFor(x => x.Mobile)
+        @Html.LayuiInputFor(x => x.IsEnable)
+        @Html.LayuiInputFor(x => x.Remarks)
 
         <div class="layui-form-item">
             <label class="layui-form-label">用户角色</label>
@@ -27,6 +27,6 @@
             </div>
         </div>
 
-        @Html.LayuiFormSubmitAndClose()
+        @Html.LayuiFormActionsForSubmitAndClose()
     }
 </div>

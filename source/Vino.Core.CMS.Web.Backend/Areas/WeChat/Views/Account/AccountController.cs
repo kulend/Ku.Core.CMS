@@ -28,10 +28,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
         }
 
         [Auth("view")]
-        public async Task<IActionResult> GetList(int page, int rows)
+        public async Task<IActionResult> GetList(int page, int limit)
         {
-            var data = await service.GetListAsync(page, rows);
-            return PagerData(data.items, page, rows, data.count);
+            var data = await service.GetListAsync(page, limit);
+            return PagerData(data.items, page, limit, data.count);
         }
 
         [Auth("edit")]

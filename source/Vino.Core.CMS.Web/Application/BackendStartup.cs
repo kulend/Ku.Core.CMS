@@ -28,8 +28,8 @@ namespace Vino.Core.CMS.Web.Application
             services.AddJwtToken(Configuration);
             services.AddBackendAuth(Configuration, Environment);
 
-            //替代系统提供的HtmlHelper
-            services.TryAddTransient(typeof(IHtmlHelper<>), typeof(VinoHtmlHelper<>));
+            //使用Layui
+            services.AddLayui();
 
             services.AddMvc(opts =>
                 {

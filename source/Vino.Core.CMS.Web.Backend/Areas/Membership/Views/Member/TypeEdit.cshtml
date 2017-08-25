@@ -6,9 +6,9 @@
 <div class="window-content">
     @using (Html.LayuiBeginForm<MemberTypeDto>("TypeSave"))
     {
-        @Html.LayuiHiddenFor(x => x.Id)
-        @Html.LayuiTextBoxFor(x => x.Name)
-        @Html.LayuiTextBoxFor(x => x.OrderIndex)
-        @Html.LayuiFormSubmitAndClose()
+        @Html.LayuiInputFor(x => x.Id)
+        @Html.LayuiInputFor(x => x.Name)
+        @Html.LayuiInputFor(x => x.OrderIndex)
+        @Html.LayuiFormActionsForSubmitAndClose()
     }
 </div>

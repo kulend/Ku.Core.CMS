@@ -3,11 +3,7 @@
 
     //iframe自适应
     $(window).on('resize', function () {
-        var $content = $('.main-index-tab .layui-tab-content')
-            , headHeight = $(".frame-header").height()
-            , tabHeight = $(".layui-tab-title").height()
-            , footHeight = $(".main-index-footer").outerHeight();
-        $content.height($(this).height() - headHeight - tabHeight - footHeight - 10);
+        windowResize();
     }).resize();
 
     // 菜单点击
@@ -48,7 +44,44 @@
     $("#pwd_edit").on("click", function () {
         OpenWindow("修改密码", "Account/PasswordEdit", { area: ['600px', '300px'] });
     });
+
+    //放大缩小
+    $(".layui-tab-action .maxwin").on("click", function () {
+        var self = $(this);
+        if (self.hasClass("layui-layer-max")) {
+            //放大
+            $(".layui-body").animate({
+                top: '0px',
+                left: '0px',
+                bottom:'0px'
+            }, "normal", function () {
+                self.removeClass("layui-layer-max").addClass("layui-layer-maxmin");
+                windowResize();
+            });
+        } else
+        {
+            //还原
+            $(".layui-body").animate({
+                top: '60px',
+                left: '200px',
+                bottom: '44px'
+            }, "normal", function () {
+                self.removeClass("layui-layer-maxmin").addClass("layui-layer-max");
+                windowResize();
+            });
+        }
+    });
+
 });
+
+function windowResize()
+{
+    var $content = $('.main-index-tab .layui-tab-content')
+        , headHeight = $(".frame-header").height()
+        , tabHeight = $(".layui-tab-title").height()
+        , footHeight = $(".main-index-footer").outerHeight();
+    $content.height($(this).height() - headHeight - tabHeight - footHeight);
+}
 
 if (!window.winfns) {
     //用于iframe页面调用js脚本

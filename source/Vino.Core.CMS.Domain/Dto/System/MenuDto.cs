@@ -11,6 +11,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// <summary>
         /// 父级ID
         /// </summary>
+        [DataType("Hidden")]
         public long? ParentId { get; set; }
 
         public MenuDto Parent { get; set; }
@@ -62,5 +63,6 @@ namespace Vino.Core.CMS.Domain.Dto.System
         public bool HasSubMenu { set; get; }
 
         public ICollection<MenuDto> SubMenus { set; get; }
+
     }
 }

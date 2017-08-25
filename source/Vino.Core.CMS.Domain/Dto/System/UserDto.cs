@@ -21,6 +21,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// </summary>
         [Required, MaxLength(20)]
         [Display(Name = "密码")]
+        [DataType(DataType.Password)]
         public string Password { set; get; }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// </summary>
         [MaxLength(200)]
         [Display(Name = "备注")]
+        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
     }
 }

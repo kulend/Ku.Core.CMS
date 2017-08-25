@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace Vino.Core.Infrastructure.Data
 {
@@ -10,6 +11,7 @@ namespace Vino.Core.Infrastructure.Data
         /// <summary>
         /// ID
         /// </summary>
+        [DataType("Hidden")]
         public long Id { get; set; }
 
         /// <summary>

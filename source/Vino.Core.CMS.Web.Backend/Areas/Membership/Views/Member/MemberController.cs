@@ -32,10 +32,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
         }
 
         [Auth("view")]
-        public async Task<IActionResult> GetList(int page, int rows)
+        public async Task<IActionResult> GetList(int page, int limit)
         {
-            var data = await _service.GetListAsync(page, rows);
-            return PagerData(data.items, page, rows, data.count);
+            var data = await _service.GetListAsync(page, limit);
+            return PagerData(data.items, page, limit, data.count);
         }
 
         [Auth("edit")]
@@ -96,10 +96,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
         }
 
         [Auth("type.view")]
-        public async Task<IActionResult> GetTypeList(int page, int rows)
+        public async Task<IActionResult> GetTypeList(int page, int limit)
         {
-            var data = await _memberTypeService.GetListAsync(page, rows);
-            return PagerData(data.items, page, rows, data.count);
+            var data = await _memberTypeService.GetListAsync(page, limit);
+            return PagerData(data.items, page, limit, data.count);
         }
 
         [Auth("type.edit")]

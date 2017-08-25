@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Remove="Extensions\VinoHtmlHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
     <PackageReference Include="DotNetCore.CAP" Version="2.0.0-preview-20091963" />
@@ -17,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\开源\Vino.Core.Extensions\Vino.Core.Extensions.Layui\Vino.Core.Extensions.Layui.csproj" />
     <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
     <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />

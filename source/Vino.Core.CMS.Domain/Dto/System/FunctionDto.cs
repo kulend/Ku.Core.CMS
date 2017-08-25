@@ -10,6 +10,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// <summary>
         /// 父功能
         /// </summary>
+        [DataType("Hidden")]
         public long? ParentId { get; set; }
 
         /// <summary>

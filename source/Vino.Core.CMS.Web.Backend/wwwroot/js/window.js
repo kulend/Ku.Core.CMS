@@ -1,7 +1,8 @@
-﻿layui.use(['element', 'form', 'layer'], function () {
+﻿layui.use(['element', 'form', 'layer', 'laydate'], function () {
     var $ = layui.jquery
         , layer = layui.layer
         , element = layui.element
+        , laydate = layui.laydate
         , form = layui.form;
 
     //绑定form
@@ -20,6 +21,17 @@
             }
         });
     }
+
+    $(".layui-input.laydate").each(function () {
+        var self = $(this);
+        var type = self.data("type") || 'date';
+        var format = self.data("format") || 'yyyy-MM-dd';
+        laydate.render({
+            elem: self[0],
+            type: type,
+            format: format
+        });
+    });
 
     //关闭弹出
     $(".acton-close").on("click", function() {

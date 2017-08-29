@@ -29,7 +29,12 @@ namespace Vino.Core.CMS.Web.Application
             services.AddBackendAuth(Configuration, Environment);
 
             //使用Layui
-            services.AddLayui();
+            services.AddLayui(opt => {
+                opt.SubmitButtonText = "保 存";
+                opt.CloseButtonOnClick = "关 闭";
+                opt.ResetButtonText = "重 置";
+                opt.CloseButtonOnClick = "closeWindow()";
+            });
 
             services.AddMvc(opts =>
                 {

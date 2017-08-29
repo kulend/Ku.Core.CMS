@@ -16,16 +16,16 @@
             }
         </span>
     </blockquote>
-    @using (Html.LayuiBeginForm<MenuDto>("Save"))
+    @using (Html.BeginForm<MenuDto>("Save"))
     {
-        @Html.LayuiInputFor(x => x.Id)
-        @Html.LayuiInputFor(x => x.ParentId)
-        @Html.LayuiInputFor(x => x.Name)
-        @Html.LayuiInputFor(x => x.AuthCode)
-        @Html.LayuiInputFor(x => x.Url)
-        @Html.LayuiInputFor(x => x.Icon)
-        @Html.LayuiInputFor(x => x.IsShow)
-        @Html.LayuiInputFor(x => x.OrderIndex)
-        @Html.LayuiFormActionsForSubmitAndClose()
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.ParentId)
+        @Html.InputFor(x => x.Name)
+        @Html.InputFor(x => x.AuthCode)
+        @Html.InputFor(x => x.Url)
+        @Html.InputFor(x => x.Icon)
+        @Html.InputFor(x => x.IsShow)
+        @Html.InputFor(x => x.OrderIndex)
+        @Html.ActionsForSubmitAndClose()
     }
 </div>

@@ -4,14 +4,14 @@
 @using Vino.Core.CMS.Domain.Dto.Membership
 @model MemberDto
 <div class="window-content">
-    @using (Html.LayuiBeginForm<MemberDto>("Save"))
+    @using (Html.BeginForm<MemberDto>("Save"))
     {
-        @Html.LayuiInputFor(x => x.Id)
-        @Html.LayuiInputFor(x => x.Name)
-        @Html.LayuiInputFor(x => x.Password)
-        @Html.LayuiInputFor(x => x.Mobile)
-        @Html.LayuiInputFor(x => x.Sex)
-        @Html.LayuiInputFor(x => x.IsEnable)
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.Name)
+        @Html.InputFor(x => x.Password)
+        @Html.InputFor(x => x.Mobile)
+        @Html.InputFor(x => x.Sex)
+        @Html.InputFor(x => x.IsEnable)
 
         <div class="layui-form-item">
             <label class="layui-form-label">会员类型</label>
@@ -33,6 +33,6 @@
             </div>
         </div>
 
-        @Html.LayuiFormActionsForSubmitAndClose()
+        @Html.ActionsForSubmitAndClose()
     }
 </div>

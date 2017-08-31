@@ -42,7 +42,7 @@
 	margin: 0;
 }
 .frame-header .layui-nav {
-	position: absolute;
+    position: absolute;
     right: 10px;
     top: 0;
     padding: 0;
@@ -50,13 +50,17 @@
 }
 
 .layui-body {
-    z-index: 99999;
-    background:#FFF;
+    z-index: 9999;
+    background: #FFF;
 }
 
 .main-index cite {
 	padding: 0 5px;
-} 
+}
+
+.layui-nav-child {
+    z-index: 10002;
+}
 .main-index .layui-nav-child dd a {
     padding-left: 35px;
 }

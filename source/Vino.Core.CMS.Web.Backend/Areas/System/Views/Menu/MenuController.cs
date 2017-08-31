@@ -36,10 +36,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
         }
 
         [Auth("view")]
-        public async Task<IActionResult> List(long? parentId, int page = 1, int limit = 10)
+        public async Task<IActionResult> List(long? parentId, int page = 1, int rows = 10)
         {
-            var data = await service.GetListAsync(parentId, page, limit);
-            return PagerData(data.list, page, limit, data.count);
+            var data = await service.GetListAsync(parentId, page, rows);
+            return PagerData(data.list, page, rows, data.count);
         }
 
         [Auth("edit")]

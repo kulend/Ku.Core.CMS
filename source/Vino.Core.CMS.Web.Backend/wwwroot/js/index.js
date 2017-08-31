@@ -50,6 +50,7 @@
         var self = $(this);
         if (self.hasClass("layui-layer-max")) {
             //放大
+            $(".layui-header").css("z-index", "9998");
             $(".layui-body").animate({
                 top: '0px',
                 left: '0px',
@@ -66,6 +67,7 @@
                 left: '200px',
                 bottom: '44px'
             }, "normal", function () {
+                $(".layui-header").css("z-index", "10000");
                 self.removeClass("layui-layer-maxmin").addClass("layui-layer-max");
                 windowResize();
             });

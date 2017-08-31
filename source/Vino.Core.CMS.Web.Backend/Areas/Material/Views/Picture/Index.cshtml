@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+    <div class="toolbar">
+        <action id="upload" auth-code="material.picture.upload" text="上传图片" size="small" icon="&#xe67c;" after="gridReload()"/>
+        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
+    </div>
+    <table id="list">
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+        layui.use('upload', function () {
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#upload' //绑定元素
+                , url: '/Material/Picture/Upload' //上传接口
+                , accept: 'images'
+                , size: 2048
+                , multiple: true
+                , done: function (res) {
+                    //上传完毕回调
+                }
+                , error: function () {
+                    //请求异常回调
+                }
+            });
+        });
+    </script>
+}

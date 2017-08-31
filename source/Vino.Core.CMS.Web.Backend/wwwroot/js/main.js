@@ -54,7 +54,7 @@
                             });
                     }
                 });
-        } else {
+        } else if (action) {
             //直接跳转页面
             vino.page.navigateTo(action);
         }

@@ -28,10 +28,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
         }
 
         [Auth("view")]
-        public async Task<IActionResult> GetList(int page, int limit)
+        public async Task<IActionResult> GetList(int page, int rows)
         {
-            var data = await service.GetListAsync(page, limit);
-            return PagerData(data.items, page, limit, data.count);
+            var data = await service.GetListAsync(page, rows);
+            return PagerData(data.items, page, rows, data.count);
         }
 
         [Auth("edit")]

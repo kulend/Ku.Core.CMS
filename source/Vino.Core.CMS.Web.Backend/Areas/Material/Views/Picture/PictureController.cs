@@ -12,6 +12,7 @@ using Vino.Core.Infrastructure.Helper;
 using Vino.Core.CMS.Domain.Dto.Material;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.CMS.Service.Material;
+using Vino.Core.Infrastructure.Extensions;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
 {
@@ -33,43 +34,60 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
             return View();
         }
 
+        [Auth("view")]
+        public async Task<IActionResult> GetList(int page, int rows)
+        {
+            var data = await _service.GetListAsync(page, rows);
+            return PagerData(data.items, page, rows, data.count);
+        }
+
         /// <summary>
         /// 上传文件
         /// </summary>
         /// <returns></returns>
-        [Auth("material.picture.upload")]
-        [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile[] file)
+        public IActionResult Upload()
         {
-            string folder = _env.WebRootPath + $@"\upload\pictures\";
+            return View();
+        }
+
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <returns></returns>
+        [Auth("upload")]
+        [HttpPost]
+        public async Task<IActionResult> Upload(ICollection<IFormFile> file)
+        {
+            string yyyymm = DateTime.Now.ToyyyyMM();
+            string oppositePath = $"/upload/pictures/{User.GetUserIdOrZero()}/{yyyymm}/";
+            var folder = _env.WebRootPath + oppositePath;
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
             }
-            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            foreach (var item in file)
+            using (System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
             {
-                md5.Clear();
-                string suffix = item.FileName.Split('.')[1];
-                var saveName = Guid.NewGuid().ToString("N") + "." + suffix;
-                var filePath = folder + saveName;
-                var md5Code = "";
-                using (FileStream fs = System.IO.File.Create(filePath))
+                foreach (var item in file)
                 {
-                    await item.CopyToAsync(fs);
-                    md5Code = CryptHelper.EncryptMD5(fs);
-                    fs.Flush();
-                }
+                    string suffix = item.FileName.Split('.')[1];
+                    var saveName = "" + Guid.NewGuid().ToString("N") + "." + suffix;
+                    var md5Code = "";
+                    using (var fileStream = new FileStream(Path.Combine(folder, saveName), FileMode.Create))
+                    {
+                        await item.CopyToAsync(fileStream);
+                        await fileStream.FlushAsync();
+                    }
 
-                PictureDto model = new PictureDto();
-                model.Title = item.FileName;
-                model.FileName = item.FileName;
-                model.FilePath = filePath;
-                model.FileSize = item.Length;
-                model.FileType = suffix.ToLower();
-                model.Md5Code = md5Code;
-                model.UploadUserId = User.GetUserIdOrZero();
-                await this._service.SaveAsync(model);
+                    PictureDto model = new PictureDto();
+                    model.Title = item.FileName;
+                    model.FileName = item.FileName;
+                    model.FilePath = oppositePath + saveName;
+                    model.FileSize = item.Length;
+                    model.FileType = suffix.ToLower();
+                    model.Md5Code = md5Code;
+                    model.UploadUserId = User.GetUserIdOrZero();
+                    await this._service.SaveAsync(model);
+                }
             }
             return Json(true);
         }

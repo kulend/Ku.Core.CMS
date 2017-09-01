@@ -8,6 +8,8 @@ namespace Vino.Core.CMS.Service.Material
 {
     public partial interface IPictureService
     {
+        Task<(int count, List<PictureDto> items)> GetListAsync(int page, int rows);
+
         Task SaveAsync(PictureDto dto);
     }
 }

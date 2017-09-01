@@ -13,6 +13,12 @@ namespace Vino.Core.CMS.Service.Material
 {
     public partial class PictureService
     {
+        public async Task<(int count, List<PictureDto> items)> GetListAsync(int page, int rows)
+        {
+            var data = await _repository.PageQueryAsync(page, rows, null, "CreateTime desc");
+            return (data.count, _mapper.Map<List<PictureDto>>(data.items));
+        }
+
         public async Task SaveAsync(PictureDto dto)
         {
             Picture model = _mapper.Map<Picture>(dto);

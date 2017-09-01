@@ -10,7 +10,7 @@ namespace Vino.Core.CMS.Domain.Dto.Material
     public class MaterialDto: BaseDto
     {
         /// <summary>
-        /// 文件展示名称
+        /// 标题
         /// </summary>
         [MaxLength(256)]
         public string Title { set; get; }
@@ -30,7 +30,7 @@ namespace Vino.Core.CMS.Domain.Dto.Material
         /// <summary>
         /// MD5码
         /// </summary>
-        [Required, MaxLength(32)]
+        [MaxLength(32)]
         public string Md5Code { set; get; }
 
         /// <summary>
@@ -48,6 +48,7 @@ namespace Vino.Core.CMS.Domain.Dto.Material
         /// </summary>
         public UserDto UploadUser { set; get; }
 
+        [MaxLength(256)]
         public string FilePath { set; get; }
     }
 }

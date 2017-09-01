@@ -10,15 +10,15 @@ namespace Vino.Core.CMS.Domain.Entity.Material
     public class Material : BaseProtectedEntity
     {
         /// <summary>
-        /// 文件展示名称
+        /// 标题
         /// </summary>
-        [MaxLength(256)]
+        [MaxLength(128)]
         public string Title { set; get; }
 
         /// <summary>
         /// 文件名
         /// </summary>
-        [MaxLength(256)]
+        [MaxLength(128)]
         public string FileName { set; get; }
 
         /// <summary>

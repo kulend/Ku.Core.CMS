@@ -12,12 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
-    <PackageReference Include="DotNetCore.CAP" Version="2.0.0-preview-20091963" />
-    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.0.0-preview-20091963" />
-    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="2.0.0-preview-20091963" />
+    <PackageReference Include="DotNetCore.CAP" Version="2.0.0" />
+    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.0.0" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.4.1" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-10059" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-10062" />
     <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
   </ItemGroup>
 
@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj" />
+    <ProjectReference Include="..\Vino.Core.Session\Vino.Core.Session.csproj" />
     <ProjectReference Include="..\Vino.Core.Tokens.Jwt\Vino.Core.Tokens.Jwt.csproj" />
     <ProjectReference Include="..\Vino.Core.Tools\Vino.Core.Tools.csproj" />
   </ItemGroup>

@@ -10,8 +10,7 @@ using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.TaskApp.Application;
 using Vino.Core.CMS.TaskApp.AutoMapper;
 using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.Helper;
-using Vino.Core.Infrastructure.IdGenerator;
+using AutoMapper;
 
 namespace Vino.Core.CMS.TaskApp
 {
@@ -25,17 +24,25 @@ namespace Vino.Core.CMS.TaskApp
             Console.WriteLine("Hello World!");
 
             var Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            
-            //ID生成器初始化
-            ID.Initialize(Configuration);
-
-            VinoMapper.Initialize();
 
             IServiceCollection services = new ServiceCollection();
             services.AddLogging();
 
+            //AutoMapper
+            services.AddAutoMapper();
+            //Tools
+            services.AddTools();
+            //IdGenerator
+            services.AddIdGenerator(Configuration);
+
             string connection = Configuration.GetConnectionString("Default");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")), ServiceLifetime.Transient);
+
+            //缓存
+            services.AddCache(Configuration);
+
+            //事件消息发送订阅
+            services.AddEventBus<VinoDbContext>(Configuration);
 
             services.AddTimedTask().AddEntityFrameworkTimedTask<VinoDbContext>();
 

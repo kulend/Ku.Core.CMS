@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.表现", "1.表现", "{5F420258-0110-494B-98DA-94B5B61B2E5F}"
 EndProject
@@ -53,7 +53,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Extensions.Layui"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.开源项目", "7.开源项目", "{3FFD240A-9650-4B56-ADEA-A094642369E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.Extensions.Layui.Test", "..\..\开源\Vino.Core.Extensions\Tests\Vino.Core.Extensions.Layui.Test\Vino.Core.Extensions.Layui.Test.csproj", "{4E6D97BD-EE58-4916-92C2-9650CB8BF749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Extensions.Layui.Test", "..\..\开源\Vino.Core.Extensions\Tests\Vino.Core.Extensions.Layui.Test\Vino.Core.Extensions.Layui.Test.csproj", "{4E6D97BD-EE58-4916-92C2-9650CB8BF749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.Session", "Vino.Core.Session\Vino.Core.Session.csproj", "{8549DD05-26F6-4202-A1B0-AC9CF7309590}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,6 +135,10 @@ Global
 		{4E6D97BD-EE58-4916-92C2-9650CB8BF749}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E6D97BD-EE58-4916-92C2-9650CB8BF749}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E6D97BD-EE58-4916-92C2-9650CB8BF749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8549DD05-26F6-4202-A1B0-AC9CF7309590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8549DD05-26F6-4202-A1B0-AC9CF7309590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8549DD05-26F6-4202-A1B0-AC9CF7309590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8549DD05-26F6-4202-A1B0-AC9CF7309590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +162,7 @@ Global
 		{F09D0224-A801-44F5-8B42-9301F22372CF} = {5F420258-0110-494B-98DA-94B5B61B2E5F}
 		{0998E5B0-B7F0-4895-8D3C-7EC6F93274AD} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{4E6D97BD-EE58-4916-92C2-9650CB8BF749} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
+		{8549DD05-26F6-4202-A1B0-AC9CF7309590} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

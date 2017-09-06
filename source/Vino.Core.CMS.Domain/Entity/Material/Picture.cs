@@ -12,5 +12,10 @@ namespace Vino.Core.CMS.Domain.Entity.Material
     {
         [MaxLength(256)]
         public string ThumbPath { set; get; }
+
+        /// <summary>
+        /// 是否已压缩
+        /// </summary>
+        public bool IsCompressed { set; get; }
     }
 }

@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.Material
+@model PictureDto
+<div class="window-content">
+    @using (Html.BeginForm<PictureDto>("Save"))
+    {
+        @Html.InputFor(x => x.Id)
+
+        @Html.ActionsForSubmitAndClose()
+    }
+</div>

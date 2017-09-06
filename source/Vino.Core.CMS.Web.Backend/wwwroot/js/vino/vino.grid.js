@@ -71,10 +71,12 @@
         method: "get",
         page: true,
         limits: [10, 20, 30, 40, 50],
+        limit:10,
         loading: true,
         even: false,
         rownumber: false,
         checkbox: true,
+        height:'full-65',
         request: {
             pageName: 'page' //页码的参数名称，默认：page
             , limitName: 'rows' //每页数据量的参数名，默认：limit

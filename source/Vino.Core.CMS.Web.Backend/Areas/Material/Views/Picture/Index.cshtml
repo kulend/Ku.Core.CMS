@@ -12,25 +12,6 @@
 @section Scripts
 {
     <script>
-        //layui.use('upload', function () {
-        //    var upload = layui.upload;
-
-        //    //执行实例
-        //    var uploadInst = upload.render({
-        //        elem: '#upload' //绑定元素
-        //        , url: '/Material/Picture/Upload' //上传接口
-        //        , accept: 'images'
-        //        , size: 2048
-        //        , multiple: true
-        //        , done: function (res) {
-        //            //上传完毕回调
-        //        }
-        //        , error: function () {
-        //            //请求异常回调
-        //        }
-        //    });
-        //});
-
         $(function () {
             $("#list").vinoGrid({
                 url: 'GetList',
@@ -38,13 +19,15 @@
                 cols: [[
                     {
                         field: 'Name', title: '图片', width: 120, align: 'center'
-                        , templet: '<div><img src="{{d.FilePath}}" width="100" /></div>'
+                        , templet: '<div><img src="{{d.FilePath}}" /></div>'
                     },
-                    { field: 'Title', title: '标题', width: 130 },
                     { field: 'FileName', title: '文件名', width: 130 },
                     { field: 'FileType', title: '文件类型', width: 90 },
                     { field: 'Md5Code', title: 'MD5码', width: 120 },
-                    { field: 'FileSize', title: '文件大小', width: 90 },
+                    {
+                        field: 'FileSize', title: '文件大小', width: 90, align: 'center'
+                        , templet: '<div>{{# var s = (d.FileSize / 1014).toFixed(1) }} {{s}} kb</div>'
+                    },
                     { field: 'FilePath', title: '文件路径', width: 160 },
                     { field: 'CreateTime', title: '上传时间', width: 160 },
                     {

@@ -16,19 +16,27 @@
     <PackageReference Include="Autofac" Version="4.6.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-10059" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-10062" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask.EntityFramework\Vino.Core.TimedTask.EntityFramework.csproj" />
     <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask\Vino.Core.TimedTask.csproj" />
+    <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Job\Vino.Core.CMS.Job.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj" />
+    <ProjectReference Include="..\Vino.Core.EventBus\Vino.Core.EventBus.csproj" />
+    <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\Vino.Core.Tokens.Jwt\Vino.Core.Tokens.Jwt.csproj" />
+    <ProjectReference Include="..\Vino.Core.Tools\Vino.Core.Tools.csproj" />
   </ItemGroup>
 
 </Project>

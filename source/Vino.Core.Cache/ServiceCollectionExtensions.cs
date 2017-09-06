@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Vino.Core.Cache;
 using Vino.Core.Cache.Redis;
-using Vino.Core.CMS.Service.Events;
-using Vino.Core.EventBus;
-using Vino.Core.EventBus.CAP;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -29,16 +24,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 RedisConnectionMultiplexer.Init(config);
 
                 services.AddSingleton(typeof(ICacheService), typeof(RedisCacheService));
-
-                //使用redis存储session
-                services.AddSingleton<IDistributedCache>(
-                    serviceProvider =>
-                        new RedisCache(new RedisCacheOptions
-                        {
-                            Configuration = config.ConnectionString,
-                            InstanceName = config.ApplicationKey
-                        }));
-                services.AddSession();
             }
             else
             {

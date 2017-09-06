@@ -24,6 +24,9 @@ namespace Vino.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //Session
+            services.AddSession(Configuration);
+
             //JWT
             services.AddJwtToken(Configuration);
             services.AddBackendAuth(Configuration, Environment);
@@ -74,7 +77,7 @@ namespace Vino.Core.CMS.Web.Application
 
             app.UseStaticFiles();
 
-            app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromMinutes(30) });
+            app.UseSession(Configuration);
 
             //身份认证
             app.UseBackendAuth(Configuration);

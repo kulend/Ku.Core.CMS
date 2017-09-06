@@ -13,6 +13,7 @@ using Vino.Core.CMS.Domain.Dto.Material;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.CMS.Service.Material;
 using Vino.Core.Infrastructure.Extensions;
+using Vino.Core.EventBus.CAP;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
 {
@@ -90,6 +91,14 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
                 }
             }
             return Json(true);
+        }
+
+        [NonAction]
+        [EventSubscribe("material_picture_upload")]
+        public async Task SaveUserActionLog(PictureDto model)
+        {
+            //await service.AddAsync(log);
+            await Task.CompletedTask;
         }
     }
 }

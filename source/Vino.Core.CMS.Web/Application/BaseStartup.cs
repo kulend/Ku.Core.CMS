@@ -39,7 +39,7 @@ namespace Vino.Core.CMS.Web.Application
             services.AddIdGenerator(Configuration);
             //DBContext
             string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContextPool<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Backend")));
+            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Backend")));
 
             //缓存
             services.AddCache(Configuration);

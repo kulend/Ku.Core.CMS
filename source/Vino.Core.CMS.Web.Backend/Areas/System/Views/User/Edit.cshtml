@@ -3,30 +3,34 @@
 }
 @using Vino.Core.CMS.Domain.Dto.System
 @model UserDto
-<div class="window-content">
+<div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<UserDto>("Save"))
     {
-        @Html.InputFor(x => x.Id)
-        @Html.InputFor(x => x.Account)
-        @Html.InputFor(x => x.Password)
-        @Html.InputFor(x => x.Name)
-        @Html.InputFor(x => x.Mobile)
-        @Html.InputFor(x => x.IsEnable)
-        @Html.InputFor(x => x.Remarks)
+        <div class="layui-body">
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.Account)
+            @Html.InputFor(x => x.Password)
+            @Html.InputFor(x => x.Name)
+            @Html.InputFor(x => x.Mobile)
+            @Html.InputFor(x => x.IsEnable)
+            @Html.InputFor(x => x.Remarks)
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户角色</label>
-            <div class="layui-input-block">
-                @{
-                    List<RoleDto> userRoles = ViewBag.UserRoles;
-                }
-                @foreach (RoleDto role in ViewBag.Roles)
-                {
-                    <input type="checkbox" name="UserRoles" value="@role.Id" title="@role.Name" lay-skin="primary" @(role.IsEnable ? "" : "disabled") @(userRoles.Any(x=>x.Id == role.Id)?"checked":"") />
-                }
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户角色</label>
+                <div class="layui-input-block">
+                    @{
+                        List<RoleDto> userRoles = ViewBag.UserRoles;
+                    }
+                    @foreach (RoleDto role in ViewBag.Roles)
+                    {
+                        <input type="checkbox" name="UserRoles" value="@role.Id" title="@role.Name" lay-skin="primary" @(role.IsEnable ? "" : "disabled") @(userRoles.Any(x => x.Id == role.Id) ? "checked" : "") />
+                    }
+                </div>
             </div>
-        </div>
 
-        @Html.ActionsForSubmitAndClose()
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
     }
 </div>

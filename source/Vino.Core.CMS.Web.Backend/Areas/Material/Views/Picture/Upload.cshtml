@@ -3,46 +3,51 @@
 }
 @using Vino.Core.CMS.Domain.Dto.Membership
 @model MemberDto
-<div class="window-content">
-    <div class="layui-row">
-        <div class="layui-col-xs12" style="text-align:center;">
-            <div id="areaUplaod" class="layui-upload-drag" style="padding:15px 0; width:100%">
-                <i class="layui-icon">&#xe67c;</i>
-                <p>点击上传，或将文件拖拽到此处</p>
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <div class="layui-row">
+            <div class="layui-col-xs12" style="text-align:center;">
+                <div id="areaUplaod" class="layui-upload-drag" style="padding:15px 0; width:100%">
+                    <i class="layui-icon">&#xe67c;</i>
+                    <p>点击上传，或将文件拖拽到此处</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-col-xs12">
+                <div class="layui-upload">
+                    <div class="layui-upload-list">
+                        <table id="table" class="layui-table">
+                            <colgroup>
+                                <col align="center" width="100" />
+                                <col />
+                                <col width="80" />
+                                <col width="150" />
+                                <col width="150" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th lay-data="{width:80, align:'center'}">预览</th>
+                                    <th>文件名</th>
+                                    <th lay-data="{width:80}">大小</th>
+                                    <th lay-data="{width:150}">状态</th>
+                                    <th lay-data="{width:150}">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="layui-row">
-        <div class="layui-col-xs12">
-            <div class="layui-upload">
-                <div class="layui-upload-list">
-                    <table id="table" class="layui-table">
-                        <colgroup>
-                            <col align="center" width="100" />
-                            <col />
-                            <col width="80"/>
-                            <col width="150"/>
-                            <col width="150"/>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th lay-data="{width:80, align:'center'}">预览</th>
-                                <th>文件名</th>
-                                <th lay-data="{width:80}">大小</th>
-                                <th lay-data="{width:150}">状态</th>
-                                <th lay-data="{width:150}">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="list"></tbody>
-                    </table>
-                </div>
-                <a class="layui-hide" id="btnBind">上传</a>
-                <a class="layui-btn" id="btnUpload" style="display:none;">开始上传</a>
-            </div> 
-        </div>
+    <div class="layui-footer">
+        <a class="layui-hide" id="btnBind">上传</a>
+        <a class="layui-btn layui-btn-small" id="btnUpload" style="display:none;">开始上传</a>
+        @Html.ActionsForClose()
     </div>
 </div>
-
 @section Scripts
 {
     <script>

@@ -17,6 +17,9 @@ namespace Vino.Core.Infrastructure.Data
         /// <summary>
         /// 创建时间
         /// </summary>
+        [Display(Name = "创建时间")]
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
+        [DataType(DataType.DateTime)]
         public DateTime CreateTime { set; get; }
 
         /// <summary>

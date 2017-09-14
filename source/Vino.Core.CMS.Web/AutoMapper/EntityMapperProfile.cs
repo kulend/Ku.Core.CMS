@@ -28,6 +28,10 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.System.FunctionDto, Domain.Entity.System.Function>();
             CreateMap<Domain.Entity.System.Menu, Domain.Dto.System.MenuDto>();
             CreateMap<Domain.Dto.System.MenuDto, Domain.Entity.System.Menu>();
+            CreateMap<Domain.Entity.System.Sms, Domain.Dto.System.SmsDto>();
+            CreateMap<Domain.Dto.System.SmsDto, Domain.Entity.System.Sms>();
+            CreateMap<Domain.Entity.System.SmsQueue, Domain.Dto.System.SmsQueueDto>();
+            CreateMap<Domain.Dto.System.SmsQueueDto, Domain.Entity.System.SmsQueue>();
             CreateMap<Domain.Entity.Membership.Member, Domain.Dto.Membership.MemberDto>();
             CreateMap<Domain.Dto.Membership.MemberDto, Domain.Entity.Membership.Member>();
             CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>();

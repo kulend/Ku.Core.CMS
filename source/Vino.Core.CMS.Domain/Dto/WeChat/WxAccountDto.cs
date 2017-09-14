@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 using Vino.Core.Infrastructure.Data;
 

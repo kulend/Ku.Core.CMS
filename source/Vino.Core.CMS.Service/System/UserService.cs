@@ -174,24 +174,8 @@ namespace Vino.Core.CMS.Service.System
             var dto = _mapper.Map<UserDto>(entity);
             dto.Password = "";
 
-            UserActionLogDto log = new UserActionLogDto();
-            log.Operation = "用户登陆";
-            log.ControllerName = "Home";
-            log.ActionName = "Login";
-            log.UserId = entity.Id;
-            log.Ip = "";
-            log.Url = "";
-            log.UrlReferrer = "";
-            log.CreateTime = DateTime.Now;
-
-            using (var trans = context.Database.BeginTransaction())
-            {
-                //发送消息
-                await _eventPublisher.PublishAsync(new UserLoginEvent { UserId = entity.Id });
-                await _eventPublisher.PublishAsync(log);
-
-                trans.Commit();
-            }
+            //发送消息
+            await _eventPublisher.PublishAsync(new UserLoginEvent { UserId = entity.Id });
             return dto;
         }
 

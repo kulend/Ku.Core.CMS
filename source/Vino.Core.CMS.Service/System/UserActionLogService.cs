@@ -44,5 +44,10 @@ namespace Vino.Core.CMS.Service.System
             }
             return Task.FromResult(Gets());
         }
+
+        public async Task<UserActionLogDto> GetByIdAsync(long id)
+        {
+            return _mapper.Map<UserActionLogDto>(await this._repository.GetByIdAsync(id));
+        }
     }
 }

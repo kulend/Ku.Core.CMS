@@ -21,12 +21,20 @@ namespace Vino.Core.CMS.Web.Application
             builder.RegisterAssemblyTypes(typeof(BaseRepository<,>).GetTypeInfo().Assembly)
                 .Where(t => t.Name.EndsWith("Repository", StringComparison.CurrentCultureIgnoreCase))
                 .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+                .InstancePerDependency();
+
             //Service
             builder.RegisterAssemblyTypes(typeof(IUserService).GetTypeInfo().Assembly)
-                .Where(t => t.Name.EndsWith("Service", StringComparison.CurrentCultureIgnoreCase))
+                .Where(t => t.Name.EndsWith("Service", StringComparison.CurrentCultureIgnoreCase) 
+                        && !t.Name.EndsWith("SubscriberService", StringComparison.CurrentCultureIgnoreCase))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+
+            //SubscriberService
+            builder.RegisterAssemblyTypes(typeof(IUserService).GetTypeInfo().Assembly)
+                .Where(t => t.Name.EndsWith("SubscriberService", StringComparison.CurrentCultureIgnoreCase))
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
 
             builder.RegisterType<SystemJwtProvider>().As<IJwtProvider>().SingleInstance();
         }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain.Enum;
+using Vino.Core.CMS.Domain.Enum.System;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 
 namespace Vino.Core.CMS.Web.Backend.Migrations
@@ -225,6 +226,54 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.ToTable("system_role_function");
                 });
 
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.Sms", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Data")
+                        .HasMaxLength(512);
+
+                    b.Property<DateTime>("ExpireTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(11);
+
+                    b.Property<string>("Signature")
+                        .HasMaxLength(40);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("system_sms");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.SmsQueue", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime>("SendTime");
+
+                    b.Property<long>("SmsId");
+
+                    b.Property<short>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SmsId");
+
+                    b.ToTable("system_sms_queue");
+                });
+
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.User", b =>
                 {
                     b.Property<long>("Id");
@@ -283,13 +332,22 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.Property<string>("Ip")
                         .HasMaxLength(46);
 
+                    b.Property<string>("Method")
+                        .HasMaxLength(10);
+
                     b.Property<string>("Operation")
                         .HasMaxLength(40);
+
+                    b.Property<string>("QueryString")
+                        .HasMaxLength(256);
 
                     b.Property<string>("Url")
                         .HasMaxLength(256);
 
                     b.Property<string>("UrlReferrer")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("UserAgent")
                         .HasMaxLength(256);
 
                     b.Property<long?>("UserId");
@@ -437,6 +495,14 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.HasOne("Vino.Core.CMS.Domain.Entity.System.Role", "Role")
                         .WithMany("RoleFunctions")
                         .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.System.SmsQueue", b =>
+                {
+                    b.HasOne("Vino.Core.CMS.Domain.Entity.System.Sms", "Sms")
+                        .WithMany()
+                        .HasForeignKey("SmsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

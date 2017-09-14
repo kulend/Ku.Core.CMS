@@ -3,29 +3,34 @@
 }
 @using Vino.Core.CMS.Domain.Dto.System
 @model MenuDto
-<div class="window-content">
-    <blockquote class="layui-elem-quote low">
-        <span class="layui-breadcrumb">
-            <a href="javascript:;">顶级菜单</a>
-            @if (ViewBag.Parents != null)
-            {
-                foreach (var dto in ViewBag.Parents)
-                 {
-                     <a href="javascript:;">@dto.Name</a>
-                 }
-            }
-        </span>
-    </blockquote>
+<div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<MenuDto>("Save"))
     {
-        @Html.InputFor(x => x.Id)
-        @Html.InputFor(x => x.ParentId)
-        @Html.InputFor(x => x.Name)
-        @Html.InputFor(x => x.AuthCode)
-        @Html.InputFor(x => x.Url)
-        @Html.InputFor(x => x.Icon)
-        @Html.InputFor(x => x.IsShow)
-        @Html.InputFor(x => x.OrderIndex)
-        @Html.ActionsForSubmitAndClose()
+        <div class="layui-body">
+            <blockquote class="layui-elem-quote low">
+                <span class="layui-breadcrumb">
+                    <a href="javascript:;">顶级菜单</a>
+                    @if (ViewBag.Parents != null)
+                    {
+                        foreach (var dto in ViewBag.Parents)
+                        {
+                            <a href="javascript:;">@dto.Name</a>
+                        }
+                    }
+                </span>
+            </blockquote>
+
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.ParentId)
+            @Html.InputFor(x => x.Name)
+            @Html.InputFor(x => x.AuthCode)
+            @Html.InputFor(x => x.Url)
+            @Html.InputFor(x => x.Icon)
+            @Html.InputFor(x => x.IsShow)
+            @Html.InputFor(x => x.OrderIndex)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
     }
 </div>

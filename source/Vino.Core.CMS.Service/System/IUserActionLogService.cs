@@ -11,5 +11,7 @@ namespace Vino.Core.CMS.Service.System
         Task AddAsync(UserActionLogDto dto);
 
         Task<(int count, List<UserActionLogDto> items)> GetListAsync(int page, int size);
+
+        Task<UserActionLogDto> GetByIdAsync(long id);
     }
 }

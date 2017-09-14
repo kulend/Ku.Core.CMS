@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Vino.Core.CMS.Domain;
+using Vino.Core.CMS.Domain.Dto.System;
+using Vino.Core.EventBus;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Account
 {
@@ -29,18 +31,21 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
         private JwtSecKey _jwtSecKey;
         private JwtAuthConfig _jwtAuthConfig;
         private ICacheService cacheService;
+        private readonly IEventPublisher _eventPublisher;
 
         public AccountController(IJwtProvider jwtProvider,
             IOptions<JwtSecKey> jwtSecKey,
             IOptions<JwtAuthConfig> jwtAuthConfig,
             ICacheService _cacheService,
-            IUserService _userService)
+            IUserService _userService,
+            IEventPublisher _eventPublisher)
         {
             _jwtProvider = jwtProvider;
             _jwtSecKey = jwtSecKey.Value;
             _jwtAuthConfig = jwtAuthConfig.Value;
             this.cacheService = _cacheService;
             this.userService = _userService;
+            this._eventPublisher = _eventPublisher;
         }
 
         public IActionResult Login()
@@ -80,6 +85,21 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             {
                 throw new VinoException("登陆出错!");
             }
+            UserActionLogDto log = new UserActionLogDto();
+            log.Operation = "用户登陆";
+            log.ControllerName = "Home";
+            log.ActionName = "Login";
+            log.UserId = user.Id;
+            log.Ip = HttpContext.IpAddress();
+            log.Url = HttpContext.RequestPath();
+            log.UrlReferrer = HttpContext.UrlReferrer();
+            log.UserAgent = HttpContext.UserAgent().Substr(0, 250);
+            log.Method = HttpContext.Request.Method;
+            log.QueryString = HttpContext.Request.QueryString.ToString().Substr(0, 250);
+            log.CreateTime = DateTime.Now;
+
+            await _eventPublisher.PublishAsync(log);
+
             var claims = new List<Claim>()
             {
                 new Claim("Account",user.Account)
@@ -141,7 +161,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             }
             await userService.ChangePassword(base.User.GetUserIdOrZero(), data.CurrentPassword, data.NewPassword);
 
-            await HttpContext.Authentication.SignOutAsync("Cookie");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return Json(true);
         }

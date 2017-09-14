@@ -33,11 +33,9 @@
         });
     });
 
-    //关闭弹出
-    $(".acton-close").on("click", function() {
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
-        parent.winfns[index] = null;
+    //关闭弹窗
+    $(".action-close").on("click", function() {
+        closeWindow();
     });
 
     $(document).on("click", "button.layui-btn:not([lay-submit])", function (e) {

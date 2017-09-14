@@ -60,6 +60,16 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.System.Menu> Menus { get; set; }
 
         /// <summary>
+        /// 短信
+        /// </summary>
+        public DbSet<Domain.Entity.System.Sms> Smss { get; set; }
+
+        /// <summary>
+        /// 短信队列
+        /// </summary>
+        public DbSet<Domain.Entity.System.SmsQueue> SmsQueues { get; set; }
+
+        /// <summary>
         /// 会员
         /// </summary>
         public DbSet<Domain.Entity.Membership.Member> Members { get; set; }

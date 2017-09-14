@@ -3,26 +3,31 @@
 }
 @using Vino.Core.CMS.Domain.Dto.System
 @model FunctionDto
-<div class="window-content">
-    <blockquote class="layui-elem-quote low">
-        <span class="layui-breadcrumb">
-            <a href="javascript:;">顶级功能</a>
-            @if (ViewBag.Parents != null)
-            {
-                foreach (var dto in ViewBag.Parents)
-                 {
-                     <a href="javascript:;">@dto.Name</a>
-                 }
-            }
-        </span>
-    </blockquote>
+<div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<FunctionDto>("Save"))
     {
-        @Html.InputFor(x => x.Id)
-        @Html.InputFor(x => x.ParentId)
-        @Html.InputFor(x => x.Name)
-        @Html.InputFor(x => x.AuthCode)
-        @Html.InputFor(x => x.IsEnable)
-        @Html.ActionsForSubmitAndClose()
+        <div class="layui-body">
+            <blockquote class="layui-elem-quote low">
+                <span class="layui-breadcrumb">
+                    <a href="javascript:;">顶级功能</a>
+                    @if (ViewBag.Parents != null)
+                    {
+                        foreach (var dto in ViewBag.Parents)
+                        {
+                            <a href="javascript:;">@dto.Name</a>
+                        }
+                    }
+                </span>
+            </blockquote>
+
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.ParentId)
+            @Html.InputFor(x => x.Name)
+            @Html.InputFor(x => x.AuthCode)
+            @Html.InputFor(x => x.IsEnable)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
     }
 </div>

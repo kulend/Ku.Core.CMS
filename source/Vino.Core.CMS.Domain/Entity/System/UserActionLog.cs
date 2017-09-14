@@ -34,5 +34,14 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public string ActionResult { set; get; }
 
         public User User { set; get; }
+
+        [MaxLength(256)]
+        public string UserAgent { set; get; }
+
+        [MaxLength(10)]
+        public string Method { set; get; }
+
+        [MaxLength(256)]
+        public string QueryString { set; get; }
     }
 }

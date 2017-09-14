@@ -3,14 +3,18 @@
 }
 @using Vino.Core.CMS.Domain.Dto.System
 @model RoleDto
-<div class="window-content">
+<div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<RoleDto>("Save"))
     {
-        @Html.InputFor(x => x.Id)
-        @Html.InputFor(x => x.Name)
-        @Html.InputFor(x => x.NameEn)
-        @Html.InputFor(x => x.IsEnable)
-        @Html.InputFor(x => x.Remarks)
-        @Html.ActionsForSubmitAndClose()
-    }
+        <div class="layui-body">
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.Name)
+            @Html.InputFor(x => x.NameEn)
+            @Html.InputFor(x => x.IsEnable)
+            @Html.InputFor(x => x.Remarks)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+     }
 </div>

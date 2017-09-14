@@ -53,11 +53,12 @@ namespace Vino.Core.CMS.Web.Filters
                 log.ControllerName = action.ControllerName;
                 log.ActionName = action.ActionName;
                 log.UserId = userId;
-                log.Ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
-                log.Url = context.HttpContext.Request.Path;
-                var headersDictionary = context.HttpContext.Request.Headers;
-                var urlReferrer = headersDictionary[HeaderNames.Referer].ToString();
-                log.UrlReferrer = urlReferrer;
+                log.Ip = context.HttpContext.IpAddress();
+                log.Url = context.HttpContext.RequestPath();
+                log.UrlReferrer = context.HttpContext.UrlReferrer();
+                log.UserAgent = context.HttpContext.UserAgent().Substr(0, 250);
+                log.Method = context.HttpContext.Request.Method;
+                log.QueryString = context.HttpContext.Request.QueryString.ToString().Substr(0, 250);
                 if (result != null)
                 {
                     var json = JsonConvert.SerializeObject(result.Value);

@@ -55,7 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.开源项目", "7.开源�
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Extensions.Layui.Test", "..\..\开源\Vino.Core.Extensions\Tests\Vino.Core.Extensions.Layui.Test\Vino.Core.Extensions.Layui.Test.csproj", "{4E6D97BD-EE58-4916-92C2-9650CB8BF749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.Session", "Vino.Core.Session\Vino.Core.Session.csproj", "{8549DD05-26F6-4202-A1B0-AC9CF7309590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Session", "Vino.Core.Session\Vino.Core.Session.csproj", "{8549DD05-26F6-4202-A1B0-AC9CF7309590}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.CAP", "..\..\开源\CAP\src\DotNetCore.CAP\DotNetCore.CAP.csproj", "{661BD796-CEBB-40A1-9B37-29ADB4CA7F7E}"
 EndProject

@@ -30,7 +30,7 @@ namespace Vino.Core.CMS.Domain.Entity.Material
         /// <summary>
         /// MD5码
         /// </summary>
-        [Required, MaxLength(32)]
+        [MaxLength(32)]
         public string Md5Code { set; get; }
 
         /// <summary>
@@ -50,5 +50,8 @@ namespace Vino.Core.CMS.Domain.Entity.Material
 
         [MaxLength(256)]
         public string FilePath { set; get; }
+
+        [MaxLength(256)]
+        public string Folder { set; get; }
     }
 }

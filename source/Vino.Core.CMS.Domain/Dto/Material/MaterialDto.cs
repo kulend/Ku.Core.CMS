@@ -50,5 +50,8 @@ namespace Vino.Core.CMS.Domain.Dto.Material
 
         [MaxLength(256)]
         public string FilePath { set; get; }
+
+        [MaxLength(256)]
+        public string Folder { set; get; }
     }
 }

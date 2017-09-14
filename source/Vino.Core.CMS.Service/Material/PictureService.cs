@@ -11,7 +11,6 @@ using Vino.Core.CMS.Domain.Dto.Material;
 using Vino.Core.CMS.Domain.Entity.Material;
 using Vino.Core.EventBus;
 using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.Material
 {
@@ -32,32 +31,34 @@ namespace Vino.Core.CMS.Service.Material
             return (data.count, _mapper.Map<List<PictureDto>>(data.items));
         }
 
-        public async Task SaveAsync(PictureDto dto)
+        public async Task AddAsync(PictureDto dto)
         {
             Picture model = _mapper.Map<Picture>(dto);
-            if (model.Id == 0)
+            model.IsDeleted = false;
+            model.CreateTime = DateTime.Now;
+            using (var trans = await _repository.BeginTransactionAsync())
             {
-                //新增
-                model.Id = ID.NewID();
-                model.IsDeleted = false;
-                model.CreateTime = DateTime.Now;
                 await _repository.InsertAsync(model);
+                await _repository.SaveAsync();
 
                 //发送消息
                 await _eventPublisher.PublishAsync("material_picture_upload", new PictureDto { Id = model.Id });
+                trans.Commit();
             }
-            else
-            {
-                //更新
-                var entity = await _repository.GetByIdAsync(model.Id);
-                if (entity == null)
-                {
-                    throw new VinoDataNotFoundException("无法取得数据!");
-                }
+        }
 
-                entity.Title = model.Title;
-                _repository.Update(entity);
+        public async Task SaveAsync(PictureDto dto)
+        {
+            Picture model = _mapper.Map<Picture>(dto);
+            //更新
+            var entity = await _repository.GetByIdAsync(model.Id);
+            if (entity == null)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
             }
+
+            entity.Title = model.Title;
+            _repository.Update(entity);
             await _repository.SaveAsync();
         }
     }

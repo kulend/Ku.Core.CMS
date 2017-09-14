@@ -14,9 +14,10 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170914094933_7")]
+    partial class _7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +49,7 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Md5Code")
+                        .IsRequired()
                         .HasMaxLength(32);
 
                     b.Property<string>("ThumbPath")

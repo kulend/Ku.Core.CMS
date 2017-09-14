@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Vino.Core.Tools\Vino.Core.Tools.csproj" />
   </ItemGroup>
 
 </Project>

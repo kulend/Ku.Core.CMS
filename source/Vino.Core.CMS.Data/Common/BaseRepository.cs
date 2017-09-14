@@ -20,6 +20,8 @@ namespace Vino.Core.CMS.Data.Common
         /// </summary>
         protected virtual DbSet<TEntity> Table => _dbContext.Set<TEntity>();
 
+        public VinoDbContextTransaction CurrentTransaction { get => currentTransaction; set => currentTransaction = value; }
+
         /// <summary>
         /// 通过构造函数注入得到数据上下文对象实例
         /// </summary>
@@ -27,6 +29,26 @@ namespace Vino.Core.CMS.Data.Common
         protected BaseRepository(VinoDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        private VinoDbContextTransaction currentTransaction;
+
+        public ITransaction BeginTransaction()
+        {
+            if (currentTransaction == null)
+            {
+                currentTransaction = new VinoDbContextTransaction(_dbContext.Database.BeginTransaction());
+            }
+            return currentTransaction;
+        }
+
+        public async Task<ITransaction> BeginTransactionAsync()
+        {
+            if (currentTransaction == null)
+            {
+                currentTransaction = new VinoDbContextTransaction(await _dbContext.Database.BeginTransactionAsync());
+            }
+            return currentTransaction;
         }
 
         #region 主键查询

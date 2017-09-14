@@ -20,8 +20,19 @@ namespace Vino.Core.Infrastructure.Data
         /// <summary>
         /// 异步保存
         /// </summary>
-        /// <returns></returns>
         Task SaveAsync();
+
+        /// <summary>
+        /// 开启事务
+        /// </summary>
+        /// <returns></returns>
+        ITransaction BeginTransaction();
+
+        /// <summary>
+        /// 开启事务
+        /// </summary>
+        /// <returns></returns>
+        Task<ITransaction> BeginTransactionAsync();
     }
 
     /// <summary>

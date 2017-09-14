@@ -10,6 +10,8 @@ namespace Vino.Core.CMS.Service.Material
     {
         Task<(int count, List<PictureDto> items)> GetListAsync(int page, int rows);
 
+        Task AddAsync(PictureDto dto);
+
         Task SaveAsync(PictureDto dto);
     }
 }

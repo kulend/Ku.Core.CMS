@@ -14,6 +14,7 @@ using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.CMS.Service.Material;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.EventBus.CAP;
+using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
 {
@@ -66,39 +67,30 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
             {
                 Directory.CreateDirectory(folder);
             }
-            using (System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
+            foreach (var item in file)
             {
-                foreach (var item in file)
-                {
-                    string suffix = item.FileName.Split('.')[1];
-                    var saveName = "" + Guid.NewGuid().ToString("N") + "." + suffix;
-                    var md5Code = "";
-                    using (var fileStream = new FileStream(Path.Combine(folder, saveName), FileMode.Create))
-                    {
-                        await item.CopyToAsync(fileStream);
-                        await fileStream.FlushAsync();
-                    }
+                PictureDto model = new PictureDto();
+                model.Id = ID.NewID();
 
-                    PictureDto model = new PictureDto();
-                    model.Title = item.FileName;
-                    model.FileName = item.FileName;
-                    model.FilePath = oppositePath + saveName;
-                    model.FileSize = item.Length;
-                    model.FileType = suffix.ToLower();
-                    model.Md5Code = md5Code;
-                    model.UploadUserId = User.GetUserIdOrZero();
-                    await this._service.SaveAsync(model);
+                string suffix = item.FileName.Split('.').Last().ToLower();
+                var saveName = model.Id + "_original." + suffix;
+
+                using (var fileStream = new FileStream(Path.Combine(folder, saveName), FileMode.Create))
+                {
+                    await item.CopyToAsync(fileStream);
+                    await fileStream.FlushAsync();
                 }
+
+                model.Title = item.FileName;
+                model.FileName = saveName;
+                model.Folder = oppositePath;
+                model.FilePath = oppositePath + saveName;
+                model.FileSize = item.Length;
+                model.FileType = suffix;
+                model.UploadUserId = User.GetUserIdOrZero();
+                await this._service.AddAsync(model);
             }
             return Json(true);
-        }
-
-        [NonAction]
-        [EventSubscribe("material_picture_upload")]
-        public async Task SaveUserActionLog(PictureDto model)
-        {
-            //await service.AddAsync(log);
-            await Task.CompletedTask;
         }
     }
 }

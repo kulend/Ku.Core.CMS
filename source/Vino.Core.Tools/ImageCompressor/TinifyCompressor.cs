@@ -21,5 +21,15 @@ namespace Vino.Core.Tools.ImageCompressor
             var source = Tinify.FromFile(filePath);
             await source.ToFile(savePath);
         }
+
+        /// <summary>
+        /// 裁剪图片
+        /// </summary>
+        public async Task Resize(string filePath, string savePath, object options)
+        {
+            var source = Tinify.FromFile(filePath);
+            var resized = source.Resize(options);
+            await resized.ToFile(savePath);
+        }
     }
 }

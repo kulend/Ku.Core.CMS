@@ -21,13 +21,14 @@
                         field: 'FilePath', title: '图片', width: 120, align: 'center'
                         , templet: '<div><img src="{{d.FilePath}}" /></div>'
                     },
-                    { field: 'FileName', title: '文件名', width: 130 },
+                    { field: 'Title', title: '文件名', width: 130 },
                     { field: 'FileType', title: '文件类型', width: 90 },
                     { field: 'Md5Code', title: 'MD5码', width: 120 },
                     {
                         field: 'FileSize', title: '文件大小', width: 90, align: 'center'
                         , templet: '<div>{{# var s = (d.FileSize / 1014).toFixed(1) }} {{s}} kb</div>'
                     },
+                    { field: 'IsCompressed', title: '压缩', width: 80, align: 'center', templet: grid_templet_bool("IsCompressed") },
                     { field: 'FilePath', title: '文件路径', width: 160 },
                     { field: 'CreateTime', title: '上传时间', width: 160 },
                     {

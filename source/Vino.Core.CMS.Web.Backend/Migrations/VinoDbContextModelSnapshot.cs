@@ -3,13 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.CMS.Domain.Enum.System;
-using Vino.Core.CMS.Domain.Enum.WeChat;
 
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {

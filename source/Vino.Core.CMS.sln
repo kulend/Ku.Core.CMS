@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.表现", "1.表现", "{5F420258-0110-494B-98DA-94B5B61B2E5F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.其他", "6.其他", "{38AE7166-6167-4D42-A479-647797CD1A83}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.其他", "8.其他", "{38AE7166-6167-4D42-A479-647797CD1A83}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Infrastructure", "Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj", "{73C2FAAC-7BCB-420E-913E-37CE2F21470F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.数据", "3.数据", "{710A57A2-44CD-4A89-A01A-1AF755B90113}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.数据", "4.数据", "{710A57A2-44CD-4A89-A01A-1AF755B90113}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.Data", "Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj", "{02FBBBAB-95BC-4C92-BABA-B0F1F84EA50B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.服务", "2.服务", "{55C35987-B209-43DB-A627-3E77CC97586F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.服务", "3.服务", "{55C35987-B209-43DB-A627-3E77CC97586F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.Service", "Vino.Core.CMS.Service\Vino.Core.CMS.Service.csproj", "{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB}"
 EndProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Tokens.Jwt", "Vin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.Domain", "Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj", "{3B9DB242-13E5-401A-8592-3BAB515AEDEF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.定时任务", "4.定时任务", "{AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.定时任务", "5.定时任务", "{AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.TimedTask", "..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask\Vino.Core.TimedTask.csproj", "{EE0DB9D1-1226-430E-9BB2-1B1B680D0DF5}"
 EndProject
@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.TaskApp", "Vi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.CodeGenerator", "Vino.Core.CMS.CodeGenerator\Vino.Core.CMS.CodeGenerator.csproj", "{1D36842E-C60C-460A-905E-8E8B604B04D1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.测试", "5.测试", "{90D6C3DB-5BAC-4192-B281-6F553849024E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.测试", "6.测试", "{90D6C3DB-5BAC-4192-B281-6F553849024E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.Tests", "Vino.Core.CMS.Tests\Vino.Core.CMS.Tests.csproj", "{63ED8391-D0AA-43B1-B0CD-3628F89895E9}"
 EndProject
@@ -62,6 +62,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.CAP.RabbitMQ", "..\..\开源\CAP\src\DotNetCore.CAP.RabbitMQ\DotNetCore.CAP.RabbitMQ.csproj", "{9E4BB26D-1B25-44F1-A32F-20A1F76714D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.CAP.MySql", "..\..\开源\CAP\src\DotNetCore.CAP.MySql\DotNetCore.CAP.MySql.csproj", "{86B2E8FF-3778-4CD5-B8B5-40A69C28A59A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.接口", "2.接口", "{9D86126B-0723-4E1C-B95A-DCD1E079D624}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.MvcPlugin", "Vino.Core.MvcPlugin\Vino.Core.MvcPlugin.csproj", "{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "插件", "插件", "{854BE864-CB14-49C5-9B7E-8EAA0D5595CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.Plugin.Article", "Vino.Core.CMS.Plugin.Article\Vino.Core.CMS.Plugin.Article.csproj", "{3B496AC8-A741-415F-B78F-EE0CA4DFEC14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,6 +165,14 @@ Global
 		{86B2E8FF-3778-4CD5-B8B5-40A69C28A59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B2E8FF-3778-4CD5-B8B5-40A69C28A59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B2E8FF-3778-4CD5-B8B5-40A69C28A59A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B496AC8-A741-415F-B78F-EE0CA4DFEC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B496AC8-A741-415F-B78F-EE0CA4DFEC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B496AC8-A741-415F-B78F-EE0CA4DFEC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B496AC8-A741-415F-B78F-EE0CA4DFEC14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +200,8 @@ Global
 		{661BD796-CEBB-40A1-9B37-29ADB4CA7F7E} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{9E4BB26D-1B25-44F1-A32F-20A1F76714D1} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{86B2E8FF-3778-4CD5-B8B5-40A69C28A59A} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
+		{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
+		{3B496AC8-A741-415F-B78F-EE0CA4DFEC14} = {854BE864-CB14-49C5-9B7E-8EAA0D5595CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

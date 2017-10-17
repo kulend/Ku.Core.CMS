@@ -24,6 +24,7 @@ using Vino.Core.EventBus;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Account
 {
+    [Area("Default")]
     public class AccountController : BaseController
     {
         private IUserService userService;

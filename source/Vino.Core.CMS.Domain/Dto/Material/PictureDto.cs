@@ -13,5 +13,7 @@ namespace Vino.Core.CMS.Domain.Dto.Material
         /// 是否已压缩
         /// </summary>
         public bool IsCompressed { set; get; }
+
+        public int TryCompressCount { set; get; } = 0;
     }
 }

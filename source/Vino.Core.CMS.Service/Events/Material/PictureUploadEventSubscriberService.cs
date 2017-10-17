@@ -36,7 +36,7 @@ namespace Vino.Core.CMS.Service.Events.Material
         /// <summary>
         /// 图片压缩处理
         /// </summary>
-        [EventSubscribe("material_picture_upload")]
+        [EventSubscribe("material_picture_compress")]
         public async Task Compress(PictureDto dto)
         {
             var model = await _repository.GetByIdAsync(dto.Id);
@@ -54,26 +54,47 @@ namespace Vino.Core.CMS.Service.Events.Material
             {
                 var fileName = model.Id + "." + model.FileType;
                 var filePath = model.Folder + fileName;
-                await _imageCompressor.Compress(_env.WebRootPath + model.FilePath,
-                    _env.WebRootPath + filePath);
+                try
+                {
+                    //压缩图片
+                    await _imageCompressor.Compress(_env.WebRootPath + model.FilePath,
+                            _env.WebRootPath + filePath);
 
-                model.FilePath = filePath;
-                model.FileName = fileName;
-                var fileInfo = new FileInfo(_env.WebRootPath + filePath);
-                model.FileSize = fileInfo.Length;
+                    //缩略图
+                    var thumbPath = model.Folder + model.Id + "_thumb." + model.FileType;
+                    await _imageCompressor.Resize(_env.WebRootPath + filePath,
+                            _env.WebRootPath + thumbPath, new { method = "fit", width = 240, height = 240 });
+
+                    model.FilePath = filePath;
+                    model.FileName = fileName;
+                    model.ThumbPath = thumbPath;
+                    var fileInfo = new FileInfo(_env.WebRootPath + filePath);
+                    model.FileSize = fileInfo.Length;
+                    model.IsCompressed = true;
+                    using (var trans = await _repository.BeginTransactionAsync())
+                    {
+                        _repository.Update(model);
+                        await _repository.SaveAsync();
+                        trans.Commit();
+                    }
+                }
+                catch
+                {
+                    //尝试压缩3次
+                    if (dto.TryCompressCount < 3)
+                    {
+                        dto.TryCompressCount = dto.TryCompressCount + 1;
+                        //发送消息
+                        await _eventPublisher.PublishAsync("material_picture_compress", dto);
+                    }
+                }
             }
-            model.IsCompressed = true;
-            _repository.Update(model);
-            await _repository.SaveAsync();
-
-            //发送消息
-            await _eventPublisher.PublishAsync("material_picture_compress", new PictureDto { Id = model.Id });
         }
 
         /// <summary>
         /// 文件计算MD5
         /// </summary>
-        [EventSubscribe("material_picture_compress")]
+        [EventSubscribe("material_picture_upload")]
         public async Task Md5(PictureDto dto)
         {
             var model = await _repository.GetByIdAsync(dto.Id);
@@ -97,6 +118,9 @@ namespace Vino.Core.CMS.Service.Events.Material
                 model.Md5Code = md5Code;
                 _repository.Update(model);
                 await _repository.SaveAsync();
+
+                //发送消息
+                await _eventPublisher.PublishAsync("material_picture_compress", new PictureDto { Id = model.Id });
             }
             catch (Exception)
             {

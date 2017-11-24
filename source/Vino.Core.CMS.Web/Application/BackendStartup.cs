@@ -12,8 +12,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Vino.Core.CMS.Web.Filters;
 using Vino.Core.Infrastructure.Json;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Vino.Core.MvcPlugin;
 
 namespace Vino.Core.CMS.Web.Application
 {
@@ -55,15 +53,6 @@ namespace Vino.Core.CMS.Web.Application
                     json.SerializerSettings.Converters.Add(new LongToStringConverter());
                     json.SerializerSettings.Converters.Add(new EnumDisplayConverter());
                 });
-
-            services.AddMvcPlugin(Configuration, Environment).LoadEnablePlugins(plugin =>
-            {
-                //var cmsPlugin = plugin as PluginBase;
-                //if (cmsPlugin != null)
-                //{
-                //    cmsPlugin.InitPlug();
-                //}
-            }, null);
 
             return base.ConfigureServices(services);
         }
@@ -108,7 +97,7 @@ namespace Vino.Core.CMS.Web.Application
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action}/{id?}",
-                    defaults: new { area="Default", controller = "Home", action = "Index" });
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
     }

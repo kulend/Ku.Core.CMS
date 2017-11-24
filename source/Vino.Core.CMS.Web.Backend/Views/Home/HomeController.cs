@@ -9,7 +9,6 @@ using Vino.Core.CMS.Web.Extensions;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Home
 {
-    [Area("Default")]
     public class HomeController : BaseController
     {
         public HomeController()

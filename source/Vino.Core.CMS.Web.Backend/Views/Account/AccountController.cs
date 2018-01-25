@@ -24,7 +24,7 @@ using Vino.Core.EventBus;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Account
 {
-    public class AccountController : BaseController
+    public class AccountController : BackendController
     {
         private IUserService userService;
         private IJwtProvider _jwtProvider;

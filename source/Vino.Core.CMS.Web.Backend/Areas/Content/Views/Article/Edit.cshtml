@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.Content
+@model ArticleDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<ArticleDto>("Save"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Title)
+        @Html.InputFor(x => x.SubTitle)
+        @Html.InputFor(x => x.Author)
+        @Html.InputFor(x => x.Provenance)
+        @Html.InputFor(x => x.IsPublished)
+        @Html.InputFor(x => x.PublishedTime)
+        @Html.InputFor(x => x.Keyword)
+        @Html.InputFor(x => x.OrderIndex)
+        @Html.InputFor(x => x.ContentType)
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>

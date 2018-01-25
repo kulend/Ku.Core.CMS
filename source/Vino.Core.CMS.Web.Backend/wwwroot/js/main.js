@@ -100,5 +100,5 @@ function createOperateBtn(btn) {
     if (authcode && authcode.indexOf("delete") > 0) {
         isWarn = true;
     }
-    return `<button class="layui-btn layui-btn-mini ${isWarn ? 'layui-btn-danger' : ''} ${btn.css}" action="${btn.action}" after="gridReload()">${btn.title}</button>`;
+    return `<button class="layui-btn layui-btn-xs ${isWarn ? 'layui-btn-danger' : ''} ${btn.css}" action="${btn.action}" after="gridReload()" title="${btn.title}">${btn.title}</button>`;
 }

@@ -9,7 +9,7 @@ using Vino.Core.CMS.Web.Extensions;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Home
 {
-    public class HomeController : BaseController
+    public class HomeController : BackendController
     {
         public HomeController()
         {

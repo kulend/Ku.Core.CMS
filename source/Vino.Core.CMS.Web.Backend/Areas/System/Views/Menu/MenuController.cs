@@ -13,7 +13,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
 {
     [Area("System")]
     [Auth("sys.menu")]
-    public class MenuController : BaseController
+    public class MenuController : BackendController
     {
         private IMenuService service;
         public MenuController(IMenuService _service)

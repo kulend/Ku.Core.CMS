@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.CMS.Domain.Enum.Content;
 using Vino.Core.CMS.Domain.Enum.System;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180124040832_9")]
+    partial class _9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,35 +31,16 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.Property<string>("Author")
                         .HasMaxLength(32);
 
-                    b.Property<string>("Content");
-
-                    b.Property<short>("ContentType");
-
                     b.Property<DateTime>("CreateTime");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<bool>("IsPublished");
-
-                    b.Property<string>("Keyword")
-                        .HasMaxLength(256);
-
-                    b.Property<int>("OrderIndex");
-
                     b.Property<string>("Provenance")
                         .HasMaxLength(64);
-
-                    b.Property<DateTime?>("PublishedTime");
-
-                    b.Property<string>("SubTitle")
-                        .IsRequired()
-                        .HasMaxLength(256);
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(256);
-
-                    b.Property<int>("Visits");
 
                     b.HasKey("Id");
 

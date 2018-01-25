@@ -13,7 +13,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
 {
     [Area("System")]
     [Auth("sys.role")]
-    public class RoleController : BaseController
+    public class RoleController : BackendController
     {
         private readonly IRoleService service;
         public RoleController(IRoleService _service)

@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+    <div class="toolbar">
+        <action auth-code="content.article.edit" text="添加" size="sm" icon="&#xe608;" action="window:Content/Article/Edit" after="gridReload()" />
+        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+    </div>
+    <table id="list">
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'Title', title: '标题', width: 220 },
+                    { field: 'Author', title: '作者', width: 120 },
+                    { field: 'Provenance', title: '来源', width: 140 },
+                    { field: 'IsPublished', title: '是否发布', width: 100, align: 'center', templet: grid_templet_bool("IsPublished") },
+                    { field: 'OrderIndex', title: '排序', width: 80, align: 'center' },
+                    { field: 'Visits', title: '浏览量', width: 80, align: 'center' },
+                    { field: 'PublishedTime', title: '发布时间', width: 170, align: 'center'},
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "content.article.edit", title: "编辑", action: `window:Content/Article/Edit?id={{d.Id}}` },
+                            { code: "content.article.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

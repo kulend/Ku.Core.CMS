@@ -20,7 +20,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
 {
     [Area("Material")]
     [Auth("material.picture")]
-    public class PictureController : BaseController
+    public class PictureController : BackendController
     {
         private IHostingEnvironment _env;
         private IPictureService _service;
@@ -91,6 +91,19 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
                 await this._service.AddAsync(model);
             }
             return Json(true);
+        }
+
+        [Auth("select")]
+        public IActionResult Select()
+        {
+            return View();
+        }
+
+        [Auth("select")]
+        public async Task<IActionResult> GetSelectList(int page, int rows)
+        {
+            var data = await _service.GetListAsync(page, rows);
+            return PagerData(data.items, page, rows, data.count);
         }
     }
 }

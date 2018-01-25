@@ -13,7 +13,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
 {
     [Area("System")]
     [Auth("sys.user")]
-    public class UserController : BaseController
+    public class UserController : BackendController
     {
         private IUserService service;
         private IRoleService roleService;

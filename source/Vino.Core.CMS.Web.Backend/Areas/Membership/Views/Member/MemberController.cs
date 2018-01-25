@@ -12,7 +12,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
 {
     [Area("Membership")]
     [Auth("membership.member")]
-    public class MemberController : BaseController
+    public class MemberController : BackendController
     {
         private readonly IMemberService _service;
         private readonly IMemberTypeService _memberTypeService;

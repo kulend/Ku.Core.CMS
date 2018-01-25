@@ -13,7 +13,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
 {
     [Area("System")]
     [Auth("sys.function")]
-    public class FunctionController : BaseController
+    public class FunctionController : BackendController
     {
         private IFunctionService service;
         public FunctionController(IFunctionService _service)

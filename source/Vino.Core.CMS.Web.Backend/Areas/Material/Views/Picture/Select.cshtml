@@ -1,0 +1,190 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@section Css
+    {
+    <style>
+        .img_pick {
+            overflow: auto;
+            margin-top: 20px;
+        }
+
+            .img_pick .img_item {
+                position: relative;
+                margin-right: 11px;
+                margin-bottom: 10px;
+                float: left;
+                text-align: center;
+            }
+
+            .img_pick .img_item_bd {
+                margin: 0;
+                border: 1px solid #e7e7eb;
+                width: 117px;
+            }
+
+        .frm_radio_label, .frm_checkbox_label {
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            margin-right: 1em;
+        }
+
+        .img_pick .img_item .pic_box {
+            width: 117px;
+            height: 117px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img_pick .img_item .pic {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            height:117px;
+        }
+
+        .img_pick .img_item .pic {
+            display: block;
+            border-bottom: 1px solid #e7e7eb;
+        }
+
+        .img_pick .img_item .lbl_content {
+            display: block;
+            padding: 0 9px;
+        }
+
+        .img_pick .img_item .lbl_content {
+            height: 32px;
+            line-height: 32px;
+            text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .img_pick .img_item_bd.selected .selected_mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .img_pick .img_item_bd.selected .selected_mask_inner {
+            width: 118px;
+            height: 118px;
+            -moz-opacity: .6;
+            -khtml-opacity: .6;
+            opacity: .6;
+            background-color: #000;
+            filter: alpha(opacity=60);
+        }
+
+        .img_pick .img_item_bd.selected .selected_mask_icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: transparent url(/images/icon_card_selected.png) no-repeat 0 0;
+            width: 117px;
+            height: 117px;
+            vertical-align: middle;
+            display: inline-block;
+            background-position: 50% 50%;
+        }
+
+        #pager {
+            float: right;
+        }
+    </style>
+}
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <span class="layui-breadcrumb" lay-separator="|">
+            <a href="">娱乐</a>
+            <a href="">八卦</a>
+            <a href="">体育</a>
+            <a href="">搞笑</a>
+        </span>
+        <ul id="img-list" class="img_pick"></ul>
+        <div id="pager"></div>
+    </div>
+    <div class="layui-footer">
+        <button class="layui-btn layui-btn-sm" id="btnOk">确 定</button>
+        <action text="取 消" size="sm" theme="warm" action="javascript:closeWindow()" />
+    </div>
+</div>
+<script id="tp:img-item" type="text/html">
+    {{each items value i}}
+    <li class="img_item">
+        <label class="frm_checkbox_label img_item_bd {{value.Id | inArraySelected}}" data-item='{"id":"{{value.Id}}", "thumb":"{{value.ThumbPath}}", "path":"{{value.FilePath}}"}'>
+            <div class="pic_box">
+                <img class="pic" src="{{value.ThumbPath||value.FilePath}}"/>
+            </div>
+            <span class="lbl_content">
+                {{value.Title}}
+            </span>
+            <div class="selected_mask">
+                <div class="selected_mask_inner"></div>
+                <div class="selected_mask_icon"></div>
+            </div>
+        </label>
+    </li>
+    {{/each}}
+</script>
+@section Scripts
+    {
+    <script src="~/lib/artTemplate/template-web.js"></script>
+    <script>
+        var selectedItems = [];
+        var selectedItemIds = [];
+        template.defaults.imports.inArraySelected = function (value) { return $.inArray(value, selectedItemIds) >= 0 ? "selected":""; };
+        
+        layui.use(['laypage'], function () {
+            var laypage = layui.laypage;
+
+            var loadData = function (pms) {
+                vino.ajax.get("GetSelectList", { page: pms.curr, rows: pms.limit }, function (data) {
+                    $("#img-list").html(template('tp:img-item', { items: data.data }));
+                    laypage.render({
+                        elem: 'pager'
+                        , count: data.count //数据总数
+                        , limit: pms.limit
+                        , curr: pms.curr
+                        , jump: function (obj, first) {
+                            if (!first) {
+                                loadData(obj);
+                            }
+                        }
+                    });
+
+                    $("#img-list label.frm_checkbox_label").on("click", function () {
+                        var item = JSON.parse($(this).attr("data-item"));
+                        console.log(item);
+                        if ($(this).hasClass("selected")) {
+                            $(this).removeClass("selected");
+                            for (var i = 0; i < selectedItemIds.length; i++) {
+                                if (selectedItemIds[i] == item.id) { 
+                                    selectedItemIds.splice(i, 1);
+                                    selectedItems.splice(i, 1);
+                                }
+                            }
+                        } else {
+                            $(this).addClass("selected");
+                            selectedItems.push(item);
+                            selectedItemIds.push(item.id);
+                        }
+                        console.log(selectedItemIds);
+                    });
+                });
+            };
+
+            loadData({ curr: 1, limit: 10 });
+        });
+    </script>
+}

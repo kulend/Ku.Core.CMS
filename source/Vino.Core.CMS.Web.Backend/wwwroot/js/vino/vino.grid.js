@@ -12,13 +12,13 @@
         if (opts.checkbox)
         {
             opts.cols[0].unshift(
-                { checkbox: true, fixed: true, align: 'center' }
+                { type: 'checkbox', fixed: true, align: 'center' }
             );
         }
         if (opts.rownumber)
         {
             opts.cols[0].unshift(
-                { rownumbers: true, fixed: true, align: 'center' }
+                { type: 'numbers', fixed: true, align: 'center' }
             );
         }
         var table = layui.table;
@@ -74,7 +74,7 @@
         limit:10,
         loading: true,
         even: false,
-        rownumber: false,
+        rownumber: true,
         checkbox: true,
         height:'full-65',
         request: {

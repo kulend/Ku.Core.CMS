@@ -3,6 +3,12 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\Material\Views\Upload\**" />
+    <Content Remove="Areas\Material\Views\Upload\**" />
+    <EmbeddedResource Remove="Areas\Material\Views\Upload\**" />
+    <None Remove="Areas\Material\Views\Upload\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
   <ItemGroup>
@@ -12,9 +18,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vino.Core.CMS.Web\Vino.Core.CMS.Web.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Material\Views\Upload\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 </Project>

@@ -73,3 +73,51 @@ if (!vino.page) {
         }
     };
 })();
+
+(function () {
+    var querystring = {
+        all: function () {
+            if (!location.search) {
+                return [];
+            }
+            var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+            if (result == null) {
+                return "";
+            }
+            for (var i = 0; i < result.length; i++) {
+                result[i] = result[i].substring(1);
+            }
+            return result;
+        },
+        get: function (name) {
+            if (!location.search) {
+                return null;
+            }
+            var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+            if (result == null || result.length < 1) {
+                return null;
+            }
+            return result[1];
+        },
+        updateParam: function (url, name, value) {
+            var r = url;
+            if (r != null && r != 'undefined' && r != "") {
+                value = encodeURIComponent(value);
+                var reg = new RegExp("(^|)" + name + "=([^&]*)(|$)");
+                var tmp = name + "=" + value;
+                if (url.match(reg) != null) {
+                    r = url.replace(eval(reg), tmp);
+                }
+                else {
+                    if (url.match("[\?]")) {
+                        r = url + "&" + tmp;
+                    } else {
+                        r = url + "?" + tmp;
+                    }
+                }
+            }
+            return r;
+        }
+    };
+    vino.page.querystring = querystring;
+})();

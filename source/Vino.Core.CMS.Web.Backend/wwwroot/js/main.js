@@ -8,7 +8,9 @@
         var action = $(this).data("action") || $(this).attr("action") || "";
         var after = $(this).attr("after");
         if (action.indexOf("window:") === 0) {
-            OpenWindow($(this).attr("title") || "&nbsp;", action.substring(7), null, function () {
+            OpenWindow($(this).attr("title") || "&nbsp;", action.substring(7), null, function (value) {
+                eval("var $data;");
+                $data = value;
                 if (after) {
                     eval(after);
                 }
@@ -23,35 +25,35 @@
             vino.page.msg.confirm(confirmMsg,
                 function() {
                     if ("get" === method) {
-                        vino.ajax.get(url,
-                            null,
-                            function(reply) {
-                                if (reply.code === 0) {
-                                    vino.page.msg.tip("操作成功！",
-                                        function() {
-                                            if (after) {
-                                                eval(after);
-                                            }
-                                        });
-                                } else {
-                                    vino.page.msg.tip(reply.message);
-                                }
-                            });
+                        vino.ajax.get(url, null, function(reply) {
+                            if (reply.code === 0) {
+                                vino.page.msg.tip("操作成功！",
+                                    function() {
+                                        eval("var $data;");
+                                        $data = reply;
+                                        if (after) {
+                                            eval(after);
+                                        }
+                                    });
+                            } else {
+                                vino.page.msg.tip(reply.message);
+                            }
+                        });
                     } else {
-                        vino.ajax.post(url,
-                            null,
-                            function(reply) {
-                                if (reply.code === 0) {
-                                    vino.page.msg.tip("操作成功！",
-                                        function() {
-                                            if (after) {
-                                                eval(after);
-                                            }
-                                        });
-                                } else {
-                                    vino.page.msg.tip(reply.message);
-                                }
-                            });
+                        vino.ajax.post(url, null, function(reply) {
+                            if (reply.code === 0) {
+                                vino.page.msg.tip("操作成功！",
+                                    function() {
+                                        eval("var $data;");
+                                        $data = reply;
+                                        if (after) {
+                                            eval(after);
+                                        }
+                                    });
+                            } else {
+                                vino.page.msg.tip(reply.message);
+                            }
+                        });
                     }
                 });
         } else if (action) {

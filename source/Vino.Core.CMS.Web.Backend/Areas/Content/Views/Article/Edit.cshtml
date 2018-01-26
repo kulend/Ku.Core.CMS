@@ -7,18 +7,35 @@
     @using (Html.BeginForm<ArticleDto>("Save"))
     {
     <div class="layui-body">
+        @Html.InputFor(x => x.Id)
         @Html.InputFor(x => x.Title)
         @Html.InputFor(x => x.SubTitle)
         @Html.InputFor(x => x.Author)
         @Html.InputFor(x => x.Provenance)
+        <div class="layui-form-item">
+            <label class="layui-form-label">封面</label>
+            <div id="coverList" class="layui-input-block">
+            </div>
+        </div>
         @Html.InputFor(x => x.IsPublished)
         @Html.InputFor(x => x.PublishedTime)
         @Html.InputFor(x => x.Keyword)
         @Html.InputFor(x => x.OrderIndex)
         @Html.InputFor(x => x.ContentType)
     </div>
-        <div class="layui-footer">
-            @Html.ActionsForSubmitAndClose()
-        </div>
+    <div class="layui-footer">
+        @Html.ActionsForSubmitAndClose()
+    </div>
     }
 </div>
+@section Scripts
+{
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script>
+        $("#coverList").vinoImagePicker({
+            field_data: "CoverData",
+            max_count: 1
+        });
+        $("#coverList").vinoImagePicker("loadData", '@Html.Raw(Model.CoverData)');
+    </script>
+}

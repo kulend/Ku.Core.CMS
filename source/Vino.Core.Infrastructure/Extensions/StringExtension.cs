@@ -165,5 +165,19 @@ namespace Vino.Core.Infrastructure.Extensions
             }
             return obj.Substring(start, length);
         }
+
+        /// <summary>
+        /// 替换
+        /// </summary>
+        /// <returns></returns>
+        public static string R(this string self, string oldValue, string newValue)
+        {
+            if (string.IsNullOrEmpty(self))
+            {
+                return self;
+            }
+
+            return self.Replace(oldValue, newValue);
+        }
     }
 }

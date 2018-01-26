@@ -69,5 +69,12 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
             return JsonData(true);
         }
 
+        [HttpPost]
+        [Auth("delete")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            await _service.DeleteAsync(id);
+            return JsonData(true);
+        }
     }
 }

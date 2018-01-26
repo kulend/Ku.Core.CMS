@@ -40,9 +40,14 @@
 
     $(document).on("click", "button.layui-btn:not([lay-submit])", function (e) {
         var action = $(this).data("action") || $(this).attr("action") || "";
+        var after = $(this).attr("after");
         if (action.indexOf("window:") === 0) {
-            OpenWindow($(this).attr("title") || "&nbsp;", action.substring(7), null, function () {
-
+            OpenWindow($(this).attr("title") || "&nbsp;", action.substring(7), null, function (value) {
+                eval("var $data;");
+                $data = value;
+                if (after) {
+                    eval(after);
+                }
             });
         } else if (action.indexOf("javascript:") === 0 || action.indexOf("js:") === 0) {
             var js = action.substring(action.indexOf(":") + 1);
@@ -54,34 +59,36 @@
             vino.page.msg.confirm(confirmMsg,
                 function () {
                     if ("get" === method) {
-                        vino.ajax.get(url,
-                            null,
-                            function (reply) {
-                                if (reply.code === 0) {
-                                    vino.page.msg.tip("操作成功！",
-                                        function () {
-
-                                        });
-                                } else {
-                                    vino.page.msg.tip(reply.message);
-                                }
-                            });
+                        vino.ajax.get(url, null, function (reply) {
+                            if (reply.code === 0) {
+                                vino.page.msg.tip("操作成功！", function () {
+                                    eval("var $data;");
+                                    $data = reply;
+                                    if (after) {
+                                        eval(after);
+                                    }
+                                });
+                            } else {
+                                vino.page.msg.tip(reply.message);
+                            }
+                        });
                     } else {
-                        vino.ajax.post(url,
-                            null,
-                            function (reply) {
-                                if (reply.code === 0) {
-                                    vino.page.msg.tip("操作成功！",
-                                        function () {
-
-                                        });
-                                } else {
-                                    vino.page.msg.tip(reply.message);
-                                }
-                            });
+                        vino.ajax.post(url, null, function (reply) {
+                            if (reply.code === 0) {
+                                vino.page.msg.tip("操作成功！", function () {
+                                    eval("var $data;");
+                                    $data = reply;
+                                    if (after) {
+                                        eval(after);
+                                    }
+                                });
+                            } else {
+                                vino.page.msg.tip(reply.message);
+                            }
+                        });
                     }
                 });
-        } else {
+        } else if (action) {
             //直接跳转页面
             vino.page.navigateTo(action);
         }
@@ -97,8 +104,12 @@ function gridReload() {
 }
 
 //关闭弹窗
-function closeWindow() {
+function closeWindow(data) {
     var index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
+    var fn = parent.winfns[index];
+    if (fn && data) {
+        fn(data);
+    }
     parent.winfns[index] = null;
 }

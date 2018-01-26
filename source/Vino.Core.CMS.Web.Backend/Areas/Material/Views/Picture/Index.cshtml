@@ -3,9 +3,8 @@
 }
 <div class="main-content">
     <div class="toolbar">
-        <action id="upload" auth-code="material.picture.upload" text="上传图片" size="sm" icon="&#xe67c;" action="window:Material/Picture/Upload" />
+        <action auth-code="material.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:Material/Picture/Upload" after="gridReload()" />
         <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
-        <action text="选择" size="sm" action="window:Material/Picture/Select" />
     </div>
     <table id="list">
     </table>

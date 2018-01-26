@@ -29,6 +29,7 @@
 
     entitys.Add(new EntityItem{Area= "Material", Name="Picture", Title="图片素材"});
 
+	entitys.Add(new EntityItem{Area= "Content", Name="Article", Title="文章"});
 #>
 
 <#

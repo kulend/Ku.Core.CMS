@@ -1,7 +1,0 @@
-{
-  "ID": "1",
-  "Name": "vino.core.cms.plugin.article",
-  "FileName": "bin\\Vino.Core.CMS.Plugin.Article.dll",
-  "DeveloperFileName": "bin\\Debug\\netcoreapp2.0\\Vino.Core.CMS.Plugin.Article.dll",
-  "Enable": true
-}

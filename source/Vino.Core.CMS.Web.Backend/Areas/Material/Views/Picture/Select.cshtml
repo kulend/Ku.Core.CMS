@@ -4,15 +4,11 @@
 @section Css
     {
     <style>
-        .img_pick {
-            overflow: auto;
-            margin-top: 20px;
-        }
-
-            .img_pick .img_item {
+        .img_pick { overflow: auto; margin-top: 10px; overflow:hidden; }
+        .img_pick .img_item {
                 position: relative;
-                margin-right: 11px;
-                margin-bottom: 10px;
+                margin-right: 15px;
+                margin-bottom: 7px;
                 float: left;
                 text-align: center;
             }
@@ -60,12 +56,13 @@
         }
 
         .img_pick .img_item .lbl_content {
-            height: 32px;
-            line-height: 32px;
+            height: 28px;
+            line-height: 28px;
             text-align: left;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            font-size:12px;
         }
 
         .img_pick .img_item_bd.selected .selected_mask {
@@ -101,22 +98,30 @@
         #pager {
             float: right;
         }
+        .search-bar {
+            margin-left:10px;
+        }
     </style>
 }
 <div class="layui-layout layui-layout-window">
-    <div class="layui-body">
-        <span class="layui-breadcrumb" lay-separator="|">
-            <a href="">娱乐</a>
-            <a href="">八卦</a>
-            <a href="">体育</a>
-            <a href="">搞笑</a>
-        </span>
+    <div class="layui-body" style="overflow:hidden;">
+        <div class="layui-row search-bar">
+            <span class="layui-breadcrumb" lay-separator="|">
+                <a href="javascript:;">全部</a>
+            </span>
+            <span style="float:right;">
+                <action auth-code="material.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:Material/Picture/Upload" after="doReload()" />
+            </span>
+        </div>
         <ul id="img-list" class="img_pick"></ul>
         <div id="pager"></div>
     </div>
     <div class="layui-footer">
-        <button class="layui-btn layui-btn-sm" id="btnOk">确 定</button>
-        <action text="取 消" size="sm" theme="warm" action="javascript:closeWindow()" />
+        <span id="sel-tip" style="position:absolute; left:20px;">已选1个，可选10个</span>
+        <span>
+            <button class="layui-btn layui-btn-sm" action="javascript:doSelectOk()">确 定</button>
+            <action text="取 消" size="sm" theme="warm" action="javascript:closeWindow()" />
+        </span>
     </div>
 </div>
 <script id="tp:img-item" type="text/html">
@@ -144,47 +149,66 @@
         var selectedItems = [];
         var selectedItemIds = [];
         template.defaults.imports.inArraySelected = function (value) { return $.inArray(value, selectedItemIds) >= 0 ? "selected":""; };
-        
+        var laypage;
         layui.use(['laypage'], function () {
-            var laypage = layui.laypage;
-
-            var loadData = function (pms) {
-                vino.ajax.get("GetSelectList", { page: pms.curr, rows: pms.limit }, function (data) {
-                    $("#img-list").html(template('tp:img-item', { items: data.data }));
-                    laypage.render({
-                        elem: 'pager'
-                        , count: data.count //数据总数
-                        , limit: pms.limit
-                        , curr: pms.curr
-                        , jump: function (obj, first) {
-                            if (!first) {
-                                loadData(obj);
-                            }
-                        }
-                    });
-
-                    $("#img-list label.frm_checkbox_label").on("click", function () {
-                        var item = JSON.parse($(this).attr("data-item"));
-                        console.log(item);
-                        if ($(this).hasClass("selected")) {
-                            $(this).removeClass("selected");
-                            for (var i = 0; i < selectedItemIds.length; i++) {
-                                if (selectedItemIds[i] == item.id) { 
-                                    selectedItemIds.splice(i, 1);
-                                    selectedItems.splice(i, 1);
-                                }
-                            }
-                        } else {
-                            $(this).addClass("selected");
-                            selectedItems.push(item);
-                            selectedItemIds.push(item.id);
-                        }
-                        console.log(selectedItemIds);
-                    });
-                });
-            };
-
+            laypage = layui.laypage;
             loadData({ curr: 1, limit: 10 });
+            showSelTip();
         });
+        
+        function loadData(pms) {
+            vino.ajax.get("GetSelectList", { page: pms.curr, rows: pms.limit }, function (data) {
+                $("#img-list").html(template('tp:img-item', { items: data.data }));
+                laypage.render({
+                    elem: 'pager'
+                    , count: data.count //数据总数
+                    , limit: pms.limit
+                    , curr: pms.curr
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            loadData(obj);
+                        }
+                    }
+                });
+
+                $("#img-list label.frm_checkbox_label").on("click", function () {
+                    var item = JSON.parse($(this).attr("data-item"));
+                    console.log(item);
+                    if ($(this).hasClass("selected")) {
+                        $(this).removeClass("selected");
+                        for (var i = 0; i < selectedItemIds.length; i++) {
+                            if (selectedItemIds[i] == item.id) {
+                                selectedItemIds.splice(i, 1);
+                                selectedItems.splice(i, 1);
+                            }
+                        }
+                    } else {
+                        var max = vino.page.querystring.get("max") || 10;
+                        if (selectedItemIds.length >= max) {
+                            vino.page.msg.tip(`最多只能选择${max}张照片！`);
+                            return;
+                        }
+                        $(this).addClass("selected");
+                        selectedItems.push(item);
+                        selectedItemIds.push(item.id);
+                    }
+                    showSelTip();
+                    console.log(selectedItemIds);
+                });
+            });
+        }
+
+        function doReload() {
+            loadData({ curr: 1, limit: 10 });
+        }
+
+        function showSelTip() { 
+            var max = vino.page.querystring.get("max") || 10;
+            $("#sel-tip").text(`已选${selectedItemIds.length}个，可选${max}个`);
+        }
+
+        function doSelectOk() { 
+            closeWindow(selectedItems);
+        }
     </script>
 }

@@ -20,19 +20,23 @@
                     <div class="layui-upload-list">
                         <table id="table" class="layui-table">
                             <colgroup>
-                                <col align="center" width="100" />
+                                <col align="center" width="60" />
                                 <col />
-                                <col width="80" />
-                                <col width="150" />
-                                <col width="150" />
+                                <col width="40" />
+                                <col width="40" />
+                                <col width="100" />
+                                <col width="100" />
+                                <col width="120" />
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th lay-data="{width:80, align:'center'}">预览</th>
+                                    <th>预览</th>
                                     <th>文件名</th>
-                                    <th lay-data="{width:80}">大小</th>
-                                    <th lay-data="{width:150}">状态</th>
-                                    <th lay-data="{width:150}">操作</th>
+                                    <th>大小</th>
+                                    <th>状态</th>
+                                    <th>分类</th>
+                                    <th>标签</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="list"></tbody>
@@ -43,21 +47,28 @@
         </div>
     </div>
     <div class="layui-footer">
+        <span id="sel-tip" style="position:absolute; left:20px;">统一分类：
+            <select>
+                <option>AAAAAA</option>
+                <option>BBBBBBB</option>
+            </select>
+        </span>
         <a class="layui-hide" id="btnBind">上传</a>
         <a class="layui-btn layui-btn-sm" id="btnUpload" style="display:none;">开始上传</a>
-        @Html.ActionsForClose()
+        <action text="关 闭" size="sm" theme="warm" action="javascript:closeWindow(true)" />
     </div>
 </div>
 @section Scripts
 {
     <script>
         var files;
+        var ins;
         layui.use('upload', function () { 
             var $ = layui.jquery, upload = layui.upload;
 
             var list = $('#list');
             var btnUpload = $('#btnUpload');
-            var ins = upload.render({
+            ins = upload.render({
                 elem: '#areaUplaod'
                 , url: '/Material/Picture/Upload'
                 , accept: 'images'
@@ -71,14 +82,18 @@
                     obj.preview(function (index, file, result) {
                         var tr = $(['<tr id="upload-' + index + '" data-status="wait">'
                             , '<td align="center"><img src="' + result + '" width="50" /></td>'
-                            , '<td>' + file.name + '</td>'
+                            , '<td><p style="width:120px; overflow:hidden;">' + file.name + '</p></td>'
                             , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
-                            , '<td class="item-status">等待上传</td>'
+                            , '<td class="item-status">待传</td>'
+                            , '<td><select name="type"></select></td>'
+                            , '<td><input type="text" style="width:80px" /></td>'
                             , '<td>'
-                            , '<a class="layui-btn layui-btn-mini item-upload">开始上传</a>'
-                            , '<a class="layui-btn layui-btn-mini layui-btn-danger item-delete">移除</a>'
+                            , '<a class="layui-btn layui-btn-xs item-upload">上传</a>'
+                            , '<a class="layui-btn layui-btn-xs layui-btn-danger item-delete">移除</a>'
                             , '</td>'
                             , '</tr>'].join(''));
+
+                        tr.find('select[name="type"]').html("<option>AAAAAA</option><option>BBBB</option><option>CCCCC</option><option>GGGGG</option>");
 
                         //单个上传
                         tr.find('.item-upload').on('click', function () {
@@ -147,6 +162,7 @@
                 vino.page.msg.tip("上传完成");
                 return;
             }
+            ins.config.data = { type: 1 };
             var tr = $('#list').find('tr[data-status="wait"]').first();
             tr.attr("data-continue", "true");
             tr.find(".item-upload").trigger("click");

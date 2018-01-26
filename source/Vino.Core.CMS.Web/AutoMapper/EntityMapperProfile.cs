@@ -40,6 +40,8 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.WeChat.WxAccountDto, Domain.Entity.WeChat.WxAccount>();
             CreateMap<Domain.Entity.Material.Picture, Domain.Dto.Material.PictureDto>();
             CreateMap<Domain.Dto.Material.PictureDto, Domain.Entity.Material.Picture>();
+            CreateMap<Domain.Entity.Content.Article, Domain.Dto.Content.ArticleDto>();
+            CreateMap<Domain.Dto.Content.ArticleDto, Domain.Entity.Content.Article>();
         }
     }
 }

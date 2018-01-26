@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="VinoDbContext.cs">
-//        最后生成时间：2017-08-03 15:48
+//        最后生成时间：2018-01-24 11:56
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -88,6 +88,11 @@ namespace Vino.Core.CMS.Data.Common
         /// 图片素材
         /// </summary>
         public DbSet<Domain.Entity.Material.Picture> Pictures { get; set; }
+
+        /// <summary>
+        /// 文章
+        /// </summary>
+        public DbSet<Domain.Entity.Content.Article> Articles { get; set; }
 
     }
 }

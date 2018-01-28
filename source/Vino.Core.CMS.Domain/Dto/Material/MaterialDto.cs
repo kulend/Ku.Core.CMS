@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Vino.Core.CMS.Domain.Dto.System;
@@ -53,5 +54,22 @@ namespace Vino.Core.CMS.Domain.Dto.Material
 
         [MaxLength(256)]
         public string Folder { set; get; }
+
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        [DefaultValue(false)]
+        [Display(Name = "是否公开", Prompt = "公开|私密")]
+        public bool IsPublic { set; get; } = false;
+
+        /// <summary>
+        /// 分组ID
+        /// </summary>
+        public long? GroupId { set; get; }
+
+        /// <summary>
+        /// 分组
+        /// </summary>
+        public MaterialGroupDto Group { set; get; }
     }
 }

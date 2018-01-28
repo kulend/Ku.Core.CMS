@@ -53,5 +53,20 @@ namespace Vino.Core.CMS.Domain.Entity.Material
 
         [MaxLength(256)]
         public string Folder { set; get; }
+
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public bool IsPublic { set; get; } = false;
+
+        /// <summary>
+        /// 分组ID
+        /// </summary>
+        public long? GroupId { set; get; }
+
+        /// <summary>
+        /// 分组
+        /// </summary>
+        public MaterialGroup Group { set; get; }
     }
 }

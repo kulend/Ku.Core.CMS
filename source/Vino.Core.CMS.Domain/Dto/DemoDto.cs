@@ -48,5 +48,8 @@ namespace Vino.Core.CMS.Domain.Dto
         [DisplayFormat(DataFormatString = "yyyy年份")]
         [DataType("year")]
         public string Year { set; get; }
+
+        [Display(Name = "备注")]
+        public string Remark { set; get; }
     }
 }

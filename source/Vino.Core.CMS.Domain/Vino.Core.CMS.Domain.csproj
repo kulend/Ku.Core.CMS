@@ -9,8 +9,4 @@
     <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Enum\Material\" />
-  </ItemGroup>
-
 </Project>

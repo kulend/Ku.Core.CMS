@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.TimedTask.EntityFramework;
+using Vino.Core.CMS.Domain.Entity.WeChat;
 
 namespace Vino.Core.CMS.Data.Common
 {
@@ -32,6 +33,9 @@ namespace Vino.Core.CMS.Data.Common
 
             //菜单
             modelBuilder.Entity<Menu>().HasMany(m => m.SubMenus).WithOne(m => m.Parent);
+
+            //微信菜单
+            modelBuilder.Entity<WxMenu>().OwnsOne(t=>t.MatchRule);
 
             base.OnModelCreating(modelBuilder);
 

@@ -9,16 +9,16 @@ using System;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain.Enum;
 using Vino.Core.CMS.Domain.Enum.Content;
-using Vino.Core.CMS.Domain.Enum.Material;
 using Vino.Core.CMS.Domain.Enum.System;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180126152031_13")]
+    partial class _13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,8 +83,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30);
-
-                    b.Property<short>("Type");
 
                     b.HasKey("Id");
 
@@ -487,34 +485,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.ToTable("wechat_account");
                 });
 
-            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.WeChat.WxMenu", b =>
-                {
-                    b.Property<long>("Id");
-
-                    b.Property<long>("AccountId");
-
-                    b.Property<DateTime>("CreateTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<bool>("IsIndividuation");
-
-                    b.Property<string>("MenuData");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(40);
-
-                    b.Property<string>("WxMenuId")
-                        .HasMaxLength(32);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("wechat_menu");
-                });
-
             modelBuilder.Entity("Vino.Core.TimedTask.TimedTask", b =>
                 {
                     b.Property<string>("Id")
@@ -642,47 +612,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.WeChat.WxMenu", b =>
-                {
-                    b.HasOne("Vino.Core.CMS.Domain.Entity.WeChat.WxAccount", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.OwnsOne("Vino.Core.CMS.Domain.Entity.WeChat.WxMenuMatchRule", "MatchRule", b1 =>
-                        {
-                            b1.Property<long>("WxMenuId");
-
-                            b1.Property<string>("City")
-                                .HasMaxLength(40);
-
-                            b1.Property<string>("Client")
-                                .HasMaxLength(1);
-
-                            b1.Property<string>("Country")
-                                .HasMaxLength(40);
-
-                            b1.Property<string>("Language")
-                                .HasMaxLength(10);
-
-                            b1.Property<string>("Province")
-                                .HasMaxLength(40);
-
-                            b1.Property<string>("Sex")
-                                .HasMaxLength(1);
-
-                            b1.Property<string>("TagId")
-                                .HasMaxLength(20);
-
-                            b1.ToTable("wechat_menu");
-
-                            b1.HasOne("Vino.Core.CMS.Domain.Entity.WeChat.WxMenu")
-                                .WithOne("MatchRule")
-                                .HasForeignKey("Vino.Core.CMS.Domain.Entity.WeChat.WxMenuMatchRule", "WxMenuId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -24,7 +24,7 @@
                 path: $(this).attr("data-path"),
                 thumb: $(this).attr("data-thumb")
             };
-            if (opts.onDataParse && typeof (opts.onDataParse) == "function") {
+            if (opts.onDataParse && typeof (opts.onDataParse) === "function") {
                 opts.onDataParse.call(this, item);
             }
             items.push(item);
@@ -51,7 +51,7 @@
         $item.find("a.img").on("click", function () {
             var $element = $(this).closest(".image-upload");
             var opts = $element.data("options") || {};
-            if (opts.onClick && typeof (opts.onClick) == "function") {
+            if (opts.onClick && typeof (opts.onClick) === "function") {
                 opts.onClick.call(this.parentNode.parentNode);
             }
         });
@@ -119,7 +119,7 @@
         $addObj.attr("data-thumb", data.thumb);
         $addObj.find("img").attr("src", data.thumb || data.path);
 
-        if (opts.onLoadParse && typeof (opts.onLoadParse) == "function") {
+        if (opts.onLoadParse && typeof (opts.onLoadParse) === "function") {
             opts.onLoadParse.call($addObj[0], data);
         }
         $empty.before($addObj);
@@ -161,8 +161,7 @@
                 } else {
                     //添加
                     for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-                        addItem($element, file);
+                        addItem($element, files[i]);
                     }
                 }
                 upadteFieldValue($element);
@@ -202,7 +201,7 @@
     }
 
     $.fn.vinoImagePicker = function (options, param) {
-        if (typeof options == 'string') {
+        if (typeof options === 'string') {
             return $.fn.vinoImagePicker.methods[options](this, param);
         }
         options = options || {};
@@ -249,7 +248,7 @@
                 if (!data) {
                     return;
                 }
-                var opts = $element.data("options") || {};
+                //var opts = $element.data("options") || {};
                 var items = JSON.parse(data);
                 if (items && items.length > 0) {
                     //加载数据
@@ -257,6 +256,18 @@
                         loadItem($element, items[i]);
                     }
                 }
+            });
+        },
+        loadImage: function (target, path) {
+            target.each(function () {
+                var $element = $(this);
+                if (!path) {
+                    return;
+                }
+                var item = {
+                    path: path
+                };
+                loadItem($element, item);
             });
         },
         getData: function (target) {
@@ -272,7 +283,7 @@
                     path: $(this).attr("data-path"),
                     thumb: $(this).attr("data-thumb")
                 };
-                if (opts.onDataParse && typeof (opts.onDataParse) == "function") {
+                if (opts.onDataParse && typeof (opts.onDataParse) === "function") {
                     opts.onDataParse.call(this, item);
                 }
                 items.push(item);

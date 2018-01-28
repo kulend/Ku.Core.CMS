@@ -85,9 +85,19 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.WeChat.WxAccount> WxAccounts { get; set; }
 
         /// <summary>
+        /// 微信菜单
+        /// </summary>
+        public DbSet<Domain.Entity.WeChat.WxMenu> WxMenus { get; set; }
+
+        /// <summary>
         /// 图片素材
         /// </summary>
         public DbSet<Domain.Entity.Material.Picture> Pictures { get; set; }
+
+        /// <summary>
+        /// 素材分组
+        /// </summary>
+        public DbSet<Domain.Entity.Material.MaterialGroup> MaterialGroups { get; set; }
 
         /// <summary>
         /// 文章

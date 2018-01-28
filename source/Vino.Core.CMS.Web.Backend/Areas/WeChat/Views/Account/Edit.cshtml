@@ -3,17 +3,37 @@
 }
 @using Vino.Core.CMS.Domain.Dto.WeChat
 @model WxAccountDto
-<div class="window-content">
+<div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<WxAccountDto>("Save"))
     {
-        @Html.InputFor(x => x.Id)
-        @Html.InputFor(x => x.Type)
-        @Html.InputFor(x => x.Name)
-        @Html.InputFor(x => x.OriginalId)
-        @Html.InputFor(x => x.WeixinId)
-        @Html.InputFor(x => x.AppId)
-        @Html.InputFor(x => x.AppSecret)
-        @Html.InputFor(x => x.Token)
-        @Html.ActionsForSubmitAndClose()
+        <div class="layui-body">
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.Type)
+            @Html.InputFor(x => x.Name)
+            <div class="layui-form-item">
+                <label class="layui-form-label">头像</label>
+                <div id="image" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.OriginalId)
+            @Html.InputFor(x => x.WeixinId)
+            @Html.InputFor(x => x.AppId)
+            @Html.InputFor(x => x.AppSecret)
+            @Html.InputFor(x => x.Token)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
     }
 </div>
+@section Scripts
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script>
+        $("#image").vinoImagePicker({
+            field_path: "Image",
+            max_count: 1
+        });
+        $("#image").vinoImagePicker("loadImage", '@Html.Raw(Model.Image)');
+    </script>
+}

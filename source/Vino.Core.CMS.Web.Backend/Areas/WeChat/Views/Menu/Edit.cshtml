@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.WeChat
+@model WxMenuDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<WxMenuDto>("Save"))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.Name)
+            @Html.InputFor(x => x.MenuData)
+            @Html.InputFor(x => x.IsIndividuation, new KeyValuePair<string, string>("lay-filter", "IsIndividuation"))
+        
+            <fieldset id="dvMatchRule" class="layui-elem-field">
+                <legend>匹配规则</legend>
+                <div class="layui-field-box">
+                    @Html.InputFor(x => x.MatchRule.TagId)
+                    @Html.InputFor(x => x.MatchRule.Sex)
+                    @Html.InputFor(x => x.MatchRule.Client)
+                    @Html.InputFor(x => x.MatchRule.Country)
+                    @Html.InputFor(x => x.MatchRule.Province)
+                    @Html.InputFor(x => x.MatchRule.City)
+                    @Html.InputFor(x => x.MatchRule.Language)
+                </div>
+            </fieldset>
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () { 
+            var form = layui.form;
+            //监听开关
+            form.on('switch(IsIndividuation)', function (data) {
+                if (this.checked) {
+                    $("#dvMatchRule").show();
+                } else
+                {
+                    $("#dvMatchRule").hide();
+                }
+            });
+        });
+    </script>
+}

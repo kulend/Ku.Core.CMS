@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.WeChat;
+using Vino.Core.CMS.Domain.Entity.WeChat;
 
 namespace Vino.Core.CMS.Service.WeChat
 {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.WeChat;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
 using Vino.Core.Infrastructure.Exceptions;
@@ -17,27 +16,7 @@ namespace Vino.Core.CMS.Service.WeChat
     {
         public async Task<(int count, List<WxUserTagDto> items)> GetListAsync(int page, int size, WxUserTagSearch where)
         {
-            Expression<Func<WxUserTag, bool>> expression = null;
-            if (where != null)
-            {
-                expression = where.GetSearchExpression();
-                //var lambdaParam = Expression.Parameter(typeof(WxUserTag));
-                //var lambdaBody = Expression.Equal(
-                //    Expression.PropertyOrField(lambdaParam, "AccountId"),
-                //    Expression.Constant(where.AccountId, typeof(long))
-                //);
-
-                //if (where.Keyword.IsNotNullOrEmpty())
-                //{
-                //    MemberExpression member = Expression.PropertyOrField(lambdaParam, "Name");
-                //    MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                //    ConstantExpression constant = Expression.Constant(where.Keyword, typeof(string));
-                //    var expression2 = Expression.Lambda<Func<WxUserTag, bool>>(Expression.Call(member, method, constant), lambdaParam);
-                //    expression = Expression.Lambda<Func<WxUserTag, bool>>(Expression.AndAlso(lambdaBody, expression2.Body), lambdaParam);
-                //}
-            }
-
-            var data = await _repository.PageQueryAsync(page, size, expression, "TagId asc");
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), "TagId asc");
             return (data.count, _mapper.Map<List<WxUserTagDto>>(data.items));
         }
 

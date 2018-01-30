@@ -23,6 +23,14 @@
         }
         var table = layui.table;
         var id = $target.attr("id");
+        opts.id = id;
+
+        var where = opts.where || {};
+        if (opts.onWhere && typeof opts.onWhere === "function")
+        {
+            opts.where = $.extend(where, { where: opts.onWhere.call() });
+        }
+
         //执行渲染
         var tableIns = table.render(opts);
         tableInsArr[id] = tableIns;
@@ -50,25 +58,33 @@
     };
 
     $.fn.vinoGrid.methods = {
-        reload: function (target, options) {
+        reload: function (target) {
             target.each(function () {
-                //if (options) {
-                //    var opts = $.data(this, 'options');
-                //    opts = $.extend(opts, options);
-                //}
-                //$(this).trigger("reloadGrid");
                 var id = $(this).attr("id");
-                var ins = tableInsArr[id];
-                if (ins)
-                {
-                    ins.reload();
+                layui.table.reload(id);
+                //var ins = tableInsArr[id];
+                //if (ins)
+                //{
+                //    ins.reload();
+                //}
+            });
+        },
+        search: function (target, options) {
+            target.each(function () {
+                var id = $(this).attr("id");
+                var opts = $(this).data("options");
+                var where = opts.where || {};
+                if (opts.onWhere && typeof opts.onWhere === "function") {
+                    opts.where = $.extend(where, { where: opts.onWhere.call() }, options);
                 }
+                opts.page = { curr: 1};
+                layui.table.reload(id, opts);
             });
         }
     };
 
     $.fn.vinoGrid.defaults = {
-        method: "get",
+        method: "post",
         page: true,
         limits: [10, 20, 30, 40, 50],
         limit:10,

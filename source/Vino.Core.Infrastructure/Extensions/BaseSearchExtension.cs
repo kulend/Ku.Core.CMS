@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using Vino.Core.Infrastructure.Attributes;
 using Vino.Core.Infrastructure.Data;
 
@@ -26,11 +24,10 @@ namespace Vino.Core.Infrastructure.Extensions
                 {
                     expression = exp;
                 }
-                else
+                else if(exp != null)
                 {
                     expression = Expression.Lambda<Func<T, bool>>(Expression.AndAlso(expression.Body, exp.Body), parameter);
                 }
-
             }
             return expression;
         }
@@ -46,16 +43,21 @@ namespace Vino.Core.Infrastructure.Extensions
             {
                 return null;
             }
+            //如果有CustomConditionAttribute，则跳过该条件
+            if (p.GetCustomAttribute<CustomConditionAttribute>() != null)
+            {
+                return null;
+            }
             var attr = p.GetCustomAttribute<SearchConditionAttribute>();
             var name = attr != null ? (attr.PropertyName.IsNotNullOrEmpty() ? attr.PropertyName : p.Name) : p.Name;
             SearchConditionOperation operation = attr != null ? attr.Operation : SearchConditionOperation.Equal;
-            BinaryExpression body = null;
+            Expression body = null;
             switch (operation)
             {
                 case SearchConditionOperation.Equal:
                     body = Expression.Equal(
                         Expression.PropertyOrField(parameter, name),
-                        Expression.Constant(p.GetValue(self), p.PropertyType)
+                        Expression.Constant(value, p.PropertyType)
                     );
                     break;
                 case SearchConditionOperation.NotEqual:
@@ -65,6 +67,14 @@ namespace Vino.Core.Infrastructure.Extensions
                     );
                     break;
                 case SearchConditionOperation.Contains:
+                    body = Expression.Call(Expression.PropertyOrField(parameter, name),
+                                            typeof(string).GetMethod("Contains", new[] { typeof(string) }),
+                                            Expression.Constant(value, p.PropertyType));
+                    break;
+                case SearchConditionOperation.NotContains:
+                    body = Expression.Not(Expression.Call(Expression.PropertyOrField(parameter, name),
+                                            typeof(string).GetMethod("Contains", new[] { typeof(string) }),
+                                            Expression.Constant(value, p.PropertyType)));
                     break;
                 default:
                     return null;

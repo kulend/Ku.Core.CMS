@@ -13,7 +13,7 @@ namespace Vino.Core.Infrastructure.Attributes
 
         public SearchConditionAttribute(string propertyName, SearchConditionOperation operation)
         {
-            this.PropertyName = PropertyName;
+            this.PropertyName = propertyName;
             this.Operation = operation;
         }
 
@@ -32,6 +32,7 @@ namespace Vino.Core.Infrastructure.Attributes
     {
         Equal,
         NotEqual,
-        Contains
+        Contains,
+        NotContains,
     }
 }

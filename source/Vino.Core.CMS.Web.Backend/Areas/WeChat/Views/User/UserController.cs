@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.WeChat;
+using Vino.Core.CMS.Domain.Entity.WeChat;
 using Vino.Core.CMS.Service.WeChat;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
@@ -43,7 +44,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
         }
 
         [Auth("tag.edit")]
-        public async Task<IActionResult> EditTag(long? id)
+        public async Task<IActionResult> TagEdit(long? id, long? AccountId)
         {
             if (id.HasValue)
             {
@@ -53,6 +54,11 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
                 {
                     throw new VinoDataNotFoundException("无法取得数据!");
                 }
+                ViewBag.Account = await accountService.GetByIdAsync(model.AccountId);
+                if (ViewBag.Account == null)
+                {
+                    throw new VinoDataNotFoundException("数据出错!");
+                }
                 ViewData["Mode"] = "Edit";
                 return View(model);
             }
@@ -60,6 +66,19 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
             {
                 //新增
                 WxUserTagDto dto = new WxUserTagDto();
+                if (AccountId.HasValue)
+                {
+                    dto.AccountId = AccountId.Value;
+                    ViewBag.Account = await accountService.GetByIdAsync(AccountId.Value);
+                    if (ViewBag.Account == null)
+                    {
+                        throw new VinoDataNotFoundException("参数出错!");
+                    }
+                }
+                else
+                {
+                    throw new VinoDataNotFoundException("参数出错!");
+                }
                 ViewData["Mode"] = "Add";
                 return View(dto);
             }

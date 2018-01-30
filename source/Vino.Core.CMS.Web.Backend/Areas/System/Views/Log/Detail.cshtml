@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.System
+@model UserActionLogDto
+<div class="layui-layout layui-layout-window">
+@using (Html.BeginForm<UserActionLogDto>("#"))
+{
+    <div class="layui-body">
+        @Html.ShowFor(x => x.Operation)
+        @Html.ShowFor(x => x.ControllerName)
+        @Html.ShowFor(x => x.ActionName)
+        @Html.ShowFor(x => x.Url)
+        @Html.ShowFor(x => x.UrlReferrer)
+        @Html.ShowFor(x => x.Ip)
+        @Html.ShowFor(x => x.UserAgent)
+        @Html.ShowFor(x => x.ActionResult)
+        @Html.ShowFor(x => x.CreateTime)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+}
+</div>

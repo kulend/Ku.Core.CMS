@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+    <div class="toolbar">
+        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
+    </div>
+    <table id="list">
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'UserName', title: '操作用户', width: 120 },
+                    { field: 'Operation', title: '操作说明', width: 250 },
+                    { field: 'Url', title: '链接', width: 250 },
+                    { field: 'Ip', title: '访问IP', width: 140 },
+                    { field: 'CreateTime', title: '操作时间', width: 160 },
+                    {
+                        title: '操作', fixed: 'right', width: 100, align: 'center',
+                        templet: grid_templet_operate([
+                            { code: "", title: "详情", action: `window:System/Log/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

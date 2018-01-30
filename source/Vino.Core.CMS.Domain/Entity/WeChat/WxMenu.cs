@@ -33,6 +33,11 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
         public string MenuData { set; get; }
 
         /// <summary>
+        /// 最后发布时间
+        /// </summary>
+        public DateTime? PublishTime { set; get; }
+
+        /// <summary>
         /// 是否个性化菜单
         /// </summary>
         [DefaultValue(false)]

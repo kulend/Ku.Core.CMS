@@ -29,7 +29,7 @@
     }
     
     $.fn.vinoGrid = function (options, param) {
-        if (typeof options == 'string') {
+        if (typeof options === 'string') {
             return $.fn.vinoGrid.methods[options](this, param);
         }
         options = options || {};

@@ -32,6 +32,14 @@ namespace Vino.Core.CMS.Domain.Dto.WeChat
         public string MenuData { set; get; }
 
         /// <summary>
+        /// 最后发布时间
+        /// </summary>
+        [Display(Name = "发布时间")]
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
+        [DataType(DataType.DateTime)]
+        public DateTime? PublishTime { set; get; }
+
+        /// <summary>
         /// 是否个性化菜单
         /// </summary>
         [DefaultValue(false)]

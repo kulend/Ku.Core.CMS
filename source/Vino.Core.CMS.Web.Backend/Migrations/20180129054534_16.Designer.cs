@@ -16,9 +16,10 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180129054534_16")]
+    partial class _16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -517,29 +518,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.ToTable("wechat_menu");
                 });
 
-            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.WeChat.WxUserTag", b =>
-                {
-                    b.Property<long>("Id");
-
-                    b.Property<long>("AccountId");
-
-                    b.Property<int>("Count");
-
-                    b.Property<DateTime>("CreateTime");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(40);
-
-                    b.Property<int>("TagId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("wechat_user_tag");
-                });
-
             modelBuilder.Entity("Vino.Core.TimedTask.TimedTask", b =>
                 {
                     b.Property<string>("Id")
@@ -708,14 +686,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                                 .HasForeignKey("Vino.Core.CMS.Domain.Entity.WeChat.WxMenuMatchRule", "WxMenuId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
-                });
-
-            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.WeChat.WxUserTag", b =>
-                {
-                    b.HasOne("Vino.Core.CMS.Domain.Entity.WeChat.WxAccount", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

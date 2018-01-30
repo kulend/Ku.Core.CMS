@@ -40,8 +40,8 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.WeChat.WxAccountDto, Domain.Entity.WeChat.WxAccount>();
             CreateMap<Domain.Entity.WeChat.WxMenu, Domain.Dto.WeChat.WxMenuDto>();
             CreateMap<Domain.Dto.WeChat.WxMenuDto, Domain.Entity.WeChat.WxMenu>();
-            CreateMap<Domain.Entity.WeChat.WxMenuMatchRule, Domain.Dto.WeChat.WxMenuMatchRuleDto>();
-            CreateMap<Domain.Dto.WeChat.WxMenuMatchRuleDto, Domain.Entity.WeChat.WxMenuMatchRule>();
+            CreateMap<Domain.Entity.WeChat.WxUserTag, Domain.Dto.WeChat.WxUserTagDto>();
+            CreateMap<Domain.Dto.WeChat.WxUserTagDto, Domain.Entity.WeChat.WxUserTag>();
             CreateMap<Domain.Entity.Material.Picture, Domain.Dto.Material.PictureDto>();
             CreateMap<Domain.Dto.Material.PictureDto, Domain.Entity.Material.Picture>();
             CreateMap<Domain.Entity.Material.MaterialGroup, Domain.Dto.Material.MaterialGroupDto>();

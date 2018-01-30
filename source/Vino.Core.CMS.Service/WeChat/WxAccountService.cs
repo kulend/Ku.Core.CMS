@@ -75,5 +75,11 @@ namespace Vino.Core.CMS.Service.WeChat
             await _repository.DeleteAsync(id);
             await _repository.SaveAsync();
         }
+
+        public async Task<List<WxAccountDto>> GetAllAsync()
+        {
+            var data = await _repository.QueryAsync(null, "CreateTime asc");
+            return _mapper.Map<List<WxAccountDto>>(data);
+        }
     }
 }

@@ -12,7 +12,7 @@ using Vino.Core.Infrastructure.Exceptions;
 namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
 {
     [Area("WeChat")]
-    [Auth("wechat.accnount")]
+    [Auth("wechat.account")]
     public class AccountController : BackendController
     {
         private IWxAccountService service;

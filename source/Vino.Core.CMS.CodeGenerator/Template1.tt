@@ -27,6 +27,7 @@
 
     entitys.Add(new EntityItem{Area= "WeChat", Name="WxAccount", Title="公众号"});
 	entitys.Add(new EntityItem{Area= "WeChat", Name="WxMenu", Title="微信菜单"});
+	entitys.Add(new EntityItem{Area= "WeChat", Name="WxUserTag", Title="微信用户标签"});
 
     entitys.Add(new EntityItem{Area= "Material", Name="Picture", Title="图片素材"});
 	entitys.Add(new EntityItem{Area= "Material", Name="MaterialGroup", Title="素材分组"});

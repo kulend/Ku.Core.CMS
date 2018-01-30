@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.WeChat
+@model WxUserTagDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<WxUserTagDto>("SaveTag"))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.Name)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

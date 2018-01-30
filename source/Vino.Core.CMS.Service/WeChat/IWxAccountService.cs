@@ -15,5 +15,7 @@ namespace Vino.Core.CMS.Service.WeChat
         Task SaveAsync(WxAccountDto dto);
 
         Task DeleteAsync(long id);
+
+        Task<List<WxAccountDto>> GetAllAsync();
     }
 }

@@ -12,7 +12,7 @@
             @Html.InputFor(x => x.MenuData)
             @Html.InputFor(x => x.IsIndividuation, new KeyValuePair<string, string>("lay-filter", "IsIndividuation"))
         
-            <fieldset id="dvMatchRule" class="layui-elem-field">
+            <fieldset id="dvMatchRule" class="layui-elem-field" style="@(Model.IsIndividuation?"":"display:none;")">
                 <legend>匹配规则</legend>
                 <div class="layui-field-box">
                     @Html.InputFor(x => x.MatchRule.TagId)
@@ -33,7 +33,7 @@
 @section Scripts
     {
     <script>
-        layui.use(['form'], function () { 
+        layui.use(['form'], function () {
             var form = layui.form;
             //监听开关
             form.on('switch(IsIndividuation)', function (data) {

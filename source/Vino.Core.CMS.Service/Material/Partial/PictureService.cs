@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="IPictureService.cs">
-//        最后生成时间：2017-08-30 17:53
+//        最后生成时间：2018-01-30 17:47
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -17,13 +17,10 @@ using AutoMapper;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.Material;
+using Vino.Core.CMS.IService.Material;
 
 namespace Vino.Core.CMS.Service.Material
 {
-    public partial interface IPictureService
-    {
-    }
-
     public partial class PictureService : BaseService, IPictureService
     {
         protected readonly IPictureRepository _repository;

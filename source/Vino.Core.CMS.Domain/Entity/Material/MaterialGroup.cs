@@ -33,4 +33,9 @@ namespace Vino.Core.CMS.Domain.Entity.Material
         /// </summary>
         public User CreateUser { set; get; }
     }
+
+    public class MaterialGroupSearch : BaseSearch<MaterialGroup>
+    {
+
+    }
 }

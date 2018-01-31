@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.CMS.Service.Events;
+using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Service.Events.System;
 using Vino.Core.EventBus;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.Helper;
 using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class UserService
+    public partial class UserService : IUserService
     {
         private readonly IEventPublisher _eventPublisher;
 
@@ -32,17 +29,47 @@ namespace Vino.Core.CMS.Service.System
             this._eventPublisher = _eventPublisher;
         }
 
-        public async Task<(int count, List<UserDto> items)> GetListAsync(int page, int size)
+        #region 自动生成的方法
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>List<UserDto></returns>
+        public async Task<List<UserDto>> GetListAsync(UserSearch where, string sort)
         {
-            var data = await _repository.PageQueryAsync(page, size, null, "CreateTime asc");
+            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
+            return _mapper.Map<List<UserDto>>(data);
+        }
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        public async Task<(int count, List<UserDto> items)> GetListAsync(int page, int size, UserSearch where, string sort)
+        {
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
             return (data.count, _mapper.Map<List<UserDto>>(data.items));
         }
 
+        /// <summary>
+        /// 根据主键取得数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task<UserDto> GetByIdAsync(long id)
         {
             return _mapper.Map<UserDto>(await this._repository.GetByIdAsync(id));
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
         public async Task SaveAsync(UserDto dto, long[] UserRoleIds)
         {
             User model = _mapper.Map<User>(dto);
@@ -108,13 +135,13 @@ namespace Vino.Core.CMS.Service.System
                     //密码设置
                     item.EncryptPassword();
                 }
-                
+
                 item.Remarks = model.Remarks;
                 _repository.Update(item);
 
                 //角色处理
                 var currentRoles = await context.UserRoles.Where(x => x.UserId == item.Id).ToListAsync();
-                foreach (var roleId in UserRoleIds.Where(x=>!currentRoles.Any(i=>i.RoleId == x)))
+                foreach (var roleId in UserRoleIds.Where(x => !currentRoles.Any(i => i.RoleId == x)))
                 {
                     UserRole ur = new UserRole();
                     ur.UserId = model.Id;
@@ -126,11 +153,20 @@ namespace Vino.Core.CMS.Service.System
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task DeleteAsync(long id)
         {
             await _repository.DeleteAsync(id);
             await _repository.SaveAsync();
         }
+
+        #endregion
+
+        #region 其他方法
 
         #region 用户角色
 
@@ -140,7 +176,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<RoleDto>> GetUserRolesAsync(long userId)
         {
             var queryable = context.UserRoles.Include(x => x.Role).Where(x => x.UserId == userId);
-            var items = _mapper.Map<List<RoleDto>>((await queryable.ToListAsync()).Select(x=>x.Role));
+            var items = _mapper.Map<List<RoleDto>>((await queryable.ToListAsync()).Select(x => x.Role));
             return items;
         }
 
@@ -180,7 +216,7 @@ namespace Vino.Core.CMS.Service.System
         }
 
         #endregion
-        
+
         #region 修改密码
 
         public async Task ChangePassword(long userId, string currentPwd, string newPwd)
@@ -211,6 +247,8 @@ namespace Vino.Core.CMS.Service.System
             await _repository.SaveAsync();
         }
 
+
+        #endregion
 
         #endregion
     }

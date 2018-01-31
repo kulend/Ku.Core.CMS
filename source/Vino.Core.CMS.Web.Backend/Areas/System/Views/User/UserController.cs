@@ -8,6 +8,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Web.Filters;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.CMS.IService.System;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
 {
@@ -32,7 +33,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
-            var data = await service.GetListAsync(page, rows);
+            var data = await service.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -40,7 +41,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.User
         public async Task<IActionResult> Edit(long? id)
         {
             //取得角色列表
-            var roles = await roleService.GetAllAsync();
+            var roles = await roleService.GetListAsync(null, null);
             ViewBag.Roles = roles;
 
             if (id.HasValue)

@@ -60,4 +60,9 @@ namespace Vino.Core.CMS.Domain.Entity.System
 
         public ICollection<Menu> SubMenus { set; get; }
     }
+
+    public class MenuSearch : BaseSearch<Menu>
+    {
+        public long? ParentId { set; get; }
+    }
 }

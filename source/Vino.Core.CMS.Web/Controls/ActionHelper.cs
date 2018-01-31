@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using Vino.Core.CMS.Service.System;
+using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.Infrastructure.Extensions;
 

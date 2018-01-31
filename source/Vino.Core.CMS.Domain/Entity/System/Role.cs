@@ -49,4 +49,9 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// </summary>
         public virtual ICollection<RoleFunction> RoleFunctions { get; set; }
     }
+
+    public class RoleSearch : BaseSearch<Role>
+    {
+
+    }
 }

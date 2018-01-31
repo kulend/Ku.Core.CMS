@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.Content;
-using Vino.Core.CMS.Service.Content;
+using Vino.Core.CMS.IService.Content;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
@@ -31,7 +31,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
-            var data = await _service.GetListAsync(page, rows);
+            var data = await _service.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
 

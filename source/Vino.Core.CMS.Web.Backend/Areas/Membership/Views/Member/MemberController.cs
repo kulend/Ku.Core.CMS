@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Service.Membership;
 using Vino.Core.CMS.Web.Security;
+using Vino.Core.CMS.IService.Membership;
 
 namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
 {
@@ -34,7 +34,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
-            var data = await _service.GetListAsync(page, rows);
+            var data = await _service.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -42,7 +42,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
         public async Task<IActionResult> Edit(long? id)
         {
             //取得会员类型列表
-            ViewBag.MemberTypeList = await _memberTypeService.GetAllAsync();
+            ViewBag.MemberTypeList = await _memberTypeService.GetListAsync(null, null);
 
             if (id.HasValue)
             {
@@ -98,7 +98,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
         [Auth("type.view")]
         public async Task<IActionResult> GetTypeList(int page, int rows)
         {
-            var data = await _memberTypeService.GetListAsync(page, rows);
+            var data = await _memberTypeService.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
 

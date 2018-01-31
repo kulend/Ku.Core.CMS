@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="IMenuService.cs">
-//        最后生成时间：2017-08-03 12:01
+//        最后生成时间：2018-01-30 17:47
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -17,13 +17,10 @@ using AutoMapper;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.System;
+using Vino.Core.CMS.IService.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial interface IMenuService
-    {
-    }
-
     public partial class MenuService : BaseService, IMenuService
     {
         protected readonly IMenuRepository _repository;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Service.System;
+using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
@@ -27,7 +27,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Log
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
-            var data = await service.GetListAsync(page, rows);
+            var data = await service.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
 

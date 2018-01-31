@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
+using Vino.Core.CMS.IService.WeChat;
 using Vino.Core.CMS.Service.WeChat;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
@@ -31,7 +32,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
         public async Task<IActionResult> TagList()
         {
             //取得公众号数据
-            var accounts = await accountService.GetAllAsync();
+            var accounts = await accountService.GetListAsync(null, null);
             ViewBag.Accounts = accounts;
             return View();
         }
@@ -39,7 +40,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
         [Auth("tag.view")]
         public async Task<IActionResult> GetTagList(int page, int rows, WxUserTagSearch where)
         {
-            var data = await tagService.GetListAsync(page, rows, where);
+            var data = await tagService.GetListAsync(page, rows, where, "TagId asc");
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -54,8 +55,8 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
                 {
                     throw new VinoDataNotFoundException("无法取得数据!");
                 }
-                ViewBag.Account = await accountService.GetByIdAsync(model.AccountId);
-                if (ViewBag.Account == null)
+                model.Account = await accountService.GetByIdAsync(model.AccountId);
+                if (model.Account == null)
                 {
                     throw new VinoDataNotFoundException("数据出错!");
                 }
@@ -69,8 +70,8 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
                 if (AccountId.HasValue)
                 {
                     dto.AccountId = AccountId.Value;
-                    ViewBag.Account = await accountService.GetByIdAsync(AccountId.Value);
-                    if (ViewBag.Account == null)
+                    dto.Account = await accountService.GetByIdAsync(AccountId.Value);
+                    if (dto.Account == null)
                     {
                         throw new VinoDataNotFoundException("参数出错!");
                     }

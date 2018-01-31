@@ -39,4 +39,9 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// </summary>
         public DateTime ExpireTime { set; get; }
     }
+
+    public class SmsSearch : BaseSearch<Sms>
+    {
+
+    }
 }

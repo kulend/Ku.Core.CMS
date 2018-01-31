@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.IService\Vino.Core.CMS.IService.csproj" />
     <ProjectReference Include="..\Vino.Core.EventBus\Vino.Core.EventBus.csproj" />
     <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />

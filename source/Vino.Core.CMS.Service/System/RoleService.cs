@@ -13,10 +13,12 @@ using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.Infrastructure.Helper;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.IdGenerator;
+using Vino.Core.CMS.IService.System;
+using Vino.Core.Infrastructure.Extensions;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class RoleService
+    public partial class RoleService : IRoleService
     {
         private readonly IFunctionRepository functionRepository;
 
@@ -27,25 +29,47 @@ namespace Vino.Core.CMS.Service.System
             this.functionRepository = _functionRepository;
         }
 
-        public async Task<(int count, List<RoleDto> items)> GetListAsync(int pageIndex, int pageSize)
-        {
-            var data = await _repository.PageQueryAsync(pageIndex, pageSize, null, "");
+        #region 自动生成的方法
 
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>List<RoleDto></returns>
+        public async Task<List<RoleDto>> GetListAsync(RoleSearch where, string sort)
+        {
+            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
+            return _mapper.Map<List<RoleDto>>(data);
+        }
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        public async Task<(int count, List<RoleDto> items)> GetListAsync(int page, int size, RoleSearch where, string sort)
+        {
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
             return (data.count, _mapper.Map<List<RoleDto>>(data.items));
         }
 
-        public async Task<List<RoleDto>> GetAllAsync()
-        {
-            var queryable = _repository.GetQueryable();
-            var items = _mapper.Map<List<RoleDto>>(await queryable.ToListAsync());
-            return items;
-        }
-
+        /// <summary>
+        /// 根据主键取得数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task<RoleDto> GetByIdAsync(long id)
         {
             return _mapper.Map<RoleDto>(await this._repository.GetByIdAsync(id));
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
         public async Task SaveAsync(RoleDto dto)
         {
             Role model = _mapper.Map<Role>(dto);
@@ -60,26 +84,37 @@ namespace Vino.Core.CMS.Service.System
             else
             {
                 //更新
-                var role = await _repository.GetByIdAsync(model.Id);
-                if (role == null)
+                var item = await _repository.GetByIdAsync(model.Id);
+                if (item == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得角色数据!");
+                    throw new VinoDataNotFoundException("无法取得角色数据！");
                 }
 
-                role.Name = model.Name;
-                role.NameEn = model.NameEn;
-                role.IsEnable = model.IsEnable;
-                role.Remarks = model.Remarks;
-                _repository.Update(role);
+                //TODO:这里进行赋值
+                item.Name = model.Name;
+                item.NameEn = model.NameEn;
+                item.IsEnable = model.IsEnable;
+                item.Remarks = model.Remarks;
+
+                _repository.Update(item);
             }
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task DeleteAsync(long id)
         {
             await _repository.DeleteAsync(id);
             await _repository.SaveAsync();
         }
+
+        #endregion
+
+        #region 其他方法
 
         #region 功能权限
 
@@ -111,7 +146,7 @@ namespace Vino.Core.CMS.Service.System
 
         public async Task SaveRoleAuthAsync(long RoleId, long FunctionId, bool hasAuth)
         {
-            var model = await context.RoleFunctions.SingleOrDefaultAsync(x=>x.RoleId == RoleId && x.FunctionId == FunctionId);
+            var model = await context.RoleFunctions.SingleOrDefaultAsync(x => x.RoleId == RoleId && x.FunctionId == FunctionId);
             if (hasAuth)
             {
                 if (model == null)
@@ -123,12 +158,14 @@ namespace Vino.Core.CMS.Service.System
                     await context.SaveChangesAsync();
                 }
             }
-            else if(model != null)
+            else if (model != null)
             {
                 context.RoleFunctions.Remove(model);
                 await context.SaveChangesAsync();
             }
         }
+
+        #endregion
 
         #endregion
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Vino.Core.CMS.Service.System;
+using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.Infrastructure.Extensions;
 

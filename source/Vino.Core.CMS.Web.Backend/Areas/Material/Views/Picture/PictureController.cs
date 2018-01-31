@@ -15,6 +15,7 @@ using Vino.Core.CMS.Service.Material;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.EventBus.CAP;
 using Vino.Core.Infrastructure.IdGenerator;
+using Vino.Core.CMS.IService.Material;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
 {
@@ -39,7 +40,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
-            var data = await _service.GetListAsync(page, rows);
+            var data = await _service.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -102,7 +103,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
         [Auth("select")]
         public async Task<IActionResult> GetSelectList(int page, int rows)
         {
-            var data = await _service.GetListAsync(page, rows);
+            var data = await _service.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
     }

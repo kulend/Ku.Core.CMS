@@ -1,28 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Domain.Entity.Membership;
+using Vino.Core.CMS.IService.Membership;
 using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.Membership
 {
-    public partial class MemberTypeService
+    public partial class MemberTypeService : IMemberTypeService
     {
-        public async Task<(int count, List<MemberTypeDto> items)> GetListAsync(int page, int size)
+        #region 自动生成的方法
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>List<MemberTypeDto></returns>
+        public async Task<List<MemberTypeDto>> GetListAsync(MemberTypeSearch where, string sort)
         {
-            var data = await _repository.PageQueryAsync(page, size, null, "OrderIndex asc");
+            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "OrderIndex asc");
+            return _mapper.Map<List<MemberTypeDto>>(data);
+        }
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        public async Task<(int count, List<MemberTypeDto> items)> GetListAsync(int page, int size, MemberTypeSearch where, string sort)
+        {
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "OrderIndex asc");
             return (data.count, _mapper.Map<List<MemberTypeDto>>(data.items));
         }
 
+        /// <summary>
+        /// 根据主键取得数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task<MemberTypeDto> GetByIdAsync(long id)
         {
             return _mapper.Map<MemberTypeDto>(await this._repository.GetByIdAsync(id));
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
         public async Task SaveAsync(MemberTypeDto dto)
         {
             MemberType model = _mapper.Map<MemberType>(dto);
@@ -43,6 +73,7 @@ namespace Vino.Core.CMS.Service.Membership
                     throw new VinoDataNotFoundException("无法取得会员类型数据！");
                 }
 
+                //TODO:这里进行赋值
                 item.Name = model.Name;
                 item.OrderIndex = model.OrderIndex;
                 _repository.Update(item);
@@ -50,16 +81,21 @@ namespace Vino.Core.CMS.Service.Membership
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task DeleteAsync(long id)
         {
             await _repository.DeleteAsync(id);
             await _repository.SaveAsync();
         }
 
-        public async Task<List<MemberTypeDto>> GetAllAsync()
-        {
-            var data = await _repository.QueryAsync(null, "OrderIndex asc");
-            return  _mapper.Map<List<MemberTypeDto>>(data);
-        }
+        #endregion
+
+        #region 其他方法
+
+        #endregion
     }
 }

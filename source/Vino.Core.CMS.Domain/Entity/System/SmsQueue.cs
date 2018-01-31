@@ -28,4 +28,9 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// </summary>
         public DateTime SendTime { set; get; }
     }
+
+    public class SmsQueueSearch : BaseSearch<SmsQueue>
+    {
+
+    }
 }

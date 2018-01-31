@@ -109,4 +109,9 @@ namespace Vino.Core.CMS.Domain.Entity.Membership
 
         public MemberType MemberType { set; get; }
     }
+	
+	public class MemberSearch : BaseSearch<Member>
+    {
+
+    }
 }

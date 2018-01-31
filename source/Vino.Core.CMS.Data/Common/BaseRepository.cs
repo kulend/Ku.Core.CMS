@@ -111,11 +111,25 @@ namespace Vino.Core.CMS.Data.Common
 
         public async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> where, string order)
         {
+            return await QueryAsync(where, order, null);
+        }
+
+        public async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> where, string order, Expression<Func<TEntity, object>>[] includes)
+        {
             var query = Table.AsQueryable();
             if (where != null)
             {
                 query = query.Where(where);
             }
+
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
             //处理有IsDelete字段表
             if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
             {
@@ -150,26 +164,6 @@ namespace Vino.Core.CMS.Data.Common
                         query = isDesc ? ((IOrderedQueryable<TEntity>)query).ThenByDescending(name) : ((IOrderedQueryable<TEntity>)query).ThenBy(name);
                     }
                 }
-            }
-            return await query.ToListAsync();
-        }
-
-        public async Task<List<TEntity>> QueryAsync<Tkey>(Expression<Func<TEntity, bool>> where,
-            Expression<Func<TEntity, Tkey>> order, bool isDesc = false)
-        {
-            var query = Table.AsQueryable();
-            if (where != null)
-            {
-                query = query.Where(where);
-            }
-            //处理有IsDelete字段表
-            if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
-            {
-                query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
-            }
-            if (order != null)
-            {
-                query = isDesc ? query.OrderByDescending(order) : query.OrderBy(order);
             }
             return await query.ToListAsync();
         }
@@ -337,9 +331,7 @@ namespace Vino.Core.CMS.Data.Common
         /// <summary>
         /// 异步分页查询
         /// </summary>
-        public async Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size,
-            Expression<Func<TEntity, bool>> where,
-            string order)
+        public async Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size, Expression<Func<TEntity, bool>> where, string order)
         {
             return await PageQueryAsync(page, size, where, order, null);
         }
@@ -347,9 +339,7 @@ namespace Vino.Core.CMS.Data.Common
         /// <summary>
         /// 异步分页查询
         /// </summary>
-        public async Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size,
-            Expression<Func<TEntity, bool>> where,
-            string order, Expression<Func<TEntity, object>>[] includes)
+        public async Task<(int count, List<TEntity> items)> PageQueryAsync(int page, int size, Expression<Func<TEntity, bool>> where, string order, Expression<Func<TEntity, object>>[] includes)
         {
             var query = Table.AsQueryable();
             if (includes != null && includes.Length > 0)
@@ -398,32 +388,6 @@ namespace Vino.Core.CMS.Data.Common
                         query = isDesc ? ((IOrderedQueryable<TEntity>)query).ThenByDescending(name) : ((IOrderedQueryable<TEntity>)query).ThenBy(name);
                     }
                 }
-            }
-
-            var items = await query.Skip((page - 1) * size).Take(size).ToListAsync();
-            return (total, items);
-        }
-
-        /// <summary>
-        /// 异步分页查询
-        /// </summary>
-        public async Task<(int count, List<TEntity> items)> PageQueryAsync<Tkey>(int page, int size,
-            Expression<Func<TEntity, bool>> where,
-            Expression<Func<TEntity, Tkey>> order, bool isDesc = false)
-        {
-            var query = Table.AsQueryable();
-            if (where != null)
-            {
-                query = query.Where(where);
-            }
-            //处理有IsDelete字段表
-            if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
-            {
-                query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
-            }
-            var total = await query.CountAsync();
-            if (order != null) {
-                query = isDesc ? query.OrderByDescending(order) : query.OrderBy(order);
             }
 
             var items = await query.Skip((page - 1) * size).Take(size).ToListAsync();

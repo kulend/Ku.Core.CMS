@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="IArticleService.cs">
-//        最后生成时间：2018-01-24 11:56
+//        最后生成时间：2018-01-30 17:47
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -17,13 +17,10 @@ using AutoMapper;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.Content;
+using Vino.Core.CMS.IService.Content;
 
 namespace Vino.Core.CMS.Service.Content
 {
-    public partial interface IArticleService
-    {
-    }
-
     public partial class ArticleService : BaseService, IArticleService
     {
         protected readonly IArticleRepository _repository;

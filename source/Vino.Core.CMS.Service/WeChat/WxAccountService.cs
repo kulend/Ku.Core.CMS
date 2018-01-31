@@ -1,31 +1,60 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
+using Vino.Core.CMS.IService.WeChat;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.Helper;
 using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.WeChat
 {
-    public partial class WxAccountService
+    public partial class WxAccountService : IWxAccountService
     {
-        public async Task<(int count, List<WxAccountDto> items)> GetListAsync(int page, int size)
+        #region 自动生成的方法
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>List<WxAccountDto></returns>
+        public async Task<List<WxAccountDto>> GetListAsync(WxAccountSearch where, string sort)
         {
-            var data = await _repository.PageQueryAsync(page, size, null, "CreateTime asc");
+            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
+            return _mapper.Map<List<WxAccountDto>>(data);
+        }
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        public async Task<(int count, List<WxAccountDto> items)> GetListAsync(int page, int size, WxAccountSearch where, string sort)
+        {
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
             return (data.count, _mapper.Map<List<WxAccountDto>>(data.items));
         }
 
+        /// <summary>
+        /// 根据主键取得数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task<WxAccountDto> GetByIdAsync(long id)
         {
             return _mapper.Map<WxAccountDto>(await this._repository.GetByIdAsync(id));
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
         public async Task SaveAsync(WxAccountDto dto)
         {
             WxAccount model = _mapper.Map<WxAccount>(dto);
@@ -70,16 +99,21 @@ namespace Vino.Core.CMS.Service.WeChat
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task DeleteAsync(long id)
         {
             await _repository.DeleteAsync(id);
             await _repository.SaveAsync();
         }
 
-        public async Task<List<WxAccountDto>> GetAllAsync()
-        {
-            var data = await _repository.QueryAsync(null, "CreateTime asc");
-            return _mapper.Map<List<WxAccountDto>>(data);
-        }
+        #endregion
+
+        #region 其他方法
+
+        #endregion
     }
 }

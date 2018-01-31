@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="IWxMenuService.cs">
-//        最后生成时间：2018-01-28 18:40
+//        最后生成时间：2018-01-30 17:47
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -17,13 +17,10 @@ using AutoMapper;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.WeChat;
+using Vino.Core.CMS.IService.WeChat;
 
 namespace Vino.Core.CMS.Service.WeChat
 {
-    public partial interface IWxMenuService
-    {
-    }
-
     public partial class WxMenuService : BaseService, IWxMenuService
     {
         protected readonly IWxMenuRepository _repository;

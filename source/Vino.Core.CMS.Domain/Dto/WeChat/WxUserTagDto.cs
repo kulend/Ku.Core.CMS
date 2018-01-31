@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Vino.Core.CMS.Domain.Entity.WeChat;
-using Vino.Core.Infrastructure.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat

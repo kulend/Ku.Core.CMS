@@ -8,6 +8,7 @@ using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Service.WeChat;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.CMS.Domain.Dto.WeChat;
+using Vino.Core.CMS.IService.WeChat;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.Menu
 {
@@ -30,7 +31,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.Menu
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows)
         {
-            var data = await service.GetListAsync(page, rows);
+            var data = await service.GetListAsync(page, rows, null, null);
             return PagerData(data.items, page, rows, data.count);
         }
 

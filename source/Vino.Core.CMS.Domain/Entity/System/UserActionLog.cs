@@ -44,4 +44,9 @@ namespace Vino.Core.CMS.Domain.Entity.System
         [MaxLength(256)]
         public string QueryString { set; get; }
     }
+
+    public class UserActionLogSearch : BaseSearch<UserActionLog>
+    {
+
+    }
 }

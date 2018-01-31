@@ -24,6 +24,7 @@
         var table = layui.table;
         var id = $target.attr("id");
         opts.id = id;
+        $target.attr("lay-filter", id);
 
         var where = opts.where || {};
         if (opts.onWhere && typeof opts.onWhere === "function")
@@ -62,11 +63,6 @@
             target.each(function () {
                 var id = $(this).attr("id");
                 layui.table.reload(id);
-                //var ins = tableInsArr[id];
-                //if (ins)
-                //{
-                //    ins.reload();
-                //}
             });
         },
         search: function (target, options) {

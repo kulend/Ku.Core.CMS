@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="ISmsQueueService.cs">
-//        最后生成时间：2017-09-12 15:00
+//        最后生成时间：2018-01-30 17:47
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -17,13 +17,10 @@ using AutoMapper;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.System;
+using Vino.Core.CMS.IService.System;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial interface ISmsQueueService
-    {
-    }
-
     public partial class SmsQueueService : BaseService, ISmsQueueService
     {
         protected readonly ISmsQueueRepository _repository;

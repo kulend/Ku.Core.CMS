@@ -18,4 +18,9 @@ namespace Vino.Core.CMS.Domain.Entity.Material
         /// </summary>
         public bool IsCompressed { set; get; }
     }
+
+    public class PictureSearch : BaseSearch<Picture>
+    {
+
+    }
 }

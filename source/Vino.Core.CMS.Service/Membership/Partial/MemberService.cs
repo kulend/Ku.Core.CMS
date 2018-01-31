@@ -6,7 +6,7 @@
 // </auto-generated>
 //
 // <copyright file="IMemberService.cs">
-//        最后生成时间：2017-08-03 15:40
+//        最后生成时间：2018-01-31 09:52
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -17,13 +17,10 @@ using AutoMapper;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.Membership;
+using Vino.Core.CMS.IService.Membership;
 
 namespace Vino.Core.CMS.Service.Membership
 {
-    public partial interface IMemberService
-    {
-    }
-
     public partial class MemberService : BaseService, IMemberService
     {
         protected readonly IMemberRepository _repository;

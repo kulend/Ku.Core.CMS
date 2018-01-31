@@ -45,4 +45,12 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// </summary>
         public int Level { set; get; }
     }
+
+    public class FunctionSearch : BaseSearch<Function>
+    {
+        /// <summary>
+        /// 父功能
+        /// </summary>
+        public long? ParentId { get; set; }
+    }
 }

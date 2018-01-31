@@ -1,25 +1,60 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
+using Vino.Core.CMS.IService.System;
 using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Helper;
+using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class MenuService
+    public partial class MenuService : IMenuService
     {
-        public async Task<(int count, List<MenuDto> list)> GetListAsync(long? parentId, int pageIndex, int pageSize)
-        {
-            var data = await _repository.PageQueryAsync(pageIndex, pageSize, function => function.ParentId == parentId, "");
+        #region 自动生成的方法
 
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>List<MenuDto></returns>
+        public async Task<List<MenuDto>> GetListAsync(MenuSearch where, string sort)
+        {
+            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
+            return _mapper.Map<List<MenuDto>>(data);
+        }
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        public async Task<(int count, List<MenuDto> items)> GetListAsync(int page, int size, MenuSearch where, string sort)
+        {
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
             return (data.count, _mapper.Map<List<MenuDto>>(data.items));
         }
 
+        /// <summary>
+        /// 根据主键取得数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public async Task<MenuDto> GetByIdAsync(long id)
+        {
+            return _mapper.Map<MenuDto>(await this._repository.GetByIdAsync(id));
+        }
+
+        /// <summary>
+        /// 保存数据
+        /// </summary>
         public async Task SaveAsync(MenuDto dto)
         {
             Menu model = _mapper.Map<Menu>(dto);
@@ -67,22 +102,14 @@ namespace Vino.Core.CMS.Service.System
                 _repository.Update(menu);
             }
             await _repository.SaveAsync();
+
         }
 
-        public Task<List<MenuDto>> GetParentsAsync(long parentId)
-        {
-            List<MenuDto> Gets()
-            {
-                return GetParents(parentId);
-            }
-            return Task.FromResult(Gets());
-        }
-
-        public async Task<MenuDto> GetByIdAsync(long id)
-        {
-            return _mapper.Map<MenuDto>(await this._repository.GetByIdAsync(id));
-        }
-
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         public async Task DeleteAsync(long id)
         {
             //取得菜单信息
@@ -97,8 +124,22 @@ namespace Vino.Core.CMS.Service.System
                 await UpdateMenuHasSub(menu.ParentId.Value);
             }
             await _repository.SaveAsync();
+
         }
 
+        #endregion
+
+        #region 其他方法
+		
+        public Task<List<MenuDto>> GetParentsAsync(long parentId)
+        {
+            List<MenuDto> Gets()
+            {
+                return GetParents(parentId);
+            }
+            return Task.FromResult(Gets());
+        }
+		
         public async Task<List<MenuDto>> GetSubsAsync(long? parentId)
         {
             var queryable = _repository.GetQueryable();
@@ -123,6 +164,8 @@ namespace Vino.Core.CMS.Service.System
             var query = queryable.OrderBy(x => x.OrderIndex);
             return _mapper.Map<List<MenuDto>>(await query.ToListAsync());
         }
+		
+        #endregion
 
         #region private
 

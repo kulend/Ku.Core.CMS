@@ -102,5 +102,11 @@ namespace Vino.Core.CMS.Domain.Entity.System
 
             return result.EqualOrdinalIgnoreCase(this.Password);
         }
+		
+    }
+	
+    public class UserSearch : BaseSearch<User>
+    {
+
     }
 }

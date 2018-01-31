@@ -6,13 +6,20 @@
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<WxUserTagDto>("SaveTag"))
     {
-        <div class="layui-body">
-            @Html.InputFor(x => x.Id)
-            @Html.InputFor(x => x.Name)
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.AccountId)
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属公众号</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show">@Model.Account.Name</label>
+            </div>
         </div>
-        <div class="layui-footer">
-            @Html.ActionsForSubmitAndClose()
-        </div>
+        @Html.InputFor(x => x.Name)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForSubmitAndClose()
+    </div>
     }
 </div>
 @section Scripts

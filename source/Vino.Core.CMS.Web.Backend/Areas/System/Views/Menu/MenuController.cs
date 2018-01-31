@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Vino.Core.CMS.Domain.Dto.System;
-using Vino.Core.CMS.Service.System;
+using Vino.Core.CMS.Domain.Entity.System;
+using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
@@ -38,8 +39,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
         [Auth("view")]
         public async Task<IActionResult> List(long? parentId, int page = 1, int rows = 10)
         {
-            var data = await service.GetListAsync(parentId, page, rows);
-            return PagerData(data.list, page, rows, data.count);
+            var search = new MenuSearch();
+            search.ParentId = parentId;
+            var data = await service.GetListAsync(page, rows, search, null);
+            return PagerData(data.items, page, rows, data.count);
         }
 
         [Auth("edit")]

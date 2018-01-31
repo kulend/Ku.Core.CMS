@@ -21,4 +21,9 @@ namespace Vino.Core.CMS.Domain.Entity.Membership
         /// </summary>
         public int OrderIndex { set; get; }
     }
+
+    public class MemberTypeSearch : BaseSearch<MemberType>
+    {
+
+    }
 }

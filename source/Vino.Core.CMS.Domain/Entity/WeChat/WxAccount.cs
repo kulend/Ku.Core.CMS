@@ -34,4 +34,9 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
         [MaxLength(30)]
         public string Token { set; get; }
     }
+
+    public class WxAccountSearch : BaseSearch<WxAccount>
+    {
+
+    }
 }

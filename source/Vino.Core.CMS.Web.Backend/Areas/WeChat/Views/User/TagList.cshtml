@@ -41,7 +41,7 @@
             $("#list").vinoGrid({
                 url: 'GetTagList',
                 cols: [[
-                    { field: 'Name', title: '名称', width: 150 },
+                    { field: 'Name', title: '名称', width: 150, sort:true },
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([

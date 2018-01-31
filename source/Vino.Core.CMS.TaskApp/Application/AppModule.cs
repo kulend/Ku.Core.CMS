@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using Autofac;
 using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Service.System;
 using Vino.Core.Infrastructure.DependencyResolver;
 
@@ -21,7 +22,7 @@ namespace Vino.Core.CMS.TaskApp.Application
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
             //Service
-            builder.RegisterAssemblyTypes(typeof(IUserService).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(UserService).GetTypeInfo().Assembly)
                 .Where(t => t.Name.EndsWith("Service", StringComparison.CurrentCultureIgnoreCase))
                 .AsImplementedInterfaces()
                 .InstancePerDependency();

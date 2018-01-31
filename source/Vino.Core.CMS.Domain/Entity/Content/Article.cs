@@ -91,4 +91,9 @@ namespace Vino.Core.CMS.Domain.Entity.Content
         [Display(Name = "封面")]
         public string CoverData { set; get; }
     }
+
+    public class ArticleSearch : BaseSearch<Article>
+    {
+
+    }
 }

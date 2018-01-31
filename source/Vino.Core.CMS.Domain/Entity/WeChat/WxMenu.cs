@@ -84,4 +84,9 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
         [Display(Name = "语言")]
         public string Language { set; get; }
     }
+	
+	public class WxMenuSearch : BaseSearch<WxMenu>
+    {
+
+    }
 }

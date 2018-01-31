@@ -62,6 +62,19 @@ namespace Vino.Core.CMS.Service.WeChat
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
+                if (!model.IsIndividuation)
+                {
+                    model.MatchRule = new WxMenuMatchRule
+                    {
+                        TagId = "",
+                        Sex = "",
+                        Client = "",
+                        Country = "",
+                        Province = "",
+                        City = "",
+                        Language = "",
+                    };
+                }
                 await _repository.InsertAsync(model);
             }
             else
@@ -77,7 +90,43 @@ namespace Vino.Core.CMS.Service.WeChat
                 item.Name = model.Name;
                 item.MenuData = model.MenuData;
                 item.IsIndividuation = model.IsIndividuation;
-                item.MatchRule = model.MatchRule;
+                if (!model.IsIndividuation)
+                {
+                    model.MatchRule = new WxMenuMatchRule
+                    {
+                        TagId = "",
+                        Sex = "",
+                        Client = "",
+                        Country = "",
+                        Province = "",
+                        City = "",
+                        Language = "",
+                    };
+                }
+
+                if (item.MatchRule != null)
+                {
+                    item.MatchRule.TagId = model.MatchRule.TagId;
+                    item.MatchRule.Sex = model.MatchRule.Sex;
+                    item.MatchRule.Client = model.MatchRule.Client;
+                    item.MatchRule.Country = model.MatchRule.Country;
+                    item.MatchRule.Province = model.MatchRule.Province;
+                    item.MatchRule.City = model.MatchRule.City;
+                    item.MatchRule.Language = model.MatchRule.Language;
+                }
+                else
+                {
+                    item.MatchRule = new WxMenuMatchRule
+                    {
+                        TagId = model.MatchRule.TagId,
+                        Sex = model.MatchRule.Sex,
+                        Client = model.MatchRule.Client,
+                        Country = model.MatchRule.Country,
+                        Province = model.MatchRule.Province,
+                        City = model.MatchRule.City,
+                        Language = model.MatchRule.Language,
+                    };
+                }
                 _repository.Update(item);
             }
             await _repository.SaveAsync();

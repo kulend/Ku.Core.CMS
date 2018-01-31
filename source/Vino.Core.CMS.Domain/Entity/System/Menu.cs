@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Vino.Core.Infrastructure.Attributes;
 using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
@@ -63,6 +64,8 @@ namespace Vino.Core.CMS.Domain.Entity.System
 
     public class MenuSearch : BaseSearch<Menu>
     {
+        [SearchCondition(false)]
         public long? ParentId { set; get; }
+
     }
 }

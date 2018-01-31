@@ -3,8 +3,23 @@
 }
 <div class="main-content">
     <div class="toolbar">
-        <action auth-code="wechat.menu.edit" text="添加" size="sm" icon="&#xe608;" action="window:WeChat/Menu/Edit" after="gridReload()"/>
+        <action id="btnAdd" auth-code="wechat.menu.edit" text="添加" size="sm" icon="&#xe608;" action="window:WeChat/Menu/Edit" after="gridReload()" />
         <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+        <span style="position:absolute;right:10px;line-height:30px;">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公众号</label>
+                    <div class="layui-input-block">
+                        <select id="scAccount" lay-verify="required" lay-filter="account">
+                            @foreach (var account in ViewBag.Accounts)
+                            {
+                            <option value="@account.Id">@account.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </span>
     </div>
     <table id="list">
     </table>
@@ -12,22 +27,35 @@
 @section Scripts
 {
     <script>
-        $(function() {
+        layui.use(['form'], function () {
+            var form = layui.form;
+            form.on('select(account)', function (data) {
+                $("#list").vinoGrid("search");
+                $("#btnAdd").attr("action", "window:WeChat/Menu/Edit?AccountId=" + data.value);
+            });
+        });
+
+        $(function () {
+            $("#btnAdd").attr("action", "window:WeChat/Menu/Edit?AccountId=" + $("#scAccount").val());
             $("#list").vinoGrid({
                 url: 'GetList',
                 cols: [[
                     { field: 'Name', title: '名称', width: 150 },
-                    { field: 'Type', title: '类型', width: 150, align: 'center', templet:'<div>{{d.Type.Title}}</div>'},
-                    { field: 'WeixinId', title: '微信号', width: 140 },
-                    { field: 'AppId', title: '应用ID', width: 140 },
+                    { field: 'IsIndividuation', title: '个性化菜单', width: 100, align: 'center', templet: grid_templet_bool("IsIndividuation") },
+                    { field: 'PublishTime', title: '发布时间', width: 150 },
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.menu.edit", title: "编辑", action: `window:WeChat/Account/Edit?id={{d.Id}}` },
+                            { code: "wechat.menu.edit", title: "编辑", action: `window:WeChat/Menu/Edit?id={{d.Id}}` },
                             { code: "wechat.menu.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
-                ]]
+                ]],
+                onWhere: function () {
+                    return {
+                        AccountId: $("#scAccount").val()
+                    };
+                }
             });
         });
     </script>

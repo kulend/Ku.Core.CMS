@@ -87,6 +87,6 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
 	
 	public class WxMenuSearch : BaseSearch<WxMenu>
     {
-
+        public long? AccountId { set; get; }
     }
 }

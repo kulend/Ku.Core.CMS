@@ -32,7 +32,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
         public async Task<IActionResult> TagList()
         {
             //取得公众号数据
-            var accounts = await accountService.GetListAsync(null, null);
+            var accounts = await accountService.GetListAsync(null, "Name asc");
             ViewBag.Accounts = accounts;
             return View();
         }

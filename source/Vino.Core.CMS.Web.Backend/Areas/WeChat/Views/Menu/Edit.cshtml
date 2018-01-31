@@ -6,25 +6,72 @@
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<WxMenuDto>("Save"))
     {
-        <div class="layui-body">
-            @Html.InputFor(x => x.Id)
-            @Html.InputFor(x => x.Name)
-            @Html.InputFor(x => x.MenuData)
-            @Html.InputFor(x => x.IsIndividuation, new KeyValuePair<string, string>("lay-filter", "IsIndividuation"))
-        
-            <fieldset id="dvMatchRule" class="layui-elem-field" style="@(Model.IsIndividuation?"":"display:none;")">
-                <legend>匹配规则</legend>
-                <div class="layui-field-box">
-                    @Html.InputFor(x => x.MatchRule.TagId)
-                    @Html.InputFor(x => x.MatchRule.Sex)
-                    @Html.InputFor(x => x.MatchRule.Client)
-                    @Html.InputFor(x => x.MatchRule.Country)
-                    @Html.InputFor(x => x.MatchRule.Province)
-                    @Html.InputFor(x => x.MatchRule.City)
-                    @Html.InputFor(x => x.MatchRule.Language)
-                </div>
-            </fieldset>
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.AccountId)
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属公众号</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show">@Model.Account.Name</label>
+            </div>
         </div>
+        @Html.InputFor(x => x.Name)
+        @Html.InputFor(x => x.MenuData)
+        @Html.InputFor(x => x.IsIndividuation, new KeyValuePair<string, string>("lay-filter", "IsIndividuation"))
+
+        <fieldset id="dvMatchRule" class="layui-elem-field" style="@(Model.IsIndividuation?"":"display:none;")">
+            <legend>匹配规则</legend>
+            <div class="layui-field-box">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户标签</label>
+                    <div class="layui-input-block">
+                        <select name="MatchRule.TagId">
+                            <option value="">不做匹配</option>
+                            @foreach (WxUserTagDto tag in ViewBag.UserTags)
+                            {
+                                if (Model.MatchRule != null && tag.TagId.ToString().Equals(Model.MatchRule.TagId))
+                                {
+                                    <option value="@tag.TagId" selected="selected">@tag.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@tag.TagId">@tag.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="MatchRule.Sex" value="" title="不做匹配" @((Model.MatchRule == null || string.IsNullOrEmpty(Model.MatchRule.Sex)) ? "checked" : "")>
+                        <input type="radio" name="MatchRule.Sex" value="1" title="男" @((Model.MatchRule != null && "1".Equals(Model.MatchRule.Sex)) ? "checked" : "")>
+                        <input type="radio" name="MatchRule.Sex" value="2" title="女" @((Model.MatchRule != null && "2".Equals(Model.MatchRule.Sex)) ? "checked" : "")>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">客户端</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="MatchRule.Client" value="" title="不做匹配" @((Model.MatchRule == null || string.IsNullOrEmpty(Model.MatchRule.Client)) ? "checked" : "")>
+                        <input type="radio" name="MatchRule.Client" value="1" title="IOS" @((Model.MatchRule != null && "1".Equals(Model.MatchRule.Client)) ? "checked" : "")>
+                        <input type="radio" name="MatchRule.Client" value="2" title="Android" @((Model.MatchRule != null && "2".Equals(Model.MatchRule.Client)) ? "checked" : "")>
+                        <input type="radio" name="MatchRule.Client" value="3" title="Others" @((Model.MatchRule != null && "3".Equals(Model.MatchRule.Client)) ? "checked" : "")>
+                    </div>
+                </div>
+                @Html.InputFor(x => x.MatchRule.Country)
+                @Html.InputFor(x => x.MatchRule.Province)
+                @Html.InputFor(x => x.MatchRule.City)
+                <div class="layui-form-item">
+                    <label class="layui-form-label">语言</label>
+                    <div class="layui-input-block">
+                        <select id="language" name="MatchRule.Language">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
         <div class="layui-footer">
             @Html.ActionsForSubmitAndClose()
         </div>
@@ -32,7 +79,11 @@
 </div>
 @section Scripts
     {
-    <script>
+<script>
+        var languages = [["zh_CN", "简体中文"], ["zh_TW", "繁体中文TW"], ["zh_HK", "繁体中文HK"]
+            , ["en", "英文"], ["id", "印尼"], ["ms", "马来"], ["es", "西班牙"], ["ko", "韩国"], ["it", "意大利"], ["ja", "日本"], ["pl", "波兰"], ["pt", "葡萄牙"]
+            , ["ru", "俄国"], ["th", "泰文"], ["vi", "越南"], ["ar", "阿拉伯语"], ["hi", "北印度"], ["he", "希伯来"], ["tr", "土耳其"], ["de", "德语"], ["fr", "法语"]];
+
         layui.use(['form'], function () {
             var form = layui.form;
             //监听开关
@@ -44,6 +95,21 @@
                     $("#dvMatchRule").hide();
                 }
             });
+
+            var selLanguage = "@(Model.MatchRule != null ? Model.MatchRule.Language: "")";
+            var options = [];
+            options.push(`<option value="">不做匹配</option>`);
+            for (var i = 0; i < languages.length; i++) {
+                var cd = languages[i][0];
+                var nm = languages[i][1];
+                if (cd == selLanguage) {
+                    options.push(`<option value="${cd}" selected="selected">${nm}</option>`);
+                } else { 
+                    options.push(`<option value="${cd}">${nm}</option>`);
+                }
+            }
+            $("#language").html(options.join(""));
+            form.render("select");
         });
-    </script>
+</script>
 }

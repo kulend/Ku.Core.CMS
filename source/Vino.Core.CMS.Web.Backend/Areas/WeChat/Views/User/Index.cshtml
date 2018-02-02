@@ -41,12 +41,18 @@
             $("#list").vinoGrid({
                 url: 'GetUserList',
                 cols: [[
-                    { field: 'Name', title: '名称', width: 150, sort:true },
+                    { field: 'OpenId', title: 'OpenId', width: 150 },
+                    { field: 'UnionId', title: 'UnionId', width: 150 },
+                    { field: 'NickName', title: '昵称', width: 150 },
+                    { field: 'Remark', title: '备注名', width: 150 },
+                    { field: 'Sex', title: '性别', width: 80, align: 'center', templet: '<div>{{d.Sex.Title}}</div>'},
+                    { field: 'City', title: '地区', width: 180, templet: '<div>{{d.Country}}{{d.Province}}{{d.City}}</div>' },
+                    { field: 'IsSubscribe', title: '是否关注', width: 90, align: 'center', templet: grid_templet_bool("IsSubscribe") },
+                    { field: 'SubscribeTime', title: '关注时间', width: 150},
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.user.tag.edit", title: "编辑", action: `window:WeChat/User/TagEdit?id={{d.Id}}` },
-                            { code: "wechat.user.tag.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            { code: "wechat.user.view", title: "详情", action: `window:WeChat/User/Detail?id={{d.Id}}`, css: "layui-btn-primary" }
                         ])
                     }
                 ]],

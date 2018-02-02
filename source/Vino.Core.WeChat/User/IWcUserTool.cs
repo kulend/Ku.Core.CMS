@@ -27,5 +27,15 @@ namespace Vino.Core.WeChat.User
         /// 删除用户标签
         /// </summary>
         Task<WcReply<string>> DeleteUserTag(WcAccessToken token, int tagId);
+
+        /// <summary>
+        /// 取得微信用户列表
+        /// </summary>
+        Task<WcReply<WcUserListRsp>> GetUserListAsync(WcAccessToken token, string nextOpenId);
+
+        /// <summary>
+        /// 取得微信用户信息
+        /// </summary>
+        Task<WcReply<WcUserDetailRsp>> GetUserDetailAsync(WcAccessToken token, string openId);
     }
 }

@@ -13,7 +13,7 @@ namespace Vino.Core.WeChat.AccessToken
     {
         private readonly ILogger<WcAccessTokenTool> _logger;
 
-        private const string CACHE_ACCESSTOKEN = "vino.cache.user.authcode:{0}";
+        private const string CACHE_ACCESSTOKEN = "vino.cache.wechat.accesstoken:{0}";
         private const string URL_GET_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
 
         private ICacheService cacheService;

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.Infrastructure.Attributes;
+using Vino.Core.CMS.Domain.Enum;
 using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat
@@ -25,16 +23,20 @@ namespace Vino.Core.CMS.Domain.Dto.WeChat
         [Display(Name = "UnionId")]
         public string UnionId { set; get; }
 
+        [Display(Name = "是否已关注", Prompt = "已关注|未关注")]
+        public bool IsSubscribe { set; get; }
+
         [MaxLength(100)]
         [Display(Name = "昵称")]
         public string NickName { set; get; }
 
         [MaxLength(500)]
         [Display(Name = "头像")]
+        [DataType(DataType.ImageUrl)]
         public string HeadImgUrl { set; get; }
 
         [Display(Name = "性别")]
-        public string Sxe { set; get; }
+        public EmSex Sex { set; get; }
 
         [MaxLength(100)]
         [Display(Name = "国家")]

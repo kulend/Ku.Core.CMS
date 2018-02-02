@@ -19,6 +19,9 @@ namespace Vino.Core.WeChat.User
         private const string URL_TAG_UPDATE = "https://api.weixin.qq.com/cgi-bin/tags/update?access_token={0}";
         private const string URL_TAG_DELETE = "https://api.weixin.qq.com/cgi-bin/tags/delete?access_token={0}";
 
+        private const string URL_USERS_LIST = "https://api.weixin.qq.com/cgi-bin/user/get?access_token={0}&next_openid={1}";
+        private const string URL_USERS_DETAIL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN";
+
         private ICacheService cacheService;
 
         public WcUserTool(ICacheService cache, ILogger<WcUserTool> logger)
@@ -102,6 +105,51 @@ namespace Vino.Core.WeChat.User
             return rsp;
         }
 
+        #endregion
+
+        #region 用户
+
+        /// <summary>
+        /// 取得微信用户列表
+        /// </summary>
+        public async Task<WcReply<WcUserListRsp>> GetUserListAsync(WcAccessToken token, string nextOpenId)
+        {
+            var res = await HttpHelper.HttpGetAsync(string.Format(URL_USERS_LIST, token.Token, nextOpenId ?? ""));
+            if (res.IndexOf("errcode") >= 0)
+            {
+                WcReply<WcUserListRsp> error = JsonConvert.DeserializeObject<WcReply<WcUserListRsp>>(res);
+                _logger.LogError(error.ToString());
+                return error;
+            }
+
+            WcUserListRsp data = JsonConvert.DeserializeObject<WcUserListRsp>(res);
+            return new WcReply<WcUserListRsp>
+            {
+                Data = data,
+                ErrCode = 0
+            };
+        }
+
+        /// <summary>
+        /// 取得微信用户信息
+        /// </summary>
+        public async Task<WcReply<WcUserDetailRsp>> GetUserDetailAsync(WcAccessToken token, string openId)
+        {
+            var res = await HttpHelper.HttpGetAsync(string.Format(URL_USERS_DETAIL, token.Token, openId));
+            if (res.IndexOf("errcode") >= 0)
+            {
+                WcReply<WcUserDetailRsp> error = JsonConvert.DeserializeObject<WcReply<WcUserDetailRsp>>(res);
+                _logger.LogError(error.ToString());
+                return error;
+            }
+
+            WcUserDetailRsp data = JsonConvert.DeserializeObject<WcUserDetailRsp>(res);
+            return new WcReply<WcUserDetailRsp>
+            {
+                Data = data,
+                ErrCode = 0
+            };
+        }
         #endregion
     }
 }

@@ -46,6 +46,17 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
             return PagerData(data.items, page, rows, data.count);
         }
 
+        [Auth("view")]
+        public async Task<IActionResult> Detail(long id)
+        {
+            var module = await service.GetByIdAsync(id);
+            if (module == null)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
+            }
+            return View(module);
+        }
+
         #endregion
 
         #region 用户标签

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,11 +12,29 @@ using Vino.Core.Infrastructure.Helper;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
 using Vino.Core.CMS.Domain;
+using Vino.Core.CMS.Data.Repository.System;
+using Vino.Core.Cache;
+using Vino.Core.CMS.Data.Common;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class FunctionService : IFunctionService
+    public partial class FunctionService : BaseService, IFunctionService
     {
+        protected readonly IFunctionRepository _repository;
+        protected readonly ICacheService _cache;
+        protected readonly VinoDbContext _context;
+
+        #region 构造函数
+
+        public FunctionService(IFunctionRepository repository, ICacheService cache, VinoDbContext context)
+        {
+            this._repository = repository;
+            this._cache = cache;
+            this._context = context;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -27,7 +46,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<FunctionDto>> GetListAsync(FunctionSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<FunctionDto>>(data);
+            return Mapper.Map<List<FunctionDto>>(data);
         }
 
         /// <summary>
@@ -41,7 +60,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<(int count, List<FunctionDto> items)> GetListAsync(int page, int size, FunctionSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<FunctionDto>>(data.items));
+            return (data.count, Mapper.Map<List<FunctionDto>>(data.items));
         }
 
         /// <summary>
@@ -51,7 +70,7 @@ namespace Vino.Core.CMS.Service.System
         /// <returns></returns>
         public async Task<FunctionDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<FunctionDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<FunctionDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -59,7 +78,7 @@ namespace Vino.Core.CMS.Service.System
         /// </summary>
         public async Task SaveAsync(FunctionDto dto)
         {
-            Function model = _mapper.Map<Function>(dto);
+            Function model = Mapper.Map<Function>(dto);
             if (model.Id == 0)
             {
                 //新增
@@ -148,7 +167,7 @@ namespace Vino.Core.CMS.Service.System
                 }
             }
             GetModel(parentId);
-            return _mapper.Map<List<FunctionDto>>(list);
+            return Mapper.Map<List<FunctionDto>>(list);
         }
 		
         public async Task<List<FunctionDto>> GetSubsAsync(long? parentId)
@@ -164,7 +183,7 @@ namespace Vino.Core.CMS.Service.System
             }
 
             var query = queryable.OrderBy(x => x.CreateTime);
-            return _mapper.Map<List<FunctionDto>>(await query.ToListAsync());
+            return Mapper.Map<List<FunctionDto>>(await query.ToListAsync());
         }
 		
         #endregion
@@ -184,7 +203,7 @@ namespace Vino.Core.CMS.Service.System
                 //取得用户所有权限码
                 List<string> codes = new List<string>();
                 //取得所有角色
-                var roles = await context.UserRoles.Include(t=>t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
+                var roles = await _context.UserRoles.Include(t=>t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
                 if (roles.Any(x=>x.Role.NameEn.Equals("vino.developer")))
                 {
                     authcodes = new List<string> {"vino.develop"};
@@ -244,7 +263,7 @@ namespace Vino.Core.CMS.Service.System
 
         private async Task<List<string>> GetRoleAuthCodes(long roleId)
         {
-            var functions = await context.RoleFunctions.Include(t => t.Function)
+            var functions = await _context.RoleFunctions.Include(t => t.Function)
                 .Where(x => x.RoleId == roleId && x.Function.IsEnable).ToListAsync();
             return functions.Select(x => x.Function.AuthCode).ToList();
         }
@@ -258,7 +277,7 @@ namespace Vino.Core.CMS.Service.System
                 //取得用户所有权限码
                 List<string> codes = new List<string>();
                 //取得所有角色
-                var roles = await context.UserRoles.Include(t => t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
+                var roles = await _context.UserRoles.Include(t => t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
                 if (roles.Any(x => x.Role.NameEn.Equals("vino.developer")))
                 {
                     authcodes = new List<string> { "vino.develop" };

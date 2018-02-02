@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.Membership;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Domain.Entity.Membership;
 using Vino.Core.CMS.IService.Membership;
@@ -13,8 +15,19 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.Membership
 {
-    public partial class MemberService : IMemberService
+    public partial class MemberService : BaseService, IMemberService
     {
+        protected readonly IMemberRepository _repository;
+
+        #region 构造函数
+
+        public MemberService(IMemberRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -28,7 +41,7 @@ namespace Vino.Core.CMS.Service.Membership
             var includes = new List<Expression<Func<Member, object>>>();
 			includes.Add(x=>x.MemberType);
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc", includes.ToArray());
-            return _mapper.Map<List<MemberDto>>(data);
+            return Mapper.Map<List<MemberDto>>(data);
         }
 
         /// <summary>
@@ -42,7 +55,7 @@ namespace Vino.Core.CMS.Service.Membership
         public async Task<(int count, List<MemberDto> items)> GetListAsync(int page, int size, MemberSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<MemberDto>>(data.items));
+            return (data.count, Mapper.Map<List<MemberDto>>(data.items));
         }
 
         /// <summary>
@@ -52,7 +65,7 @@ namespace Vino.Core.CMS.Service.Membership
         /// <returns></returns>
         public async Task<MemberDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<MemberDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<MemberDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -60,7 +73,7 @@ namespace Vino.Core.CMS.Service.Membership
         /// </summary>
         public async Task SaveAsync(MemberDto dto)
         {
-            Member model = _mapper.Map<Member>(dto);
+            Member model = Mapper.Map<Member>(dto);
             if (model.Id == 0)
             {
                 //新增

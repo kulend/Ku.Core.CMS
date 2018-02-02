@@ -15,16 +15,22 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.Material
 {
-    public partial class PictureService : IPictureService
+    public partial class PictureService : BaseService, IPictureService
     {
+        protected readonly IPictureRepository _repository;
         private readonly IEventPublisher _eventPublisher;
-
-        public PictureService(VinoDbContext context, ICacheService cache, IMapper mapper, IPictureRepository repository,
+		
+        #region 构造函数
+		
+        public PictureService(
+            IPictureRepository repository,
             IEventPublisher _eventPublisher)
-            : this(context, cache, mapper, repository)
         {
+            this._repository = repository;
             this._eventPublisher = _eventPublisher;
         }
+
+        #endregion
 
         #region 自动生成的方法
 
@@ -37,7 +43,7 @@ namespace Vino.Core.CMS.Service.Material
         public async Task<List<PictureDto>> GetListAsync(PictureSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<PictureDto>>(data);
+            return Mapper.Map<List<PictureDto>>(data);
         }
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace Vino.Core.CMS.Service.Material
         public async Task<(int count, List<PictureDto> items)> GetListAsync(int page, int size, PictureSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<PictureDto>>(data.items));
+            return (data.count, Mapper.Map<List<PictureDto>>(data.items));
         }
 
         /// <summary>
@@ -61,7 +67,7 @@ namespace Vino.Core.CMS.Service.Material
         /// <returns></returns>
         public async Task<PictureDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<PictureDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<PictureDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -69,7 +75,7 @@ namespace Vino.Core.CMS.Service.Material
         /// </summary>
         public async Task SaveAsync(PictureDto dto)
         {
-            Picture model = _mapper.Map<Picture>(dto);
+            Picture model = Mapper.Map<Picture>(dto);
             var entity = await _repository.GetByIdAsync(model.Id);
             if (entity == null)
             {
@@ -98,7 +104,7 @@ namespace Vino.Core.CMS.Service.Material
 		
         public async Task AddAsync(PictureDto dto)
         {
-            Picture model = _mapper.Map<Picture>(dto);
+            Picture model = Mapper.Map<Picture>(dto);
             model.IsDeleted = false;
             model.CreateTime = DateTime.Now;
             using (var trans = await _repository.BeginTransactionAsync())

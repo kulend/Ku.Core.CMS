@@ -1,6 +1,8 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.Material;
 using Vino.Core.CMS.Domain.Dto.Material;
 using Vino.Core.CMS.Domain.Entity.Material;
 using Vino.Core.CMS.IService.Material;
@@ -10,8 +12,19 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.Material
 {
-    public partial class MaterialGroupService : IMaterialGroupService
+    public partial class MaterialGroupService : BaseService, IMaterialGroupService
     {
+        protected readonly IMaterialGroupRepository _repository;
+
+        #region 构造函数
+
+        public MaterialGroupService(IMaterialGroupRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -23,7 +36,7 @@ namespace Vino.Core.CMS.Service.Material
         public async Task<List<MaterialGroupDto>> GetListAsync(MaterialGroupSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<MaterialGroupDto>>(data);
+            return Mapper.Map<List<MaterialGroupDto>>(data);
         }
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace Vino.Core.CMS.Service.Material
         public async Task<(int count, List<MaterialGroupDto> items)> GetListAsync(int page, int size, MaterialGroupSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<MaterialGroupDto>>(data.items));
+            return (data.count, Mapper.Map<List<MaterialGroupDto>>(data.items));
         }
 
         /// <summary>
@@ -47,7 +60,7 @@ namespace Vino.Core.CMS.Service.Material
         /// <returns></returns>
         public async Task<MaterialGroupDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<MaterialGroupDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<MaterialGroupDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -55,7 +68,7 @@ namespace Vino.Core.CMS.Service.Material
         /// </summary>
         public async Task SaveAsync(MaterialGroupDto dto)
         {
-            MaterialGroup model = _mapper.Map<MaterialGroup>(dto);
+            MaterialGroup model = Mapper.Map<MaterialGroup>(dto);
             if (model.Id == 0)
             {
                 //新增

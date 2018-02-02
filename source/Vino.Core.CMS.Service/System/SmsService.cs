@@ -1,6 +1,8 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.CMS.IService.System;
@@ -10,8 +12,19 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class SmsService : ISmsService
+    public partial class SmsService : BaseService, ISmsService
     {
+        protected readonly ISmsRepository _repository;
+
+        #region 构造函数
+
+        public SmsService(ISmsRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -23,7 +36,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<SmsDto>> GetListAsync(SmsSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<SmsDto>>(data);
+            return Mapper.Map<List<SmsDto>>(data);
         }
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<(int count, List<SmsDto> items)> GetListAsync(int page, int size, SmsSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<SmsDto>>(data.items));
+            return (data.count, Mapper.Map<List<SmsDto>>(data.items));
         }
 
         /// <summary>
@@ -47,7 +60,7 @@ namespace Vino.Core.CMS.Service.System
         /// <returns></returns>
         public async Task<SmsDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<SmsDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<SmsDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -55,7 +68,7 @@ namespace Vino.Core.CMS.Service.System
         /// </summary>
         public async Task SaveAsync(SmsDto dto)
         {
-            Sms model = _mapper.Map<Sms>(dto);
+            Sms model = Mapper.Map<Sms>(dto);
             if (model.Id == 0)
             {
                 //新增

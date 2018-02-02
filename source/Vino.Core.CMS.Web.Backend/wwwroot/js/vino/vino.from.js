@@ -34,7 +34,7 @@
                 dataType: opts.dataType,
                 beforeSubmit: function (arr, $from, options) {
                     var isValid = false;
-                    if (opts.onBefore && typeof opts.onBefore == "function") {
+                    if (opts.onBefore && typeof opts.onBefore === "function") {
                         isValid = opts.onBefore(arr, $from, opts);
                         if (!isValid) {
                             return false;

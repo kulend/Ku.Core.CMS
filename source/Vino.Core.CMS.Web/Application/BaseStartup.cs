@@ -10,8 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using NLog.Extensions.Logging;
-using NLog.Web;
 using Vino.Core.CMS.Data.Common;
 
 namespace Vino.Core.CMS.Web.Application
@@ -47,6 +45,9 @@ namespace Vino.Core.CMS.Web.Application
             //事件消息发送订阅
             services.AddEventBus<VinoDbContext>(Configuration);
 
+            //微信
+            services.AddWeChat();
+
             //Autofac依赖注入
             var builder = new ContainerBuilder();
             builder.Populate(services);
@@ -57,10 +58,6 @@ namespace Vino.Core.CMS.Web.Application
 
         public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //Nlog
-            loggerFactory.AddNLog();
-            app.AddNLogWeb();
-
             //事件消息发送订阅
             app.UseEventBus();
         }

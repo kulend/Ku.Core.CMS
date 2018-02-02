@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
-using Vino.Core.WeChat.AccessToken;
 
 namespace Vino.Core.CMS.IService.WeChat
 {
-    public partial interface IWxAccountService
+    public partial interface IWxUserService
     {
         #region 自动创建的接口
 
@@ -15,8 +14,8 @@ namespace Vino.Core.CMS.IService.WeChat
         /// </summary>
         /// <param name="where">查询条件</param>
         /// <param name="sort">排序</param>
-        /// <returns>List<WxAccountDto></returns>
-        Task<List<WxAccountDto>> GetListAsync(WxAccountSearch where, string sort);
+        /// <returns>List<WxUserDto></returns>
+        Task<List<WxUserDto>> GetListAsync(WxUserSearch where, string sort);
 
         /// <summary>
         /// 分页查询数据
@@ -26,19 +25,19 @@ namespace Vino.Core.CMS.IService.WeChat
         /// <param name="where">查询条件</param>
         /// <param name="sort">排序</param>
         /// <returns>count：条数；items：分页数据</returns>
-        Task<(int count, List<WxAccountDto> items)> GetListAsync(int page, int size, WxAccountSearch where, string sort);
+        Task<(int count, List<WxUserDto> items)> GetListAsync(int page, int size, WxUserSearch where, string sort);
 
         /// <summary>
         /// 根据主键取得数据
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<WxAccountDto> GetByIdAsync(long id);
+        Task<WxUserDto> GetByIdAsync(long id);
 
         /// <summary>
         /// 保存数据
         /// </summary>
-        Task SaveAsync(WxAccountDto dto);
+        Task SaveAsync(WxUserDto dto);
 
         /// <summary>
         /// 删除数据
@@ -51,7 +50,7 @@ namespace Vino.Core.CMS.IService.WeChat
 
         #region 其他接口
 
-        Task<WcAccessToken> GetAccessToken(long id);
+        Task SyncAsync(long accountId);
 
         #endregion
     }

@@ -53,14 +53,20 @@ namespace Vino.Core.Infrastructure.Extensions
                 return null;
             }
 
-            //如果是Nullable类型，只需要取得真实类。
-            var propertyType = p.PropertyType;
-            if (value != null && propertyType.IsNullableType())
-            {
-                propertyType = propertyType.RealType();
-            }
-
             var name = attr != null ? (attr.PropertyName.IsNotNullOrEmpty() ? attr.PropertyName : p.Name) : p.Name;
+            //根据名称取得属性
+            var property = typeof(T).GetProperty(name);
+            if (property == null)
+            {
+                return null;
+            }
+            var propertyType = property.PropertyType;
+            ////如果是Nullable类型，只需要取得真实类。
+            //if (value != null && propertyType.IsNullableType())
+            //{
+            //    propertyType = propertyType.RealType();
+            //}
+
             SearchConditionOperation operation = attr != null ? attr.Operation : SearchConditionOperation.Equal;
             Expression body = null;
             switch (operation)

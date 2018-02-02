@@ -95,6 +95,11 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.WeChat.WxUserTag> WxUserTags { get; set; }
 
         /// <summary>
+        /// 微信用户
+        /// </summary>
+        public DbSet<Domain.Entity.WeChat.WxUser> WxUsers { get; set; }
+
+        /// <summary>
         /// 图片素材
         /// </summary>
         public DbSet<Domain.Entity.Material.Picture> Pictures { get; set; }

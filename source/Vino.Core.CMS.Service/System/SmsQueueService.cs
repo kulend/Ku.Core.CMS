@@ -1,6 +1,8 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.CMS.IService.System;
@@ -10,8 +12,19 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class SmsQueueService : ISmsQueueService
+    public partial class SmsQueueService : BaseService, ISmsQueueService
     {
+        protected readonly ISmsQueueRepository _repository;
+
+        #region 构造函数
+
+        public SmsQueueService(ISmsQueueRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -23,7 +36,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<SmsQueueDto>> GetListAsync(SmsQueueSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<SmsQueueDto>>(data);
+            return Mapper.Map<List<SmsQueueDto>>(data);
         }
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<(int count, List<SmsQueueDto> items)> GetListAsync(int page, int size, SmsQueueSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<SmsQueueDto>>(data.items));
+            return (data.count, Mapper.Map<List<SmsQueueDto>>(data.items));
         }
 
         /// <summary>
@@ -47,7 +60,7 @@ namespace Vino.Core.CMS.Service.System
         /// <returns></returns>
         public async Task<SmsQueueDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<SmsQueueDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<SmsQueueDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -55,7 +68,7 @@ namespace Vino.Core.CMS.Service.System
         /// </summary>
         public async Task SaveAsync(SmsQueueDto dto)
         {
-            SmsQueue model = _mapper.Map<SmsQueue>(dto);
+            SmsQueue model = Mapper.Map<SmsQueue>(dto);
             if (model.Id == 0)
             {
                 //新增

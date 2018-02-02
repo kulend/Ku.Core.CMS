@@ -1,19 +1,35 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.WeChat;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
 using Vino.Core.CMS.IService.WeChat;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
+using Vino.Core.WeChat.AccessToken;
 
 namespace Vino.Core.CMS.Service.WeChat
 {
-    public partial class WxAccountService : IWxAccountService
+    public partial class WxAccountService : BaseService, IWxAccountService
     {
+        protected readonly IWxAccountRepository _repository;
+        private readonly IWcAccessTokenTool wcAccessTokenTool;
+
+        #region 构造函数
+
+        public WxAccountService(IWxAccountRepository repository, IWcAccessTokenTool _wcAccessTokenTool)
+        {
+            this._repository = repository;
+            this.wcAccessTokenTool = _wcAccessTokenTool;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -25,7 +41,7 @@ namespace Vino.Core.CMS.Service.WeChat
         public async Task<List<WxAccountDto>> GetListAsync(WxAccountSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<WxAccountDto>>(data);
+            return Mapper.Map<List<WxAccountDto>>(data);
         }
 
         /// <summary>
@@ -39,7 +55,7 @@ namespace Vino.Core.CMS.Service.WeChat
         public async Task<(int count, List<WxAccountDto> items)> GetListAsync(int page, int size, WxAccountSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<WxAccountDto>>(data.items));
+            return (data.count, Mapper.Map<List<WxAccountDto>>(data.items));
         }
 
         /// <summary>
@@ -49,7 +65,7 @@ namespace Vino.Core.CMS.Service.WeChat
         /// <returns></returns>
         public async Task<WxAccountDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<WxAccountDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<WxAccountDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -57,7 +73,7 @@ namespace Vino.Core.CMS.Service.WeChat
         /// </summary>
         public async Task SaveAsync(WxAccountDto dto)
         {
-            WxAccount model = _mapper.Map<WxAccount>(dto);
+            WxAccount model = Mapper.Map<WxAccount>(dto);
             if (model.Id == 0)
             {
                 //新增
@@ -113,6 +129,32 @@ namespace Vino.Core.CMS.Service.WeChat
         #endregion
 
         #region 其他方法
+
+        /// <summary>
+        /// 获取微信AccessToken
+        /// </summary>
+        /// <param name="id">公众号ID</param>
+        /// <returns></returns>
+        public async Task<WcAccessToken> GetAccessToken(long id)
+        {
+            //取得公众号信息
+            var account = await _repository.GetByIdAsync(id);
+            if (account == null)
+            {
+                throw new VinoDataNotFoundException("无法取得公众号数据！");
+            }
+            if (account.AppId.IsNullOrEmpty() || account.AppSecret.IsNullOrEmpty())
+            {
+                throw new VinoDataNotFoundException("公众号未设置AppId或AppSecret！");
+            }
+
+            var token = await wcAccessTokenTool.GetAsync(account.AppId, account.AppSecret);
+            if (token == null || token.Data == null)
+            {
+                throw new VinoDataNotFoundException("无法取得微信AccessToken，请检查AppId和AppSecret设置是否正确！");
+            }
+            return token.Data;
+        }
 
         #endregion
     }

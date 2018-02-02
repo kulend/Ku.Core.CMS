@@ -16,9 +16,10 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180131092133_18")]
+    partial class _18
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -530,6 +531,8 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                         .HasMaxLength(100);
 
                     b.Property<DateTime>("CreateTime");
+
+                    b.Property<int>("GroupId");
 
                     b.Property<string>("HeadImgUrl")
                         .HasMaxLength(500);

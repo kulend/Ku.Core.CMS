@@ -41,7 +41,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
         {
             var search = new MenuSearch();
             search.ParentId = parentId;
-            var data = await service.GetListAsync(page, rows, search, null);
+            var data = await service.GetListAsync(page, rows, search, "OrderIndex asc");
             return PagerData(data.items, page, rows, data.count);
         }
 

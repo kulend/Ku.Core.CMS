@@ -1,11 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
@@ -15,20 +13,26 @@ using Vino.Core.EventBus;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
+using Vino.Core.CMS.Data.Common;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class UserService : IUserService
+    public partial class UserService : BaseService, IUserService
     {
+        protected readonly IUserRepository _repository;
         private readonly IEventPublisher _eventPublisher;
+        protected readonly VinoDbContext context;
 
-        public UserService(VinoDbContext context, ICacheService cache, IMapper mapper, IUserRepository repository,
-            IEventPublisher _eventPublisher)
-            : this(context, cache, mapper, repository)
+        #region 构造函数
+
+        public UserService(IUserRepository repository, IEventPublisher _eventPublisher, VinoDbContext context)
         {
-            this._eventPublisher = _eventPublisher;
+            this._repository = repository;
+			this._eventPublisher = _eventPublisher;
+            this.context = context;
         }
 
+        #endregion
         #region 自动生成的方法
 
         /// <summary>
@@ -40,7 +44,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<UserDto>> GetListAsync(UserSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<UserDto>>(data);
+            return Mapper.Map<List<UserDto>>(data);
         }
 
         /// <summary>
@@ -54,7 +58,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<(int count, List<UserDto> items)> GetListAsync(int page, int size, UserSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<UserDto>>(data.items));
+            return (data.count, Mapper.Map<List<UserDto>>(data.items));
         }
 
         /// <summary>
@@ -64,7 +68,7 @@ namespace Vino.Core.CMS.Service.System
         /// <returns></returns>
         public async Task<UserDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<UserDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<UserDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace Vino.Core.CMS.Service.System
         /// </summary>
         public async Task SaveAsync(UserDto dto, long[] UserRoleIds)
         {
-            User model = _mapper.Map<User>(dto);
+            User model = Mapper.Map<User>(dto);
             if (model.Id == 0)
             {
                 //新增
@@ -176,7 +180,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<RoleDto>> GetUserRolesAsync(long userId)
         {
             var queryable = context.UserRoles.Include(x => x.Role).Where(x => x.UserId == userId);
-            var items = _mapper.Map<List<RoleDto>>((await queryable.ToListAsync()).Select(x => x.Role));
+            var items = Mapper.Map<List<RoleDto>>((await queryable.ToListAsync()).Select(x => x.Role));
             return items;
         }
 
@@ -207,7 +211,7 @@ namespace Vino.Core.CMS.Service.System
             {
                 throw new VinoException("该账号已被禁止登陆！");
             }
-            var dto = _mapper.Map<UserDto>(entity);
+            var dto = Mapper.Map<UserDto>(entity);
             dto.Password = "";
 
             //发送消息

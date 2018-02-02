@@ -1,33 +1,37 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.Infrastructure.Helper;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.IdGenerator;
 using Vino.Core.CMS.IService.System;
 using Vino.Core.Infrastructure.Extensions;
+using Vino.Core.CMS.Data.Common;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class RoleService : IRoleService
+    public partial class RoleService : BaseService, IRoleService
     {
+        protected readonly IRoleRepository _repository;
+        protected readonly VinoDbContext _context;
         private readonly IFunctionRepository functionRepository;
 
-        public RoleService(VinoDbContext context, ICacheService cache, IMapper mapper, IRoleRepository repository, 
-            IFunctionRepository _functionRepository)
-            : this(context, cache, mapper, repository)
+        #region 构造函数
+
+        public RoleService(IRoleRepository repository, IFunctionRepository _functionRepository, VinoDbContext context)
         {
-            this.functionRepository = _functionRepository;
+            this._repository = repository;
+			this.functionRepository = _functionRepository;
+            this._context = context;
         }
+
+        #endregion
+
 
         #region 自动生成的方法
 
@@ -40,7 +44,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<RoleDto>> GetListAsync(RoleSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<RoleDto>>(data);
+            return Mapper.Map<List<RoleDto>>(data);
         }
 
         /// <summary>
@@ -54,7 +58,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<(int count, List<RoleDto> items)> GetListAsync(int page, int size, RoleSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<RoleDto>>(data.items));
+            return (data.count, Mapper.Map<List<RoleDto>>(data.items));
         }
 
         /// <summary>
@@ -64,7 +68,7 @@ namespace Vino.Core.CMS.Service.System
         /// <returns></returns>
         public async Task<RoleDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<RoleDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<RoleDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace Vino.Core.CMS.Service.System
         /// </summary>
         public async Task SaveAsync(RoleDto dto)
         {
-            Role model = _mapper.Map<Role>(dto);
+            Role model = Mapper.Map<Role>(dto);
             if (model.Id == 0)
             {
                 //新增
@@ -128,10 +132,10 @@ namespace Vino.Core.CMS.Service.System
                 //取得功能列表
                 var queryable = functionRepository.GetQueryable();
                 queryable = parentFunctionId.HasValue ? queryable.Where(x => x.ParentId == parentFunctionId.Value) : queryable.Where(x => x.ParentId == null);
-                var functions = _mapper.Map<List<FunctionDto>>(queryable.ToList());
+                var functions = Mapper.Map<List<FunctionDto>>(queryable.ToList());
 
                 //取得角色功能列表
-                var roleFunctions = context.RoleFunctions.Where(x => x.RoleId == roleId).ToList();
+                var roleFunctions = _context.RoleFunctions.Where(x => x.RoleId == roleId).ToList();
                 foreach (var function in functions)
                 {
                     if (roleFunctions.Any(x => x.FunctionId == function.Id))
@@ -146,7 +150,7 @@ namespace Vino.Core.CMS.Service.System
 
         public async Task SaveRoleAuthAsync(long RoleId, long FunctionId, bool hasAuth)
         {
-            var model = await context.RoleFunctions.SingleOrDefaultAsync(x => x.RoleId == RoleId && x.FunctionId == FunctionId);
+            var model = await _context.RoleFunctions.SingleOrDefaultAsync(x => x.RoleId == RoleId && x.FunctionId == FunctionId);
             if (hasAuth)
             {
                 if (model == null)
@@ -154,14 +158,14 @@ namespace Vino.Core.CMS.Service.System
                     model = new RoleFunction();
                     model.RoleId = RoleId;
                     model.FunctionId = FunctionId;
-                    await context.RoleFunctions.AddAsync(model);
-                    await context.SaveChangesAsync();
+                    await _context.RoleFunctions.AddAsync(model);
+                    await _context.SaveChangesAsync();
                 }
             }
             else if (model != null)
             {
-                context.RoleFunctions.Remove(model);
-                await context.SaveChangesAsync();
+                _context.RoleFunctions.Remove(model);
+                await _context.SaveChangesAsync();
             }
         }
 

@@ -1,6 +1,8 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.Content;
 using Vino.Core.CMS.Domain.Dto.Content;
 using Vino.Core.CMS.Domain.Entity.Content;
 using Vino.Core.CMS.IService.Content;
@@ -10,8 +12,19 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.Content
 {
-    public partial class ArticleService : IArticleService
+    public partial class ArticleService : BaseService, IArticleService
     {
+        protected readonly IArticleRepository _repository;
+
+        #region 构造函数
+
+        public ArticleService(IArticleRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -23,7 +36,7 @@ namespace Vino.Core.CMS.Service.Content
         public async Task<List<ArticleDto>> GetListAsync(ArticleSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<ArticleDto>>(data);
+            return Mapper.Map<List<ArticleDto>>(data);
         }
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace Vino.Core.CMS.Service.Content
         public async Task<(int count, List<ArticleDto> items)> GetListAsync(int page, int size, ArticleSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<ArticleDto>>(data.items));
+            return (data.count, Mapper.Map<List<ArticleDto>>(data.items));
         }
 
         /// <summary>
@@ -47,7 +60,7 @@ namespace Vino.Core.CMS.Service.Content
         /// <returns></returns>
         public async Task<ArticleDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<ArticleDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<ArticleDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -55,7 +68,7 @@ namespace Vino.Core.CMS.Service.Content
         /// </summary>
         public async Task SaveAsync(ArticleDto dto)
         {
-            Article model = _mapper.Map<Article>(dto);
+            Article model = Mapper.Map<Article>(dto);
             if (model.Id == 0)
             {
                 //新增

@@ -17,14 +17,36 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
     [Auth("wechat.user")]
     public class UserController : BackendController
     {
+        private IWxUserService service;
         private IWxUserTagService tagService;
         private IWxAccountService accountService;
 
-        public UserController(IWxUserTagService _tagService, IWxAccountService _accountService)
+        public UserController(IWxUserService _service, IWxUserTagService _tagService, IWxAccountService _accountService)
         {
+            this.service = _service;
             this.tagService = _tagService;
             this.accountService = _accountService;
         }
+
+        #region 微信用户
+
+        [Auth("view")]
+        public async Task<IActionResult> Index()
+        {
+            //取得公众号数据
+            var accounts = await accountService.GetListAsync(null, "Name asc");
+            ViewBag.Accounts = accounts;
+            return View();
+        }
+
+        [Auth("view")]
+        public async Task<IActionResult> GetUserList(int page, int rows, WxUserSearch where)
+        {
+            var data = await service.GetListAsync(page, rows, where, null);
+            return PagerData(data.items, page, rows, data.count);
+        }
+
+        #endregion
 
         #region 用户标签
 
@@ -94,7 +116,37 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
         {
             await tagService.SaveAsync(model);
             return JsonData(true);
-        } 
+        }
+
+        [HttpPost]
+        [Auth("tag.delete")]
+        public async Task<IActionResult> DeleteTag(long id)
+        {
+            await tagService.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        #endregion
+
+        #region 数据同步
+
+        [Auth("sync")]
+        public async Task<IActionResult> UserSync(long AccountId)
+        {
+            var account = await accountService.GetByIdAsync(AccountId);
+            if (account == null)
+            {
+                throw new VinoDataNotFoundException("数据出错!");
+            }
+            return View(account);
+        }
+
+        [Auth("sync")]
+        public async Task<IActionResult> DoSync(WxAccountDto model)
+        {
+            await service.SyncAsync(model.Id);
+            return JsonData(true);
+        }
 
         #endregion
     }

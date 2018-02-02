@@ -1,6 +1,8 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.WeChat;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
 using Vino.Core.CMS.IService.WeChat;
@@ -10,8 +12,19 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.WeChat
 {
-    public partial class WxMenuService : IWxMenuService
+    public partial class WxMenuService : BaseService, IWxMenuService
     {
+        protected readonly IWxMenuRepository _repository;
+
+        #region 构造函数
+
+        public WxMenuService(IWxMenuRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -23,7 +36,7 @@ namespace Vino.Core.CMS.Service.WeChat
         public async Task<List<WxMenuDto>> GetListAsync(WxMenuSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<WxMenuDto>>(data);
+            return Mapper.Map<List<WxMenuDto>>(data);
         }
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace Vino.Core.CMS.Service.WeChat
         public async Task<(int count, List<WxMenuDto> items)> GetListAsync(int page, int size, WxMenuSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<WxMenuDto>>(data.items));
+            return (data.count, Mapper.Map<List<WxMenuDto>>(data.items));
         }
 
         /// <summary>
@@ -47,7 +60,7 @@ namespace Vino.Core.CMS.Service.WeChat
         /// <returns></returns>
         public async Task<WxMenuDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<WxMenuDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<WxMenuDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -55,7 +68,7 @@ namespace Vino.Core.CMS.Service.WeChat
         /// </summary>
         public async Task SaveAsync(WxMenuDto dto)
         {
-            WxMenu model = _mapper.Map<WxMenu>(dto);
+            WxMenu model = Mapper.Map<WxMenu>(dto);
             if (model.Id == 0)
             {
                 //新增

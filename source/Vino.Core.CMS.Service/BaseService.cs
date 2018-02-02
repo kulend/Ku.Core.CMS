@@ -9,15 +9,9 @@ namespace Vino.Core.CMS.Service
 {
     public abstract class BaseService
     {
-        protected readonly VinoDbContext context;
-        protected readonly ICacheService _cache;
-        protected readonly IMapper _mapper;
-
-        protected BaseService(VinoDbContext context, ICacheService cache, IMapper mapper)
+        protected BaseService()
         {
-            this.context = context;
-            this._cache = cache;
-            this._mapper = mapper;
+
         }
     }
 }

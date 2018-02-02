@@ -1,6 +1,8 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.CMS.IService.System;
@@ -10,8 +12,19 @@ using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.System
 {
-    public partial class UserActionLogService : IUserActionLogService
+    public partial class UserActionLogService : BaseService, IUserActionLogService
     {
+        protected readonly IUserActionLogRepository _repository;
+
+        #region 构造函数
+
+        public UserActionLogService(IUserActionLogRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
         #region 自动生成的方法
 
         /// <summary>
@@ -23,7 +36,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<List<UserActionLogDto>> GetListAsync(UserActionLogSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return _mapper.Map<List<UserActionLogDto>>(data);
+            return Mapper.Map<List<UserActionLogDto>>(data);
         }
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace Vino.Core.CMS.Service.System
         public async Task<(int count, List<UserActionLogDto> items)> GetListAsync(int page, int size, UserActionLogSearch where, string sort)
         {
             var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, _mapper.Map<List<UserActionLogDto>>(data.items));
+            return (data.count, Mapper.Map<List<UserActionLogDto>>(data.items));
         }
 
         /// <summary>
@@ -47,7 +60,7 @@ namespace Vino.Core.CMS.Service.System
         /// <returns></returns>
         public async Task<UserActionLogDto> GetByIdAsync(long id)
         {
-            return _mapper.Map<UserActionLogDto>(await this._repository.GetByIdAsync(id));
+            return Mapper.Map<UserActionLogDto>(await this._repository.GetByIdAsync(id));
         }
 
         /// <summary>
@@ -55,7 +68,7 @@ namespace Vino.Core.CMS.Service.System
         /// </summary>
         public async Task SaveAsync(UserActionLogDto dto)
         {
-            UserActionLog model = _mapper.Map<UserActionLog>(dto);
+            UserActionLog model = Mapper.Map<UserActionLog>(dto);
             if (model.Id == 0)
             {
                 //新增

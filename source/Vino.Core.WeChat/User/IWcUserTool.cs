@@ -37,5 +37,10 @@ namespace Vino.Core.WeChat.User
         /// 取得微信用户信息
         /// </summary>
         Task<WcReply<WcUserDetailRsp>> GetUserDetailAsync(WcAccessToken token, string openId);
+
+        /// <summary>
+        /// 更新用户备注名
+        /// </summary>
+        Task<WcReply<string>> UpdateUserRemark(WcAccessToken token, string openid, string remark);
     }
 }

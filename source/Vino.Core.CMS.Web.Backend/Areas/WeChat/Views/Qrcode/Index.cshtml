@@ -3,7 +3,7 @@
 }
 <div class="main-content">
     <div class="toolbar">
-        <action id="btnAdd" auth-code="wechat.user.tag.edit" text="添加" size="sm" icon="&#xe608;" action="" after="gridReload()" />
+        <action id="btnAdd" auth-code="wechat.qrcode.edit" text="添加" size="sm" icon="&#xe608;" action="" after="gridReload()"/>
         <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
         <span style="position:absolute;right:10px;line-height:30px;">
             <form class="layui-form" action="">
@@ -13,7 +13,7 @@
                         <select id="scAccount" lay-verify="required" lay-filter="account">
                             @foreach (var account in ViewBag.Accounts)
                             {
-                            <option value="@account.Id">@account.Name</option>
+                                <option value="@account.Id">@account.Name</option>
                             }
                         </select>
                     </div>
@@ -31,24 +31,24 @@
             var form = layui.form;
             form.on('select(account)', function (data) {
                 $("#list").vinoGrid("search");
-                $("#btnAdd").attr("action", "window:WeChat/User/TagEdit?AccountId=" + data.value);
+                $("#btnAdd").attr("action", "window:WeChat/Qrcode/Edit?AccountId=" + data.value);
             });
         });
 
         $(function () {
-            $("#btnAdd").attr("action", "window:WeChat/User/TagEdit?AccountId=" + $("#scAccount").val());
-
+            $("#btnAdd").attr("action", "window:WeChat/Qrcode/Edit?AccountId=" + $("#scAccount").val());
             $("#list").vinoGrid({
-                url: 'GetTagList',
+                url: 'GetList',
                 cols: [[
-                    { field: 'TagId', title: '标签ID', width: 150 },
                     { field: 'Name', title: '名称', width: 150 },
-                    { field: 'Count', title: '用户数', width: 150 },
+                    { field: 'Type', title: '类型', width: 150, align: 'center', templet:'<div>{{d.Type.Title}}</div>'},
+                    { field: 'WeixinId', title: '微信号', width: 180 },
+                    { field: 'AppId', title: '应用ID', width: 180 },
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.user.tag.edit", title: "编辑", action: `window:WeChat/User/TagEdit?id={{d.Id}}` },
-                            { code: "wechat.user.tag.delete", title: "删除", action: `post:DeleteTag?id={{d.Id}}` }
+                            { code: "wechat.qrcode.edit", title: "编辑", action: `window:WeChat/Account/Edit?id={{d.Id}}` },
+                            { code: "wechat.qrcode.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
                 ]],

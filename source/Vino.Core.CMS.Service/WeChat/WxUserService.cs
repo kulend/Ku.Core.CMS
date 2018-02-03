@@ -86,29 +86,29 @@ namespace Vino.Core.CMS.Service.WeChat
         /// </summary>
         public async Task SaveAsync(WxUserDto dto)
         {
-            WxUser model = Mapper.Map<WxUser>(dto);
-            if (model.Id == 0)
-            {
-                //新增
-                model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                model.IsDeleted = false;
-                await _repository.InsertAsync(model);
-            }
-            else
-            {
-                //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
-                {
-                    throw new VinoDataNotFoundException("无法取得微信用户数据！");
-                }
+            //WxUser model = Mapper.Map<WxUser>(dto);
+            //if (model.Id == 0)
+            //{
+            //    //新增
+            //    model.Id = ID.NewID();
+            //    model.CreateTime = DateTime.Now;
+            //    model.IsDeleted = false;
+            //    await _repository.InsertAsync(model);
+            //}
+            //else
+            //{
+            //    //更新
+            //    var item = await _repository.GetByIdAsync(model.Id);
+            //    if (item == null)
+            //    {
+            //        throw new VinoDataNotFoundException("无法取得微信用户数据！");
+            //    }
 
-                //TODO:这里进行赋值
+            //    //TODO:这里进行赋值
 
-                _repository.Update(item);
-            }
-            await _repository.SaveAsync();
+            //    _repository.Update(item);
+            //}
+            //await _repository.SaveAsync();
         }
 
         /// <summary>
@@ -125,6 +125,31 @@ namespace Vino.Core.CMS.Service.WeChat
         #endregion
 
         #region 其他方法
+
+        /// <summary>
+        /// 保存备注
+        /// </summary>
+        public async Task SaveRemarkAsync(WxUserDto dto)
+        {
+            var item = await _repository.GetByIdAsync(dto.Id);
+            if (item == null)
+            {
+                throw new VinoDataNotFoundException("无法取得微信用户数据！");
+            }
+
+            item.Remark = dto.Remark;
+
+            //远程更新备注
+            //取得微信AccessToken
+            var token = await _wxAccountService.GetAccessToken(item.AccountId);
+            var rsp = await wcUserTool.UpdateUserRemark(token, item.OpenId, item.Remark);
+            if (rsp.ErrCode != 0)
+            {
+                throw new VinoArgNullException(rsp.ToString());
+            }
+            _repository.Update(item);
+            await _repository.SaveAsync();
+        }
 
         /// <summary>
         /// 同步数据

@@ -13,6 +13,14 @@
         @Html.ShowFor(x => x.Remark)
         @Html.ShowFor(x => x.HeadImgUrl)
         @Html.ShowFor(x => x.Sex)
+        <div class="layui-form-item">
+            <label class="layui-form-label">地区</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show">@Model.Country</label>
+                <label class="layui-form-label-show">@Model.Province</label>
+                <label class="layui-form-label-show">@Model.City</label>
+            </div>
+        </div>
         @Html.ShowFor(x => x.Language)
         @Html.ShowFor(x => x.IsSubscribe)
         @Html.ShowFor(x => x.SubscribeTime)

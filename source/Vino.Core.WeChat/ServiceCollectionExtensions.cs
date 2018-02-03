@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using Vino.Core.WeChat.AccessToken;
+using Vino.Core.WeChat.Qrcode;
 using Vino.Core.WeChat.User;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -13,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddSingleton(typeof(IWcAccessTokenTool), typeof(WcAccessTokenTool));
             services.AddSingleton(typeof(IWcUserTool), typeof(WcUserTool));
+            services.AddSingleton(typeof(IWcQrcodeTool), typeof(WcQrcodeTool));
             return services;
         }
     }

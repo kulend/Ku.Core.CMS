@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.WeChat
+@model WxQrcodeDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<WxQrcodeDto>("Save"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.AccountId)
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属公众号</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show">@Model.Account.Name</label>
+            </div>
+        </div>
+        @Html.InputFor(x => x.PeriodType)
+        @Html.InputFor(x => x.SceneType)
+        @Html.InputFor(x => x.EventKey)
+        @Html.InputFor(x => x.Purpose)
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+<script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+</script>
+}

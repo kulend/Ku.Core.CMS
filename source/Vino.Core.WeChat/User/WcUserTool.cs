@@ -21,6 +21,7 @@ namespace Vino.Core.WeChat.User
 
         private const string URL_USERS_LIST = "https://api.weixin.qq.com/cgi-bin/user/get?access_token={0}&next_openid={1}";
         private const string URL_USERS_DETAIL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN";
+        private const string URL_USER_REMARK_UPDATE = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token={0}";
 
         private ICacheService cacheService;
 
@@ -150,6 +151,22 @@ namespace Vino.Core.WeChat.User
                 ErrCode = 0
             };
         }
+
+        /// <summary>
+        /// 更新用户备注名
+        /// </summary>
+        public async Task<WcReply<string>> UpdateUserRemark(WcAccessToken token, string openid, string remark)
+        {
+            string url = string.Format(URL_USER_REMARK_UPDATE, token.Token);
+            var res = await HttpHelper.HttpPostAsync(url, "{\"openid\":\"" + openid + "\", \"remark\":\"" + remark + "\"}");
+            WcReply<string> rsp = JsonConvert.DeserializeObject<WcReply<string>>(res);
+            if (rsp.ErrCode != 0)
+            {
+                _logger.LogError(rsp.ToString());
+            }
+            return rsp;
+        }
+
         #endregion
     }
 }

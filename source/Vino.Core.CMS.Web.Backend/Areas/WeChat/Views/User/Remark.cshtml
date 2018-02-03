@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.WeChat
+@model WxUserDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<WxUserDto>("SaveRemark"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.ShowFor(x => x.NickName)
+        @Html.InputFor(x => x.Remark)
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>

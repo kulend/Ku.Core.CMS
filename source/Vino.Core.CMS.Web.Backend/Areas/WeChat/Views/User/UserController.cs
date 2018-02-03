@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
 using Vino.Core.CMS.IService.WeChat;
-using Vino.Core.CMS.Service.WeChat;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
@@ -55,6 +54,33 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
                 throw new VinoDataNotFoundException("无法取得数据!");
             }
             return View(module);
+        }
+
+        /// <summary>
+        /// 修改备注
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Auth("remark")]
+        public async Task<IActionResult> Remark(long id)
+        {
+            var module = await service.GetByIdAsync(id);
+            if (module == null)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
+            }
+            return View(module);
+        }
+
+        /// <summary>
+        /// 保存备注
+        /// </summary>
+        [HttpPost]
+        [Auth("remark")]
+        public async Task<IActionResult> SaveRemark(WxUserDto model)
+        {
+            await service.SaveRemarkAsync(model);
+            return JsonData(true);
         }
 
         #endregion

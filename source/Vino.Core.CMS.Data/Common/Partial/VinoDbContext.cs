@@ -99,6 +99,10 @@ namespace Vino.Core.CMS.Data.Common
         /// </summary>
         public DbSet<Domain.Entity.WeChat.WxUser> WxUsers { get; set; }
 
+        /// 微信二维码
+        /// </summary>
+        public DbSet<Domain.Entity.WeChat.WxQrcode> WxQrcodes { get; set; }
+		
         /// <summary>
         /// 图片素材
         /// </summary>

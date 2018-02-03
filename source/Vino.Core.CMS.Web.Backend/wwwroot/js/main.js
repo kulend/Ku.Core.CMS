@@ -4,7 +4,7 @@
         , element = layui.element
         , form = layui.form;
 
-    $(document).on("click", "button.layui-btn:not([lay-submit])", function(e) {
+    $(document).on("click", "button.layui-btn:not([lay-submit]), .layui-action", function(e) {
         var action = $(this).data("action") || $(this).attr("action") || "";
         var after = $(this).attr("after");
         if (action.indexOf("window:") === 0) {

@@ -1,4 +1,15 @@
-﻿using System;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：RoleController.cs
+// 功能描述：角色 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,29 +19,31 @@ using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.CMS.Domain.Entity.System;
 
-namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
+namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Role
 {
     [Area("System")]
-    [Auth("sys.role")]
+    [Auth("system.role")]
     public class RoleController : BackendController
     {
-        private readonly IRoleService service;
-        public RoleController(IRoleService _service)
+        private readonly IRoleService _service;
+
+        public RoleController(IRoleService service)
         {
-            this.service = _service;
+            this._service = service;
         }
 
         [Auth("view")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
 
         [Auth("view")]
-        public async Task<IActionResult> GetList(int page, int rows)
+        public async Task<IActionResult> GetList(int page, int rows, RoleSearch where)
         {
-            var data = await service.GetListAsync(page, rows, null, null);
+            var data = await _service.GetListAsync(page, rows, where, null);
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -40,10 +53,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
             if (id.HasValue)
             {
                 //编辑
-                var model = await service.GetByIdAsync(id.Value);
+                var model = await _service.GetByIdAsync(id.Value);
                 if (model == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得角色数据!");
+                    throw new VinoDataNotFoundException("无法取得数据!");
                 }
                 ViewData["Mode"] = "Edit";
                 return View(model);
@@ -65,7 +78,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
         [Auth("edit")]
         public async Task<IActionResult> Save(RoleDto model)
         {
-            await service.SaveAsync(model);
+            await _service.SaveAsync(model);
             return JsonData(true);
         }
 
@@ -73,7 +86,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
         [Auth("delete")]
         public async Task<IActionResult> Delete(long id)
         {
-            await service.DeleteAsync(id);
+            await _service.DeleteAsync(id);
             return JsonData(true);
         }
 
@@ -87,14 +100,14 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Role
         [Auth("function")]
         public async Task<IActionResult> GetFunctionsWithRoleAuth(long RoleId, long? pid)
         {
-            var functions = await service.GetFunctionsWithRoleAuthAsync(RoleId, pid);
+            var functions = await _service.GetFunctionsWithRoleAuthAsync(RoleId, pid);
             return JsonData(functions);
         }
 
         [Auth("function")]
         public async Task<IActionResult> SaveRoleAuth(long RoleId, long FunctionId, bool HasAuth)
         {
-            await service.SaveRoleAuthAsync(RoleId, FunctionId, HasAuth);
+            await _service.SaveRoleAuthAsync(RoleId, FunctionId, HasAuth);
             return JsonData(true);
         }
     }

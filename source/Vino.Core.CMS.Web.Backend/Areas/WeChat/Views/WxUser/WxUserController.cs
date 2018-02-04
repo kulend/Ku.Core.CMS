@@ -1,4 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：WxUserController.cs
+// 功能描述：微信用户 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +21,17 @@ using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.User
+namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxUser
 {
     [Area("WeChat")]
     [Auth("wechat.user")]
-    public class UserController : BackendController
+    public class WxUserController : BackendController
     {
         private IWxUserService service;
         private IWxUserTagService tagService;
         private IWxAccountService accountService;
 
-        public UserController(IWxUserService _service, IWxUserTagService _tagService, IWxAccountService _accountService)
+        public WxUserController(IWxUserService _service, IWxUserTagService _tagService, IWxAccountService _accountService)
         {
             this.service = _service;
             this.tagService = _tagService;

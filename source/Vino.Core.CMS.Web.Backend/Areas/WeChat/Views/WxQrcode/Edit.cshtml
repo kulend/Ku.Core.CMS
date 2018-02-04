@@ -1,0 +1,73 @@
+﻿@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Edit.cshtml
+// 功能描述：微信二维码 新增&编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.WeChat
+@using Vino.Core.CMS.Domain.Enum.WeChat
+@model WxQrcodeDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<WxQrcodeDto>("Save"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.AccountId)
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属公众号</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show">@Model.Account.Name</label>
+            </div>
+        </div>
+        @if ("Add".Equals(ViewData["Mode"]))
+        {
+            @Html.InputFor(x => x.SceneType)
+            @Html.InputFor(x => x.PeriodType, new KeyValuePair<string, string>("lay-filter", "PeriodType"))
+            <div id="dvExpireSeconds" style="@(Model.PeriodType == EmWxPeriodType.Temp ? "" : "display:none;")">
+                @Html.InputFor(x => x.ExpireSeconds)
+            </div>
+        }
+        else
+        {
+            @Html.ShowFor(x => x.SceneType)
+            @Html.ShowFor(x => x.PeriodType)
+            <div style="@(Model.PeriodType == EmWxPeriodType.Temp ? "" : "display:none;")">
+                @Html.ShowFor(x => x.ExpireSeconds)
+            </div>
+        }
+        @Html.InputFor(x => x.EventKey)
+        @Html.InputFor(x => x.Purpose)
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+{
+<script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            //监听事件
+            form.on('radio(PeriodType)', function (data) {
+                if (data.value == "0")
+                { 
+                    $("#dvExpireSeconds").show();
+                } else
+                { 
+                    $("#dvExpireSeconds").hide();
+                }
+            });
+        });
+</script>
+}

@@ -1,4 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：WxQrcode.cs
+// 功能描述：微信二维码 实体类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:13
+//
+//----------------------------------------------------------------
+
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 using Vino.Core.Infrastructure.Attributes;
@@ -38,7 +49,8 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
         /// <summary>
         /// 过期时间（秒）
         /// </summary>
-        [Display(Name = "过期时间（秒）")]
+        [Display(Name = "过期时间", Description = "秒，最大不超过2592000（即30天）")]
+        [Range(0, 2592000)]
         public int ExpireSeconds { get; set; }
 
         /// <summary>

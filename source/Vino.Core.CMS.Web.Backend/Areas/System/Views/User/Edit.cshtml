@@ -1,4 +1,17 @@
 ﻿@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Edit.cshtml
+// 功能描述：用户 新增&编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+}
+
+@{
     Layout = "~/Views/Shared/_WindowLayout.cshtml";
 }
 @using Vino.Core.CMS.Domain.Dto.System
@@ -34,3 +47,11 @@
         </div>
     }
 </div>
+@section Scripts
+{
+<script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+</script>
+}

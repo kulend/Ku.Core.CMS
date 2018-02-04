@@ -1,9 +1,21 @@
 ﻿@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：微信菜单 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+}
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="main-content">
     <div class="toolbar">
-        <action id="btnAdd" auth-code="wechat.menu.edit" text="添加" size="sm" icon="&#xe608;" action="window:WeChat/Menu/Edit" after="gridReload()" />
+        <action id="btnAdd" auth-code="wechat.menu.edit" text="添加" size="sm" icon="&#xe608;" action="window:WeChat/WxMenu/Edit" after="gridReload()" />
         <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
         <span style="position:absolute;right:10px;line-height:30px;">
             <form class="layui-form" action="">
@@ -31,12 +43,12 @@
             var form = layui.form;
             form.on('select(account)', function (data) {
                 $("#list").vinoGrid("search");
-                $("#btnAdd").attr("action", "window:WeChat/Menu/Edit?AccountId=" + data.value);
+                $("#btnAdd").attr("action", "window:WeChat/WxMenu/Edit?AccountId=" + data.value);
             });
         });
 
         $(function () {
-            $("#btnAdd").attr("action", "window:WeChat/Menu/Edit?AccountId=" + $("#scAccount").val());
+            $("#btnAdd").attr("action", "window:WeChat/WxMenu/Edit?AccountId=" + $("#scAccount").val());
             $("#list").vinoGrid({
                 url: 'GetList',
                 cols: [[
@@ -46,7 +58,7 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.menu.edit", title: "编辑", action: `window:WeChat/Menu/Edit?id={{d.Id}}` },
+                            { code: "wechat.menu.edit", title: "编辑", action: `window:WeChat/WxMenu/Edit?id={{d.Id}}` },
                             { code: "wechat.menu.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }

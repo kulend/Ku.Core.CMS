@@ -44,7 +44,7 @@ if (!vino.page) {
                 var layer = layui.layer;
                 layer.confirm(content, options, function(index) {
                     layer.close(index);
-                    if (typeof (yes) == "function") {
+                    if (typeof (yes) === "function") {
                         yes();
                     }
                 }, cancel);
@@ -70,6 +70,18 @@ if (!vino.page) {
             window.location.replace(url);
         } else {
             window.location.href = url;
+        }
+    };
+
+    vino.page.openWindow = function (options) {
+        if (self != top) {
+            parent.vino.page.openWindow(options);
+        } else
+        {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open(options);
+            }); 
         }
     };
 })();

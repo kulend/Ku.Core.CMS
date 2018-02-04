@@ -1,4 +1,15 @@
-﻿using System;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：MenuController.cs
+// 功能描述：菜单 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +21,10 @@ using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Menu
+namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Menu
 {
     [Area("System")]
-    [Auth("sys.menu")]
+    [Auth("system.menu")]
     public class MenuController : BackendController
     {
         private IMenuService service;

@@ -1,3 +1,14 @@
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：WxQrcodeDto.cs
+// 功能描述：微信二维码 数据传输类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:13
+//
+//----------------------------------------------------------------
+
 using System.ComponentModel.DataAnnotations;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 using Vino.Core.Infrastructure.Data;
@@ -24,19 +35,20 @@ namespace Vino.Core.CMS.Domain.Dto.WeChat
         /// 场景类型
         /// </summary>
         [Display(Name = "场景类型")]
-        public EmWxSceneType SceneType { get; set; }
+        public EmWxSceneType SceneType { get; set; } = EmWxSceneType.Other;
 
         /// <summary>
         /// 时效类型
         /// </summary>
         [Display(Name = "时效类型")]
-        public EmWxPeriodType PeriodType { get; set; }
+        public EmWxPeriodType PeriodType { get; set; } = EmWxPeriodType.Temp;
 
         /// <summary>
         /// 过期时间（秒）
         /// </summary>
-        [Display(Name = "过期时间（秒）")]
-        public int ExpireSeconds { get; set; }
+        [Display(Name = "过期时间", Description = "秒，最大不超过2592000（即30天）")]
+        [Range(0, 2592000)]
+        public int ExpireSeconds { get; set; } = 2592000;
 
         /// <summary>
         /// 创建用户ID

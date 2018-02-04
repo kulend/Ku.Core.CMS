@@ -1,0 +1,43 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：物流配送 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:05
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+    <div class="toolbar">
+        <action auth-code="mall.delivery.edit" text="添加" size="sm" icon="&#xe608;" action="window:Mall/Delivery/Edit" after="gridReload()" />
+        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+    </div>
+    <table id="list">
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "mall.delivery.edit", title: "编辑", action: `window:Mall/Delivery/Edit?id={{d.Id}}` },
+                            { code: "mall.delivery.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

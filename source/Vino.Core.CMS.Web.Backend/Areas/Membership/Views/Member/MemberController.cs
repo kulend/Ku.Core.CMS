@@ -1,4 +1,15 @@
-﻿using System;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：MemberController.cs
+// 功能描述：会员 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +19,7 @@ using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.CMS.IService.Membership;
 
-namespace Vino.Core.CMS.Web.Admin.Areas.Membership.Views.Member
+namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.Member
 {
     [Area("Membership")]
     [Auth("membership.member")]

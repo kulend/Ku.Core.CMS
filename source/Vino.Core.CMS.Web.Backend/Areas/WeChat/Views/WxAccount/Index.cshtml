@@ -1,9 +1,21 @@
 ﻿@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：公众号 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+}
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="main-content">
     <div class="toolbar">
-        <action auth-code="wechat.account.edit" text="添加" size="sm" icon="&#xe608;" action="window:WeChat/Account/Edit" after="gridReload()"/>
+        <action auth-code="wechat.wxaccount.edit" text="添加" size="sm" icon="&#xe608;" action="window:WeChat/WxAccount/Edit" after="gridReload()" />
         <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
     </div>
     <table id="list">
@@ -12,7 +24,7 @@
 @section Scripts
 {
     <script>
-        $(function() {
+        $(function () {
             $("#list").vinoGrid({
                 url: 'GetList',
                 cols: [[
@@ -23,8 +35,8 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.account.edit", title: "编辑", action: `window:WeChat/Account/Edit?id={{d.Id}}` },
-                            { code: "wechat.account.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            { code: "wechat.wxaccount.edit", title: "编辑", action: `window:WeChat/WxAccount/Edit?id={{d.Id}}` },
+                            { code: "wechat.wxaccount.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
                 ]]

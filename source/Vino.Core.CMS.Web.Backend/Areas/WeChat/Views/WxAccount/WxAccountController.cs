@@ -1,37 +1,49 @@
-﻿using System;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：WxAccountController.cs
+// 功能描述：公众号 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Enum.WeChat;
-using Vino.Core.CMS.Service.WeChat;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.CMS.IService.WeChat;
+using Vino.Core.CMS.Domain.Entity.WeChat;
 
-namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
+namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxAccount
 {
     [Area("WeChat")]
     [Auth("wechat.account")]
-    public class AccountController : BackendController
+    public class WxAccountController : BackendController
     {
-        private IWxAccountService service;
-        public AccountController(IWxAccountService _service)
+        private readonly IWxAccountService _service;
+
+        public WxAccountController(IWxAccountService service)
         {
-            this.service = _service;
+            this._service = service;
         }
 
         [Auth("view")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
 
         [Auth("view")]
-        public async Task<IActionResult> GetList(int page, int rows)
+        public async Task<IActionResult> GetList(int page, int rows, WxAccountSearch where)
         {
-            var data = await service.GetListAsync(page, rows, null, null);
+            var data = await _service.GetListAsync(page, rows, where, null);
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -41,10 +53,10 @@ namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
             if (id.HasValue)
             {
                 //编辑
-                var model = await service.GetByIdAsync(id.Value);
+                var model = await _service.GetByIdAsync(id.Value);
                 if (model == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得公众号数据!");
+                    throw new VinoDataNotFoundException("无法取得数据!");
                 }
                 ViewData["Mode"] = "Edit";
                 return View(model);
@@ -58,7 +70,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
                 return View(dto);
             }
         }
-        
+
         /// <summary>
         /// 保存
         /// </summary>
@@ -66,7 +78,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
         [Auth("edit")]
         public async Task<IActionResult> Save(WxAccountDto model)
         {
-            await service.SaveAsync(model);
+            await _service.SaveAsync(model);
             return JsonData(true);
         }
 
@@ -74,7 +86,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.WeChat.Views.Account
         [Auth("delete")]
         public async Task<IActionResult> Delete(long id)
         {
-            await service.DeleteAsync(id);
+            await _service.DeleteAsync(id);
             return JsonData(true);
         }
     }

@@ -1,4 +1,15 @@
-﻿using System;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：FunctionController.cs
+// 功能描述：功能 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,16 +21,17 @@ using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
+namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Function
 {
     [Area("System")]
-    [Auth("sys.function")]
+    [Auth("system.function")]
     public class FunctionController : BackendController
     {
-        private IFunctionService service;
-        public FunctionController(IFunctionService _service)
+        private readonly IFunctionService _service;
+
+        public FunctionController(IFunctionService service)
         {
-            this.service = _service;
+            this._service = service;
         }
 
 
@@ -31,7 +43,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
             var Parents = new List<FunctionDto>();
             if (parentId.HasValue)
             {
-                Parents = await service.GetParentsAsync(parentId.Value);
+                Parents = await _service.GetParentsAsync(parentId.Value);
             }
             ViewData["ParentId"] = parentId;
             return View(Parents);
@@ -42,7 +54,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
         {
             var search = new FunctionSearch();
             search.ParentId = parentId;
-            var data = await service.GetListAsync(page, rows, search, null);
+            var data = await _service.GetListAsync(page, rows, search, null);
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -52,14 +64,14 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
             if (id.HasValue)
             {
                 //编辑
-                var module = await service.GetByIdAsync(id.Value);
+                var module = await _service.GetByIdAsync(id.Value);
                 if (module == null)
                 {
                     throw new VinoDataNotFoundException("无法取得数据!");
                 }
                 if (module.ParentId.HasValue)
                 {
-                    ViewBag.Parents = await service.GetParentsAsync(module.ParentId.Value);
+                    ViewBag.Parents = await _service.GetParentsAsync(module.ParentId.Value);
                 }
                 ViewData["Mode"] = "Edit";
                 return View(module);
@@ -72,7 +84,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
                 if (pid.HasValue)
                 {
                     dto.ParentId = pid.Value;
-                    ViewBag.Parents = await service.GetParentsAsync(pid.Value);
+                    ViewBag.Parents = await _service.GetParentsAsync(pid.Value);
                 }
                 else
                 {
@@ -90,7 +102,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
         [Auth("edit")]
         public async Task<IActionResult> Save(FunctionDto model)
         {
-            await service.SaveAsync(model);
+            await _service.SaveAsync(model);
             return JsonData(model);
         }
 
@@ -100,7 +112,7 @@ namespace Vino.Core.CMS.Web.Admin.Areas.System.Views.Function
         [Auth("delete"), HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            await service.DeleteAsync(id);
+            await _service.DeleteAsync(id);
             return JsonData(true);
         }
 

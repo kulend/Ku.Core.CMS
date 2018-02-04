@@ -1,4 +1,16 @@
 ﻿@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：微信二维码 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+}
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="main-content">
@@ -31,23 +43,28 @@
             var form = layui.form;
             form.on('select(account)', function (data) {
                 $("#list").vinoGrid("search");
-                $("#btnAdd").attr("action", "window:WeChat/Qrcode/Edit?AccountId=" + data.value);
+                $("#btnAdd").attr("action", "window:WeChat/WxQrcode/Edit?AccountId=" + data.value);
             });
         });
 
         $(function () {
-            $("#btnAdd").attr("action", "window:WeChat/Qrcode/Edit?AccountId=" + $("#scAccount").val());
+            $("#btnAdd").attr("action", "window:WeChat/WxQrcode/Edit?AccountId=" + $("#scAccount").val());
             $("#list").vinoGrid({
                 url: 'GetList',
                 cols: [[
-                    { field: 'Name', title: '名称', width: 150 },
-                    { field: 'Type', title: '类型', width: 150, align: 'center', templet:'<div>{{d.Type.Title}}</div>'},
-                    { field: 'WeixinId', title: '微信号', width: 180 },
-                    { field: 'AppId', title: '应用ID', width: 180 },
+                    { field: 'SceneId', title: '场景ID', width: 120 },
+                    { field: 'SceneType', title: '场景类型', width: 100, align: 'center', templet: '<div>{{d.SceneType.Title}}</div>' },
+                    { field: 'PeriodType', title: '时效类型', width: 100, align: 'center', templet: '<div>{{d.PeriodType.Title}}</div>' },
+                    { field: 'EventKey', title: '事件', width: 120 },
+                    { field: 'Purpose', title: '用途', width: 150 },
+                    { field: 'ScanCount', title: '扫描次数', width: 90 },
+                    { field: 'Ticket', title: 'Ticket', width: 150 },
+                    { field: 'Url', title: 'Url', width: 150 },
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.qrcode.edit", title: "编辑", action: `window:WeChat/Account/Edit?id={{d.Id}}` },
+                            { code: "wechat.qrcode.edit", title: "编辑", action: `window:WeChat/WxQrcode/Edit?id={{d.Id}}` },
+                            { code: "", title: "下载", action: `javascript:openDownDialog('{{d.Ticket}}')` },
                             { code: "wechat.qrcode.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
@@ -59,5 +76,18 @@
                 }
             });
         });
+
+        function openDownDialog(ticket)
+        { 
+            var url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' + encodeURI(ticket);
+            vino.page.openWindow({
+                type: 2,
+                title: '下载二维码',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['430px', '475px'],
+                content: url
+            });
+        }
     </script>
 }

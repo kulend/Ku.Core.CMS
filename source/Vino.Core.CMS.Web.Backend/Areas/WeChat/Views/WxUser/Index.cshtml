@@ -1,0 +1,82 @@
+﻿@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：微信用户 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+    <div class="toolbar">
+        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+        <action id="btnSync" auth-code="wechat.user.sync" text="数据同步" size="sm" action="" after="gridReload()" />
+        <span style="position:absolute;right:10px;line-height:30px;">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公众号</label>
+                    <div class="layui-input-block">
+                        <select id="scAccount" lay-verify="required" lay-filter="account">
+                            @foreach (var account in ViewBag.Accounts)
+                            {
+                            <option value="@account.Id">@account.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </span>
+    </div>
+    <table id="list">
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            form.on('select(account)', function (data) {
+                $("#list").vinoGrid("search");
+                $("#btnSync").attr("action", "window:WeChat/WxUser/UserSync?AccountId=" + data.value);
+            });
+        });
+
+        $(function () {
+            $("#btnSync").attr("action", "window:WeChat/WxUser/UserSync?AccountId=" + $("#scAccount").val());
+
+            $("#list").vinoGrid({
+                url: 'GetUserList',
+                cols: [[
+                    { field: 'OpenId', title: 'OpenId', width: 150 },
+                    { field: 'UnionId', title: 'UnionId', width: 150 },
+                    { field: 'NickName', title: '昵称', width: 150 },
+                    {
+                        field: 'Remark', title: '备注名', width: 150,
+                        templet: '<div>{{d.Remark}} <i class="layui-icon layui-action" title="修改备注" action="window:WeChat/WxUser/Remark?id={{d.Id}}">&#xe642;</i></div>'
+                    },
+                    { field: 'Sex', title: '性别', width: 80, align: 'center', templet: '<div>{{d.Sex.Title}}</div>'},
+                    { field: 'City', title: '地区', width: 180, templet: '<div>{{d.Country}}{{d.Province}}{{d.City}}</div>' },
+                    { field: 'IsSubscribe', title: '是否关注', width: 90, align: 'center', templet: grid_templet_bool("IsSubscribe") },
+                    { field: 'SubscribeTime', title: '关注时间', width: 150},
+                    {
+                        title: '操作', fixed: 'right', width: 120, align: 'center',
+                        templet: grid_templet_operate([
+                            { code: "wechat.user.view", title: "详情", action: `window:WeChat/User/Detail?id={{d.Id}}`, css: "layui-btn-primary" }
+                        ])
+                    }
+                ]],
+                onWhere: function () {
+                    return {
+                        AccountId: $("#scAccount").val()
+                    };
+                }
+            });
+        });
+    </script>
+}

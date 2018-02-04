@@ -1,7 +1,19 @@
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：WxQrcodeService.cs
+// 功能描述：微信二维码 业务逻辑处理类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:13
+//
+//----------------------------------------------------------------
+
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.WeChat;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
@@ -85,12 +97,23 @@ namespace Vino.Core.CMS.Service.WeChat
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
 
+                //取得新场景值
+                var count = await _repository.CountAsync(x => x.AccountId == model.AccountId && x.PeriodType == model.PeriodType);
+                if (model.PeriodType == EmWxPeriodType.Temp)
+                {
+                    model.SceneId = 100000 + count + 1;
+                }
+                else
+                {
+                    model.SceneId = count + 1;
+                }
+
                 //取得微信AccessToken
                 var token = await _wxAccountService.GetAccessToken(model.AccountId);
                 //远程创建
                 if (model.PeriodType == EmWxPeriodType.Temp)
                 {
-                    var rsp = await _wcQrcodeTool.CreateTemp(token, 0, model.ExpireSeconds);
+                    var rsp = await _wcQrcodeTool.CreateTemp(token, model.SceneId, model.ExpireSeconds);
                     if (rsp.ErrCode != 0)
                     {
                         throw new VinoArgNullException(rsp.ToString());
@@ -101,7 +124,7 @@ namespace Vino.Core.CMS.Service.WeChat
                 }
                 else
                 {
-                    var rsp = await _wcQrcodeTool.Create(token, 0);
+                    var rsp = await _wcQrcodeTool.Create(token, model.SceneId);
                     if (rsp.ErrCode != 0)
                     {
                         throw new VinoArgNullException(rsp.ToString());

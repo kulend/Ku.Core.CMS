@@ -1,46 +1,55 @@
-﻿using System;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：WxQrcodeController.cs
+// 功能描述：微信二维码 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Service.WeChat;
-using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.CMS.Domain.Dto.WeChat;
-using Vino.Core.CMS.IService.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
+using Vino.Core.CMS.IService.WeChat;
+using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Filters;
+using Vino.Core.CMS.Web.Security;
+using Vino.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.Menu
+namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxQrcode
 {
     [Area("WeChat")]
-    [Auth("wechat.menu")]
-    public class MenuController : BackendController
+    [Auth("wechat.qrcode")]
+    public class WxQrcodeController : BackendController
     {
-        private IWxMenuService service;
-        private IWxAccountService accountService;
-        private IWxUserTagService wxUserTagService;
+        private IWxQrcodeService _service;
+        private IWxAccountService _accountService;
 
-        public MenuController(IWxMenuService _service, IWxAccountService _accountService, IWxUserTagService _wxUserTagService)
+        public WxQrcodeController(IWxQrcodeService service, IWxAccountService accountService)
         {
-            this.service = _service;
-            this.accountService = _accountService;
-            this.wxUserTagService = _wxUserTagService;
+            this._service = service;
+            this._accountService = accountService;
         }
 
         [Auth("view")]
         public async Task<IActionResult> Index()
         {
             //取得公众号数据
-            var accounts = await accountService.GetListAsync(null, "Name asc");
+            var accounts = await _accountService.GetListAsync(null, "Name asc");
             ViewBag.Accounts = accounts;
             return View();
         }
 
         [Auth("view")]
-        public async Task<IActionResult> GetList(int page, int rows, WxMenuSearch where)
+        public async Task<IActionResult> GetList(int page, int rows, WxQrcodeSearch where)
         {
-            var data = await service.GetListAsync(page, rows, where, null);
+            var data = await _service.GetListAsync(page, rows, where, "SceneId asc");
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -50,29 +59,27 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.Menu
             if (id.HasValue)
             {
                 //编辑
-                var model = await service.GetByIdAsync(id.Value);
+                var model = await _service.GetByIdAsync(id.Value);
                 if (model == null)
                 {
                     throw new VinoDataNotFoundException("无法取得数据!");
                 }
-                model.Account = await accountService.GetByIdAsync(model.AccountId);
+                model.Account = await _accountService.GetByIdAsync(model.AccountId);
                 if (model.Account == null)
                 {
                     throw new VinoDataNotFoundException("数据出错!");
                 }
-                //取得用户标签
-                ViewBag.UserTags =  await wxUserTagService.GetListAsync(new WxUserTagSearch() { AccountId = model.AccountId }, "TagId asc");
                 ViewData["Mode"] = "Edit";
                 return View(model);
             }
             else
             {
                 //新增
-                WxMenuDto dto = new WxMenuDto();
+                WxQrcodeDto dto = new WxQrcodeDto();
                 if (AccountId.HasValue)
                 {
                     dto.AccountId = AccountId.Value;
-                    dto.Account = await accountService.GetByIdAsync(AccountId.Value);
+                    dto.Account = await _accountService.GetByIdAsync(AccountId.Value);
                     if (dto.Account == null)
                     {
                         throw new VinoDataNotFoundException("参数出错!");
@@ -82,8 +89,6 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.Menu
                 {
                     throw new VinoDataNotFoundException("参数出错!");
                 }
-                //取得用户标签
-                ViewBag.UserTags = await wxUserTagService.GetListAsync(new WxUserTagSearch() { AccountId = dto.AccountId }, "TagId asc");
                 ViewData["Mode"] = "Add";
                 return View(dto);
             }
@@ -94,17 +99,18 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.Menu
         /// </summary>
         [HttpPost]
         [Auth("edit")]
-        public async Task<IActionResult> Save(WxMenuDto model)
+        public async Task<IActionResult> Save(WxQrcodeDto model)
         {
-            await service.SaveAsync(model);
+            await _service.SaveAsync(model);
             return JsonData(true);
         }
 
         [HttpPost]
         [Auth("delete")]
+        [UserAction("删除微信二维码")]
         public async Task<IActionResult> Delete(long id)
         {
-            await service.DeleteAsync(id);
+            await _service.DeleteAsync(id);
             return JsonData(true);
         }
     }

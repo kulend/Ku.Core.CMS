@@ -1,3 +1,14 @@
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：IWxQrcodeService.cs
+// 功能描述：微信二维码 业务逻辑接口类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:13
+//
+//----------------------------------------------------------------
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.WeChat;

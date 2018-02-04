@@ -1,16 +1,16 @@
-.input-length-long {
+.layui-input-inline.long {
     width: 400px;
 }
 
-.input-length-short {
+.layui-input-inline.short {
     width: 120px;
 }
 
-.input-length-middle {
+.layui-input-inline.middle {
     width: 200px;
 }
 
-.input-length-num {
+.layui-input-inline.num {
     width: 100px;
 }
 

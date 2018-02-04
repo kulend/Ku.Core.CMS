@@ -1,4 +1,15 @@
-﻿using AutoMapper;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：UserService.cs
+// 功能描述：用户 业务逻辑处理类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:13
+//
+//----------------------------------------------------------------
+
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +44,7 @@ namespace Vino.Core.CMS.Service.System
         }
 
         #endregion
+
         #region 自动生成的方法
 
         /// <summary>

@@ -1,4 +1,15 @@
-﻿using AutoMapper;
+﻿//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：MemberTypeService.cs
+// 功能描述：会员类型 业务逻辑处理类
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:13
+//
+//----------------------------------------------------------------
+
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

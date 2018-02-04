@@ -1,3 +1,14 @@
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino ç‰ˆæƒæ‰€æœ‰
+//
+// æ–‡ä»¶åï¼šWxUserDto.cs
+// åŠŸèƒ½æè¿°ï¼šå¾®ä¿¡ç”¨æˆ· æ•°æ®ä¼ è¾“ç±»
+//
+// åˆ›å»ºè€…ï¼škulend@qq.com
+// åˆ›å»ºæ—¶é—´ï¼š2018-02-04 19:13
+//
+//----------------------------------------------------------------
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using Vino.Core.CMS.Domain.Enum;
@@ -8,7 +19,7 @@ namespace Vino.Core.CMS.Domain.Dto.WeChat
     public class WxUserDto : BaseDto
     {
         /// <summary>
-        /// ¹«ÖÚºÅID
+        /// å…¬ä¼—å·ID
         /// </summary>
         [DataType("Hidden")]
         public long AccountId { get; set; }
@@ -23,54 +34,53 @@ namespace Vino.Core.CMS.Domain.Dto.WeChat
         [Display(Name = "UnionId")]
         public string UnionId { set; get; }
 
-        [Display(Name = "ÊÇ·ñÒÑ¹Ø×¢", Prompt = "ÒÑ¹Ø×¢|Î´¹Ø×¢")]
+        [Display(Name = "æ˜¯å¦å·²å…³æ³¨")]
         public bool IsSubscribe { set; get; }
 
         [MaxLength(100)]
-        [Display(Name = "êÇ³Æ")]
+        [Display(Name = "æ˜µç§°")]
         public string NickName { set; get; }
 
         [MaxLength(500)]
-        [Display(Name = "Í·Ïñ")]
-        [DataType(DataType.ImageUrl)]
+        [Display(Name = "å¤´åƒ")]
         public string HeadImgUrl { set; get; }
 
-        [Display(Name = "ĞÔ±ğ")]
+        [Display(Name = "æ€§åˆ«")]
         public EmSex Sex { set; get; }
 
         [MaxLength(100)]
-        [Display(Name = "¹ú¼Ò")]
+        [Display(Name = "å›½å®¶")]
         public string Country { set; get; }
 
         [MaxLength(100)]
-        [Display(Name = "Ê¡·İ")]
+        [Display(Name = "çœä»½")]
         public string Province { set; get; }
 
         [MaxLength(100)]
-        [Display(Name = "³ÇÊĞ")]
+        [Display(Name = "åŸå¸‚")]
         public string City { set; get; }
 
         [MaxLength(20)]
-        [Display(Name = "ÓïÑÔ")]
+        [Display(Name = "è¯­è¨€")]
         public string Language { set; get; }
 
         [MaxLength(30)]
-        [Display(Name = "±¸×¢Ãû")]
+        [Display(Name = "å¤‡æ³¨å")]
         public string Remark { set; get; }
 
         /// <summary>
-        /// ¹Ø×¢Ê±¼ä
+        /// å…³æ³¨æ—¶é—´
         /// </summary>
-        [Display(Name = "¹Ø×¢Ê±¼ä")]
+        [Display(Name = "å…³æ³¨æ—¶é—´")]
         [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
         [DataType(DataType.DateTime)]
         public DateTime? SubscribeTime { set; get; }
 
         /// <summary>
-        /// ÓÃ»§±êÇ©
+        /// ç”¨æˆ·æ ‡ç­¾
         /// </summary>
         [MaxLength(256)]
-        [Display(Name = "ÓÃ»§±êÇ©")]
+        [Display(Name = "ç”¨æˆ·æ ‡ç­¾")]
         public string UserTags { get; set; }
     }
 }

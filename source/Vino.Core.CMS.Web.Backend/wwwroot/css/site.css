@@ -13,6 +13,9 @@
 .layui-input-inline.num {
     width: 100px;
 }
+.layui-form-label {
+    width: 110px;
+}
 
 .layui-textarea {
     width: 400px;
@@ -23,6 +26,10 @@
     padding-top: 6px;
     padding-bottom: 6px;
     line-height: 13px;
+}
+
+.layui-elem-field legend.sub {
+    font-size: 17px;
 }
 
 .menu-open-tree {

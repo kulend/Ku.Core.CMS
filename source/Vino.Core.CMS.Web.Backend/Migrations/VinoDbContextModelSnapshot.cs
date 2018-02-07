@@ -9,6 +9,7 @@ using System;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain.Enum;
 using Vino.Core.CMS.Domain.Enum.Content;
+using Vino.Core.CMS.Domain.Enum.Mall;
 using Vino.Core.CMS.Domain.Enum.Material;
 using Vino.Core.CMS.Domain.Enum.System;
 using Vino.Core.CMS.Domain.Enum.WeChat;
@@ -68,6 +69,40 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("content_article");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Mall.DeliveryTemplet", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<string>("ChargeConfig");
+
+                    b.Property<short>("ChargeMode");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("EffectiveTime");
+
+                    b.Property<DateTime?>("ExpireTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsEnable");
+
+                    b.Property<bool>("IsSnapshot");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<long?>("OriginId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("mall_delivery_templet");
                 });
 
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Material.MaterialGroup", b =>

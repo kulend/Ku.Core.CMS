@@ -9,12 +9,12 @@
         { return false; }
         var success = reply.code === 0;
         if (success) {
-            if (options.onSuccess && typeof options.onSuccess == "function") {
+            if (options.onSuccess && typeof options.onSuccess === "function") {
                 return options.onSuccess(reply, options);
             }
             return true;
         } else {
-            if (options.onError && typeof options.onError == "function") {
+            if (options.onError && typeof options.onError === "function") {
                 var ret = options.onError(reply, options);
                 if (ret) {
                     return false;
@@ -67,13 +67,12 @@
             if (opts) {
                 opts = $.extend(opts, options);
             } else {
-                opts = {};
-                if ($(this).attr("data-opts")) {
-                    opts = eval("(" + $(this).attr("data-opts") + ")");
-                }
+                opts = $(this).data("opts") || {};
+                console.log($(this).data("opts"));
                 opts = $.extend(opts, $.fn.vinoForm.defaults, options);
                 $.data(this, 'options', opts);
             }
+             console.log($.data(this, 'options'));
             _bind(this);
         });
     };

@@ -121,9 +121,9 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.Content.Article> Articles { get; set; }
 
         /// <summary>
-        /// 物流配送
+        /// 配送模板
         /// </summary>
-        public DbSet<Domain.Entity.Mall.Delivery> Deliverys { get; set; }
+        public DbSet<Domain.Entity.Mall.DeliveryTemplet> DeliveryTemplets { get; set; }
 
     }
 }

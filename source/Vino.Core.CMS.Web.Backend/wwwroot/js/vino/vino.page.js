@@ -84,6 +84,14 @@ if (!vino.page) {
             }); 
         }
     };
+
+    vino.page.fixedFloat = function (value, num) {
+        if (!value)
+        {
+            value = "0";
+        }
+        return parseFloat(value.replace(/[^\-?\d.]/g, '')).toFixed(num || 2);
+    };
 })();
 
 (function () {

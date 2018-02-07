@@ -6,21 +6,9 @@
         , form = layui.form;
 
     //绑定form
-    if ($("#inputForm").length) {
-        $("#inputForm").vinoForm({
-            onSuccess: function (reply, options) {
-                vino.page.msg.tip('保存成功！', function () {
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
-                    var fn = parent.winfns[index];
-                    if (fn) {
-                        fn(reply);
-                    }
-                    parent.winfns[index] = null;
-                });
-            }
-        });
-    }
+    $("form[auto-bind=true]").each(function () {
+        _bindForm($(this));
+    });
 
     $(".layui-input.laydate").each(function () {
         var self = $(this);
@@ -38,19 +26,23 @@
         closeWindow();
     });
 
-    $(document).on("click", "button.layui-btn:not([lay-submit])", function (e) {
+    $(document).on("click", "button.layui-btn:not([lay-submit]), .layui-action", function (e) {
+        var self = this;
         var action = $(this).data("action") || $(this).attr("action") || "";
         var after = $(this).attr("after");
         if (action.indexOf("window:") === 0) {
             OpenWindow($(this).attr("title") || "&nbsp;", action.substring(7), null, function (value) {
-                eval("var $data;");
+                eval("var $data, $this;");
                 $data = value;
+                $this = self;
                 if (after) {
                     eval(after);
                 }
             });
         } else if (action.indexOf("javascript:") === 0 || action.indexOf("js:") === 0) {
             var js = action.substring(action.indexOf(":") + 1);
+            eval("var $this;");
+            $this = self;
             eval(js);
         } else if (action.toLowerCase().indexOf("post:") === 0 || action.toLowerCase().indexOf("get:") === 0) {
             var method = action.substring(0, action.indexOf(":")).toLowerCase();
@@ -94,6 +86,24 @@
         }
     });
 });
+
+function _bindForm($from, options) {
+    var options = $.extend({}, {
+        onSuccess: function (reply, options) {
+            vino.page.msg.tip('保存成功！', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+                var fn = parent.winfns[index];
+                if (fn) {
+                    fn(reply);
+                }
+                parent.winfns[index] = null;
+            });
+        }
+    }, options);
+
+    $from.vinoForm(options);
+}
 
 function OpenWindow(title, src, options, onClose) {
     parent.OpenWindow(title, src, options, onClose);

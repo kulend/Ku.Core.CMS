@@ -27,4 +27,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\data_location\" />
+  </ItemGroup>
 </Project>

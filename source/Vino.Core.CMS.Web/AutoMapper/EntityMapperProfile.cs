@@ -53,8 +53,8 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.Material.MaterialGroupDto, Domain.Entity.Material.MaterialGroup>();
             CreateMap<Domain.Entity.Content.Article, Domain.Dto.Content.ArticleDto>();
             CreateMap<Domain.Dto.Content.ArticleDto, Domain.Entity.Content.Article>();
-            CreateMap<Domain.Entity.Mall.Delivery, Domain.Dto.Mall.DeliveryDto>();
-            CreateMap<Domain.Dto.Mall.DeliveryDto, Domain.Entity.Mall.Delivery>();
+            CreateMap<Domain.Entity.Mall.DeliveryTemplet, Domain.Dto.Mall.DeliveryTempletDto>();
+            CreateMap<Domain.Dto.Mall.DeliveryTempletDto, Domain.Entity.Mall.DeliveryTemplet>();
         }
     }
 }

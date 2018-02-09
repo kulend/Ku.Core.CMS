@@ -32,7 +32,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.User
         private IRoleService roleService;
         public UserController(IUserService service, IRoleService _roleService)
         {
-            this._service = _service;
+            this._service = service;
             this.roleService = _roleService;
         }
 

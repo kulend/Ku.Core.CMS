@@ -1,0 +1,217 @@
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：配送模板 详情页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-02-05 10:25
+    //
+    //----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.Mall
+@using Vino.Core.CMS.Domain.Enum.Mall
+@using Vino.Core.Infrastructure.Extensions;
+@model DeliveryTempletDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DeliveryTempletDto>("#"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.ShowFor(x => x.Name)
+        @Html.ShowFor(x => x.Description)
+        @Html.ShowFor(x => x.IsEnable)
+        @Html.ShowFor(x => x.ChargeMode)
+        @if (Model.ChargeMode == EmChargeMode.Quantity)
+        {
+        <fieldset id="dvConfigQuantity" class="layui-elem-field">
+            <legend>运费配置（按件数）</legend>
+            <div class="layui-field-box">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">基本配置</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">默认运费</label>
+                            <div class="layui-input-inline num">
+                                <label class="layui-form-label-show">@Model.QuantityChargeConfigObj.DefaultFee.ToString("0.00")</label>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">元</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">每件增加运费</label>
+                            <div class="layui-input-inline num">
+                                <label class="layui-form-label-show">@Model.QuantityChargeConfigObj.PreQuantityFee.ToString("0.00")</label>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">元</div>
+                            <div class="layui-form-mid layui-word-aux">超过1件后每件增加的运费</div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">地区配置</legend>
+                    <div class="layui-field-box">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col>
+                                <col width="90">
+                                <col width="120">
+                                <col width="120">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>地区</th>
+                                    <th>是否配送</th>
+                                    <th>运费</th>
+                                    <th>每件增加运费</th>
+                                </tr>
+                            </thead>
+                            <tbody class="charge-config-body">
+                                @if (Model.QuantityChargeConfigObj.AreaConfig != null)
+                                {
+                                @foreach (var item in Model.QuantityChargeConfigObj.AreaConfig)
+                                {
+                                <tr class="charge-config-item main">
+                                    <td>
+                                        <span class="charge-config-location">@item.Areas.SelectJoin(x => x.Name, "，")</span>
+                                    </td>
+                                    <td>
+                                        @Html.Raw(item.Deliverable ? "<i class='layui-icon'>&#xe605;</i>" : "<i class='layui-icon'>&#x1006;</i>")
+                                    </td>
+                                    <td>
+                                        <label class="layui-form-label-show">@item.DefaultFee.ToString("0.00")</label>
+                                    </td>
+                                    <td>
+                                        <label class="layui-form-label-show">@item.PreQuantityFee.ToString("0.00")</label>
+                                    </td>
+                                </tr>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+        }
+        else
+        {
+        <fieldset id="dvConfigWeight" class="layui-elem-field">
+            <legend>运费配置（按重量）</legend>
+            <div class="layui-field-box">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">基本配置</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">首重重量</label>
+                                <div class="layui-input-inline num">
+                                    <label class="layui-form-label-show">@Model.WeightChargeConfigObj.FirstWeight</label>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">克</div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">首重费用</label>
+                                <div class="layui-input-inline num">
+                                    <label class="layui-form-label-show">@Model.WeightChargeConfigObj.FirstFee.ToString("0.00")</label>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">元</div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">续重重量</label>
+                                <div class="layui-input-inline num">
+                                    <label class="layui-form-label-show">@Model.WeightChargeConfigObj.ExtendWeight</label>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">克</div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">续重费用</label>
+                                <div class="layui-input-inline num">
+                                    <label class="layui-form-label-show">@Model.WeightChargeConfigObj.ExtendFee.ToString("0.00")</label>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">元</div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">地区配置</legend>
+                    <div class="layui-field-box">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col>
+                                <col width="90">
+                                <col width="160">
+                                <col width="160">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">地区</th>
+                                    <th rowspan="2">是否配送</th>
+                                    <th>首重重量(克)</th>
+                                    <th>首重费用</th>
+                                </tr>
+                                <tr>
+                                    <th>续重重量(克)</th>
+                                    <th>续重费用</th>
+                                </tr>
+                            </thead>
+                            <tbody class="charge-config-body">
+                                @if (Model.WeightChargeConfigObj.AreaConfig != null)
+                                {
+                                @foreach (var item in Model.WeightChargeConfigObj.AreaConfig)
+                                {
+                                <tr class="charge-config-item main">
+                                    <td rowspan="2">
+                                        <span class="charge-config-location">@item.Areas.SelectJoin(x => x.Name, "，")</span>
+                                    </td>
+                                    <td rowspan="2">
+                                        @Html.Raw(item.Deliverable ? "<i class='layui-icon'>&#xe605;</i>" : "<i class='layui-icon'>&#x1006;</i>")
+                                    </td>
+                                    <td>
+                                        <label class="layui-form-label-show">@Model.WeightChargeConfigObj.FirstWeight</label>
+                                    </td>
+                                    <td>
+                                        <label class="layui-form-label-show">@Model.WeightChargeConfigObj.FirstFee.ToString("0.00")</label>
+                                    </td>
+                                </tr>
+                                <tr class="charge-config-item">
+                                    <td>
+                                        <label class="layui-form-label-show">@Model.WeightChargeConfigObj.ExtendWeight</label>
+                                    </td>
+                                    <td>
+                                        <label class="layui-form-label-show">@Model.WeightChargeConfigObj.ExtendFee.ToString("0.00")</label>
+                                    </td>
+                                </tr>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+        }
+
+
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        var form;
+        layui.use(['form', 'element'], function () {
+            form = layui.form;
+        });
+    </script>
+}

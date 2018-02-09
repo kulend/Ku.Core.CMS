@@ -88,9 +88,14 @@ if (!vino.page) {
     vino.page.fixedFloat = function (value, num) {
         if (!value)
         {
-            value = "0";
+            return parseFloat(0).toFixed(num);
         }
-        return parseFloat(value.replace(/[^\-?\d.]/g, '')).toFixed(num || 2);
+        var v = parseFloat(value.replace(/[^\-?\d.]/g, '')).toFixed(num);
+        if (v === "NaN")
+        {
+            v = parseFloat(0).toFixed(num);
+        }
+        return v;
     };
 })();
 

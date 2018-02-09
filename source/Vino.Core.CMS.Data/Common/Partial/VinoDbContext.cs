@@ -124,6 +124,11 @@ namespace Vino.Core.CMS.Data.Common
         /// 配送模板
         /// </summary>
         public DbSet<Domain.Entity.Mall.DeliveryTemplet> DeliveryTemplets { get; set; }
+		
+		/// <summary>
+        /// 支付方式
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.Payment> Payments { get; set; }
 
     }
 }

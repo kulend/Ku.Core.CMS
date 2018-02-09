@@ -12,6 +12,8 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Vino.Core.CMS.Web.AutoMapper
 {
@@ -55,6 +57,33 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.Content.ArticleDto, Domain.Entity.Content.Article>();
             CreateMap<Domain.Entity.Mall.DeliveryTemplet, Domain.Dto.Mall.DeliveryTempletDto>();
             CreateMap<Domain.Dto.Mall.DeliveryTempletDto, Domain.Entity.Mall.DeliveryTemplet>();
+            CreateMap<Domain.Entity.Mall.Payment, Domain.Dto.Mall.PaymentDto>().ForMember(x=>x.PaymentConfig, opt=>{
+                opt.ResolveUsing<JsonDeserializeResolver<IDictionary<string, string>>, string>(x => x.PaymentConfig);
+            });
+            CreateMap<Domain.Dto.Mall.PaymentDto, Domain.Entity.Mall.Payment>().ForMember(x=>x.PaymentConfig, opt=> {
+                opt.ResolveUsing<JsonSerializeResolver, object>(x => x.PaymentConfig);
+            });
+        }
+
+        private class JsonSerializeResolver : IMemberValueResolver<object, object, object, string>
+        {
+            public string Resolve(object source, object destination, object sourceMember, string destMember, ResolutionContext context)
+            {
+                return JsonConvert.SerializeObject(sourceMember);
+            }
+        }
+
+        private class JsonDeserializeResolver<T> : IMemberValueResolver<object, object, string, T>
+        {
+            public T Resolve(object source, object destination, string sourceMember, T destMember, ResolutionContext context)
+            {
+                if (context.Items.ContainsKey("JsonDeserializeIgnore") 
+                    && (bool)context.Items["JsonDeserializeIgnore"])
+                {
+                    return default(T);
+                }
+                return JsonConvert.DeserializeObject<T>(sourceMember);
+            }
         }
     }
 }

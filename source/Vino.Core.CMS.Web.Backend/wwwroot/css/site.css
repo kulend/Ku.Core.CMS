@@ -1,5 +1,5 @@
 .layui-input-inline.long {
-    width: 400px;
+    width: 75%;
 }
 
 .layui-input-inline.short {
@@ -17,8 +17,28 @@
     width: 110px;
 }
 
+.layui-input-block {
+    margin-left:140px;
+}
+
+.layui-input-block.long {
+    width: 75%;
+}
+
+.layui-input-block.short {
+    width: 20%;
+}
+
+.layui-input-block.middle {
+    width: 40%;
+}
+
+.layui-input-block.num {
+    width: 100px;
+}
+
 .layui-textarea {
-    width: 400px;
+    /*width: 85%;*/
     min-height: 75px;
 }
 
@@ -30,6 +50,10 @@
 
 .layui-elem-field legend.sub {
     font-size: 17px;
+}
+
+.layui-form-label-show {
+    width:85%;
 }
 
 .menu-open-tree {

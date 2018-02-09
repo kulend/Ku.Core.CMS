@@ -1,0 +1,48 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：配送模板 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-05 10:25
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+    <div class="toolbar">
+        <action auth-code="mall.deliverytemplet.edit" text="添加" size="sm" icon="&#xe608;" action="window:Mall/DeliveryTemplet/Edit" after="gridReload()" />
+        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+    </div>
+    <table id="list">
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'Name', title: '名称', width: 170 },
+                    { field: 'IsEnable', title: '是否可用', width: 100, align: 'center', templet: grid_templet_bool("IsEnable") },
+                    { field: 'ChargeMode', title: '计费方式', width: 100, align: 'center', templet: '<div>{{d.ChargeMode.Title}}</div>' },
+                    { field: 'EffectiveTime', title: '生效时间', width: 170, align: 'center' },
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "mall.deliverytemplet.edit", title: "编辑", action: `window:Mall/DeliveryTemplet/Edit?id={{d.Id}}` },
+                            { code: "", title: "详情", action: `window:Mall/DeliveryTemplet/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "mall.deliverytemplet.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

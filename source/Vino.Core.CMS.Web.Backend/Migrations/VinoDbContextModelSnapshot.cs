@@ -100,9 +100,49 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
 
                     b.Property<long?>("OriginId");
 
+                    b.Property<int>("SnapshotCount");
+
                     b.HasKey("Id");
 
                     b.ToTable("mall_delivery_templet");
+                });
+
+            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Mall.Payment", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("EffectiveTime");
+
+                    b.Property<DateTime?>("ExpireTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsEnable");
+
+                    b.Property<bool>("IsMobile");
+
+                    b.Property<bool>("IsSnapshot");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<long?>("OriginId");
+
+                    b.Property<string>("PaymentConfig");
+
+                    b.Property<short>("PaymentMode");
+
+                    b.Property<int>("SnapshotCount");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("mall_payment");
                 });
 
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Material.MaterialGroup", b =>

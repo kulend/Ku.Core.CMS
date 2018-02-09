@@ -36,7 +36,8 @@
 
 	//entitys.Add(new EntityItem{Area= "Content", Name="Article", Title="文章"});
 
-	entitys.Add(new EntityItem{Area= "Mall", Name="DeliveryTemplet", Title="配送模板"});
+	//entitys.Add(new EntityItem{Area= "Mall", Name="DeliveryTemplet", Title="配送模板"});
+	entitys.Add(new EntityItem{Area= "Mall", Name="Payment", Title="支付方式"});
 #>
 
 <#

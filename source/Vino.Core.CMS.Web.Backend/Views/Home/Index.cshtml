@@ -14,6 +14,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="icon" href="~/favicon.ico" />
     <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/lib/layui/css/layui.css" />
     <link rel="stylesheet" href="~/lib/layui-admin/style/admin.css" />
     <environment names="Development">
@@ -119,6 +120,7 @@
                 </div>
                 <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="layadmin-layout-tabs">
                     <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                        @*<li lay-id="0" class="layui-this"><span>首页</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>*@
                     </ul>
                 </div>
             </div>
@@ -160,6 +162,16 @@
             width: 100%;
             border: 0;
             height: 100%
+        }
+        .layui-nav-item i.fa {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            margin-top: -6px;
+        }
+        .layui-side-menu .layui-nav .layui-nav-item > a {
+            padding-top: 0;
+            padding-bottom: 0;
         }
     </style>
     <environment names="Development">

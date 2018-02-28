@@ -1,7 +1,7 @@
 ﻿layui.use('element', function () {
     var element = layui.element;
 
-    _addNavTab("首页", 'index', '/Account/PasswordEdit');
+    _addNavTab("首页", 'home', '/Account/PasswordEdit');
 
     // 菜单点击
     element.on('nav(layadmin-system-side-menu)', _openNavMenu);
@@ -10,11 +10,15 @@
         var id = $(this).attr('lay-id');
         var $tabTitle = $("#LAY_app_tabsheader");
         $tabTitle.children("li[lay-id='" + id + "']").addClass("layui-this").siblings().removeClass("layui-this");
+
+        //侧栏选中
+        $(`#LAY-system-side-menu .layui-this`).removeClass("layui-this");
+        $(`#LAY-system-side-menu [data-id='${id}']`).addClass("layui-this");
     });
 
     function _addNavTab(text, id, url) {
         var $tabTitle = $("#LAY_app_tabsheader");
-        var title = `<li lay-id="${id}"><span>${text}</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>`;
+        var title = `<li lay-id="${id}" class="layui-this"><span>${text}</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i></li>`;
         var content = `<iframe id="LAY_app_iframe_${id}" data-id="${id}" frameborder="0" src="${url}"></iframe>`;
         var titleHide = text + '<i class="layui-icon layui-unselect layui-tab-close" data-id="' + id + '">&#x1006;</i>';
 
@@ -95,6 +99,13 @@
         layer.closeAll('tips');
     });
 
+    $("#LAY-system-side-menu .layui-nav-item a").on("click", function () {
+        if ($("#LAY_app").hasClass("layadmin-side-shrink")) {
+            $(this).closest("li.layui-nav-item").addClass("layui-nav-itemed").siblings().removeClass("layui-nav-itemed");
+            $("#LAY_app").toggleClass("layadmin-side-shrink")
+        }
+    });
+
     //标签页处理
     element.on('nav(layadmin-pagetabs-nav)', function () {
         var event = $(this).attr("layadmin-event");
@@ -108,12 +119,21 @@
         }
         else if (event == "closeOtherTabs") {
             //关闭其他页面
-            $("#LAY_app_tabsheader").children("li.layui-this").siblings().each(function () {
+            $("#LAY_app_tabsheader").children("li.layui-this").siblings().not("[lay-id='home']").each(function () {
                 let id = $(this).attr("lay-id");
                 element.tabDelete('F_index_tab', id);
                 $(this).remove();
             });
         }
+        else if (event == "closeAllTabs") {
+            //关闭全部页面
+            $("#LAY_app_tabsheader").children("li").siblings().not("[lay-id='home']").each(function () {
+                let id = $(this).attr("lay-id");
+                element.tabDelete('F_index_tab', id);
+                $(this).remove();
+            });
+        }
+        $(this).parent().removeClass("layui-show");
     });
 
     //绑定事件

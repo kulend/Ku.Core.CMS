@@ -130,5 +130,14 @@ namespace Vino.Core.CMS.Data.Common
         /// </summary>
         public DbSet<Domain.Entity.Mall.Payment> Payments { get; set; }
 
+        /// 商品
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.Product> Products { get; set; }
+
+        /// <summary>
+        /// 商品SKU
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.ProductSku> ProductSkus { get; set; }
+
     }
 }

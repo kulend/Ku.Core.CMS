@@ -29,5 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\lib\data_location\" />
+    <Folder Include="wwwroot\lib\layui-admin\" />
   </ItemGroup>
 </Project>

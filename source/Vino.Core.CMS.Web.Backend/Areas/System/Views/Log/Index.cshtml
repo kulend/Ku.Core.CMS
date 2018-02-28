@@ -1,12 +1,16 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="main-content">
-    <div class="toolbar">
-        <action text="刷新" size="small" icon="&#x1002;" action="javascript:gridReload()" />
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">操作日志</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+            </div>
+            <table id="list"></table>
+        </div>
     </div>
-    <table id="list">
-    </table>
 </div>
 @section Scripts
 {
@@ -23,7 +27,7 @@
                     {
                         title: '操作', fixed: 'right', width: 100, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "", title: "详情", action: `window:System/Log/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "", title: "详情", action: `window:/System/Log/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
                         ])
                     }
                 ]]

@@ -15,33 +15,36 @@
 }
 @using Vino.Core.CMS.Domain.Dto.System
 @model List<FunctionDto>
-<div class="main-content">
-    <blockquote class="layui-elem-quote low">
-        <span class="layui-breadcrumb">
-            <a href="Index">顶级功能</a>
-            @foreach (var dto in Model)
-            {
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <span class="layui-breadcrumb">
+                <a href="Index">顶级功能</a>
+                @foreach (var dto in Model)
+                {
                 <a href="Index?parentId=@dto.Id">@dto.Name</a>
-            }
-        </span>
-    </blockquote>
-    <div class="toolbar">
-        @if (Model != null)
-        {
-            if (Model.Count > 1)
-            {
-                <action text="返回上级" size="sm" icon="&#xe619;" action="Index?parentId=@Model[Model.Count - 2].Id" />
-            }
-            else if(Model.Count == 1)
-            {
-                <action text="返回上级" size="sm" icon="&#xe619;" action="Index" />
-            }
-        }
-        <action auth-code="sys.function.edit" text="添加" size="sm" icon="&#xe608;" action="window:System/Function/Edit?pid=@ViewData["ParentId"]"/>
-        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()"/>
+                }
+            </span>
+        </div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                @if (Model != null)
+                {
+                    if (Model.Count > 1)
+                    {
+                        <action text="返回上级" size="sm" icon="&#xe619;" action="Index?parentId=@Model[Model.Count - 2].Id" />
+                    }
+                    else if (Model.Count == 1)
+                    {
+                        <action text="返回上级" size="sm" icon="&#xe619;" action="Index" />
+                    }
+                }
+                <action auth-code="system.function.edit" text="添加" size="sm" icon="&#xe608;" action="window:/System/Function/Edit?pid=@ViewData["ParentId"]" />
+                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+            </div>
+            <table id="list"></table>
+        </div>
     </div>
-    <table id="list">
-    </table>
 </div>
 @section Scripts
 {
@@ -59,7 +62,7 @@
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
                             { code: "", title: "子功能", action: `Index?parentId={{d.Id}}`, css:"layui-btn-primary" },
-                            { code: "sys.function.edit", title: "编辑", action: `window:System/Function/Edit?id={{d.Id}}` },
+                            { code: "sys.function.edit", title: "编辑", action: `window:/System/Function/Edit?id={{d.Id}}` },
                             { code: "sys.function.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }

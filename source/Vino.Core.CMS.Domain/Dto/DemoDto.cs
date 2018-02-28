@@ -50,6 +50,7 @@ namespace Vino.Core.CMS.Domain.Dto
         public string Year { set; get; }
 
         [Display(Name = "备注")]
+        [DataType(DataType.MultilineText)]
         public string Remark { set; get; }
     }
 }

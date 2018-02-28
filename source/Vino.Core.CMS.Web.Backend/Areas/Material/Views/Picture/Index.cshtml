@@ -13,13 +13,17 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="main-content">
-    <div class="toolbar">
-        <action auth-code="material.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:Material/Picture/Upload" after="gridReload()" />
-        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">图片素材</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+                <action auth-code="material.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:/Material/Picture/Upload" after="gridReload()" />
+            </div>
+            <table id="list"></table>
+        </div>
     </div>
-    <table id="list">
-    </table>
 </div>
 @section Scripts
 {
@@ -46,7 +50,7 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "membership.member.edit", title: "编辑", action: `window:Membership/Member/Edit?id={{d.Id}}` },
+                            { code: "membership.member.edit", title: "编辑", action: `window:/Material/Picture/Edit?id={{d.Id}}` },
                             { code: "membership.member.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }

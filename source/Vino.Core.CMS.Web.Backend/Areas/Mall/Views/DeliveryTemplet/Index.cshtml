@@ -13,13 +13,17 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="main-content">
-    <div class="toolbar">
-        <action auth-code="mall.deliverytemplet.edit" text="添加" size="sm" icon="&#xe608;" action="window:Mall/DeliveryTemplet/Edit" after="gridReload()" />
-        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">配送模板</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action auth-code="mall.deliverytemplet.edit" text="添加" size="sm" icon="&#xe608;" action="window:/Mall/DeliveryTemplet/Edit" after="gridReload()" />
+                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+            </div>
+            <table id="list"></table>
+        </div>
     </div>
-    <table id="list">
-    </table>
 </div>
 @section Scripts
 {
@@ -36,8 +40,8 @@
                     {
                         title: '操作', fixed: 'right', width: 160, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "mall.deliverytemplet.edit", title: "编辑", action: `window:Mall/DeliveryTemplet/Edit?id={{d.Id}}` },
-                            { code: "", title: "详情", action: `window:Mall/DeliveryTemplet/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "mall.deliverytemplet.edit", title: "编辑", action: `window:/Mall/DeliveryTemplet/Edit?id={{d.Id}}` },
+                            { code: "", title: "详情", action: `window:/Mall/DeliveryTemplet/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
                             { code: "mall.deliverytemplet.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }

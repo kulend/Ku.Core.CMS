@@ -63,6 +63,10 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.Mall.PaymentDto, Domain.Entity.Mall.Payment>().ForMember(x=>x.PaymentConfig, opt=> {
                 opt.ResolveUsing<JsonSerializeResolver, object>(x => x.PaymentConfig);
             });
+            CreateMap<Domain.Entity.Mall.Product, Domain.Dto.Mall.ProductDto>();
+            CreateMap<Domain.Dto.Mall.ProductDto, Domain.Entity.Mall.Product>();
+            CreateMap<Domain.Entity.Mall.ProductSku, Domain.Dto.Mall.ProductSkuDto>();
+            CreateMap<Domain.Dto.Mall.ProductSkuDto, Domain.Entity.Mall.ProductSku>();
         }
 
         private class JsonSerializeResolver : IMemberValueResolver<object, object, object, string>

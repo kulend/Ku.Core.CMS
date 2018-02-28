@@ -15,14 +15,13 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/lib/layui/css/layui.css" />
+    <link rel="stylesheet" href="~/lib/layui-admin/style/admin.css" />
     @RenderSection("Css", required: false)
     <environment names="Development">
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true"/>
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/main.min.css" asp-append-version="true"/>
     </environment>
     @await Component.InvokeAsync("AuthCodeJs")
 </head>

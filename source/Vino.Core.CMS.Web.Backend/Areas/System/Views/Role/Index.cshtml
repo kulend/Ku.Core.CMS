@@ -13,13 +13,17 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="main-content">
-    <div class="toolbar">
-        <action auth-code="system.role.edit" text="添加" size="sm" icon="&#xe608;" action="window:System/Role/Edit" after="gridReload()" />
-        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">角色列表</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action auth-code="system.role.edit" text="添加" size="sm" icon="&#xe608;" action="window:/System/Role/Edit" after="gridReload()" />
+                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+            </div>
+            <table id="list"></table>
+        </div>
     </div>
-    <table id="list">
-    </table>
 </div>
 @section Scripts
 {
@@ -34,8 +38,8 @@
                         {
                             title: '操作', fixed: 'right', width: 165, align: 'center',
                             templet: grid_templet_operate([
-                                { code: "sys.role.function", title: "权限分配", action: `window:System/Role/RoleFunction?RoleId={{d.Id}}`, css: "layui-btn-primary" },
-                                { code: "sys.role.edit", title: "编辑", action: `window:System/Role/Edit?id={{d.Id}}` },
+                                { code: "sys.role.function", title: "权限分配", action: `window:/System/Role/RoleFunction?RoleId={{d.Id}}`, css: "layui-btn-primary" },
+                                { code: "sys.role.edit", title: "编辑", action: `window:/System/Role/Edit?id={{d.Id}}` },
                                 { code: "sys.role.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
                             ])
                         }

@@ -1,28 +1,32 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="main-content">
-    <div class="toolbar">
-        <action id="btnAdd" auth-code="wechat.user.tag.edit" text="添加" size="sm" icon="&#xe608;" action="" after="gridReload()" />
-        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
-        <span style="position:absolute;right:10px;line-height:30px;">
-            <form class="layui-form" action="">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">公众号</label>
-                    <div class="layui-input-block">
-                        <select id="scAccount" lay-verify="required" lay-filter="account">
-                            @foreach (var account in ViewBag.Accounts)
-                            {
-                            <option value="@account.Id">@account.Name</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-            </form>
-        </span>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">微信用户列表</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+                <action id="btnAdd" auth-code="wechat.user.tag.edit" text="添加" size="sm" icon="&#xe608;" action="" after="gridReload()" />
+                <span class="toolbar-right">
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">公众号</label>
+                            <div class="layui-input-block">
+                                <select id="scAccount" lay-verify="required" lay-filter="account">
+                                    @foreach (var account in ViewBag.Accounts)
+                                    {
+                                        <option value="@account.Id">@account.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </span>
+            </div>
+            <table id="list"></table>
+        </div>
     </div>
-    <table id="list">
-    </table>
 </div>
 @section Scripts
 {
@@ -31,12 +35,12 @@
             var form = layui.form;
             form.on('select(account)', function (data) {
                 $("#list").vinoGrid("search");
-                $("#btnAdd").attr("action", "window:WeChat/WxUser/TagEdit?AccountId=" + data.value);
+                $("#btnAdd").attr("action", "window:/WeChat/WxUser/TagEdit?AccountId=" + data.value);
             });
         });
 
         $(function () {
-            $("#btnAdd").attr("action", "window:WeChat/WxUser/TagEdit?AccountId=" + $("#scAccount").val());
+            $("#btnAdd").attr("action", "window:/WeChat/WxUser/TagEdit?AccountId=" + $("#scAccount").val());
 
             $("#list").vinoGrid({
                 url: 'GetTagList',
@@ -47,7 +51,7 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.user.tag.edit", title: "编辑", action: `window:WeChat/WxUser/TagEdit?id={{d.Id}}` },
+                            { code: "wechat.user.tag.edit", title: "编辑", action: `window:/WeChat/WxUser/TagEdit?id={{d.Id}}` },
                             { code: "wechat.user.tag.delete", title: "删除", action: `post:DeleteTag?id={{d.Id}}` }
                         ])
                     }

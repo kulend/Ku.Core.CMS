@@ -1,26 +1,27 @@
 ﻿@model List<Vino.Core.CMS.Domain.Dto.System.MenuDto>
 @foreach (var menu in Model)
 {
-    <li class="layui-nav-item layui-nav-itemed">
-        @if (menu.SubMenus.Any())
-        {
-            <a href="javascript:;">
-                <i class="fa @menu.Icon"></i><cite>@menu.Name</cite>
-            </a>
-            <dl class="layui-nav-child">
-                @foreach (var sub in menu.SubMenus.OrderBy(x => x.OrderIndex))
-                {
-                    <dd data-url="@sub.Url" data-id="@sub.Id">
-                        <a href="javascript:;">@sub.Name</a>
-                    </dd>
-                }
-            </dl>
-        }
-        else
-        {
-            <a href="javascript:;" data-url="@menu.Url" data-id="@menu.Id">
-                <i class="fa @menu.Icon"></i><cite>@menu.Name</cite>
-            </a>
-        }
-    </li>
+<li class="layui-nav-item layui-nav-itemed">
+    @if (menu.SubMenus.Any())
+    {
+        <a href="javascript:;" lay-tips="@menu.Name" lay-direction="2">
+            <i class="layui-icon layui-icon-component"></i>
+            <cite>@menu.Name</cite>
+        </a>
+        <dl class="layui-nav-child">
+            @foreach (var sub in menu.SubMenus.OrderBy(x => x.OrderIndex))
+            {
+                <dd data-url="@sub.Url" data-id="@sub.Id">
+                    <a href="javascript:;">@sub.Name</a>
+                </dd>
+            }
+        </dl>
+    }
+    else
+    {
+        <a href="javascript:;" data-url="@menu.Url" data-id="@menu.Id">
+            <i class="fa @menu.Icon"></i><cite>@menu.Name</cite>
+        </a>
+    }
+</li>
 }

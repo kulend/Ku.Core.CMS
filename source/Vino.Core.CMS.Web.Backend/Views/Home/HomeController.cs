@@ -21,5 +21,12 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
             ViewData["LoginUserName"] = User.GetUserNameOrNull();
             return View();
         }
+
+        [Auth]
+        public IActionResult LayuiAdmin()
+        {
+            ViewData["LoginUserName"] = User.GetUserNameOrNull();
+            return View();
+        }
     }
 }

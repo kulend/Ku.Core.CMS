@@ -13,13 +13,17 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="main-content">
-    <div class="toolbar">
-        <action auth-code="wechat.wxaccount.edit" text="添加" size="sm" icon="&#xe608;" action="window:WeChat/WxAccount/Edit" after="gridReload()" />
-        <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">公众号列表</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action auth-code="wechat.wxaccount.edit" text="添加" size="sm" icon="&#xe608;" action="window:/WeChat/WxAccount/Edit" after="gridReload()" />
+                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+            </div>
+            <table id="list"></table>
+        </div>
     </div>
-    <table id="list">
-    </table>
 </div>
 @section Scripts
 {

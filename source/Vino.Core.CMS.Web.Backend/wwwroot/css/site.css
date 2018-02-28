@@ -56,14 +56,6 @@
     width:85%;
 }
 
-.menu-open-tree {
-    cursor: pointer;
-}
-
-.menu-tree-nbsp {
-    margin-left: 20px;
-}
-
 .layui-form-label-show {
     float: left;
     display: block;
@@ -71,6 +63,20 @@
     font-weight: 400;
     text-align: left;
     color:#808080;
+}
+
+.layui-action {
+    cursor: pointer;
+}
+
+.toolbar {
+    margin-bottom: 10px;
+}
+
+.toolbar .toolbar-right {
+    position: absolute;
+    right: 15px;
+    line-height: 24px;
 }
 
 .image-upload{overflow:hidden;}

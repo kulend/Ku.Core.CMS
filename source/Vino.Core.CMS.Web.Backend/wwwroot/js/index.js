@@ -102,7 +102,8 @@
     $("#LAY-system-side-menu .layui-nav-item a").on("click", function () {
         if ($("#LAY_app").hasClass("layadmin-side-shrink")) {
             $(this).closest("li.layui-nav-item").addClass("layui-nav-itemed").siblings().removeClass("layui-nav-itemed");
-            $("#LAY_app").toggleClass("layadmin-side-shrink")
+            $("#LAY_app").toggleClass("layadmin-side-shrink");
+            $("#LAY_app_flexible").toggleClass("layui-icon-shrink-right layui-icon-spread-left");
         }
     });
 

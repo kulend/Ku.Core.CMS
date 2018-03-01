@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum.Mall;
@@ -100,8 +101,14 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         /// <summary>
         /// 商品属性
         /// </summary>
-        [MaxLength(2000)]
         [Display(Name = "商品属性")]
-        public string Properties { set; get; }
+        public List<ProductPropertyItem> Properties { set; get; }
+    }
+
+    public class ProductPropertyItem
+    {
+        public string Name { set; get; }
+
+        public string Value { set; get; }
     }
 }

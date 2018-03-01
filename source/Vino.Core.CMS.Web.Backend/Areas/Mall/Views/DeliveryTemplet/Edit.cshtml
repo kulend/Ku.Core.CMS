@@ -289,7 +289,7 @@
                     + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
                     + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
                     + '<td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>'
-                    + '';
+                    + '</tr>';
             } else {
                 rowHmtl = '<tr class="charge-config-item main" deliverable="true">'
                     + `<td rowspan="2"><span class="charge-config-location" data-items='${JSON.stringify(list)}'>${text}</span><button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon">&#xe642;</i>选择</button></td>`
@@ -297,11 +297,11 @@
                     + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)"></td>'
                     + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
                     + '<td rowspan="2"><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this, 2)">删除</button></td>'
-                    + '';
+                    + '</tr>';
                 rowHmtl += '<tr class="charge-config-item">'
                     + '<td><input type="text" name="input3" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)"></td>'
                     + '<td><input type="text" name="input4" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
-                    + '';
+                    + '</tr>';
             }
             $(thisObj).closest("fieldset").find(".charge-config-body").append(rowHmtl);
             form.render("checkbox");

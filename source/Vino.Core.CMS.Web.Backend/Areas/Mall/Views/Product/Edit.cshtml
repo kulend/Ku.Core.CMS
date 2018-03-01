@@ -15,14 +15,15 @@
     Layout = "~/Views/Shared/_WindowLayout.cshtml";
 }
 @using Vino.Core.CMS.Domain.Dto.Mall
+@using Vino.Core.CMS.Domain.Enum.Mall
 @model ProductDto
 <div class="layui-layout layui-layout-window">
-    @using (Html.BeginForm<ProductDto>("Save"))
+    @using (Html.BeginForm<ProductDto>("Save", new { auto_bind = "false" }))
     {
         <div class="layui-body">
             <div class="layui-tab">
                 <ul class="layui-tab-title">
-                    <li class="layui-this">商品信息</li>
+                    <li class="layui-this">基本信息</li>
                     <li>商品详情</li>
                 </ul>
                 <div class="layui-tab-content">
@@ -40,7 +41,57 @@
                         @Html.InputFor(x => x.OrderIndex)
                     </div>
                     <div class="layui-tab-item">
-                        @Html.InputFor(x => x.ContentType)
+                        @Html.InputFor(x => x.ContentType, new { lay_filter = "ContentType" })
+                        <div class="layui-form-item @(Model.ContentType == EmProductContentType.Text ? "" : "layui-hide")">
+                            <label class="layui-form-label">详情内容</label>
+                            <div id="ID_content_1" class="layui-input-block long">
+                                <textarea class="layui-textarea">@(Model.ContentType == EmProductContentType.Text ? Model.Content : "")</textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item @(Model.ContentType == EmProductContentType.RichText ? "" : "layui-hide")">
+                            <label class="layui-form-label">详情内容</label>
+                            <div id="ID_content_2" class="layui-input-block">
+                                @Html.Raw(Model.ContentType == EmProductContentType.RichText ? Model.Content : "")
+                            </div>
+                        </div>
+                        <div class="layui-form-item @(Model.ContentType == EmProductContentType.Picture ? "" : "layui-hide")">
+                            <label class="layui-form-label">详情图</label>
+                            <div id="ID_content_3" class="layui-input-block">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">商品属性</label>
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-xs" action="js:doSelectAttr()"><i class="layui-icon">&#xe608;</i>增加</button>
+                                <table id="ID_attrs_table" class="layui-table">
+                                    <colgroup>
+                                        <col width="40%">
+                                        <col width="40%">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>属性名</th>
+                                            <th>属性值</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Properties != null)
+                                        {
+                                            @foreach (var item in Model.Properties)
+                                            {
+                                            <tr>
+                                                <td>@item.Name</td>
+                                                <td><input type="text" name="input1" class="layui-input" value="@item.Value"></td>
+                                                <td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>
+                                            </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,16 +103,106 @@
     }
 </div>
 @section Scripts
-    {
+{
     <script src="~/js/vino/vino.image.picker.js"></script>
+    <script src="~/lib/wangEditor/wangEditor.js"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
+
             $("#ImageData").vinoImagePicker({
                 field_data: "ImageData",
                 max_count: 5
             });
+
             $("#ImageData").vinoImagePicker("loadData", '@Html.Raw(Model.ImageData)');
+
+            $("#ID_content_3").vinoImagePicker({
+                max_count: 10
+            });
+
+            if ($("input[name=ContentType]:checked").attr("key") === "Picture")
+            {
+                $("#ID_content_3").vinoImagePicker("loadData", '@Html.Raw(Model.Content)');
+            }
+
+            var E = window.wangEditor;
+            var editor = new E('#ID_content_2');
+            editor.create();
+
+            //监听事件
+            form.on('radio(ContentType)', function (item) {
+                var key = $(item.elem).attr("key");
+                if (key === "Text") {
+                    $("#ID_content_1").closest(".layui-form-item").removeClass("layui-hide");
+                    $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
+                } else if (key === "RichText") {
+                    $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_2").closest(".layui-form-item").removeClass("layui-hide");
+                    $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
+                }
+                else if (key === "Picture")
+                {
+                    $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_3").closest(".layui-form-item").removeClass("layui-hide");
+                }
+            });
+
+            _bindForm($("form"), {
+                onBefore: function (arr, $from, options) {
+                    var key = $("input[name=ContentType]:checked").attr("key");
+                    if (key === "Text") {
+                        arr.push({ name: "Content", value: $("#ID_content_1 textarea").val() });
+                    } else if (key === "RichText") {
+                        arr.push({ name: "Content", value: editor.txt.html() });
+                    }
+                    else if (key === "Picture") {
+                        arr.push({ name: "Content", value: JSON.stringify($("#ID_content_3").vinoImagePicker("getData")) });
+                    }
+                    //商品属性
+                    var properties = [];
+                    $("#ID_attrs_table tbody tr").each(function (index) {
+                        let name = $(this).find("td:first").text();
+                        let value = $(this).find("input[name=input1]").val();
+                        properties.push({ Name: name, Value: value });
+                        arr.push({ name: `Properties[${index}][Name]`, value: name });
+                        arr.push({ name: `Properties[${index}][Value]`, value: value });
+                    });
+                    
+                    console.log(arr);
+                    return true;
+                }
+            });
         });
+
+        function doSelectAttr() {
+            var sel = [];
+            $("#ID_attrs_table tbody tr").each(function () {
+                var name = $(this).find("td:first").text();
+                if (name)
+                { 
+                    sel.push(name);
+                }
+            });
+            OpenWindow("选择商品属性", `/Mall/Product/AttrSelect?sel=${encodeURI(sel.join(','))}`, null, function (items) {
+                if (items) {
+                    for (var i = 0; i < items.length; i++) {
+                        let item = items[i];
+                        var rowHmtl = '<tr>'
+                            + `<td>${item.name}</td>`
+                            + '<td><input type="text" name="input1" class="layui-input"></td>'
+                            + '<td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>'
+                            + '</tr>';
+                        $("#ID_attrs_table tbody").append(rowHmtl);
+                    }
+                }
+            });
+        }
+
+        function removeRow(thisObj) { 
+            $(thisObj).closest("tr").remove();
+        }
     </script>
 }

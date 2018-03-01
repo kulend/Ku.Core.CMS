@@ -30,5 +30,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\lib\data_location\" />
     <Folder Include="wwwroot\lib\layui-admin\" />
+    <Folder Include="wwwroot\lib\新文件夹\" />
   </ItemGroup>
 </Project>

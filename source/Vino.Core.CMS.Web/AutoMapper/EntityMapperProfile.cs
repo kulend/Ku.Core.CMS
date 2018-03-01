@@ -63,8 +63,12 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.Mall.PaymentDto, Domain.Entity.Mall.Payment>().ForMember(x=>x.PaymentConfig, opt=> {
                 opt.ResolveUsing<JsonSerializeResolver, object>(x => x.PaymentConfig);
             });
-            CreateMap<Domain.Entity.Mall.Product, Domain.Dto.Mall.ProductDto>();
-            CreateMap<Domain.Dto.Mall.ProductDto, Domain.Entity.Mall.Product>();
+            CreateMap<Domain.Entity.Mall.Product, Domain.Dto.Mall.ProductDto>().ForMember(x => x.Properties, opt => {
+                opt.ResolveUsing<JsonDeserializeResolver<List<Domain.Dto.Mall.ProductPropertyItem>>, string>(x => x.Properties);
+            });
+            CreateMap<Domain.Dto.Mall.ProductDto, Domain.Entity.Mall.Product>().ForMember(x => x.Properties, opt => {
+                opt.ResolveUsing<JsonSerializeResolver, object>(x => x.Properties);
+            });
             CreateMap<Domain.Entity.Mall.ProductSku, Domain.Dto.Mall.ProductSkuDto>();
             CreateMap<Domain.Dto.Mall.ProductSkuDto, Domain.Entity.Mall.ProductSku>();
         }
@@ -73,6 +77,10 @@ namespace Vino.Core.CMS.Web.AutoMapper
         {
             public string Resolve(object source, object destination, object sourceMember, string destMember, ResolutionContext context)
             {
+                if (sourceMember == null)
+                {
+                    return null;
+                }
                 return JsonConvert.SerializeObject(sourceMember);
             }
         }
@@ -83,6 +91,10 @@ namespace Vino.Core.CMS.Web.AutoMapper
             {
                 if (context.Items.ContainsKey("JsonDeserializeIgnore") 
                     && (bool)context.Items["JsonDeserializeIgnore"])
+                {
+                    return default(T);
+                }
+                if (sourceMember == null)
                 {
                     return default(T);
                 }

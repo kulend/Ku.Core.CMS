@@ -32,6 +32,13 @@
             $("#list").vinoGrid({
                 url: 'GetList',
                 cols: [[
+                    { field: 'Status', title: '状态', width: 100, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
+                    { field: 'Name', title: '名称', width: 170 },
+                    { field: 'Title', title: '标题', width: 170 },
+                    { field: 'PriceRange', title: '价格', width: 80, align: 'right'},
+                    { field: 'Stock', title: '库存', width: 70, align: 'right'},
+                    { field: 'Sales', title: '销量', width: 70, align: 'right' },
+                    { field: 'OrderIndex', title: '排序', width: 70, align: 'center'},
                     { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
                     {
                         title: '操作', fixed: 'right', width: 160, align: 'center',

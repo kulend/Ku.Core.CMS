@@ -88,5 +88,14 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             await _service.DeleteAsync(id);
             return JsonData(true);
         }
+
+        /// <summary>
+        /// 商品属性选择
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> AttrSelect()
+        {
+            return View();
+        }
     }
 }

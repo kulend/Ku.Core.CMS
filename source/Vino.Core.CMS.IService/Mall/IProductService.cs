@@ -48,7 +48,7 @@ namespace Vino.Core.CMS.IService.Mall
         /// <summary>
         /// 保存数据
         /// </summary>
-        Task SaveAsync(ProductDto dto);
+        Task SaveAsync(ProductDto dto, List<ProductSkuDto> skus);
 
         /// <summary>
         /// 删除数据

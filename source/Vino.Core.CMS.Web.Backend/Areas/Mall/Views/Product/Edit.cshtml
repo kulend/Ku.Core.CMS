@@ -20,10 +20,12 @@
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<ProductDto>("Save", new { auto_bind = "false" }))
     {
+        <input type="hidden" name="EditID" value="@ViewData["EditID"]" />
         <div class="layui-body">
             <div class="layui-tab">
                 <ul class="layui-tab-title">
                     <li class="layui-this">基本信息</li>
+                    <li>销售SKU</li>
                     <li>商品详情</li>
                 </ul>
                 <div class="layui-tab-content">
@@ -39,6 +41,10 @@
                             </div>
                         </div>
                         @Html.InputFor(x => x.OrderIndex)
+                    </div>
+                    <div class="layui-tab-item layui-show">
+                        <button type="button" class="layui-btn layui-btn-xs" action="js:doAddSku()"><i class="layui-icon">&#xe608;</i>增加</button>
+                        <table id="ID_sku_table"></table>
                     </div>
                     <div class="layui-tab-item">
                         @Html.InputFor(x => x.ContentType, new { lay_filter = "ContentType" })
@@ -81,11 +87,11 @@
                                         {
                                             @foreach (var item in Model.Properties)
                                             {
-                                            <tr>
-                                                <td>@item.Name</td>
-                                                <td><input type="text" name="input1" class="layui-input" value="@item.Value"></td>
-                                                <td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>
-                                            </tr>
+                                                <tr>
+                                                    <td>@item.Name</td>
+                                                    <td><input type="text" name="input1" class="layui-input" value="@item.Value"></td>
+                                                    <td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>
+                                                </tr>
                                             }
                                         }
                                     </tbody>
@@ -103,9 +109,11 @@
     }
 </div>
 @section Scripts
-{
+    {
     <script src="~/js/vino/vino.image.picker.js"></script>
     <script src="~/lib/wangEditor/wangEditor.js"></script>
+    <script src="~/js/vino/vino.grid.js" asp-append-version="true"></script>
+    <script src="~/js/vino/vino.grid.ext.js" asp-append-version="true"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
@@ -170,10 +178,32 @@
                         arr.push({ name: `Properties[${index}][Name]`, value: name });
                         arr.push({ name: `Properties[${index}][Value]`, value: value });
                     });
-                    
-                    console.log(arr);
                     return true;
                 }
+            });
+
+            $("#ID_sku_table").vinoGrid({
+                url: 'GetSkuList?EditID=@ViewData["EditID"]',
+                page: false,
+                checkbox: false,
+                rownumber:false,
+                cols: [[
+                    { field: 'Name', title: '名称', width: 140 },
+                    { field: 'Title', title: '标题', width: 140 },
+                    { field: 'Status', title: '状态', width: 70, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
+                    { field: 'Price', title: '价格', width: 65, align: 'right' },
+                    { field: 'Stock', title: '库存', width: 65, align: 'right' },
+                    { field: 'Sales', title: '销量', width: 65, align: 'right' },
+                    { field: 'OrderIndex', title: '排序', width: 65, align: 'center' },
+                    { field: 'CreateTime', title: '创建时间', width: 150, align: 'center' },
+                    {
+                        title: '操作', fixed: 'right', width: 120, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "", title: "编辑", action: `window:/Mall/Product/SkuEdit?id={{d.Id}}&EditID=@ViewData["EditID"]` },
+                            { code: "", title: "删除", action: `post:SkuDelete?id={{d.Id}}&EditID=@ViewData["EditID"]`, css:"layui-btn-danger" }
+                        ])
+                    }
+                ]]
             });
         });
 
@@ -182,7 +212,7 @@
             $("#ID_attrs_table tbody tr").each(function () {
                 var name = $(this).find("td:first").text();
                 if (name)
-                { 
+                {
                     sel.push(name);
                 }
             });
@@ -201,8 +231,14 @@
             });
         }
 
-        function removeRow(thisObj) { 
+        function removeRow(thisObj) {
             $(thisObj).closest("tr").remove();
+        }
+
+        function doAddSku() {
+            OpenWindow("添加商品SKU", `/Mall/Product/SkuEdit?EditID=@ViewData["EditID"]`, null, function () {
+                $("#ID_sku_table").vinoGrid("reload");
+            });
         }
     </script>
 }

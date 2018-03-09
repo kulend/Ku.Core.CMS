@@ -11,6 +11,8 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Vino.Core.CMS.Domain.Enum;
+using Vino.Core.CMS.Domain.Enum.Mall;
 using Vino.Core.Infrastructure.Attributes;
 using Vino.Core.Infrastructure.Data;
 
@@ -23,6 +25,12 @@ namespace Vino.Core.CMS.Domain.Entity.Mall
         public long ProductId { set; get; }
 
         public Product Product { set; get; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        [Display(Name = "状态")]
+        public EmProductSkuStatus Status { set; get; }
 
         /// <summary>
         /// 名称
@@ -74,10 +82,13 @@ namespace Vino.Core.CMS.Domain.Entity.Mall
         /// </summary>
         [Display(Name = "排序值")]
         public int OrderIndex { set; get; }
+
+        [NotMapped]
+        public EmEntityModifyStatus ModifyStatus { set; get; } = EmEntityModifyStatus.UnChange;
     }
 
     public class ProductSkuSearch : BaseSearch<ProductSku>
     {
-
+        public long? ProductId { set; get; }
     }
 }

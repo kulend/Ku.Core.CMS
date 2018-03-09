@@ -17,12 +17,13 @@
     @RenderSection("Css", required: false)
     <environment names="Development">
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/window.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/window.css" asp-append-version="true" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/window.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/window.min.css" asp-append-version="true" />
     </environment>
+    @await Component.InvokeAsync("AuthCodeJs")
 </head>
 <body>
 

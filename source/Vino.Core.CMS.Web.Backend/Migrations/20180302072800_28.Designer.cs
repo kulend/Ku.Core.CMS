@@ -17,9 +17,10 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180302072800_28")]
+    partial class _28
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,10 +156,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<DateTime?>("EffectiveTime");
-
-                    b.Property<DateTime?>("ExpireTime");
-
                     b.Property<string>("ImageData")
                         .HasMaxLength(3000);
 
@@ -167,15 +164,11 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<bool>("IsSnapshot");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128);
 
                     b.Property<int>("OrderIndex");
-
-                    b.Property<long?>("OriginId");
 
                     b.Property<string>("PriceRange")
                         .HasMaxLength(32);
@@ -184,8 +177,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                         .HasMaxLength(2000);
 
                     b.Property<int>("Sales");
-
-                    b.Property<int>("SnapshotCount");
 
                     b.Property<short>("Status");
 

@@ -1,0 +1,58 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Edit.cshtml
+// 功能描述：商品SKU 新增&编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-24 10:50
+//
+//----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.Mall
+@model ProductSkuDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<ProductSkuDto>("SkuSave"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.ProductId)
+        @Html.InputFor(x => x.Status)
+        @Html.InputFor(x => x.Name)
+        @Html.InputFor(x => x.Title)
+        <div class="layui-form-item">
+            <label class="layui-form-label">主图</label>
+            <div id="CoverImage" class="layui-input-block">
+            </div>
+        </div>
+        @Html.InputFor(x => x.Price)
+        @Html.InputFor(x => x.MarketPrice)
+        @Html.InputFor(x => x.Stock)
+        @Html.InputFor(x => x.OrderIndex)
+    </div>
+    <div class="layui-footer">
+        @Html.HiddenFor(x => x.CreateTime)
+        <input type="hidden" name="EditID" value="@ViewData["EditID"]" />
+        @Html.ActionsForSubmitAndClose()
+    </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            $("#CoverImage").vinoImagePicker({
+                field_data: "CoverImage",
+                max_count: 1
+            });
+            $("#CoverImage").vinoImagePicker("loadData", '@Html.Raw(Model.CoverImage)');
+        });
+    </script>
+    }

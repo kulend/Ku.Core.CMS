@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -103,6 +104,35 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         /// </summary>
         [Display(Name = "商品属性")]
         public List<ProductPropertyItem> Properties { set; get; }
+
+        /// <summary>
+        /// 是否快照
+        /// </summary>
+        [Display(Name = "是否快照", Prompt = "是|否")]
+        public bool IsSnapshot { set; get; } = false;
+
+        /// <summary>
+        /// 快照数
+        /// </summary>
+        [Display(Name = "快照数")]
+        public int SnapshotCount { set; get; }
+
+        #region 快照数据
+
+        [Display(Name = "生效时间")]
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
+        public DateTime? EffectiveTime { set; get; }
+
+        [Display(Name = "失效时间")]
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
+        public DateTime? ExpireTime { set; get; }
+
+        /// <summary>
+        /// 原ID
+        /// </summary>
+        public long? OriginId { set; get; }
+
+        #endregion
     }
 
     public class ProductPropertyItem

@@ -12,6 +12,7 @@
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Mall;
 using Vino.Core.CMS.Domain.Dto.Mall;
@@ -26,12 +27,14 @@ namespace Vino.Core.CMS.Service.Mall
     public partial class ProductService : BaseService, IProductService
     {
         protected readonly IProductRepository _repository;
+        protected readonly IProductSkuRepository _skuRepository;
 
         #region 构造函数
 
-        public ProductService(IProductRepository repository)
+        public ProductService(IProductRepository repository, IProductSkuRepository skuRepository)
         {
             this._repository = repository;
+            this._skuRepository = skuRepository;
         }
 
         #endregion
@@ -47,7 +50,9 @@ namespace Vino.Core.CMS.Service.Mall
         public async Task<List<ProductDto>> GetListAsync(ProductSearch where, string sort)
         {
             var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<ProductDto>>(data);
+            return Mapper.Map<List<ProductDto>>(data, opt => {
+                opt.Items.Add("JsonDeserializeIgnore", true);
+            });
         }
 
         /// <summary>
@@ -77,31 +82,133 @@ namespace Vino.Core.CMS.Service.Mall
         /// <summary>
         /// 保存数据
         /// </summary>
-        public async Task SaveAsync(ProductDto dto)
+        public async Task SaveAsync(ProductDto dto, List<ProductSkuDto> skus)
         {
             Product model = Mapper.Map<Product>(dto);
+            List<ProductSku> skuList = Mapper.Map<List<ProductSku>>(skus);
+            if (skuList == null || skuList.Count == 0)
+            {
+                throw new VinoDataNotFoundException("至少添加一项商品SKU！");
+            }
             if (model.Id == 0)
             {
                 //新增
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
+                model.Sales = 0;
+                model.Visits = 0;
                 model.IsDeleted = false;
-                await _repository.InsertAsync(model);
+                model.IsSnapshot = false;
+                model.SnapshotCount = 0;
+                model.OriginId = null;
+                model.EffectiveTime = DateTime.Now;
+
+                foreach (var item in skuList)
+                {
+                    item.ProductId = model.Id;
+                    item.CreateTime = DateTime.Now;
+                    item.IsDeleted = false;
+                    item.Sales = 0;
+                }
+                model.Stock = skuList.Sum(x => x.Stock);
+                var maxPrice = skuList.Max(x => x.Price);
+                var minPrice = skuList.Min(x => x.Price);
+                if (maxPrice == minPrice)
+                {
+                    model.PriceRange = maxPrice + "";
+                }
+                else
+                {
+                    model.PriceRange = minPrice + "~" + maxPrice;
+                }
+
+                using (var trans = await _repository.BeginTransactionAsync())
+                {
+                    await _repository.InsertAsync(model);
+                    await _skuRepository.InsertRangeAsync(skuList);
+                    await _repository.SaveAsync();
+                }
             }
             else
             {
                 //更新
                 var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                if (item == null || item.IsDeleted)
                 {
                     throw new VinoDataNotFoundException("无法取得商品数据！");
                 }
+                if (item.IsSnapshot)
+                {
+                    throw new VinoDataNotFoundException("快照数据无法修改！");
+                }
+                model.Stock = skuList.Sum(x => x.Stock);
+                var maxPrice = skuList.Max(x => x.Price);
+                var minPrice = skuList.Min(x => x.Price);
+                if (maxPrice == minPrice)
+                {
+                    model.PriceRange = maxPrice + "";
+                }
+                else
+                {
+                    model.PriceRange = minPrice + "~" + maxPrice;
+                }
 
-                //TODO:这里进行赋值
+                item.Status = model.Status;
+                item.Name = model.Name;
+                item.Title = model.Title;
+                item.Intro = model.Intro;
+                item.ImageData = model.ImageData;
+                item.ContentType = model.ContentType;
+                item.Content = model.Content;
+                item.PriceRange = model.PriceRange;
+                item.Stock = model.Stock;
+                item.OrderIndex = model.OrderIndex;
+                item.Properties = model.Properties;
 
-                _repository.Update(item);
+                //var search = new ProductSkuSearch { ProductId = item.Id };
+                //var skuItems = await _skuRepository.QueryAsync(search.GetExpression(), null);
+
+                using (var trans = await _repository.BeginTransactionAsync())
+                {
+                    //新增
+                    var newSkus = skuList.Where(x => x.ModifyStatus == Domain.Enum.EmEntityModifyStatus.Insert);
+                    foreach (var sku in newSkus)
+                    {
+                        sku.ProductId = item.Id;
+                        sku.CreateTime = DateTime.Now;
+                        sku.IsDeleted = false;
+                        sku.Sales = 0;
+                    }
+                    await _skuRepository.InsertRangeAsync(newSkus.ToList());
+
+                    //删除
+                    foreach (var sku in skuList.Where(x => x.ModifyStatus == Domain.Enum.EmEntityModifyStatus.Delete))
+                    {
+                        await _skuRepository.DeleteAsync(sku.Id);
+                    }
+                    //更新
+                    foreach (var sku in skuList.Where(x => x.ModifyStatus == Domain.Enum.EmEntityModifyStatus.Update))
+                    {
+                        var skuItem = _skuRepository.GetById(sku.Id);
+                        if (skuItem == null || skuItem.IsDeleted)
+                        {
+                            trans.Rollback();
+                            throw new VinoDataNotFoundException("SKU数据无法取得！");
+                        }
+                        skuItem.Name = sku.Name;
+                        skuItem.Title = sku.Title;
+                        skuItem.CoverImage = sku.CoverImage;
+                        skuItem.Price = sku.Price;
+                        skuItem.MarketPrice = sku.MarketPrice;
+                        skuItem.Stock = sku.Stock;
+                        skuItem.OrderIndex = sku.OrderIndex;
+                        _skuRepository.Update(skuItem);
+                    }
+
+                    _repository.Update(item);
+                    await _repository.SaveAsync();
+                }
             }
-            await _repository.SaveAsync();
         }
 
         /// <summary>

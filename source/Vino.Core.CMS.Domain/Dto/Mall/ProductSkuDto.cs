@@ -11,6 +11,8 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Vino.Core.CMS.Domain.Enum;
+using Vino.Core.CMS.Domain.Enum.Mall;
 using Vino.Core.Infrastructure.Attributes;
 using Vino.Core.Infrastructure.Data;
 
@@ -18,9 +20,16 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
 {
     public class ProductSkuDto : BaseDto
     {
+        [DataType("Hidden")]
         public long ProductId { set; get; }
 
         public ProductDto Product { set; get; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        [Display(Name = "状态")]
+        public EmProductSkuStatus Status { set; get; } = EmProductSkuStatus.OnSale;
 
         /// <summary>
         /// 名称
@@ -72,5 +81,7 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         /// </summary>
         [Display(Name = "排序值")]
         public int OrderIndex { set; get; }
+
+        public EmEntityModifyStatus ModifyStatus { set; get; } = EmEntityModifyStatus.UnChange;
     }
 }

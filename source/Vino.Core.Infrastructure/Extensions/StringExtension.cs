@@ -179,5 +179,25 @@ namespace Vino.Core.Infrastructure.Extensions
 
             return self.Replace(oldValue, newValue);
         }
+
+        /// <summary>
+        /// 比较
+        /// </summary>
+        /// <returns></returns>
+        public static bool Eq(this string self, string value)
+        {
+            if (self == null) return value == null;
+            return self.Equals(value);
+        }
+
+        /// <summary>
+        /// 比较
+        /// </summary>
+        /// <returns></returns>
+        public static bool NotEq(this string self, string value)
+        {
+            if (self == null) return value != null;
+            return !self.Equals(value);
+        }
     }
 }

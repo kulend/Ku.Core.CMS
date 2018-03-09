@@ -20,6 +20,9 @@ using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.CMS.Domain.Dto.Mall;
 using Vino.Core.CMS.IService.Mall;
 using Vino.Core.CMS.Domain.Entity.Mall;
+using Vino.Core.Cache;
+using Vino.Core.CMS.Domain;
+using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
 {
@@ -28,10 +31,14 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
     public class ProductController : BackendController
     {
         private readonly IProductService _service;
+        private readonly IProductSkuService _skuService;
+        private ICacheService _cacheService;
 
-        public ProductController(IProductService service)
+        public ProductController(IProductService service, IProductSkuService skuService, ICacheService cacheService)
         {
             this._service = service;
+            this._skuService = skuService;
+            this._cacheService = cacheService;
         }
 
         [Auth("view")]
@@ -50,6 +57,10 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
         [Auth("edit")]
         public async Task<IActionResult> Edit(long? id)
         {
+            //生成编辑ID，sku变动时根据此ID来操作缓存数据
+            var EditID = ID.NewID();
+            ViewData["EditID"] = EditID;
+
             if (id.HasValue)
             {
                 //编辑
@@ -58,6 +69,18 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
                 {
                     throw new VinoDataNotFoundException("无法取得数据!");
                 }
+
+                //取得所有sku并保存到缓存
+                ProductSkuSearch where = new ProductSkuSearch();
+                where.ProductId = model.Id;
+                var skus = await _skuService.GetListAsync(where, null);
+                if (skus == null)
+                {
+                    skus = new List<ProductSkuDto>();
+                }
+                var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
+                _cacheService.Add(cacheKey, skus, new TimeSpan(10, 0, 0));
+
                 ViewData["Mode"] = "Edit";
                 return View(model);
             }
@@ -70,14 +93,114 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             }
         }
 
+        #region SKU编辑
+
+        [Auth("edit")]
+        public async Task<IActionResult> GetSkuList(int page, int rows, long EditID)
+        {
+            var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
+            var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+            if (list == null)
+            {
+                list = new List<ProductSkuDto>();
+            }
+            return PagerData(list, 1, 99, list.Count);
+        }
+
+        [Auth("edit")]
+        public async Task<IActionResult> SkuEdit(long? id, long EditID)
+        {
+            ViewData["EditID"] = EditID;
+
+            if (id.HasValue)
+            {
+                //编辑
+                //从缓存获取
+                var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
+                var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+                if (list == null)
+                {
+                    list = new List<ProductSkuDto>();
+                }
+                var model = list.SingleOrDefault(x => x.Id == id);
+                if (model == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得数据!");
+                }
+                ViewData["Mode"] = "Edit";
+                return View(model);
+            }
+            else
+            {
+                //新增
+                ProductSkuDto dto = new ProductSkuDto();
+                ViewData["Mode"] = "Add";
+                return View(dto);
+            }
+        }
+
+        /// <summary>
+        /// 保存SKU
+        /// </summary>
+        [HttpPost]
+        [Auth("edit")]
+        public async Task<IActionResult> SkuSave(ProductSkuDto model, long EditID)
+        {
+            //临时SKU数据，保存到缓存中
+            var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
+            var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+            if (list == null)
+            {
+                list = new List<ProductSkuDto>();
+            }
+            //TODO
+            if (model.Id == 0)
+            {
+                model.Id = ID.NewID();
+                model.CreateTime = DateTime.Now;
+                list.Add(model);
+            }
+            else
+            {
+                var index = list.FindIndex(x => x.Id == model.Id);
+                list[index] = model;
+            }
+            _cacheService.Add(cacheKey, list, new TimeSpan(10, 0, 0));
+            return JsonData(true);
+        }
+
+        [HttpPost]
+        [Auth("edit")]
+        public async Task<IActionResult> SkuDelete(long id, long EditID)
+        {
+            var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
+            var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+            if (list == null)
+            {
+                list = new List<ProductSkuDto>();
+            }
+            var index = list.FindIndex(x => x.Id == id);
+            if (index >= 0)
+            {
+                list.RemoveAt(index);
+            }
+            _cacheService.Add(cacheKey, list, new TimeSpan(10, 0, 0));
+            return JsonData(true);
+        }
+
+        #endregion
+
         /// <summary>
         /// 保存
         /// </summary>
         [HttpPost]
         [Auth("edit")]
-        public async Task<IActionResult> Save(ProductDto model)
+        public async Task<IActionResult> Save(ProductDto model, long EditID)
         {
-            await _service.SaveAsync(model);
+            var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
+            var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+
+            await _service.SaveAsync(model, list);
             return JsonData(true);
         }
 
@@ -97,5 +220,6 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
         {
             return View();
         }
+
     }
 }

@@ -80,6 +80,8 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         /// </summary>
         public long? OriginId { set; get; }
 
+        #endregion
+
         public QuantityConfigModel QuantityChargeConfigObj
         {
             get {
@@ -178,7 +180,6 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
             public string Code { set; get; }
             public string Name { set; get; }
         }
-        
-        #endregion
+
     }
 }

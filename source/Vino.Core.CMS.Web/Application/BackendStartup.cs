@@ -33,6 +33,8 @@ namespace Vino.Core.CMS.Web.Application
             //使用Layui
             services.AddLayui(opt => {
                 opt.ActionsInFormItem = false;
+                opt.ActionTagTheme = "layui-btn-primary";
+                opt.ActionTagSize = "layui-btn-sm";
             });
 
             services.AddMvc(opts =>

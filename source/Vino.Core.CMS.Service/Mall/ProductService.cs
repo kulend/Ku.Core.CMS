@@ -127,6 +127,7 @@ namespace Vino.Core.CMS.Service.Mall
                     await _repository.InsertAsync(model);
                     await _skuRepository.InsertRangeAsync(skuList);
                     await _repository.SaveAsync();
+                    trans.Commit();
                 }
             }
             else
@@ -141,35 +142,63 @@ namespace Vino.Core.CMS.Service.Mall
                 {
                     throw new VinoDataNotFoundException("快照数据无法修改！");
                 }
-                model.Stock = skuList.Sum(x => x.Stock);
-                var maxPrice = skuList.Max(x => x.Price);
-                var minPrice = skuList.Min(x => x.Price);
-                if (maxPrice == minPrice)
-                {
-                    model.PriceRange = maxPrice + "";
-                }
-                else
-                {
-                    model.PriceRange = minPrice + "~" + maxPrice;
-                }
-
-                item.Status = model.Status;
-                item.Name = model.Name;
-                item.Title = model.Title;
-                item.Intro = model.Intro;
-                item.ImageData = model.ImageData;
-                item.ContentType = model.ContentType;
-                item.Content = model.Content;
-                item.PriceRange = model.PriceRange;
-                item.Stock = model.Stock;
-                item.OrderIndex = model.OrderIndex;
-                item.Properties = model.Properties;
-
-                //var search = new ProductSkuSearch { ProductId = item.Id };
-                //var skuItems = await _skuRepository.QueryAsync(search.GetExpression(), null);
 
                 using (var trans = await _repository.BeginTransactionAsync())
                 {
+                    //生成快照
+                    Product snapshot = item.Copy();
+                    snapshot.Id = ID.NewID();
+                    snapshot.IsDeleted = false;
+                    snapshot.CreateTime = DateTime.Now;
+                    snapshot.ExpireTime = DateTime.Now;
+                    snapshot.IsSnapshot = true;
+                    snapshot.OriginId = item.OriginId;
+                    await _repository.InsertAsync(snapshot);
+
+                    //var search = new ProductSkuSearch { ProductId = item.Id };
+                    //包含已删除数据
+                    var skuItems = await _skuRepository.QueryAsync((x=>x.ProductId == item.Id), null, null);
+                    var snapshotSkus = new List<ProductSku>();
+                    foreach (var sku in skuItems)
+                    {
+                        ProductSku snapshotSku = sku.Copy();
+                        snapshotSku.Id = ID.NewID();
+                        snapshotSku.ProductId = snapshot.Id;
+                        snapshotSkus.Add(snapshotSku);
+                    }
+                    await _skuRepository.InsertRangeAsync(snapshotSkus);
+                    //end
+
+                    model.Stock = skuList.Sum(x => x.Stock);
+                    var maxPrice = skuList.Max(x => x.Price);
+                    var minPrice = skuList.Min(x => x.Price);
+                    if (maxPrice == minPrice)
+                    {
+                        model.PriceRange = maxPrice + "";
+                    }
+                    else
+                    {
+                        model.PriceRange = minPrice + "~" + maxPrice;
+                    }
+
+                    item.Status = model.Status;
+                    item.Name = model.Name;
+                    item.Title = model.Title;
+                    item.Intro = model.Intro;
+                    item.ImageData = model.ImageData;
+                    item.ContentType = model.ContentType;
+                    item.Content = model.Content;
+                    item.PriceRange = model.PriceRange;
+                    item.Stock = model.Stock;
+                    item.OrderIndex = model.OrderIndex;
+                    item.Properties = model.Properties;
+
+                    item.SnapshotCount = item.SnapshotCount + 1;
+                    item.EffectiveTime = DateTime.Now;
+
+                    //var search = new ProductSkuSearch { ProductId = item.Id };
+                    //var skuItems = await _skuRepository.QueryAsync(search.GetExpression(), null);
+
                     //新增
                     var newSkus = skuList.Where(x => x.ModifyStatus == Domain.Enum.EmEntityModifyStatus.Insert);
                     foreach (var sku in newSkus)
@@ -207,6 +236,7 @@ namespace Vino.Core.CMS.Service.Mall
 
                     _repository.Update(item);
                     await _repository.SaveAsync();
+                    trans.Commit();
                 }
             }
         }

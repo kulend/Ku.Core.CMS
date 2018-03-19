@@ -50,6 +50,14 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows, ProductSearch where)
         {
+            if (where == null)
+            {
+                where = new ProductSearch { IsDeleted = false};
+            }
+            if (!where.IsSnapshot.HasValue)
+            {
+                where.IsSnapshot = false;
+            }
             var data = await _service.GetListAsync(page, rows, where, null);
             return PagerData(data.items, page, rows, data.count);
         }
@@ -78,6 +86,10 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
                 {
                     skus = new List<ProductSkuDto>();
                 }
+                foreach (var sku in skus)
+                {
+                    sku.ModifyStatus = Domain.Enum.EmEntityModifyStatus.UnChange;
+                }
                 var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
                 _cacheService.Add(cacheKey, skus, new TimeSpan(10, 0, 0));
 
@@ -104,7 +116,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             {
                 list = new List<ProductSkuDto>();
             }
-            return PagerData(list, 1, 99, list.Count);
+            return PagerData(list.Where(x=>x.ModifyStatus != Domain.Enum.EmEntityModifyStatus.Delete), 1, 99, list.Count);
         }
 
         [Auth("edit")]
@@ -158,11 +170,18 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             {
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
+                model.ModifyStatus = Domain.Enum.EmEntityModifyStatus.Insert;
                 list.Add(model);
             }
             else
             {
                 var index = list.FindIndex(x => x.Id == model.Id);
+                var savedItem = list[index];
+                model.ModifyStatus = savedItem.ModifyStatus;
+                if (model.ModifyStatus != Domain.Enum.EmEntityModifyStatus.Insert)
+                {
+                    model.ModifyStatus = Domain.Enum.EmEntityModifyStatus.Update;
+                }
                 list[index] = model;
             }
             _cacheService.Add(cacheKey, list, new TimeSpan(10, 0, 0));
@@ -179,10 +198,17 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             {
                 list = new List<ProductSkuDto>();
             }
-            var index = list.FindIndex(x => x.Id == id);
-            if (index >= 0)
+            var item = list.SingleOrDefault(x => x.Id == id);
+            if (item != null)
             {
-                list.RemoveAt(index);
+                if (item.ModifyStatus == Domain.Enum.EmEntityModifyStatus.Insert)
+                {
+                    list.Remove(item);
+                }
+                else
+                {
+                    item.ModifyStatus = Domain.Enum.EmEntityModifyStatus.Delete;
+                }
             }
             _cacheService.Add(cacheKey, list, new TimeSpan(10, 0, 0));
             return JsonData(true);

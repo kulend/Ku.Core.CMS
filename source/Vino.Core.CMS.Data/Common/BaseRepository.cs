@@ -117,10 +117,6 @@ namespace Vino.Core.CMS.Data.Common
         public async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> where, string order, Expression<Func<TEntity, object>>[] includes)
         {
             var query = Table.AsQueryable();
-            if (where != null)
-            {
-                query = query.Where(where);
-            }
 
             if (includes != null && includes.Length > 0)
             {
@@ -130,9 +126,13 @@ namespace Vino.Core.CMS.Data.Common
                 }
             }
 
-            //处理有IsDelete字段表
-            if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
+            if (where != null)
             {
+                query = query.Where(where);
+            }
+            else if(typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
+            {
+                //处理有IsDelete字段表
                 query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
             }
 
@@ -352,10 +352,9 @@ namespace Vino.Core.CMS.Data.Common
             if (where != null)
             {
                 query = query.Where(where);
-            }
-            //处理有IsDelete字段表
-            if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
+            } else if (typeof(BaseProtectedEntity).IsAssignableFrom(typeof(TEntity)))
             {
+                //处理有IsDelete字段表
                 query = query.Where(x => !(x as BaseProtectedEntity).IsDeleted);
             }
 

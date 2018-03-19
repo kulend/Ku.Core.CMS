@@ -135,6 +135,6 @@ namespace Vino.Core.CMS.Domain.Entity.Mall
 
     public class ProductSearch : BaseSearch<Product>
     {
-
+        public bool? IsSnapshot { set; get; }
     }
 }

@@ -15,40 +15,92 @@
 }
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-card-header">商品列表</div>
-        <div class="layui-card-body">
-            <div class="toolbar">
-                <action auth-code="mall.payment.edit" text="添加" size="sm" icon="&#xe608;" action="window:/Mall/Product/Edit" after="gridReload()" />
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+        <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+            <ul class="layui-tab-title">
+                <li lay-id="list" class="layui-this">商品列表</li>
+                <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="toolbar">
+                        <action text="" icon="&#x1002;" action="javascript:gridReload()" />
+                        <action auth-code="mall.product.edit" text="新增" icon="&#xe608;" action="window:/Mall/Product/Edit" after="gridReload()" />
+                        <action auth-code="mall.product.delete" text="批量删除" icon="&#xe640;" action="window:/Mall/Product/Edit" after="gridReload()" />
+                    </div>
+                    <table id="list"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" action="javascript:gridReload()" />
+                        <action auth-code="mall.product.delete" text="批量恢复" icon="&#xe65c;" action="window:/Mall/Product/Edit" after="gridReload()" />
+                    </div>
+                    <table id="recycles"></table>
+                </div>
             </div>
-            <table id="list"></table>
         </div>
     </div>
 </div>
 @section Scripts
 {
-    <script>
-        $(function () {
-            $("#list").vinoGrid({
-                url: 'GetList',
-                cols: [[
-                    { field: 'Status', title: '状态', width: 100, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
-                    { field: 'Name', title: '名称', width: 170 },
-                    { field: 'Title', title: '标题', width: 170 },
-                    { field: 'PriceRange', title: '价格', width: 80, align: 'right'},
-                    { field: 'Stock', title: '库存', width: 70, align: 'right'},
-                    { field: 'Sales', title: '销量', width: 70, align: 'right' },
-                    { field: 'OrderIndex', title: '排序', width: 70, align: 'center'},
-                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
-                    {
-                        title: '操作', fixed: 'right', width: 160, align: 'center',
-                        toolbar: grid_templet_operate([
-                            { code: "mall.product.edit", title: "编辑", action: `window:/Mall/Product/Edit?id={{d.Id}}` },
-                            { code: "mall.product.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
-                        ])
-                    }
-                ]]
-            });
+<script>
+    layui.use(['element'], function () {
+        var element = layui.element;
+
+        $("#list").vinoGrid({
+            url: 'GetList',
+            cols: [[
+                { field: 'Status', title: '状态', width: 100, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
+                { field: 'Name', title: '名称', width: 170 },
+                { field: 'Title', title: '标题', width: 170 },
+                { field: 'PriceRange', title: '价格', width: 120, align: 'right' },
+                { field: 'Stock', title: '库存', width: 70, align: 'right' },
+                { field: 'Sales', title: '销量', width: 70, align: 'right' },
+                { field: 'OrderIndex', title: '排序', width: 70, align: 'center' },
+                { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
+                {
+                    title: '操作', fixed: 'right', width: 160, align: 'center',
+                    toolbar: grid_templet_operate([
+                        { code: "mall.product.edit", title: "编辑", action: `window:/Mall/Product/Edit?id={{d.Id}}` },
+                        { code: "mall.product.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                    ])
+                }
+            ]],
+            onWhere: function () {
+                return {
+                    IsDeleted: false
+                };
+            }
         });
-    </script>
+
+        element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            { 
+                //初始化回收站
+                $("#recycles").vinoGrid({
+                    url: 'GetList',
+                    cols: [[
+                        { field: 'Status', title: '状态', width: 100, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
+                        { field: 'Name', title: '名称', width: 170 },
+                        { field: 'Title', title: '标题', width: 170 },
+                        { field: 'PriceRange', title: '价格', width: 120, align: 'right' },
+                        { field: 'Stock', title: '库存', width: 70, align: 'right' },
+                        { field: 'Sales', title: '销量', width: 70, align: 'right' },
+                        { field: 'OrderIndex', title: '排序', width: 70, align: 'center' },
+                        { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                            ])
+                        }
+                    ]],
+                    onWhere: function () {
+                        return {
+                            IsDeleted: true
+                        };
+                    }
+                });
+            }
+        });
+    });
+</script>
 }

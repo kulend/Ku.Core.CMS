@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.表现", "1.表现", "{5F420258-0110-494B-98DA-94B5B61B2E5F}"
 EndProject
@@ -71,7 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.IService", "V
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.WeChat", "Vino.Core.WeChat\Vino.Core.WeChat.csproj", "{758526A6-BC28-4883-A392-3A22DE484F16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.CMS.WebApi", "Vino.Core.CMS.WebApi\Vino.Core.CMS.WebApi.csproj", "{4DB286CD-6FD4-4AE7-86B1-BAA046109256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.WebApi", "Vino.Core.CMS.WebApi\Vino.Core.CMS.WebApi.csproj", "{4DB286CD-6FD4-4AE7-86B1-BAA046109256}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.Extensions.Ui", "..\..\开源\Vino.Core.Extensions\Vino.Core.Extensions.Ui\Vino.Core.Extensions.Ui.csproj", "{FF08910C-04CD-4069-AC00-0966650D68CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,6 +185,10 @@ Global
 		{4DB286CD-6FD4-4AE7-86B1-BAA046109256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DB286CD-6FD4-4AE7-86B1-BAA046109256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DB286CD-6FD4-4AE7-86B1-BAA046109256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF08910C-04CD-4069-AC00-0966650D68CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF08910C-04CD-4069-AC00-0966650D68CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF08910C-04CD-4069-AC00-0966650D68CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF08910C-04CD-4069-AC00-0966650D68CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -214,6 +220,7 @@ Global
 		{87DCC404-9023-44AF-9CCF-C978B8BF5FC3} = {55C35987-B209-43DB-A627-3E77CC97586F}
 		{758526A6-BC28-4883-A392-3A22DE484F16} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
 		{4DB286CD-6FD4-4AE7-86B1-BAA046109256} = {9D86126B-0723-4E1C-B95A-DCD1E079D624}
+		{FF08910C-04CD-4069-AC00-0966650D68CE} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

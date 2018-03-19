@@ -23,16 +23,16 @@
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                     <div class="toolbar">
-                        <action text="" icon="&#x1002;" action="javascript:gridReload()" />
-                        <action auth-code="mall.product.edit" text="新增" icon="&#xe608;" action="window:/Mall/Product/Edit" after="gridReload()" />
-                        <action auth-code="mall.product.delete" text="批量删除" icon="&#xe640;" action="window:/Mall/Product/Edit" after="gridReload()" />
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action auth-code="mall.product.edit" text="新增" icon="&#xe608;" action="window:/Mall/Product/Edit" after="grid:reload['#list']" />
+                        <action auth-code="mall.product.delete" text="批量删除" icon="&#xe640;" action="window:/Mall/Product/Edit" after="grid:reload" />
                     </div>
                     <table id="list"></table>
                 </div>
                 <div class="layui-tab-item">
                     <div class="toolbar">
-                        <action icon="&#x1002;" action="javascript:gridReload()" />
-                        <action auth-code="mall.product.delete" text="批量恢复" icon="&#xe65c;" action="window:/Mall/Product/Edit" after="gridReload()" />
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                        <action auth-code="mall.product.delete" text="批量恢复" icon="&#xe65c;" action="window:/Mall/Product/Edit" after="grid:reload" />
                     </div>
                     <table id="recycles"></table>
                 </div>
@@ -60,8 +60,8 @@
                 {
                     title: '操作', fixed: 'right', width: 160, align: 'center',
                     toolbar: grid_templet_operate([
-                        { code: "mall.product.edit", title: "编辑", action: `window:/Mall/Product/Edit?id={{d.Id}}` },
-                        { code: "mall.product.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                        { code: "mall.product.edit", text: "编辑", action: `window:/Mall/Product/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "mall.product.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                     ])
                 }
             ]],

@@ -18,7 +18,7 @@
         <div class="layui-card-header">微信用户列表</div>
         <div class="layui-card-body">
             <div class="toolbar">
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
                 <action id="btnAdd" auth-code="wechat.qrcode.edit" text="添加" size="sm" icon="&#xe608;" action="" after="gridReload()" />
                 <span class="toolbar-right">
                     <form class="layui-form" action="">
@@ -67,9 +67,9 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.qrcode.edit", title: "编辑", action: `window:WeChat/WxQrcode/Edit?id={{d.Id}}` },
-                            { code: "", title: "下载", action: `javascript:openDownDialog('{{d.Ticket}}')` },
-                            { code: "wechat.qrcode.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            { code: "wechat.qrcode.edit", text: "编辑", action: `window:WeChat/WxQrcode/Edit?id={{d.Id}}` },
+                            { code: "", text: "下载", action: `javascript:openDownDialog('{{d.Ticket}}')` },
+                            { code: "wechat.qrcode.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
                 ]],

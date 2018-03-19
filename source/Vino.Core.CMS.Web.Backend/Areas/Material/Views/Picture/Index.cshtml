@@ -18,7 +18,7 @@
         <div class="layui-card-header">图片素材</div>
         <div class="layui-card-body">
             <div class="toolbar">
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
                 <action auth-code="material.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:/Material/Picture/Upload" after="gridReload()" />
             </div>
             <table id="list"></table>
@@ -50,8 +50,8 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "membership.member.edit", title: "编辑", action: `window:/Material/Picture/Edit?id={{d.Id}}` },
-                            { code: "membership.member.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            { code: "membership.member.edit", text: "编辑", action: `window:/Material/Picture/Edit?id={{d.Id}}` },
+                            { code: "membership.member.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
                 ]]

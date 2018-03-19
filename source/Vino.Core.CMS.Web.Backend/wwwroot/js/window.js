@@ -109,10 +109,6 @@ function OpenWindow(title, src, options, onClose) {
     parent.OpenWindow(title, src, options, onClose);
 }
 
-function gridReload() {
-    $(".vino-grid").vinoGrid("reload");
-}
-
 //关闭弹窗
 function closeWindow(data) {
     var index = parent.layer.getFrameIndex(window.name);

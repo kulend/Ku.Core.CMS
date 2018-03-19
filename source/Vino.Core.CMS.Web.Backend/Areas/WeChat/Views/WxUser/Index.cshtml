@@ -18,7 +18,7 @@
         <div class="layui-card-header">微信用户列表</div>
         <div class="layui-card-body">
             <div class="toolbar">
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
                 <action id="btnSync" auth-code="wechat.user.sync" text="数据同步" size="sm" action="" after="gridReload()" />
                 <span class="toolbar-right">
                     <form class="layui-form" action="">
@@ -71,7 +71,7 @@
                     {
                         title: '操作', fixed: 'right', width: 120, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "wechat.user.view", title: "详情", action: `window:/WeChat/WxUser/Detail?id={{d.Id}}`, css: "layui-btn-primary" }
+                            { code: "wechat.user.view", text: "详情", action: `window:/WeChat/WxUser/Detail?id={{d.Id}}`, css: "layui-btn-primary" }
                         ])
                     }
                 ]],

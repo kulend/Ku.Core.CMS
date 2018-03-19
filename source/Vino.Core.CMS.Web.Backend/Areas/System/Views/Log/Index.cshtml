@@ -6,7 +6,7 @@
         <div class="layui-card-header">操作日志</div>
         <div class="layui-card-body">
             <div class="toolbar">
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
             </div>
             <table id="list"></table>
         </div>
@@ -27,7 +27,7 @@
                     {
                         title: '操作', fixed: 'right', width: 100, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "", title: "详情", action: `window:/System/Log/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "", text: "详情", action: `window:/System/Log/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
                         ])
                     }
                 ]]

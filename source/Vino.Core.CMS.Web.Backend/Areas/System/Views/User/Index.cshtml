@@ -18,8 +18,8 @@
         <div class="layui-card-header">用户列表</div>
         <div class="layui-card-body">
             <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
                 <action auth-code="system.user.edit" text="添加" size="sm" icon="&#xe608;" action="window:/System/User/Edit" after="gridReload()" />
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
             </div>
             <table id="list"></table>
         </div>
@@ -41,8 +41,8 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         templet: grid_templet_operate([
-                            { code: "sys.user.edit", title: "编辑", action: `window:/System/User/Edit?id={{d.Id}}` },
-                            { code: "sys.user.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            { code: "sys.user.edit", text: "编辑", action: `window:/System/User/Edit?id={{d.Id}}` },
+                            { code: "sys.user.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
                 ]]

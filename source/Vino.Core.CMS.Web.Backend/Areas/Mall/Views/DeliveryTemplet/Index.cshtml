@@ -18,8 +18,8 @@
         <div class="layui-card-header">配送模板</div>
         <div class="layui-card-body">
             <div class="toolbar">
-                <action auth-code="mall.deliverytemplet.edit" text="添加" size="sm" icon="&#xe608;" action="window:/Mall/DeliveryTemplet/Edit" after="gridReload()" />
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action auth-code="mall.deliverytemplet.edit" text="新增" icon="&#xe608;" action="window:/Mall/DeliveryTemplet/Edit" after="grid:reload['#list']" />
             </div>
             <table id="list"></table>
         </div>
@@ -40,9 +40,9 @@
                     {
                         title: '操作', fixed: 'right', width: 160, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "mall.deliverytemplet.edit", title: "编辑", action: `window:/Mall/DeliveryTemplet/Edit?id={{d.Id}}` },
-                            { code: "", title: "详情", action: `window:/Mall/DeliveryTemplet/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
-                            { code: "mall.deliverytemplet.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            { code: "mall.deliverytemplet.edit", text: "编辑", action: `window:/Mall/DeliveryTemplet/Edit?id={{d.Id}}` },
+                            { code: "", text: "详情", action: `window:/Mall/DeliveryTemplet/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "mall.deliverytemplet.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
                 ]]

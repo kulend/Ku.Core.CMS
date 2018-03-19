@@ -39,8 +39,8 @@
                     <action text="返回上级" size="sm" icon="&#xe619;" action="Index" />
                     }
                 }
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
                 <action auth-code="system.menu.edit" text="添加" size="sm" icon="&#xe608;" action="window:/System/Menu/Edit?pid=@ViewData["ParentId"]" />
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
             </div>
             <table id="list"></table>
         </div>
@@ -63,9 +63,9 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "", title: "子菜单", action: `Index?parentId={{d.Id}}`, css:"layui-btn-primary" },
-                            { code: "sys.menu.edit", title: "编辑", action: `window:/System/Menu/Edit?id={{d.Id}}` },
-                            { code: "sys.menu.delete", title: "删除", action: `post:Delete?id={{d.Id}}` }
+                            { code: "", text: "子菜单", action: `Index?parentId={{d.Id}}`, css:"layui-btn-primary" },
+                            { code: "sys.menu.edit", text: "编辑", action: `window:/System/Menu/Edit?id={{d.Id}}` },
+                            { code: "sys.menu.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                         ])
                     }
                 ]]

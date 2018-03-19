@@ -29,5 +29,9 @@ function createOperateBtn(btn) {
     if (authcode && authcode.indexOf("delete") > 0) {
         isWarn = true;
     }
-    return `<button type="button" class="layui-btn layui-btn-xs ${isWarn ? 'layui-btn-danger' : ''} ${btn.css}" action="${btn.action}" after="gridReload()" title="${btn.title}">${btn.title}</button>`;
+    return `<button type="button" class="layui-btn layui-btn-xs ${isWarn ? 'layui-btn-danger' : ''} ${btn.css || ''}" action="${btn.action}" after="${btn.after || 'grid:reload'}" title="${btn.title || btn.text}">${btn.text}</button>`;
+}
+
+function gridReload() {
+    $(".vino-grid").vinoGrid("reload");
 }

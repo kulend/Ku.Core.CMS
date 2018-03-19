@@ -6,8 +6,8 @@
         <div class="layui-card-header">会员类型</div>
         <div class="layui-card-body">
             <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
                 <action auth-code="membership.member.edit" text="添加" size="sm" icon="&#xe608;" action="window:/Membership/Member/TypeEdit" after="gridReload()" />
-                <action text="刷新" size="sm" icon="&#x1002;" action="javascript:gridReload()" />
             </div>
             <table id="list"></table>
         </div>
@@ -26,8 +26,8 @@
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "membership.member.type.edit", title: "编辑", action: `window:/Membership/Member/TypeEdit?id={{d.Id}}` },
-                            { code: "membership.member.type.delete", title: "删除", action: `post:TypeDelete?id={{d.Id}}` }
+                            { code: "membership.member.type.edit", text: "编辑", action: `window:/Membership/Member/TypeEdit?id={{d.Id}}` },
+                            { code: "membership.member.type.delete", text: "删除", action: `post:TypeDelete?id={{d.Id}}` }
                         ])
                     }
                 ]]

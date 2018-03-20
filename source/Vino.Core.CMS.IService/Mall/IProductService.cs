@@ -55,7 +55,7 @@ namespace Vino.Core.CMS.IService.Mall
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task DeleteAsync(long id);
+        Task DeleteAsync(params long[] id);
 
         #endregion
 

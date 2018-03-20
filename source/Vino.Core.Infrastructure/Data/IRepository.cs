@@ -135,13 +135,29 @@ namespace Vino.Core.Infrastructure.Data
         /// 删除实体
         /// </summary>
         /// <param name="id">实体主键</param>
-        bool Delete(TPrimaryKey id);
+        bool Delete(params TPrimaryKey[] id);
 
         /// <summary>
         /// 删除实体
         /// </summary>
         /// <param name="id">实体主键</param>
-        Task<bool> DeleteAsync(TPrimaryKey id);
+        Task<bool> DeleteAsync(params TPrimaryKey[] id);
+
+        #endregion
+
+        #region 恢复
+
+        /// <summary>
+        /// 恢复实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        bool Restore(params TPrimaryKey[] id);
+
+        /// <summary>
+        /// 恢复实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        Task<bool> RestoreAsync(params TPrimaryKey[] id);
 
         #endregion
 

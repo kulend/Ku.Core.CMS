@@ -32,6 +32,6 @@ function createOperateBtn(btn) {
     return `<button type="button" class="layui-btn layui-btn-xs ${isWarn ? 'layui-btn-danger' : ''} ${btn.css || ''}" action="${btn.action}" after="${btn.after || 'grid:reload'}" title="${btn.title || btn.text}">${btn.text}</button>`;
 }
 
-function gridReload() {
-    $(".vino-grid").vinoGrid("reload");
-}
+//function gridReload() {
+//    $(".vino-grid").vinoGrid("reload");
+//}

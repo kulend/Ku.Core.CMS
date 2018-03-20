@@ -76,6 +76,15 @@
                 opts.page = { curr: 1};
                 layui.table.reload(id, opts);
             });
+        },
+        getCheckedIds: function (target) {
+            var id = $(target).attr("id");
+            var checkStatus = layui.table.checkStatus(id);
+            var ids = [];
+            for (var i = 0; i < checkStatus.data.length; i++) {
+                ids.push(checkStatus.data[i]['Id']);
+            }
+            return ids;
         }
     };
 

@@ -232,7 +232,15 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
 
         [HttpPost]
         [Auth("delete")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(params long[] id)
+        {
+            await _service.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        [HttpPost]
+        [Auth("restore")]
+        public async Task<IActionResult> Restore(params long[] id)
         {
             await _service.DeleteAsync(id);
             return JsonData(true);

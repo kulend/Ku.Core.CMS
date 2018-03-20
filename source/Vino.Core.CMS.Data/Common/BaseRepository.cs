@@ -253,9 +253,31 @@ namespace Vino.Core.CMS.Data.Common
         /// 删除实体
         /// </summary>
         /// <param name="id">实体主键</param>
-        public bool Delete(TPrimaryKey id)
+        public bool Delete(params TPrimaryKey[] id)
         {
-            Table.Remove(GetById(id));
+            if (id == null || id.Length == 0)
+            {
+                return false;
+            }
+            foreach (var item in id)
+            {
+                var entity = GetById(item);
+                if (entity == null)
+                {
+                    continue;
+                }
+                if (entity is BaseProtectedEntity)
+                {
+                    //逻辑删除
+                    var protectedEntity = entity as BaseProtectedEntity;
+                    protectedEntity.IsDeleted = true;
+                    Update(entity);
+                }
+                else
+                {
+                    Table.Remove(entity);
+                }
+            }
             return true;
         }
 
@@ -263,23 +285,98 @@ namespace Vino.Core.CMS.Data.Common
         /// 删除实体
         /// </summary>
         /// <param name="id">实体主键</param>
-        public async Task<bool> DeleteAsync(TPrimaryKey id)
+        public async Task<bool> DeleteAsync(params TPrimaryKey[] id)
         {
-            var entity = await GetByIdAsync(id);
-            if (entity == null)
+            if (id == null || id.Length == 0)
             {
                 return false;
             }
-            if (entity is BaseProtectedEntity)
+            foreach (var item in id)
             {
-                //假删除
-                var protectedEntity = entity as BaseProtectedEntity;
-                protectedEntity.IsDeleted = true;
-                Update(entity);
+                var entity = await GetByIdAsync(item);
+                if (entity == null)
+                {
+                    continue;
+                }
+                if (entity is BaseProtectedEntity)
+                {
+                    //逻辑删除
+                    var protectedEntity = entity as BaseProtectedEntity;
+                    protectedEntity.IsDeleted = true;
+                    Update(entity);
+                }
+                else
+                {
+                    Table.Remove(entity);
+                }
             }
-            else
+            return true;
+        }
+
+        #endregion
+
+        #region 恢复
+
+        /// <summary>
+        /// 恢复实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        public bool Restore(params TPrimaryKey[] id)
+        {
+            if (id == null || id.Length == 0)
             {
-                Table.Remove(entity);
+                return false;
+            }
+            foreach (var item in id)
+            {
+                var entity = GetById(item);
+                if (entity == null)
+                {
+                    continue;
+                }
+                if (entity is BaseProtectedEntity)
+                {
+                    //逻辑删除
+                    var protectedEntity = entity as BaseProtectedEntity;
+                    protectedEntity.IsDeleted = false;
+                    Update(entity);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 恢复实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        public async Task<bool> RestoreAsync(params TPrimaryKey[] id)
+        {
+            if (id == null || id.Length == 0)
+            {
+                return false;
+            }
+            foreach (var item in id)
+            {
+                var entity = await GetByIdAsync(item);
+                if (entity == null)
+                {
+                    continue;
+                }
+                if (entity is BaseProtectedEntity)
+                {
+                    //逻辑删除
+                    var protectedEntity = entity as BaseProtectedEntity;
+                    protectedEntity.IsDeleted = false;
+                    Update(entity);
+                }
+                else
+                {
+                    break;
+                }
             }
             return true;
         }

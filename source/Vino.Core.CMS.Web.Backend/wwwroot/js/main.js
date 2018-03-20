@@ -74,7 +74,7 @@ function _action(that, action, after, data) {
     var act = action.indexOf(":") > 0 ? action.substring(0, action.indexOf(":")) : "";
     var method = action.indexOf(":") > 0 ? action.substring(action.indexOf(":") + 1) : "";
     var pms = [];
-    if (method.indexOf("[") > 0) {
+    if (method.indexOf("[") >= 0) {
         pms = eval(method.substring(method.indexOf("["), method.indexOf("]") + 1));
         method = method.substring(0, method.indexOf("["));
     }
@@ -92,11 +92,13 @@ function _action(that, action, after, data) {
         alert(method);
         eval(method);
     } else if (act === "post" || act === "get") {
+        var url = action.indexOf(":") > 0 ? action.substring(action.indexOf(":") + 1) : "";
+        alert(url);
         var confirmMsg = `确定要进行${$(that).attr("title") || "当前"}操作？`;
         vino.page.msg.confirm(confirmMsg,
             function () {
                 if ("get" === act) {
-                    vino.ajax.get(method, null, function (reply) {
+                    vino.ajax.get(url, data || null, function (reply) {
                         if (reply.code === 0) {
                             vino.page.msg.tip("操作成功！",
                                 function () {
@@ -109,7 +111,7 @@ function _action(that, action, after, data) {
                         }
                     });
                 } else {
-                    vino.ajax.post(method, null, function (reply) {
+                    vino.ajax.post(url, data || null, function (reply) {
                         if (reply.code === 0) {
                             vino.page.msg.tip("操作成功！",
                                 function () {
@@ -132,6 +134,15 @@ function _action(that, action, after, data) {
                 $(".vino-grid").vinoGrid("reload");
             }
         }
+    } else if (act === "batch") {
+        //批量处理
+        var tableId = pms[0];
+        var ids = $(tableId).vinoGrid("getCheckedIds");
+        if (!ids || ids.length == 0) {
+            vino.page.msg.tip("请至少选择一项！");
+            return;
+        }
+        _action(that, pms[1], after, { id: ids});
     } else if (action) {
         //直接跳转页面
         vino.page.navigateTo(action);

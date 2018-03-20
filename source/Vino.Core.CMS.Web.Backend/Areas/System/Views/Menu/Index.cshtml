@@ -32,15 +32,15 @@
                 {
                     if (Model.Count > 1)
                     {
-                    <action text="返回上级" size="sm" icon="&#xe619;" action="Index?parentId=@Model[Model.Count - 2].Id" />
+                    <action text="返回上级" icon="&#xe619;" action="Index?parentId=@Model[Model.Count - 2].Id" />
                     }
                     else if (Model.Count == 1)
                     {
-                    <action text="返回上级" size="sm" icon="&#xe619;" action="Index" />
+                    <action text="返回上级" icon="&#xe619;" action="Index" />
                     }
                 }
                 <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                <action auth-code="system.menu.edit" text="添加" size="sm" icon="&#xe608;" action="window:/System/Menu/Edit?pid=@ViewData["ParentId"]" />
+                <action auth-code="system.menu.edit" text="添加" icon="&#xe608;" action="window:/System/Menu/Edit?pid=@ViewData["ParentId"]" after="grid:reload['#list']" />
             </div>
             <table id="list"></table>
         </div>

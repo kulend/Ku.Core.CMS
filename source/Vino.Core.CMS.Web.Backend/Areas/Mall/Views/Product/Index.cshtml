@@ -32,7 +32,7 @@
                 <div class="layui-tab-item">
                     <div class="toolbar">
                         <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
-                        <action auth-code="mall.product.delete" text="批量恢复" icon="&#xe65c;" action="window:/Mall/Product/Edit" after="grid:reload" />
+                        <action auth-code="mall.product.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Restore']" after="grid:reload" />
                     </div>
                     <table id="recycles"></table>
                 </div>
@@ -46,17 +46,20 @@
     layui.use(['element'], function () {
         var element = layui.element;
 
+        var cols = [
+            { field: 'Status', title: '状态', width: 100, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
+            { field: 'Name', title: '名称', width: 170 },
+            { field: 'Title', title: '标题', width: 170 },
+            { field: 'PriceRange', title: '价格', width: 120, align: 'right' },
+            { field: 'Stock', title: '库存', width: 70, align: 'right' },
+            { field: 'Sales', title: '销量', width: 70, align: 'right' },
+            { field: 'OrderIndex', title: '排序', width: 70, align: 'center' },
+            { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
+        ];
+
         $("#list").vinoGrid({
             url: 'GetList',
-            cols: [[
-                { field: 'Status', title: '状态', width: 100, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
-                { field: 'Name', title: '名称', width: 170 },
-                { field: 'Title', title: '标题', width: 170 },
-                { field: 'PriceRange', title: '价格', width: 120, align: 'right' },
-                { field: 'Stock', title: '库存', width: 70, align: 'right' },
-                { field: 'Sales', title: '销量', width: 70, align: 'right' },
-                { field: 'OrderIndex', title: '排序', width: 70, align: 'center' },
-                { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
+            cols: [cols.concat([
                 {
                     title: '操作', fixed: 'right', width: 160, align: 'center',
                     toolbar: grid_templet_operate([
@@ -64,7 +67,7 @@
                         { code: "mall.product.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                     ])
                 }
-            ]],
+            ])],
             onWhere: function () {
                 return {
                     IsDeleted: false
@@ -78,21 +81,14 @@
                 //初始化回收站
                 $("#recycles").vinoGrid({
                     url: 'GetList',
-                    cols: [[
-                        { field: 'Status', title: '状态', width: 100, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
-                        { field: 'Name', title: '名称', width: 170 },
-                        { field: 'Title', title: '标题', width: 170 },
-                        { field: 'PriceRange', title: '价格', width: 120, align: 'right' },
-                        { field: 'Stock', title: '库存', width: 70, align: 'right' },
-                        { field: 'Sales', title: '销量', width: 70, align: 'right' },
-                        { field: 'OrderIndex', title: '排序', width: 70, align: 'center' },
-                        { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
+                    cols: [cols.concat([
                         {
                             title: '操作', fixed: 'right', width: 160, align: 'center',
                             toolbar: grid_templet_operate([
+                                { code: "mall.product.restore", text: "恢复", action: `post:Restore?id={{d.Id}}` }
                             ])
                         }
-                    ]],
+                    ])],
                     onWhere: function () {
                         return {
                             IsDeleted: true

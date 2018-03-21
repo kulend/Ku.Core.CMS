@@ -15,24 +15,38 @@
 }
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-card-header">图片素材</div>
-        <div class="layui-card-body">
-            <div class="toolbar">
-                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                <action auth-code="material.picture.upload" text="本地上传" icon="&#xe67c;" action="window:/Material/Picture/Upload" after="grid:reload['#list']" />
+        <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+            <ul class="layui-tab-title">
+                <li lay-id="list" class="layui-this">图片素材列表</li>
+                <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action auth-code="material.picture.upload" text="本地上传" icon="&#xe67c;" action="window:/Material/Picture/Upload" after="grid:reload['#list']" />
+                        <action auth-code="material.picture.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Delete']" after="grid:reload" />
+                    </div>
+                    <table id="list"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                        <action auth-code="material.picture.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Restore']" after="grid:reload" />
+                    </div>
+                    <table id="recycles"></table>
+                </div>
             </div>
-            <table id="list"></table>
         </div>
     </div>
 </div>
 @section Scripts
 {
-    <script>
-        $(function () {
-            $("#list").vinoGrid({
-                url: 'GetList',
-                size:'lg',
-                cols: [[
+<script>
+    layui.use(['element'], function () {
+        var element = layui.element;
+
+        var cols = [
                     {
                         field: 'FilePath', title: '图片', width: 120, align: 'center'
                         , templet: '<div><img src="{{d.FilePath}}" /></div>'
@@ -47,15 +61,50 @@
                     { field: 'IsCompressed', title: '压缩', width: 80, align: 'center', templet: grid_templet_bool("IsCompressed") },
                     { field: 'FilePath', title: '文件路径', width: 160 },
                     { field: 'CreateTime', title: '上传时间', width: 160 },
-                    {
-                        title: '操作', fixed: 'right', width: 165, align: 'center',
-                        toolbar: grid_templet_operate([
-                            { code: "membership.member.edit", text: "编辑", action: `window:/Material/Picture/Edit?id={{d.Id}}` },
-                            { code: "membership.member.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
-                        ])
-                    }
-                ]]
-            });
+        ];
+
+        $("#list").vinoGrid({
+            url: 'GetList',
+            size:'lg',
+            cols: [cols.concat([
+                {
+                    title: '操作', fixed: 'right', width: 160, align: 'center',
+                    toolbar: grid_templet_operate([
+                        { code: "material.picture.edit", text: "编辑", action: `window:/Material/Picture/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "material.picture.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                    ])
+                }
+            ])],
+            onWhere: function () {
+                return {
+                    IsDeleted: false
+                };
+            }
         });
-    </script>
+
+        element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            { 
+                //初始化回收站
+                $("#recycles").vinoGrid({
+                    url: 'GetList',
+                    size:'lg',
+                    cols: [cols.concat([
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "material.picture.restore", text: "恢复", action: `post:Restore?id={{d.Id}}` }
+                            ])
+                        }
+                    ])],
+                    onWhere: function () {
+                        return {
+                            IsDeleted: true
+                        };
+                    }
+                });
+            }
+        });
+    });
+</script>
 }

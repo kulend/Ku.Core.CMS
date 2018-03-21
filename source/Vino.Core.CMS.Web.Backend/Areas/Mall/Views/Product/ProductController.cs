@@ -230,6 +230,9 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
         [HttpPost]
         [Auth("delete")]
         public async Task<IActionResult> Delete(params long[] id)
@@ -238,11 +241,14 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 恢复
+        /// </summary>
         [HttpPost]
         [Auth("restore")]
         public async Task<IActionResult> Restore(params long[] id)
         {
-            await _service.DeleteAsync(id);
+            await _service.RestoreAsync(id);
             return JsonData(true);
         }
 

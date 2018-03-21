@@ -88,14 +88,28 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.Member
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
         [HttpPost]
         [Auth("delete")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(params long[] id)
         {
             await _service.DeleteAsync(id);
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        [HttpPost]
+        [Auth("restore")]
+        public async Task<IActionResult> Restore(params long[] id)
+        {
+            await _service.RestoreAsync(id);
+            return JsonData(true);
+        }
+		
         #endregion
 
         #region 会员类型
@@ -135,7 +149,9 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.Member
                 return View(dto);
             }
         }
+		
 
+		
         /// <summary>
         /// 保存角色
         /// </summary>
@@ -147,11 +163,25 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.Member
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
         [HttpPost]
         [Auth("type.delete")]
-        public async Task<IActionResult> TypeDelete(long id)
+        public async Task<IActionResult> TypeDelete(params long[] id)
         {
-            await _service.DeleteAsync(id);
+            await _memberTypeService.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        [HttpPost]
+        [Auth("type.restore")]
+        public async Task<IActionResult> TypeRestore(params long[] id)
+        {
+            await _memberTypeService.RestoreAsync(id);
             return JsonData(true);
         }
 

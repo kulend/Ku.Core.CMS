@@ -148,25 +148,44 @@ namespace Vino.Core.CMS.Service.WeChat
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(params long[] id)
         {
-            //取得信息
-            var item = await _repository.GetByIdAsync(id);
-            if (item == null)
+            foreach (var i in id)
             {
-                throw new VinoDataNotFoundException("无法取得微信用户标签数据！");
-            }
-            //远程删除
-            //取得AccessToken
-            var token = await wxAccountService.GetAccessToken(item.AccountId);
-            var rsp = await wcUserTool.DeleteUserTag(token, item.TagId);
-            if (rsp.ErrCode != 0)
-            {
-                throw new VinoDataNotFoundException(rsp.ToString());
-            }
+                //取得信息
+                var item = await _repository.GetByIdAsync(i);
+                if (item == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得微信用户标签数据！");
+                }
 
-            await _repository.DeleteAsync(id);
-            await _repository.SaveAsync();
+                //远程删除
+                //取得AccessToken
+                var token = await wxAccountService.GetAccessToken(item.AccountId);
+                var rsp = await wcUserTool.DeleteUserTag(token, item.TagId);
+                if (rsp.ErrCode != 0)
+                {
+                    throw new VinoDataNotFoundException(rsp.ToString());
+                }
+
+                if (await _repository.DeleteAsync(id))
+                {
+                    await _repository.SaveAsync();
+                }
+            }
+        }
+		
+        /// <summary>
+        /// 恢复数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public async Task RestoreAsync(params long[] id)
+        {
+            if (await _repository.RestoreAsync(id))
+            {
+                await _repository.SaveAsync();
+            }
         }
 
         #endregion

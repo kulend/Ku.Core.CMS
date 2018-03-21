@@ -25,7 +25,7 @@ using Vino.Core.Infrastructure.Exceptions;
 namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxQrcode
 {
     [Area("WeChat")]
-    [Auth("wechat.qrcode")]
+    [Auth("wechat.wxqrcode")]
     public class WxQrcodeController : BackendController
     {
         private IWxQrcodeService _service;
@@ -105,12 +105,25 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxQrcode
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
         [HttpPost]
         [Auth("delete")]
-        [UserAction("删除微信二维码")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(params long[] id)
         {
             await _service.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        [HttpPost]
+        [Auth("restore")]
+        public async Task<IActionResult> Restore(params long[] id)
+        {
+            await _service.RestoreAsync(id);
             return JsonData(true);
         }
     }

@@ -24,7 +24,7 @@ using Vino.Core.CMS.Domain.Entity.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxAccount
 {
     [Area("WeChat")]
-    [Auth("wechat.account")]
+    [Auth("wechat.wxaccount")]
     public class WxAccountController : BackendController
     {
         private readonly IWxAccountService _service;
@@ -82,11 +82,25 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxAccount
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
         [HttpPost]
         [Auth("delete")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(params long[] id)
         {
             await _service.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        [HttpPost]
+        [Auth("restore")]
+        public async Task<IActionResult> Restore(params long[] id)
+        {
+            await _service.RestoreAsync(id);
             return JsonData(true);
         }
     }

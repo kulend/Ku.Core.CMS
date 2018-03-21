@@ -8,61 +8,6 @@
         var action = $(this).data("action") || $(this).attr("action") || "";
         var after = $(this).attr("after");
         _action(this, action, after);
-
-        //if (act === "window") {
-        //    OpenWindow($(this).attr("title") || "&nbsp;", method, null, function (value) {
-        //        eval("var $data;");
-        //        $data = value;
-        //        if (after) {
-        //            eval(after);
-        //        }
-        //    });
-        //} else if (act === "javascript" || act === "js") {
-        //    eval(method);
-        //} else if (act === "post" || act === "get") {
-        //    var confirmMsg = `确定要进行${$(this).attr("title") || "当前"}操作？`;
-        //    vino.page.msg.confirm(confirmMsg,
-        //        function () {
-        //            if ("get" === act) {
-        //                vino.ajax.get(method, null, function (reply) {
-        //                    if (reply.code === 0) {
-        //                        vino.page.msg.tip("操作成功！",
-        //                            function () {
-        //                                eval("var $data;");
-        //                                $data = reply;
-        //                                if (after) {
-        //                                    eval(after);
-        //                                }
-        //                            });
-        //                    } else {
-        //                        vino.page.msg.tip(reply.message);
-        //                    }
-        //                });
-        //            } else {
-        //                vino.ajax.post(method, null, function (reply) {
-        //                    if (reply.code === 0) {
-        //                        vino.page.msg.tip("操作成功！",
-        //                            function () {
-        //                                eval("var $data;");
-        //                                $data = reply;
-        //                                if (after) {
-        //                                    eval(after);
-        //                                }
-        //                            });
-        //                    } else {
-        //                        vino.page.msg.tip(reply.message);
-        //                    }
-        //                });
-        //            }
-        //        });
-        //} else if (act === "grid") {
-        //    //数据表格处理
-        //    //var methed = action.substring(5);
-
-        //} else if (action) {
-        //    //直接跳转页面
-        //    vino.page.navigateTo(action);
-        //}
     });
 });
 
@@ -93,7 +38,6 @@ function _action(that, action, after, data) {
         eval(method);
     } else if (act === "post" || act === "get") {
         var url = action.indexOf(":") > 0 ? action.substring(action.indexOf(":") + 1) : "";
-        alert(url);
         var confirmMsg = `确定要进行${$(that).attr("title") || "当前"}操作？`;
         vino.page.msg.confirm(confirmMsg,
             function () {

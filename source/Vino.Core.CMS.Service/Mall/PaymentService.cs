@@ -151,10 +151,25 @@ namespace Vino.Core.CMS.Service.Mall
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(params long[] id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveAsync();
+            if (await _repository.DeleteAsync(id))
+            {
+                await _repository.SaveAsync();
+            }
+        }
+
+        /// <summary>
+        /// 恢复数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public async Task RestoreAsync(params long[] id)
+        {
+            if (await _repository.RestoreAsync(id))
+            {
+                await _repository.SaveAsync();
+            }
         }
 
         #endregion

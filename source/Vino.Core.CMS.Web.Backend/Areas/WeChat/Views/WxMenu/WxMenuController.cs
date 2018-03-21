@@ -99,11 +99,25 @@ namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxMenu
             return JsonData(true);
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
         [HttpPost]
         [Auth("delete")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(params long[] id)
         {
             await service.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        [HttpPost]
+        [Auth("restore")]
+        public async Task<IActionResult> Restore(params long[] id)
+        {
+            await service.RestoreAsync(id);
             return JsonData(true);
         }
     }

@@ -56,7 +56,14 @@ namespace Vino.Core.CMS.IService.WeChat
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task DeleteAsync(long id);
+        Task DeleteAsync(params long[] id);
+
+        /// <summary>
+        /// 恢复数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        Task RestoreAsync(params long[] id);
 
         #endregion
 

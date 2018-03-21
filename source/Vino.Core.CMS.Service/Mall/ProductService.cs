@@ -266,6 +266,7 @@ namespace Vino.Core.CMS.Service.Mall
                 await _repository.SaveAsync();
             }
         }
+
         #endregion
 
         #region 其他方法

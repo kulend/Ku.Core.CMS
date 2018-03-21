@@ -134,21 +134,36 @@ namespace Vino.Core.CMS.Service.System
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(params long[] id)
         {
-            //取得菜单信息
-            var menu = await _repository.GetByIdAsync(id);
-            if (menu == null)
+            foreach (var item in id)
             {
-                throw new VinoDataNotFoundException("无法取得数据!");
-            }
-            await _repository.DeleteAsync(id);
-            if (menu.ParentId.HasValue)
-            {
-                await UpdateMenuHasSub(menu.ParentId.Value);
+                //取得菜单信息
+                var menu = await _repository.GetByIdAsync(item);
+                if (menu == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得数据!");
+                }
+                await _repository.DeleteAsync(id);
+                if (menu.ParentId.HasValue)
+                {
+                    await UpdateMenuHasSub(menu.ParentId.Value);
+                }
             }
             await _repository.SaveAsync();
+        }
 
+        /// <summary>
+        /// 恢复数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public async Task RestoreAsync(params long[] id)
+        {
+            if (await _repository.RestoreAsync(id))
+            {
+                await _repository.SaveAsync();
+            }
         }
 
         #endregion

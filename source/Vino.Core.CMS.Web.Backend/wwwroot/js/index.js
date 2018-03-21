@@ -204,7 +204,7 @@ if (!window.winfns) {
 
 function OpenWindow(title, src, options, onClose) {
     var defaults = {
-        area: ['700px', '500px']
+        area: ['900px', '550px']
         , shade: 0.3
         , maxmin: true
     }

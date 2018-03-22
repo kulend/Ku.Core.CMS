@@ -261,5 +261,44 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             return View();
         }
 
+        /// <summary>
+        /// 商品详情
+        /// </summary>
+        [Auth("detail")]
+        public async Task<IActionResult> Detail(long id)
+        {
+            var model = await _service.GetByIdAsync(id);
+            if (model == null)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
+            }
+
+            return View(model);
+        }
+
+        [Auth("detail")]
+        public async Task<IActionResult> GetProductSkuList(long ProductId)
+        {
+            ProductSkuSearch where = new ProductSkuSearch();
+            where.ProductId = ProductId;
+            var list = await _skuService.GetListAsync(where, "OrderIndex asc");
+
+            return PagerData(list, 1, 999, list.Count);
+        }
+
+        /// <summary>
+        /// 商品SKU详情
+        /// </summary>
+        [Auth("detail")]
+        public async Task<IActionResult> SkuDetail(long id)
+        {
+            var model = await _skuService.GetByIdAsync(id);
+            if (model == null)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
+            }
+
+            return View(model);
+        }
     }
 }

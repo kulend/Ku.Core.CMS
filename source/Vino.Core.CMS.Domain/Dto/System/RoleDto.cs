@@ -44,6 +44,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// </summary>
         [MaxLength(200)]
         [Display(Name = "备注")]
+        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
     }
 }

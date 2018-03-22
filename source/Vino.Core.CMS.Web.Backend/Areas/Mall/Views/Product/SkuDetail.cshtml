@@ -2,8 +2,8 @@
 //----------------------------------------------------------------
 // Copyright (C) 2018 vino 版权所有
 //
-// 文件名：Edit.cshtml
-// 功能描述：商品SKU 新增&编辑页面
+// 文件名：SkuDetail.cshtml
+// 功能描述：商品SKU 详情页面
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-24 10:50
@@ -17,25 +17,22 @@
 @using Vino.Core.CMS.Domain.Dto.Mall
 @model ProductSkuDto
 <div class="layui-layout layui-layout-window">
-    @using (Html.BeginForm<ProductSkuDto>("SkuSave"))
+    @using (Html.BeginForm<ProductSkuDto>("#"))
     {
     <div class="layui-body">
-        @Html.InputFor(x => x.Id)
-        @Html.InputFor(x => x.ProductId)
-        @Html.InputFor(x => x.Status)
-        @Html.InputFor(x => x.Title)
+        @Html.ShowFor(x => x.Status)
+        @Html.ShowFor(x => x.Title)
         <div class="layui-form-item">
             <label class="layui-form-label">封面图</label>
             <div id="CoverImage" class="layui-input-block">
             </div>
         </div>
-        @Html.InputFor(x => x.Price, x => x.MarketPrice)
-        @Html.InputFor(x => x.Stock, x => x.OrderIndex)
+        @Html.ShowInlineFor(x => x.Price, x => x.MarketPrice)
+        @Html.ShowInlineFor(x => x.Stock, x => x.Sales)
+        @Html.ShowInlineFor(x => x.OrderIndex, x => x.CreateTime)
     </div>
     <div class="layui-footer">
-        @Html.HiddenFor(x => x.CreateTime)
-        <input type="hidden" name="EditID" value="@ViewData["EditID"]" />
-        @Html.ActionsForSubmitAndClose()
+        @Html.ActionsForClose()
     </div>
     }
 </div>
@@ -46,10 +43,10 @@
         layui.use(['form'], function () {
             var form = layui.form;
             $("#CoverImage").vinoImagePicker({
-                field_data: "CoverImage",
-                max_count: 1
+                max_count: 1,
+                enable:false
             });
             $("#CoverImage").vinoImagePicker("loadData", '@Html.Raw(Model.CoverImage)');
         });
     </script>
-    }
+}

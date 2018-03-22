@@ -68,11 +68,9 @@
                 opts = $.extend(opts, options);
             } else {
                 opts = $(this).data("opts") || {};
-                console.log($(this).data("opts"));
                 opts = $.extend(opts, $.fn.vinoForm.defaults, options);
                 $.data(this, 'options', opts);
             }
-             console.log($.data(this, 'options'));
             _bind(this);
         });
     };

@@ -52,7 +52,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// 菜单图标
         /// </summary>
         [MaxLength(20)]
-        [Display(Name = "图标")]
+        [Display(Name = "图标", Description = "<a href=\"http://fontawesome.dashgame.com/\" target=\"_blank\"> Font Awesome 图标网站</a>")]
         public string Icon { get; set; }
 
         /// <summary>

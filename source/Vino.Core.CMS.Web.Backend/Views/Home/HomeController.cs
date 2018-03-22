@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.CMS.Web.Extensions;
+using Vino.Core.CMS.Web.Filters;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Home
 {
@@ -16,6 +17,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
         }
 
         [Auth]
+        [PageLockFilter]
         public IActionResult Index()
         {
             ViewData["LoginUserName"] = User.GetUserNameOrNull();

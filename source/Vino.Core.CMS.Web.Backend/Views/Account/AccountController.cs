@@ -57,7 +57,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             data.Account = "admin";
             data.Password = "123456";
 #endif
-            return View();
+            return View(data);
         }
 
         [HttpPost]

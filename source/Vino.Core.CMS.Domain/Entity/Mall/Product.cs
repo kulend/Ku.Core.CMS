@@ -71,25 +71,25 @@ namespace Vino.Core.CMS.Domain.Entity.Mall
         /// 价格区间
         /// </summary>
         [MaxLength(32)]
-        [Display(Name = "价格区间")]
+        [Display(Name = "价格")]
         public string PriceRange { set; get; }
 
         /// <summary>
         /// 库存
         /// </summary>
-        [Display(Name = "库存")]
+        [Display(Name = "总库存")]
         public int Stock { set; get; } = 0;
 
         /// <summary>
         /// 销售量
         /// </summary>
-        [Display(Name = "销售量")]
+        [Display(Name = "总销售量")]
         public int Sales { set; get; } = 0;
 
         /// <summary>
         /// 浏览量
         /// </summary>
-        [Display(Name = "浏览量")]
+        [Display(Name = "总浏览量")]
         public int Visits { set; get; } = 0;
 
         /// <summary>

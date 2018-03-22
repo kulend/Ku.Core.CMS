@@ -63,7 +63,8 @@
                 {
                     title: '操作', fixed: 'right', width: 160, align: 'center',
                     toolbar: grid_templet_operate([
-                        { code: "mall.product.edit", text: "编辑", action: `window:/Mall/Product/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "mall.product.edit", text: "编辑", action: `window:/Mall/Product/Edit?id={{d.Id}}`, after: "grid:reload['#list']" },
+                        { code: "mall.product.detail", text: "详情", action: `window:/Mall/Product/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
                         { code: "mall.product.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
                     ])
                 }
@@ -85,6 +86,7 @@
                         {
                             title: '操作', fixed: 'right', width: 160, align: 'center',
                             toolbar: grid_templet_operate([
+                                { code: "mall.product.detail", text: "详情", action: `window:/Mall/Product/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
                                 { code: "mall.product.restore", text: "恢复", action: `post:Restore?id={{d.Id}}` }
                             ])
                         }

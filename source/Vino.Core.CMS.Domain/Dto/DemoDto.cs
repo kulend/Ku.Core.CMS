@@ -12,7 +12,7 @@ namespace Vino.Core.CMS.Domain.Dto
     {
         [MaxLength(30)]
         [Required]
-        [Display(Name = "名称")]
+        [Display(Name = "名称", Description = "附加说明文字")]
         public string Name { set; get; }
 
         /// <summary>

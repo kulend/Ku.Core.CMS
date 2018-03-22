@@ -52,17 +52,17 @@
     font-size: 17px;
 }
 
-.layui-form-label-show {
-    width:85%;
-}
-
-.layui-form-label-show {
+.layui-form-item .layui-form-label-show {
     float: left;
     display: block;
     padding: 9px 15px;
     font-weight: 400;
     text-align: left;
-    color:#808080;
+    color: #808080;
+}
+
+.layui-form-item .layui-input-block .layui-form-label-show {
+    width: 85%;
 }
 
 .layui-action {

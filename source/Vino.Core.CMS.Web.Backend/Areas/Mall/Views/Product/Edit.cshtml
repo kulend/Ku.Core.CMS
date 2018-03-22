@@ -31,9 +31,8 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         @Html.InputFor(x => x.Id)
-                        @Html.InputFor(x => x.Name)
-                        @Html.InputFor(x => x.Title)
                         @Html.InputFor(x => x.Status)
+                        @Html.InputFor(x => x.Name, x => x.Title)
                         @Html.InputFor(x => x.Intro)
                         <div class="layui-form-item">
                             <label class="layui-form-label">主图</label>
@@ -104,6 +103,7 @@
 
         </div>
         <div class="layui-footer">
+            <input type="hidden" id="hdContent" value="@Model.Content" />
             @Html.ActionsForSubmitAndClose()
         </div>
     }
@@ -131,7 +131,7 @@
 
             if ($("input[name=ContentType]:checked").attr("key") === "Picture")
             {
-                $("#ID_content_3").vinoImagePicker("loadData", '@Html.Raw(Model.Content)');
+                $("#ID_content_3").vinoImagePicker("loadData", $("#hdContent").val());
             }
 
             var E = window.wangEditor;
@@ -188,19 +188,18 @@
                 checkbox: false,
                 rownumber:false,
                 cols: [[
-                    { field: 'Name', title: '名称', width: 140 },
                     { field: 'Title', title: '标题', width: 140 },
                     { field: 'Status', title: '状态', width: 70, align: 'center', templet: '<div>{{d.Status.Title}}</div>' },
-                    { field: 'Price', title: '价格', width: 65, align: 'right' },
-                    { field: 'Stock', title: '库存', width: 65, align: 'right' },
-                    { field: 'Sales', title: '销量', width: 65, align: 'right' },
+                    { field: 'Price', title: '价格', width: 80, align: 'right' },
+                    { field: 'Stock', title: '库存', width: 80, align: 'right' },
+                    { field: 'Sales', title: '销量', width: 80, align: 'right' },
                     { field: 'OrderIndex', title: '排序', width: 65, align: 'center' },
-                    { field: 'CreateTime', title: '创建时间', width: 150, align: 'center' },
+                    { field: 'CreateTime', title: '创建时间', width: 160, align: 'center' },
                     {
                         title: '操作', fixed: 'right', width: 120, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "", title: "编辑", action: `window:/Mall/Product/SkuEdit?id={{d.Id}}&EditID=@ViewData["EditID"]` },
-                            { code: "", title: "删除", action: `post:SkuDelete?id={{d.Id}}&EditID=@ViewData["EditID"]`, css:"layui-btn-danger" }
+                            { code: "", text: "编辑", action: `window:/Mall/Product/SkuEdit?id={{d.Id}}&EditID=@ViewData["EditID"]` },
+                            { code: "", text: "删除", action: `post:SkuDelete?id={{d.Id}}&EditID=@ViewData["EditID"]`, css:"layui-btn-danger" }
                         ])
                     }
                 ]]

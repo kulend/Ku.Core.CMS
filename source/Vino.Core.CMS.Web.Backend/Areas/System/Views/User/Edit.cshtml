@@ -21,10 +21,8 @@
     {
         <div class="layui-body">
             @Html.InputFor(x => x.Id)
-            @Html.InputFor(x => x.Account)
-            @Html.InputFor(x => x.Password)
-            @Html.InputFor(x => x.Name)
-            @Html.InputFor(x => x.Mobile)
+            @Html.InputFor(x => x.Account, x => x.Password)
+            @Html.InputFor(x => x.Name, x => x.Mobile)
             @Html.InputFor(x => x.IsEnable)
             @Html.InputFor(x => x.Remarks)
 

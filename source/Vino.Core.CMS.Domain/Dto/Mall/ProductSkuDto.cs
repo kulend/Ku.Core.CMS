@@ -56,24 +56,28 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         /// 价格
         /// </summary>
         [Display(Name = "价格")]
+        [DisplayFormat(DataFormatString = "C")]
         public decimal Price { set; get; }
 
         /// <summary>
         /// 市场价
         /// </summary>
         [Display(Name = "市场价")]
+        [DisplayFormat(DataFormatString = "C")]
         public decimal MarketPrice { set; get; }
 
         /// <summary>
         /// 库存
         /// </summary>
         [Display(Name = "库存")]
+        [DisplayFormat(DataFormatString = "#,0 件")]
         public int Stock { set; get; } = 0;
 
         /// <summary>
         /// 销售量
         /// </summary>
         [Display(Name = "销售量")]
+        [DisplayFormat(DataFormatString = "#,0 件")]
         public int Sales { set; get; } = 0;
 
         /// <summary>

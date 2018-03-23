@@ -224,7 +224,6 @@ namespace Vino.Core.CMS.Service.Mall
                             trans.Rollback();
                             throw new VinoDataNotFoundException("SKU数据无法取得！");
                         }
-                        skuItem.Name = sku.Name;
                         skuItem.Title = sku.Title;
                         skuItem.CoverImage = sku.CoverImage;
                         skuItem.Price = sku.Price;

@@ -32,13 +32,6 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         public EmProductSkuStatus Status { set; get; } = EmProductSkuStatus.OnSale;
 
         /// <summary>
-        /// 名称
-        /// </summary>
-        [Required, MaxLength(64)]
-        [Display(Name = "名称")]
-        public string Name { set; get; }
-
-        /// <summary>
         /// 标题
         /// </summary>
         [Required, MaxLength(64)]
@@ -85,6 +78,26 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         /// </summary>
         [Display(Name = "排序值")]
         public int OrderIndex { set; get; }
+
+        /// <summary>
+        /// 重量
+        /// </summary>
+        [Display(Name = "重量")]
+        [DisplayFormat(DataFormatString = "#,0 克")]
+        public int Weight { set; get; }
+
+        /// <summary>
+        /// 积分赠送规则
+        /// </summary>
+        [Display(Name = "积分赠送规则")]
+        public EmPointsGainRule PointsGainRule { set; get; }
+
+        /// <summary>
+        /// 积分赠送规则
+        /// </summary>
+        [Display(Name = "赠送积分")]
+        [DisplayFormat(DataFormatString = "#,0 积分")]
+        public int GainPoints { set; get; }
 
         public EmEntityModifyStatus ModifyStatus { set; get; } = EmEntityModifyStatus.UnChange;
     }

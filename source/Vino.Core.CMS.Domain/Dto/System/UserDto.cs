@@ -23,14 +23,14 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// <summary>
         /// 账号
         /// </summary>
-        [Required, MaxLength(20)]
+        [Required, MaxLength(20), MinLength(5)]
         [Display(Name = "账号")]
         public string Account { set; get; }
 
         /// <summary>
         /// 账号密码
         /// </summary>
-        [Required, MaxLength(20)]
+        [Required, MaxLength(20), MinLength(6)]
         [Display(Name = "密码")]
         [DataType(DataType.Password)]
         public string Password { set; get; }
@@ -47,6 +47,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// </summary>
         [MaxLength(11)]
         [Display(Name = "手机号")]
+        [DataType(DataType.PhoneNumber)]
         public string Mobile { set; get; }
 
         /// <summary>

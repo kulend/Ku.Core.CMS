@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.CMS.IService.System;
 
-namespace Vino.Core.CMS.Web.Admin.Components
+namespace Vino.Core.CMS.Web.Backend.Components
 {
     [ViewComponent(Name = "AuthCodeJs")]
     public class AuthCodeJsViewComponent : ViewComponent

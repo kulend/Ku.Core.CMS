@@ -6,7 +6,7 @@ using Vino.Core.CMS.Service.System;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.IService.System;
 
-namespace Vino.Core.CMS.Web.Admin.Components
+namespace Vino.Core.CMS.Web.Backend.Components
 {
     [ViewComponent(Name = "HomeMenu")]
     public class HomeMenuViewComponent : ViewComponent

@@ -64,9 +64,9 @@
                         field: 'Remark', title: '备注名', width: 150,
                         templet: '<div>{{d.Remark}} <i class="layui-icon layui-action" title="修改备注" action="window:/WeChat/WxUser/Remark?id={{d.Id}}">&#xe642;</i></div>'
                     },
-                    { field: 'Sex', title: '性别', width: 80, align: 'center', templet: '<div>{{d.Sex.Title}}</div>'},
+                    { field: 'Sex', title: '性别', width: 80, enum: true },
                     { field: 'City', title: '地区', width: 180, templet: '<div>{{d.Country}}{{d.Province}}{{d.City}}</div>' },
-                    { field: 'IsSubscribe', title: '是否关注', width: 90, align: 'center', templet: grid_templet_bool("IsSubscribe") },
+                    { field: 'IsSubscribe', title: '是否关注', width: 90, switch: true},
                     { field: 'SubscribeTime', title: '关注时间', width: 150},
                     {
                         title: '操作', fixed: 'right', width: 120, align: 'center',

@@ -51,15 +51,17 @@
             , url = elem.data('url')
             , id = elem.attr('data-id')
             , $tabTitle = $("#LAY_app_tabsheader");
-        // 是否已经存在
-        if (!$tabTitle.children("li[lay-id='" + id + "']").length) {
-            _addNavTab(elem.text(), id, url);
-        } else {
-            $('#LAY_app_iframe_' + id).attr('src', url);
-        }
+        if (id) {
+            // 是否已经存在
+            if (!$tabTitle.children("li[lay-id='" + id + "']").length) {
+                _addNavTab(elem.text(), id, url);
+            } else {
+                $('#LAY_app_iframe_' + id).attr('src', url);
+            }
 
-        // 切换到当前选项卡
-        element.tabChange('F_index_tab', id);
+            // 切换到当前选项卡
+            element.tabChange('F_index_tab', id);
+        }
     }
 
     //侧边伸缩

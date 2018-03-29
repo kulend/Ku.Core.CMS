@@ -18,5 +18,8 @@ namespace Vino.Core.CMS.Domain.Enum.Mall
 
         [Display(Name = "按商品")]
         Product = 2,
+
+        [Display(Name = "按商品SKU")]
+        ProductSku = 3,
     }
 }

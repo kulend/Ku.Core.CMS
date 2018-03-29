@@ -55,7 +55,7 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         /// <summary>
         /// 市场价
         /// </summary>
-        [Display(Name = "市场价")]
+        [Display(Name = "市场价" )]
         [DisplayFormat(DataFormatString = "C")]
         public decimal MarketPrice { set; get; }
 

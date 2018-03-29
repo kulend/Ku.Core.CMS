@@ -22,8 +22,7 @@
     {
     <div class="layui-body">
         @Html.InputFor(x => x.Id)
-        @Html.ShowFor(x => x.Name)
-        @Html.ShowFor(x => x.Title)
+        @Html.ShowFor(x => x.Name, x => x.Title)
         @Html.ShowFor(x => x.Status)
         @Html.ShowFor(x => x.Intro)
         <div class="layui-form-item">
@@ -32,8 +31,8 @@
             </div>
         </div>
         @Html.ShowFor(x => x.OrderIndex)
-        @Html.ShowInlineFor(x => x.PriceRange, x=>x.Stock)
-        @Html.ShowInlineFor(x => x.Sales, x => x.Visits)
+        @Html.ShowFor(x => x.PriceRange, x=>x.Stock)
+        @Html.ShowFor(x => x.Sales, x => x.Visits)
 
         <div class="layui-form-item">
             <label class="layui-form-label">销售属性</label>
@@ -95,7 +94,7 @@
             </div>
         }
 
-        @Html.ShowInlineFor(x => x.SnapshotCount, x => x.EffectiveTime)
+        @Html.ShowFor(x => x.SnapshotCount, x => x.EffectiveTime)
     </div>
     <div class="layui-footer">
         @Html.HiddenFor(x=>x.Content)

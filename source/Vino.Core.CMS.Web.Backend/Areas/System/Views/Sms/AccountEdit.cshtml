@@ -1,0 +1,80 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Edit.cshtml
+// 功能描述：短信账号 新增&编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-03-26 16:05
+//
+//----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.System
+@using Vino.Core.CMS.Domain.Enum.System
+@model SmsAccountDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<SmsAccountDto>("AccountSave"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.Name)
+        @Html.InputFor(x => x.IsEnable)
+        @Html.InputFor(x => x.Remarks)
+        @Html.InputFor(x => x.Type, new { lay_filter = "Type" })
+        <fieldset id="dvConfigWeight" class="layui-elem-field">
+            <legend>参数配置</legend>
+            <div id="config-content" class="layui-field-box">
+                @foreach (var item in SmsAccountTypeHelper.GetItemParameters(Model.Type))
+                {
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@item.Name</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ParameterConfig[@item.Key]" class="layui-input" value="@((Model.ParameterConfig != null && Model.ParameterConfig.ContainsKey(item.Key))? Model.ParameterConfig[item.Key] : item.Value)">
+                        </div>
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+{
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form;
+        var smsAccountTypeParameters = JSON.parse('@Html.Raw(SmsAccountTypeHelper.GetItems())');
+
+        _bindForm($("form"), {
+            onBefore: function (arr, $from, options) {
+                return true;
+            }
+        });
+
+        //监听事件
+        form.on('radio(Type)', function (data) {
+            var key = $(data.elem).attr("key");
+            var pms = smsAccountTypeParameters[key];
+            var html = [];
+            for (var i = 0; i < pms.length; i++) {
+                html.push('<div class="layui-form-item">');
+                html.push(`<label class="layui-form-label">${pms[i].Name}</label>`);
+                html.push('<div class="layui-input-block">');
+                html.push(`<input type="text" name="ParameterConfig[${pms[i].Key}]" class="layui-input" value="${pms[i].Value}">`);
+                html.push('</div>');
+                html.push('</div>');
+            }
+            $("#config-content").html(html.join(""));
+        });
+
+    });
+</script>
+}

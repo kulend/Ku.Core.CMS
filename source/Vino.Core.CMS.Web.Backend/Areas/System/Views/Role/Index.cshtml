@@ -49,7 +49,7 @@
         var cols = [
             { field: 'Name', fixed: 'left', title: '名称', width: 100 },
             { field: 'NameEn', title: '英文名', width: 140 },
-            { field: 'IsEnable', title: '是否启用', width: 100, align: 'center', templet: grid_templet_bool("IsEnable")}
+            { field: 'IsEnable', title: '是否启用', width: 100, switch: true}
         ];
 
         $("#list").vinoGrid({

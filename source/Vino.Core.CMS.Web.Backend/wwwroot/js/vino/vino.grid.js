@@ -21,6 +21,20 @@
                 { type: 'numbers', fixed: true, align: 'center' }
             );
         }
+
+        for (var i = 0; i < opts.cols[0].length; i++) {
+            if (opts.cols[0][i].enum) {
+                opts.cols[0][i].align = opts.cols[0][i].align || 'center';
+                opts.cols[0][i].templet = '<div>{{d.' + opts.cols[0][i].field + '.Title}}</div>';
+            }
+            if (opts.cols[0][i].switch) {
+                opts.cols[0][i].align = opts.cols[0][i].align || 'center';
+                opts.cols[0][i].templet = '<div>{{# if(d.' +
+                    opts.cols[0][i].field +
+                    '){ }} <i class="layui-icon">&#xe605;</i> {{# }else{ }} <i class="layui-icon">&#x1006;</i> {{# } }}</div>';
+            }
+        }
+
         var table = layui.table;
         var id = $target.attr("id");
         opts.id = id;

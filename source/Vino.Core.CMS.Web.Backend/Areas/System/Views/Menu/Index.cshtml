@@ -57,8 +57,8 @@
                     { field: 'AuthCode', title: '权限编码', width: 180 },
                     { field: 'Url', title: '菜单链接', width: 200 },
                     { field: 'Icon', title: '图标', width: 100, align: 'center', templet:'<div><i class="fa {{d.Icon}}"></i></div>'},
-                    { field: 'IsShow', title: '是否显示', width: 100, align: 'center', templet: grid_templet_bool("IsShow")},
-                    { field: 'HasSubMenu', title: '子菜单', width: 80, align: 'center', templet: grid_templet_bool("HasSubMenu") },
+                    { field: 'IsShow', title: '是否显示', width: 100, align: 'center', switch: true},
+                    { field: 'HasSubMenu', title: '子菜单', width: 80, align: 'center', switch: true},
                     { field: 'OrderIndex', title: '排序值',  width: 80 },
                     {
                         title: '操作', fixed: 'right', width: 165, align: 'center',

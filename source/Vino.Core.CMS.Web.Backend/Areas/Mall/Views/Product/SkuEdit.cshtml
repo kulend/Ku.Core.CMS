@@ -30,7 +30,13 @@
             </div>
         </div>
         @Html.InputFor(x => x.Price, x => x.MarketPrice)
-        @Html.InputFor(x => x.Stock, x => x.OrderIndex)
+        @Html.InputFor(x => x.Stock, x => x.Weight)
+        @Html.InputFor(x => x.OrderIndex)
+
+        @Html.InputFor(x => x.PointsGainRule, new { lay_filter = "PointsGainRule" })
+        <div id="ID_div_Points" class="@(Model.PointsGainRule == Vino.Core.CMS.Domain.Enum.Mall.EmPointsGainRule.ProductSku?"":"layui-hide")">
+            @Html.InputFor(x => x.GainPoints)
+        </div>
     </div>
     <div class="layui-footer">
         @Html.HiddenFor(x => x.CreateTime)
@@ -50,6 +56,16 @@
                 max_count: 1
             });
             $("#CoverImage").vinoImagePicker("loadData", '@Html.Raw(Model.CoverImage)');
+
+            //监听事件
+            form.on('radio(PointsGainRule)', function (data) {
+                var key = $(data.elem).attr("key");
+                if (key === "ProductSku") {
+                    $("#ID_div_Points").removeClass("layui-hide");
+                } else { 
+                    $("#ID_div_Points").addClass("layui-hide");
+                }
+            });
         });
     </script>
     }

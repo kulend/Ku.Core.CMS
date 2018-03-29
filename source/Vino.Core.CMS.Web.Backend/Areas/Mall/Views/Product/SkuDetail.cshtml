@@ -27,9 +27,14 @@
             <div id="CoverImage" class="layui-input-block">
             </div>
         </div>
-        @Html.ShowInlineFor(x => x.Price, x => x.MarketPrice)
-        @Html.ShowInlineFor(x => x.Stock, x => x.Sales)
-        @Html.ShowInlineFor(x => x.OrderIndex, x => x.CreateTime)
+        @Html.ShowFor(x => x.Price, x => x.MarketPrice)
+        @Html.ShowFor(x => x.Stock, x => x.Weight)
+        @Html.ShowFor(x => x.Sales)
+        @Html.ShowFor(x => x.OrderIndex, x => x.CreateTime)
+        @Html.ShowFor(x => x.PointsGainRule)
+        <div id="ID_div_Points" class="@(Model.PointsGainRule == Vino.Core.CMS.Domain.Enum.Mall.EmPointsGainRule.ProductSku?"":"layui-hide")">
+            @Html.ShowFor(x => x.GainPoints)
+        </div>
     </div>
     <div class="layui-footer">
         @Html.ActionsForClose()

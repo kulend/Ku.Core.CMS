@@ -34,8 +34,8 @@
                 url: 'GetList',
                 cols: [[
                     { field: 'Name', title: '名称', width: 170 },
-                    { field: 'IsEnable', title: '是否可用', width: 100, align: 'center', templet: grid_templet_bool("IsEnable") },
-                    { field: 'ChargeMode', title: '计费方式', width: 100, align: 'center', templet: '<div>{{d.ChargeMode.Title}}</div>' },
+                    { field: 'IsEnable', title: '是否可用', width: 100, switch: true},
+                    { field: 'ChargeMode', title: '计费方式', width: 100, enum: true},
                     { field: 'EffectiveTime', title: '生效时间', width: 170, align: 'center' },
                     { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
                     {

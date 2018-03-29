@@ -199,7 +199,7 @@ namespace Vino.Core.CMS.Service.System
         {
             var queryable = _repository.GetQueryable();
             queryable = queryable.Where(u => u.ParentId == null);
-            queryable = queryable.Include(x=>x.SubMenus);
+            queryable = queryable.Include(x=>x.SubMenus).ThenInclude(x=>x.SubMenus);
             var query = queryable.OrderBy(x => x.OrderIndex);
             return Mapper.Map<List<MenuDto>>(await query.ToListAsync());
         }

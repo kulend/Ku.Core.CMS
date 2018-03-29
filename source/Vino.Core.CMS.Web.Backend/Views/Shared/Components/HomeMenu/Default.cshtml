@@ -11,9 +11,26 @@
         <dl class="layui-nav-child">
             @foreach (var sub in menu.SubMenus.OrderBy(x => x.OrderIndex))
             {
-                <dd data-url="@sub.Url" data-id="@sub.Id">
-                    <a href="javascript:;">@sub.Name</a>
-                </dd>
+                if (sub.SubMenus.Any())
+                {
+                    <dd class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;" lay-tips="@sub.Name" lay-direction="3">@sub.Name<span class="layui-nav-more"></span></a>
+                        <dl class="layui-nav-child">
+                            @foreach (var ssub in sub.SubMenus.OrderBy(x => x.OrderIndex))
+                            {
+                                <dd data-url="@ssub.Url" data-id="@ssub.Id">
+                                    <a href="javascript:;">@ssub.Name</a>
+                                </dd>
+                            }
+                        </dl>
+                    </dd>
+                }
+                else
+                {
+                     <dd data-url="@sub.Url" data-id="@sub.Id">
+                         <a href="javascript:;">@sub.Name</a>
+                     </dd>
+                }
             }
         </dl>
     }

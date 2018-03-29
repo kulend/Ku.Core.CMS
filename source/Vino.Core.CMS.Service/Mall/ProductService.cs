@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Mall;
 using Vino.Core.CMS.Domain.Dto.Mall;
 using Vino.Core.CMS.Domain.Entity.Mall;
+using Vino.Core.CMS.Domain.Enum.Mall;
 using Vino.Core.CMS.IService.Mall;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
@@ -109,6 +110,10 @@ namespace Vino.Core.CMS.Service.Mall
                     item.CreateTime = DateTime.Now;
                     item.IsDeleted = false;
                     item.Sales = 0;
+                    if (item.PointsGainRule != EmPointsGainRule.ProductSku)
+                    {
+                        item.GainPoints = 0;
+                    }
                 }
                 model.Stock = skuList.Sum(x => x.Stock);
                 var maxPrice = skuList.Max(x => x.Price);
@@ -207,6 +212,10 @@ namespace Vino.Core.CMS.Service.Mall
                         sku.CreateTime = DateTime.Now;
                         sku.IsDeleted = false;
                         sku.Sales = 0;
+                        if (sku.PointsGainRule != EmPointsGainRule.ProductSku)
+                        {
+                            sku.GainPoints = 0;
+                        }
                     }
                     await _skuRepository.InsertRangeAsync(newSkus.ToList());
 
@@ -230,6 +239,12 @@ namespace Vino.Core.CMS.Service.Mall
                         skuItem.MarketPrice = sku.MarketPrice;
                         skuItem.Stock = sku.Stock;
                         skuItem.OrderIndex = sku.OrderIndex;
+                        skuItem.PointsGainRule = sku.PointsGainRule;
+                        skuItem.GainPoints = sku.GainPoints;
+                        if (skuItem.PointsGainRule != EmPointsGainRule.ProductSku)
+                        {
+                            skuItem.GainPoints = 0;
+                        }
                         _skuRepository.Update(skuItem);
                     }
 

@@ -47,12 +47,12 @@
         var element = layui.element;
 
         var cols = [
-                    { field: 'Account', fixed: 'left', title: '账户', width: 100 },
-                    { field: 'Name', title: '名称', width: 100 },
-                    { field: 'Mobile', title: '手机', width: 140 },
-                    { field: 'IsEnable', title: '是否启用', width: 100, align: 'center', templet: grid_templet_bool("IsEnable") },
-                    { field: 'CreateTime', title: '创建时间', width: 160 },
-                    { field: 'LastLoginTime', title: '登陆时间', width: 160 },
+            { field: 'Account', fixed: 'left', title: '账户', width: 100 },
+            { field: 'Name', title: '名称', width: 100 },
+            { field: 'Mobile', title: '手机', width: 140 },
+            { field: 'IsEnable', title: '是否启用', width: 100, switch: true},
+            { field: 'CreateTime', title: '创建时间', width: 160 },
+            { field: 'LastLoginTime', title: '登陆时间', width: 160 }
         ];
 
         $("#list").vinoGrid({

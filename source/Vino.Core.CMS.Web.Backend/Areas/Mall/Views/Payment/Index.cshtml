@@ -34,9 +34,9 @@
                 url: 'GetList',
                 cols: [[
                     { field: 'Name', title: '名称', width: 170 },
-                    { field: 'IsEnable', title: '是否可用', width: 100, align: 'center', templet: grid_templet_bool("IsEnable") },
-                    { field: 'IsMobile', title: '移动支付', width: 100, align: 'center', templet: grid_templet_bool("IsMobile") },
-                    { field: 'PaymentMode', title: '支付类型', width: 100, align: 'center', templet: '<div>{{d.PaymentMode.Title}}</div>' },
+                    { field: 'IsEnable', title: '是否可用', width: 100, switch: true},
+                    { field: 'IsMobile', title: '移动支付', width: 100, switch: true},
+                    { field: 'PaymentMode', title: '支付类型', width: 100, enum: true},
                     { field: 'EffectiveTime', title: '生效时间', width: 170, align: 'center' },
                     { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
                     {

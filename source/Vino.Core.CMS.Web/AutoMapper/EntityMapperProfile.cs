@@ -35,6 +35,12 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.System.SmsDto, Domain.Entity.System.Sms>();
             CreateMap<Domain.Entity.System.SmsQueue, Domain.Dto.System.SmsQueueDto>();
             CreateMap<Domain.Dto.System.SmsQueueDto, Domain.Entity.System.SmsQueue>();
+            CreateMap<Domain.Entity.System.SmsAccount, Domain.Dto.System.SmsAccountDto>().ForMember(x => x.ParameterConfig, opt => {
+                opt.ResolveUsing<JsonDeserializeResolver<IDictionary<string, string>>, string>(x => x.ParameterConfig);
+            });
+            CreateMap<Domain.Dto.System.SmsAccountDto, Domain.Entity.System.SmsAccount>().ForMember(x => x.ParameterConfig, opt => {
+                opt.ResolveUsing<JsonSerializeResolver, object>(x => x.ParameterConfig);
+            });
             CreateMap<Domain.Entity.Membership.Member, Domain.Dto.Membership.MemberDto>();
             CreateMap<Domain.Dto.Membership.MemberDto, Domain.Entity.Membership.Member>();
             CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>();

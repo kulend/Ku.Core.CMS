@@ -28,6 +28,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\System\Views\SmsTemplet\" />
     <Folder Include="wwwroot\lib\data_location\" />
     <Folder Include="wwwroot\lib\layui-admin\" />
     <Folder Include="wwwroot\lib\新文件夹\" />

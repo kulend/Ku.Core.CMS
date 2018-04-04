@@ -28,10 +28,12 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Sms
     public class SmsController : BackendController
     {
         private readonly ISmsAccountService _accountService;
+        private readonly ISmsTempletService _templetService;
 
-        public SmsController(ISmsAccountService accountService)
+        public SmsController(ISmsAccountService accountService, ISmsTempletService templetService)
         {
             this._accountService = accountService;
+            this._templetService = templetService;
         }
 
         #region 短信账户
@@ -107,6 +109,77 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Sms
 
         #endregion
 
+        #region 短信模板
 
+        [Auth("templet.view")]
+        public async Task<IActionResult> TempletList()
+        {
+            return View();
+        }
+
+        [Auth("templet.view")]
+        public async Task<IActionResult> GetTempletList(int page, int rows, SmsTempletSearch where)
+        {
+            var data = await _templetService.GetListAsync(page, rows, where, null);
+            return PagerData(data.items, page, rows, data.count);
+        }
+
+        [Auth("templet.edit")]
+        public async Task<IActionResult> TempletEdit(long? id)
+        {
+            if (id.HasValue)
+            {
+                //编辑
+                var model = await _templetService.GetByIdAsync(id.Value);
+                if (model == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得数据!");
+                }
+                ViewData["Mode"] = "Edit";
+                return View(model);
+            }
+            else
+            {
+                //新增
+                SmsTempletDto dto = new SmsTempletDto();
+                ViewData["Mode"] = "Add";
+                return View(dto);
+            }
+        }
+
+        /// <summary>
+        /// 保存
+        /// </summary>
+        [HttpPost]
+        [Auth("templet.edit")]
+        public async Task<IActionResult> TempletSave(SmsTempletDto model)
+        {
+            await _templetService.SaveAsync(model);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        [HttpPost]
+        [Auth("templet.delete")]
+        public async Task<IActionResult> TempletDelete(params long[] id)
+        {
+            await _templetService.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        [HttpPost]
+        [Auth("templet.restore")]
+        public async Task<IActionResult> TempletRestore(params long[] id)
+        {
+            await _templetService.RestoreAsync(id);
+            return JsonData(true);
+        }
+
+        #endregion
     }
 }

@@ -1,0 +1,42 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：TempletEdit.cshtml
+// 功能描述：短信模板 新增&编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-04-02 09:50
+//
+//----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.System
+@model SmsTempletDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<SmsTempletDto>("TempletSave"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.Tag, x => x.Name)
+        @Html.InputFor(x => x.Example)
+        @Html.InputFor(x => x.Templet)
+        @Html.InputFor(x => x.TempletKey, x => x.Signature)
+        @Html.InputFor(x => x.IsEnable)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForSubmitAndClose()
+    </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

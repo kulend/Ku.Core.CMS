@@ -22,6 +22,7 @@
     entitys.Add(new EntityItem{Area= "System", Name="Sms", Title="短信"});
     entitys.Add(new EntityItem{Area= "System", Name="SmsQueue", Title="短信队列"});
 	entitys.Add(new EntityItem{Area= "System", Name="SmsAccount", Title="短信账号", HasRecycle=true});
+	entitys.Add(new EntityItem{Area= "System", Name="SmsTemplet", Title="短信模板", HasRecycle=true});
 
     entitys.Add(new EntityItem{Area= "Membership", Name="Member", Title="会员"});
     entitys.Add(new EntityItem{Area= "Membership", Name="MemberType", Title="会员类型"});

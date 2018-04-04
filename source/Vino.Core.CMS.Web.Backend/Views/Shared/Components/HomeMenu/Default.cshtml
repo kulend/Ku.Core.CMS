@@ -1,7 +1,7 @@
 ﻿@model List<Vino.Core.CMS.Domain.Dto.System.MenuDto>
 @foreach (var menu in Model)
 {
-<li class="layui-nav-item layui-nav-itemed">
+<li class="layui-nav-item">
     @if (menu.SubMenus.Any())
     {
         <a href="javascript:;" lay-tips="@menu.Name" lay-direction="2">
@@ -13,23 +13,23 @@
             {
                 if (sub.SubMenus.Any())
                 {
-                    <dd class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;" lay-tips="@sub.Name" lay-direction="3">@sub.Name<span class="layui-nav-more"></span></a>
+                    <dd class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="@sub.Name" lay-direction="3">@sub.Name</a>
                         <dl class="layui-nav-child">
                             @foreach (var ssub in sub.SubMenus.OrderBy(x => x.OrderIndex))
                             {
-                                <dd data-url="@ssub.Url" data-id="@ssub.Id">
-                                    <a href="javascript:;">@ssub.Name</a>
-                                </dd>
+                            <dd class="layui-nav-item">
+                                <a href="javascript:;" data-url="@ssub.Url" data-id="@ssub.Id">@ssub.Name</a>
+                            </dd>
                             }
                         </dl>
                     </dd>
                 }
                 else
                 {
-                     <dd data-url="@sub.Url" data-id="@sub.Id">
-                         <a href="javascript:;">@sub.Name</a>
-                     </dd>
+                    <dd class="layui-nav-item">
+                        <a href="javascript:;" data-url="@sub.Url" data-id="@sub.Id">@sub.Name</a>
+                    </dd>
                 }
             }
         </dl>

@@ -39,15 +39,19 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public string Data { set; get; }
 
         /// <summary>
-        /// 签名
-        /// </summary>
-        [StringLength(40)]
-        public string Signature { set; get; }
-
-        /// <summary>
         /// 过期时间
         /// </summary>
         public DateTime ExpireTime { set; get; }
+
+        /// <summary>
+        /// 短信模板ID
+        /// </summary>
+        public long SmsTempletId { set; get; }
+
+        /// <summary>
+        /// 短信模板
+        /// </summary>
+        public virtual SmsTemplet SmsTemplet { set; get; }
     }
 
     public class SmsSearch : BaseSearch<Sms>

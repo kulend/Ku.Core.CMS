@@ -9,10 +9,10 @@
     <None Remove="Areas\Material\Views\Upload\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
-    <PackageReference Include="NLog" Version="4.5.0-rc04" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.0-rc2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="NLog" Version="4.5.2" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
@@ -28,7 +28,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\System\Views\SmsTemplet\" />
     <Folder Include="wwwroot\lib\data_location\" />
     <Folder Include="wwwroot\lib\layui-admin\" />
     <Folder Include="wwwroot\lib\新文件夹\" />

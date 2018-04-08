@@ -38,14 +38,18 @@ namespace Vino.Core.CMS.Domain.Dto.System
         public string Data { set; get; }
 
         /// <summary>
-        /// 签名
-        /// </summary>
-        [MaxLength(40)]
-        public string Signature { set; get; }
-
-        /// <summary>
         /// 过期时间
         /// </summary>
         public DateTime ExpireTime { set; get; }
+
+        /// <summary>
+        /// 短信模板ID
+        /// </summary>
+        public long SmsTempletId { set; get; }
+
+        /// <summary>
+        /// 短信模板
+        /// </summary>
+        public SmsTempletDto SmsTemplet { set; get; }
     }
 }

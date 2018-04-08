@@ -38,6 +38,9 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// 发送时间
         /// </summary>
         public DateTime SendTime { set; get; }
+
+        [StringLength(2000)]
+        public string Response { set; get; }
     }
 
     public class SmsQueueSearch : BaseSearch<SmsQueue>

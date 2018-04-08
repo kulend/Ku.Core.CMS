@@ -67,5 +67,11 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// </summary>
         [Display(Name = "是否可用", Prompt = "是|否")]
         public bool IsEnable { set; get; } = true;
+
+        /// <summary>
+        /// 过期时间（分钟）
+        /// </summary>
+        [Display(Name = "过期时间", Prompt = "分钟，0为不设置过期时间")]
+        public int ExpireMinute { set; get; }
     }
 }

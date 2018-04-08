@@ -59,6 +59,11 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// 是否可用
         /// </summary>
         public bool IsEnable { set; get; } = true;
+
+        /// <summary>
+        /// 过期时间（分钟）
+        /// </summary>
+        public int ExpireMinute { set; get; }
     }
 
     public class SmsTempletSearch : BaseSearch<SmsTemplet>

@@ -1,0 +1,34 @@
+﻿@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：短信 详情页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-04-08 15:01
+    //
+    //----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.System
+@model SmsQueueDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<SmsQueueDto>("#"))
+    {
+    <div class="layui-body">
+        @Html.ShowFor(x => x.Status)
+        @Html.ShowFor(x => x.Sms.Mobile)
+        @Html.ShowFor(x => x.Sms.Content)
+        @Html.ShowFor(x => x.CreateTime)
+        @Html.ShowFor(x => x.SendTime)
+        @Html.ShowFor(x => x.ExpireTime)
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForClose()
+        </div>
+    }
+</div>

@@ -39,11 +39,6 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public string Data { set; get; }
 
         /// <summary>
-        /// 过期时间
-        /// </summary>
-        public DateTime ExpireTime { set; get; }
-
-        /// <summary>
         /// 短信模板ID
         /// </summary>
         public long SmsTempletId { set; get; }

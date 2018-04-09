@@ -22,29 +22,28 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// <summary>
         /// 手机号
         /// </summary>
-        [MaxLength(11)]
+        [StringLength(11)]
+        [Display(Name = "手机号")]
+        [DataType(DataType.PhoneNumber)]
         public string Mobile { set; get; }
 
         /// <summary>
         /// 短信内容
         /// </summary>
-        [MaxLength(256)]
+        [StringLength(256)]
+        [Display(Name = "短信内容")]
         public string Content { set; get; }
 
         /// <summary>
         /// 短信数据
         /// </summary>
-        [MaxLength(512)]
-        public string Data { set; get; }
-
-        /// <summary>
-        /// 过期时间
-        /// </summary>
-        public DateTime ExpireTime { set; get; }
+        [Display(Name = "短信数据")]
+        public IDictionary<string, string> Data { set; get; }
 
         /// <summary>
         /// 短信模板ID
         /// </summary>
+        [DataType("Hidden")]
         public long SmsTempletId { set; get; }
 
         /// <summary>

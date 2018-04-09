@@ -35,9 +35,14 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public Sms Sms { set; get; }
 
         /// <summary>
+        /// 过期时间
+        /// </summary>
+        public DateTime ExpireTime { set; get; }
+
+        /// <summary>
         /// 发送时间
         /// </summary>
-        public DateTime SendTime { set; get; }
+        public DateTime? SendTime { set; get; }
 
         [StringLength(2000)]
         public string Response { set; get; }

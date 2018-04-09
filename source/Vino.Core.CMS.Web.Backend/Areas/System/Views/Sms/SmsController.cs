@@ -27,13 +27,18 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Sms
     [Auth("system.sms")]
     public class SmsController : BackendController
     {
+        private readonly ISmsService _service;
         private readonly ISmsAccountService _accountService;
         private readonly ISmsTempletService _templetService;
+        private readonly ISmsQueueService _queueService;
 
-        public SmsController(ISmsAccountService accountService, ISmsTempletService templetService)
+        public SmsController(ISmsService service, 
+            ISmsAccountService accountService, ISmsTempletService templetService, ISmsQueueService queueService)
         {
+            this._service = service;
             this._accountService = accountService;
             this._templetService = templetService;
+            this._queueService = queueService;
         }
 
         #region 短信账户
@@ -177,6 +182,57 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Sms
         public async Task<IActionResult> TempletRestore(params long[] id)
         {
             await _templetService.RestoreAsync(id);
+            return JsonData(true);
+        }
+
+        #endregion
+
+        #region 短信队列
+
+        [Auth("queue.view")]
+        public async Task<IActionResult> QueueList()
+        {
+            return View();
+        }
+
+        [Auth("queue.view")]
+        public async Task<IActionResult> GetQueueList(int page, int rows, SmsQueueSearch where)
+        {
+            var data = await _queueService.GetListAsync(page, rows, where, null);
+            return PagerData(data.items, page, rows, data.count);
+        }
+
+        [Auth("queue.view")]
+        public async Task<IActionResult> Detail(long id)
+        {
+            var model = await _queueService.GetByIdAsync(id);
+            if (model == null || model.IsDeleted)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
+            }
+
+            var sms = await _service.GetByIdAsync(model.SmsId);
+            if (sms == null || model.IsDeleted)
+            {
+                throw new VinoDataNotFoundException("无法取得数据!");
+            }
+            model.Sms = sms;
+            return View(model);
+        }
+
+        [Auth("add")]
+        public async Task<IActionResult> Add()
+        {
+            //取得短信模板列表
+            ViewBag.Templets = await _templetService.GetListAsync(new SmsTempletSearch {  IsDeleted = false}, null);
+
+            return View();
+        }
+
+        [Auth("add")]
+        public async Task<IActionResult> DoAdd(SmsDto model)
+        {
+            await _service.AddAsync(model);
             return JsonData(true);
         }
 

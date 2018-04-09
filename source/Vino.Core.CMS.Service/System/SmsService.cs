@@ -26,12 +26,17 @@ namespace Vino.Core.CMS.Service.System
     public partial class SmsService : BaseService, ISmsService
     {
         protected readonly ISmsRepository _repository;
+        protected readonly ISmsQueueRepository _queueRepository;
+        protected readonly ISmsTempletRepository _templetRepository;
 
         #region 构造函数
 
-        public SmsService(ISmsRepository repository)
+        public SmsService(ISmsRepository repository, 
+            ISmsQueueRepository queueRepository, ISmsTempletRepository templetRepository)
         {
             this._repository = repository;
+            this._queueRepository = queueRepository;
+            this._templetRepository = templetRepository;
         }
 
         #endregion
@@ -133,6 +138,60 @@ namespace Vino.Core.CMS.Service.System
         #endregion
 
         #region 其他方法
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        public async Task AddAsync(SmsDto dto)
+        {
+            Sms model = Mapper.Map<Sms>(dto);
+
+            if (string.IsNullOrEmpty(model.Mobile))
+            {
+                throw new VinoArgNullException("未设置手机号！");
+            }
+
+            var templet = await _templetRepository.GetByIdAsync(model.SmsTempletId);
+            if (templet == null || templet.IsDeleted)
+            {
+                throw new VinoDataNotFoundException("无法取得短信模板数据！");
+            }
+            if (!templet.IsEnable)
+            {
+                throw new VinoDataNotFoundException("短信模板已禁用！");
+            }
+
+            var content = templet.Templet;
+            foreach (var item in dto.Data)
+            {
+                content = content.Replace("${" + item.Key + "}", item.Value);
+            }
+            model.Content = content + $"【{templet.Signature}】";
+
+            model.Id = ID.NewID();
+            model.CreateTime = DateTime.Now;
+            model.IsDeleted = false;
+
+            //创建队列
+            var queue = new SmsQueue {
+                Id = ID.NewID(),
+                CreateTime = DateTime.Now,
+                IsDeleted = false,
+                Status = Domain.Enum.System.EmSmsQueueStatus.WaitSend,
+                SmsId = model.Id,
+                ExpireTime = templet.ExpireMinute == 0 ? DateTime.Now.AddDays(1) : DateTime.Now.AddMinutes(templet.ExpireMinute)
+            };
+
+            using (var trans = await _repository.BeginTransactionAsync())
+            {
+                await _repository.InsertAsync(model);
+                await _queueRepository.InsertAsync(queue);
+                await _repository.SaveAsync();
+
+                trans.Commit();
+            }
+        }
+
 
         #endregion
     }

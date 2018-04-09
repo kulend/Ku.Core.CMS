@@ -68,6 +68,12 @@ namespace Vino.Core.CMS.IService.System
 
         #region 其他接口
 
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <returns></returns>
+        Task AddAsync(SmsDto dto);
+
         #endregion
     }
 }

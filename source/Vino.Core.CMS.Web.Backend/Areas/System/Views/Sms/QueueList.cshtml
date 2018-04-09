@@ -1,0 +1,50 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：QueueList.cshtml
+// 功能描述：短信队列 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-04-08 15:01
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">短信队列</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action auth-code="system.sms.add" text="新增" icon="&#xe608;" action="window:/System/Sms/Add" after="grid:reload['#list']" />
+            </div>
+            <table id="list"></table>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetQueueList',
+                cols: [[
+                    { field: 'Status', title: '状态', width: 100, enum: true },
+                    { field: 'Mobile', title: '手机号', width: 140, templet:'<div>{{d.Sms.Mobile}}</div>' },
+                    { field: 'Content', title: '短信内容', width: 300, templet: '<div>{{d.Sms.Content}}</div>' },
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
+                    { field: 'ExpireTime', title: '过期时间', width: 170, align: 'center' },
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "system.sms.queue.view", text: "详情", action: `window:/System/Sms/Detail?id={{d.Id}}`, css: "layui-btn-primary" }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

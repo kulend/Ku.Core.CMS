@@ -11,6 +11,9 @@ using Vino.Core.CMS.TaskApp.Application;
 using Vino.Core.CMS.TaskApp.AutoMapper;
 using Vino.Core.Infrastructure.Extensions;
 using AutoMapper;
+using System.Threading.Tasks;
+using System.Collections.Specialized;
+using Vino.Core.CMS.IService.System;
 
 namespace Vino.Core.CMS.TaskApp
 {
@@ -35,8 +38,11 @@ namespace Vino.Core.CMS.TaskApp
             //IdGenerator
             services.AddIdGenerator(Configuration);
 
-            string connection = Configuration.GetConnectionString("Default");
-            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")), ServiceLifetime.Transient);
+            string connection = Configuration.GetConnectionString("MysqlDatabase");
+            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")));
+
+            //string connection = Configuration.GetConnectionString("Default");
+            //services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")), ServiceLifetime.Transient);
 
             //缓存
             services.AddCache(Configuration);

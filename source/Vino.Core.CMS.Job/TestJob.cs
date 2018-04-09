@@ -14,6 +14,7 @@ namespace Vino.Core.CMS.Job
         }
 
         [SingleTask]
+        [Invoke(Interval = 5000)]
         public void RunXXXX(IUserService service)
         {
             var aa = service.GetListAsync(0, 10, null, null);

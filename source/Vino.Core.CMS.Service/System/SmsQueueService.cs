@@ -12,6 +12,7 @@
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.System;
 using Vino.Core.CMS.Domain.Dto.System;
@@ -60,7 +61,9 @@ namespace Vino.Core.CMS.Service.System
         /// <returns>count：条数；items：分页数据</returns>
         public async Task<(int count, List<SmsQueueDto> items)> GetListAsync(int page, int size, SmsQueueSearch where, string sort)
         {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
+            var includes = new List<Expression<Func<SmsQueue, object>>>();
+            includes.Add(x => x.Sms);
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc", includes.ToArray());
             return (data.count, Mapper.Map<List<SmsQueueDto>>(data.items));
         }
 

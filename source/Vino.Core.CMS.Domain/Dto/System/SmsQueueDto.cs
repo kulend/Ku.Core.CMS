@@ -23,6 +23,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// <summary>
         /// 状态
         /// </summary>
+        [Display(Name = "状态")]
         public EmSmsQueueStatus Status { set; get; }
 
         /// <summary>
@@ -33,9 +34,16 @@ namespace Vino.Core.CMS.Domain.Dto.System
         public SmsDto Sms { set; get; }
 
         /// <summary>
+        /// 过期时间
+        /// </summary>
+        [Display(Name = "过期时间")]
+        public DateTime ExpireTime { set; get; }
+
+        /// <summary>
         /// 发送时间
         /// </summary>
-        public DateTime SendTime { set; get; }
+        [Display(Name = "发送时间")]
+        public DateTime? SendTime { set; get; }
 
         [StringLength(2000)]
         public string Response { set; get; }

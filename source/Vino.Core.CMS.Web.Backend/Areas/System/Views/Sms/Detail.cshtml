@@ -20,12 +20,11 @@
     @using (Html.BeginForm<SmsQueueDto>("#"))
     {
     <div class="layui-body">
-        @Html.ShowFor(x => x.Status)
-        @Html.ShowFor(x => x.Sms.Mobile)
+        @Html.ShowFor(x => x.Status, x => x.Sms.Mobile)
         @Html.ShowFor(x => x.Sms.Content)
-        @Html.ShowFor(x => x.CreateTime)
+        @Html.ShowFor(x => x.CreateTime, x => x.ExpireTime)
         @Html.ShowFor(x => x.SendTime)
-        @Html.ShowFor(x => x.ExpireTime)
+        @Html.ShowFor(x=> x.Response)
     </div>
         <div class="layui-footer">
             @Html.ActionsForClose()

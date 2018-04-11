@@ -50,6 +50,6 @@ namespace Vino.Core.CMS.Domain.Entity.System
 
     public class SmsQueueSearch : BaseSearch<SmsQueue>
     {
-
+        public EmSmsQueueStatus? Status { set; get; }
     }
 }

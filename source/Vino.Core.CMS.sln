@@ -73,7 +73,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.WeChat", "Vino.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.CMS.WebApi", "Vino.Core.CMS.WebApi\Vino.Core.CMS.WebApi.csproj", "{4DB286CD-6FD4-4AE7-86B1-BAA046109256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vino.Core.Extensions.Ui", "..\..\开源\Vino.Core.Extensions\Vino.Core.Extensions.Ui\Vino.Core.Extensions.Ui.csproj", "{FF08910C-04CD-4069-AC00-0966650D68CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Extensions.Ui", "..\..\开源\Vino.Core.Extensions\Vino.Core.Extensions.Ui\Vino.Core.Extensions.Ui.csproj", "{FF08910C-04CD-4069-AC00-0966650D68CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vino.Core.Communication", "Vino.Core.Communication\Vino.Core.Communication.csproj", "{5AF55AE7-924B-46E0-A71C-C05A5A653146}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aliyun.Acs.Core", "..\..\开源\Aliyun.Acs.Core\Aliyun.Acs.Core.csproj", "{C129C091-A4B9-4257-9A50-1326C4DF6493}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aliyun.Acs.Dysmsapi", "..\..\开源\Aliyun.Acs.Dysmsapi\Aliyun.Acs.Dysmsapi.csproj", "{587E3A75-D883-4E8B-824D-9E2FAF9C3E18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +195,18 @@ Global
 		{FF08910C-04CD-4069-AC00-0966650D68CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF08910C-04CD-4069-AC00-0966650D68CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF08910C-04CD-4069-AC00-0966650D68CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AF55AE7-924B-46E0-A71C-C05A5A653146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AF55AE7-924B-46E0-A71C-C05A5A653146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AF55AE7-924B-46E0-A71C-C05A5A653146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AF55AE7-924B-46E0-A71C-C05A5A653146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C129C091-A4B9-4257-9A50-1326C4DF6493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C129C091-A4B9-4257-9A50-1326C4DF6493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C129C091-A4B9-4257-9A50-1326C4DF6493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C129C091-A4B9-4257-9A50-1326C4DF6493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{587E3A75-D883-4E8B-824D-9E2FAF9C3E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587E3A75-D883-4E8B-824D-9E2FAF9C3E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587E3A75-D883-4E8B-824D-9E2FAF9C3E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587E3A75-D883-4E8B-824D-9E2FAF9C3E18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,6 +239,9 @@ Global
 		{758526A6-BC28-4883-A392-3A22DE484F16} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
 		{4DB286CD-6FD4-4AE7-86B1-BAA046109256} = {9D86126B-0723-4E1C-B95A-DCD1E079D624}
 		{FF08910C-04CD-4069-AC00-0966650D68CE} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
+		{5AF55AE7-924B-46E0-A71C-C05A5A653146} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
+		{C129C091-A4B9-4257-9A50-1326C4DF6493} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
+		{587E3A75-D883-4E8B-824D-9E2FAF9C3E18} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

@@ -117,6 +117,7 @@ namespace Vino.Core.CMS.Service.System
                 item.TempletKey = model.TempletKey;
                 item.Signature = model.Signature;
                 item.IsEnable = model.IsEnable;
+                item.SmsAccountId = model.SmsAccountId;
 
                 _repository.Update(item);
             }

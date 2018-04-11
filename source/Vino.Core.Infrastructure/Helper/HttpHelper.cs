@@ -54,7 +54,7 @@ namespace Vino.Core.Infrastructure.Helper
                 var response = await http.GetAsync(url);
                 //确保HTTP成功状态值
                 response.EnsureSuccessStatusCode();
-                string responseStr = response.Content.ReadAsStringAsync().Result;
+                //string responseStr = response.Content.ReadAsStringAsync().Result;
                 return await response.Content.ReadAsStringAsync();
             }
         }

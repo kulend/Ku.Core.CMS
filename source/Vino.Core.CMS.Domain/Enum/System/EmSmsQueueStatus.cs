@@ -12,5 +12,11 @@ namespace Vino.Core.CMS.Domain.Enum.System
 
         [Display(Name = "已发送")]
         Sent = 1,
+
+        [Display(Name = "已过期")]
+        Expired = 2,
+
+        [Display(Name = "发送出错")]
+        Error = 3,
     }
 }

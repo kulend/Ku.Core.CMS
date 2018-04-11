@@ -132,6 +132,9 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Sms
         [Auth("templet.edit")]
         public async Task<IActionResult> TempletEdit(long? id)
         {
+            //取得短信账号列表
+            ViewBag.Accounts =  await _accountService.GetListAsync(new SmsAccountSearch { IsDeleted = false}, null);
+
             if (id.HasValue)
             {
                 //编辑

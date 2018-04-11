@@ -46,6 +46,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
         public DateTime? SendTime { set; get; }
 
         [StringLength(2000)]
+        [Display(Name = "发送回应")]
         public string Response { set; get; }
     }
 }

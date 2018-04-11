@@ -97,7 +97,11 @@ namespace Vino.Core.CMS.Service.System
                     throw new VinoDataNotFoundException("无法取得短信账号数据！");
                 }
 
-                //TODO:这里进行赋值
+                item.Name = model.Name;
+                item.ParameterConfig = model.ParameterConfig;
+                item.IsEnable = model.IsEnable;
+                item.Remarks = model.Remarks;
+                item.Type = model.Type;
 
                 _repository.Update(item);
             }

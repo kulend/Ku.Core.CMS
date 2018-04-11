@@ -64,6 +64,16 @@ namespace Vino.Core.CMS.Domain.Entity.System
         /// 过期时间（分钟）
         /// </summary>
         public int ExpireMinute { set; get; }
+
+        /// <summary>
+        /// 短信账号ID
+        /// </summary>
+        public long? SmsAccountId { set; get; }
+
+        /// <summary>
+        /// 短信账号
+        /// </summary>
+        public virtual SmsAccount SmsAccount { set; get; }
     }
 
     public class SmsTempletSearch : BaseSearch<SmsTemplet>

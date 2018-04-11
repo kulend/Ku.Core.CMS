@@ -73,5 +73,16 @@ namespace Vino.Core.CMS.Domain.Dto.System
         /// </summary>
         [Display(Name = "过期时间", Prompt = "分钟，0为不设置过期时间")]
         public int ExpireMinute { set; get; }
+
+        /// <summary>
+        /// 短信账户ID
+        /// </summary>
+        [Display(Name = "短信账户ID")]
+        public long? SmsAccountId { set; get; }
+
+        /// <summary>
+        /// 短信账号
+        /// </summary>
+        public SmsAccountDto SmsAccount { set; get; }
     }
 }

@@ -7,14 +7,14 @@ namespace Vino.Core.CMS.Job
 {
     public class TestJob: VinoJob
     {
-        [Invoke(Interval = 5000)]
+        //[Invoke(Interval = 5000)]
         [SingleTask]
         public void Run()
         {
         }
 
         [SingleTask]
-        [Invoke(Interval = 5000)]
+        //[Invoke(Interval = 5000)]
         public void RunXXXX(IUserService service)
         {
             var aa = service.GetListAsync(0, 10, null, null);

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\开源\Aliyun.Acs.Core\Aliyun.Acs.Core.csproj" />
+    <ProjectReference Include="..\..\..\开源\Aliyun.Acs.Dysmsapi\Aliyun.Acs.Dysmsapi.csproj" />
+  </ItemGroup>
+
+</Project>

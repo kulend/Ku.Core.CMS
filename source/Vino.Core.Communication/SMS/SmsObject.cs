@@ -29,6 +29,6 @@ namespace Vino.Core.Communication.SMS
         /// <summary>
         /// 业务ID
         /// </summary>
-        public long OutId { set; get; }
+        public string OutId { set; get; }
     }
 }

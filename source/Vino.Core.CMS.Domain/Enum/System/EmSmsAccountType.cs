@@ -24,16 +24,6 @@ namespace Vino.Core.CMS.Domain.Enum.System
                     EmSmsAccountType.Aliyun,
                     new SmsAccountTypeParameter[]{
                         new SmsAccountTypeParameter{
-                            Key="Product",
-                            Name="产品名称",
-                            Value="Dysmsapi"
-                        },
-                        new SmsAccountTypeParameter{
-                            Key="Domain",
-                            Name="产品域名",
-                            Value="dysmsapi.aliyuncs.com"
-                        },
-                        new SmsAccountTypeParameter{
                             Key="AccessKeyId",
                             Name="AccessKeyId",
                             Value=""

@@ -7,6 +7,6 @@ namespace Vino.Core.Communication.SMS
 {
     public interface ISmsSender
     {
-        Task<string> Send(SmsObject sms, IDictionary<string, string> parms);
+        Task<(bool success, string response)> Send(SmsObject sms);
     }
 }

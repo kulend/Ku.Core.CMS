@@ -50,25 +50,27 @@ namespace Vino.Core.CMS.Job
                             Signature = item.Sms.SmsTemplet.Signature,
                             TempletKey = item.Sms.SmsTemplet.TempletKey,
                             Data = JsonConvert.DeserializeObject<IDictionary<string, string>>(item.Sms.Data),
-                            OutId = item.Id
+                            OutId = item.Id.ToString()
                         };
 
-                        ISmsSender sender = null;
-                        string result;
-                        if (account.Type == EmSmsAccountType.Aliyun) sender = new AliyunSmsSender();
-                        try
+                        var dict = JsonConvert.DeserializeObject<IDictionary<string, string>>(account.ParameterConfig);
+                        var accessKeyId = dict["AccessKeyId"];
+                        var accessKeySecret = dict["AccessKeySecret"];
+
+                        (bool success, string response) res;
+                        switch (account.Type)
                         {
-                            result = await sender.Send(sms, JsonConvert.DeserializeObject<IDictionary<string, string>>(account.ParameterConfig));
-                            item.Response = result.Substr(0, 1000);
-                            item.Status = EmSmsQueueStatus.Sent;
-                            item.SendTime = DateTime.Now;
+                            case EmSmsAccountType.Aliyun:
+                                res = await new AliyunSmsSender(accessKeyId, accessKeySecret).Send(sms);
+                                break;
+                            default:
+                                res = (false, "短信账户功能未实现");
+                                break;
                         }
-                        catch (Exception ex)
-                        {
-                            item.Status = EmSmsQueueStatus.Error;
-                            item.SendTime = DateTime.Now;
-                            item.Response = ex.Message.Substr(0, 1000);
-                        }
+
+                        item.Response = res.response.Substr(0, 1000);
+                        item.Status = res.success ? EmSmsQueueStatus.Sent : EmSmsQueueStatus.Error;
+                        item.SendTime = DateTime.Now;
                     }
                     queueRepository.Update(item);
                     await queueRepository.SaveAsync();

@@ -23,6 +23,10 @@ namespace Vino.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //JWT
+            services.AddJwtToken(Configuration);
+            services.AddWebApiAuth(Configuration, Environment);
+
             services.AddMvc(opts =>
             {
                 opts.Filters.Add(typeof(WebApiResultFilter));
@@ -60,6 +64,8 @@ namespace Vino.Core.CMS.Web.Application
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseWebApiAuth();
 
             app.UseMvc();
         }

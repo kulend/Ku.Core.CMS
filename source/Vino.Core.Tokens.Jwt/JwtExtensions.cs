@@ -12,7 +12,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddJwtToken(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IJwtProvider, SystemJwtProvider>();
-            return services.Configure<JwtSecKey>(configuration.GetSection("JwtSecKey"));
+            services.Configure<JwtConfig>(configuration.GetSection("Jwt"));
+            return services;
         }
     }
 }

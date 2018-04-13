@@ -4,10 +4,14 @@ using System.Text;
 
 namespace Vino.Core.Tokens.Jwt
 {
-    public class JwtSecKey
+    public class JwtConfig
     {
         public string Key { get; set; }
 
         public int ExpiredMinutes { get; set; } = 30;
+
+        public string Issuer { set; get; }
+
+        public string Audience { set; get; }
     }
 }

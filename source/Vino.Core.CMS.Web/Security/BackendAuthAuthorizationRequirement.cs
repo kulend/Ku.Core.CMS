@@ -15,7 +15,7 @@ namespace Vino.Core.CMS.Web.Security
 
     }
 
-    public class BackendAuthAuthorizationHandler : BackendAttributeAuthorizationHandler<BackendAuthAuthorizationRequirement, AuthAttribute>
+    public class BackendAuthAuthorizationHandler : DefaultAttributeAuthorizationHandler<BackendAuthAuthorizationRequirement, AuthAttribute>
     {
         private IFunctionService service;
 

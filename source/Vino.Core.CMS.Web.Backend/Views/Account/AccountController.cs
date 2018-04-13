@@ -28,20 +28,17 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
     {
         private IUserService userService;
         private IJwtProvider _jwtProvider;
-        private JwtSecKey _jwtSecKey;
         private JwtAuthConfig _jwtAuthConfig;
         private ICacheService cacheService;
         private readonly IEventPublisher _eventPublisher;
 
         public AccountController(IJwtProvider jwtProvider,
-            IOptions<JwtSecKey> jwtSecKey,
             IOptions<JwtAuthConfig> jwtAuthConfig,
             ICacheService _cacheService,
             IUserService _userService,
             IEventPublisher _eventPublisher)
         {
             _jwtProvider = jwtProvider;
-            _jwtSecKey = jwtSecKey.Value;
             _jwtAuthConfig = jwtAuthConfig.Value;
             this.cacheService = _cacheService;
             this.userService = _userService;
@@ -107,8 +104,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
                 ,new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-            var token = _jwtProvider.CreateToken(_jwtSecKey.Key, _jwtAuthConfig.Issuer, _jwtAuthConfig.Audience, claims,
-                DateTime.Now.AddMinutes(_jwtSecKey.ExpiredMinutes));
+            var token = _jwtProvider.CreateToken(claims);
 
             base.Response.Cookies.Append(_jwtAuthConfig.CookieName, token, new CookieOptions
             {

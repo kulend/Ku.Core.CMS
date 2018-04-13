@@ -8,8 +8,10 @@ namespace Vino.Core.Tokens.Jwt
 {
     public interface IJwtProvider
     {
-        string CreateToken(string key, string issuer, string audience, IEnumerable<Claim> claims, DateTime expires);
+        string CreateToken(IEnumerable<Claim> claims);
 
-        ClaimsPrincipal ValidateToken(string key, string validateJwtToken, TokenValidationParameters validationParameters);
+        string CreateToken(IEnumerable<Claim> claims, DateTime expires);
+
+        ClaimsPrincipal ValidateToken(string validateJwtToken, TokenValidationParameters validationParameters);
     }
 }

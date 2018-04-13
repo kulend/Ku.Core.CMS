@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Vino.Core.CMS.Web.Configs;
 using Vino.Core.CMS.Web.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class BackendAuthExtensions
+    public static class WebApiAuthExtensions
     {
-        public static IServiceCollection AddBackendAuth(this IServiceCollection services, IConfiguration Configuration, IHostingEnvironment env)
+        public static IServiceCollection AddWebApiAuth(this IServiceCollection services, IConfiguration Configuration, IHostingEnvironment env)
         {
-            services.Configure<JwtAuthConfig>(Configuration.GetSection("JwtAuth"));
-
             var key = Configuration["Jwt:Key"];
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 
@@ -45,30 +39,34 @@ namespace Microsoft.Extensions.DependencyInjection
                 // 时间偏差
                 ClockSkew = TimeSpan.Zero
             };
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("auth", policy =>
+            //    {
+            //        policy.Requirements.Add(new ValidJtiRequirement());
+            //        policy.Requirements.Add(new BackendAuthAuthorizationRequirement());
+            //    });
+            //});
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("auth", policy =>
                 {
-                    policy.Requirements.Add(new ValidJtiRequirement());
-                    policy.Requirements.Add(new BackendAuthAuthorizationRequirement());
+                    //policy.Requirements.Add(new ValidJtiRequirement());
+                    policy.Requirements.Add(new WebApiAuthAuthorizationRequirement());
                 });
             });
 
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(o =>
-            {
-                o.LoginPath = new PathString(Configuration["JwtAuth:LoginPath"]);
-                o.AccessDeniedPath = new PathString(Configuration["JwtAuth:AccessDeniedPath"]);
-                o.Cookie.Name = Configuration["JwtAuth:CookieName"];
-                o.TicketDataFormat = new JwtTicketDataFormat(
-                    SecurityAlgorithms.HmacSha256,
-                    tokenValidationParameters);
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => {
+                options.TokenValidationParameters = tokenValidationParameters;
             });
-            services.AddScoped<IAuthorizationHandler, ValidJtiHandler>();
-            services.AddScoped<IAuthorizationHandler, BackendAuthAuthorizationHandler>();
+
+            //services.AddScoped<IAuthorizationHandler, ValidJtiHandler>();
+            services.AddScoped<IAuthorizationHandler, WebApiAuthAuthorizationHandler>();
             return services;
         }
     }
@@ -76,9 +74,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
 namespace Microsoft.AspNetCore.Builder
 {
-    public static class BackendAuthExtensions
+    public static class WebApiAuthExtensions
     {
-        public static IApplicationBuilder UseBackendAuth(this IApplicationBuilder app, IConfiguration Configuration)
+        public static IApplicationBuilder UseWebApiAuth(this IApplicationBuilder app)
         {
             app.UseAuthentication();
             return app;

@@ -50,5 +50,11 @@ namespace Vino.Core.CMS.Web.Extensions
             }
             return (MemberRole)int.Parse(value);
         }
+
+        public static string GetVersion(this ClaimsPrincipal self)
+        {
+            var version = self.FindFirst(ClaimTypes.Version)?.Value;
+            return version;
+        }
     }
 }

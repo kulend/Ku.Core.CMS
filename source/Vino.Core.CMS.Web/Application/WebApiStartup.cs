@@ -29,6 +29,7 @@ namespace Vino.Core.CMS.Web.Application
 
             services.AddMvc(opts =>
             {
+                opts.Filters.Add(typeof(VinoActionFilter));
                 opts.Filters.Add(typeof(WebApiResultFilter));
                 opts.Filters.Add(typeof(ApiExceptionFilter));
                 //opts.Filters.Add(typeof(UserActionLogFilter));

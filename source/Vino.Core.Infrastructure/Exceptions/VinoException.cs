@@ -78,4 +78,25 @@ namespace Vino.Core.Infrastructure.Exceptions
         {
         }
     }
+
+    public class VinoNeedVerifyCodeException : VinoException
+    {
+        public VinoNeedVerifyCodeException()
+            : base(2001, "需要验证码")
+        {
+        }
+    }
+
+    public class VinoVerifyCodeInvalidException : VinoException
+    {
+        public VinoVerifyCodeInvalidException()
+            : base(2002, "验证码出错")
+        {
+        }
+
+        public VinoVerifyCodeInvalidException(string msg)
+            : base(2002, msg)
+        {
+        }
+    }
 }

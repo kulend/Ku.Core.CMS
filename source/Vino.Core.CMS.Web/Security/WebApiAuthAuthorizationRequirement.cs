@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Vino.Core.Cache;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.IService.System;
 using Vino.Core.CMS.Web.Extensions;
 
@@ -16,15 +18,23 @@ namespace Vino.Core.CMS.Web.Security
 
     public class WebApiAuthAuthorizationHandler : DefaultAttributeAuthorizationHandler<WebApiAuthAuthorizationRequirement, MemberAuthAttribute>
     {
-        private IFunctionService service;
+        private ICacheService _cacheService;
 
-        public WebApiAuthAuthorizationHandler(IFunctionService _service)
+        public WebApiAuthAuthorizationHandler(ICacheService cacheService)
         {
-            this.service = _service;
+            this._cacheService = cacheService;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, WebApiAuthAuthorizationRequirement requirement, List<MemberAuthAttribute> attributes, List<MemberAuthAttribute> controllAttributes)
         {
+            // 检查缓存会员数据是否存在
+            var member = _cacheService.Get<LoginMember>(string.Format(CacheKeyDefinition.ApiMemberToken, context.User.GetUserIdOrZero(), context.User.GetVersion()));
+            if (member == null)
+            {
+                context.Fail();
+                return;
+            }
+
             var attr1 = controllAttributes.FirstOrDefault();
             if (!CheckPermissionAsync(context, attr1))
             {

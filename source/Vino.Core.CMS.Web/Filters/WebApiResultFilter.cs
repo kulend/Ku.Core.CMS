@@ -12,6 +12,12 @@ namespace Vino.Core.CMS.Web.Filters
     {
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
+            if (context.Result is FileContentResult file)
+            {
+                await next();
+                return;
+            }
+
             object value = null;
             if (context.Result is ObjectResult obj)
             {
@@ -20,6 +26,7 @@ namespace Vino.Core.CMS.Web.Filters
             {
                 value = json.Value;
             }
+            
             var result = new JsonResult(new {
                 code = 0,
                 data = value

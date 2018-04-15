@@ -15,7 +15,7 @@ namespace Vino.Core.CMS.Web.Base
         /// 是否是Json请求
         /// </summary>
         /// <returns></returns>
-        public bool IsJsonRequest()
+        protected bool IsJsonRequest()
         {
             return base.HttpContext.Request.IsJsonRequest();
         }

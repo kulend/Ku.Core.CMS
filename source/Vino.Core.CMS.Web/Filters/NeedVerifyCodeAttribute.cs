@@ -10,6 +10,9 @@ using Vino.Core.Infrastructure.Exceptions;
 
 namespace Vino.Core.CMS.Web.Filters
 {
+    /// <summary>
+    /// 该特性指示需要图像验证码验证
+    /// </summary>
     public class NeedVerifyCodeAttribute : VinoActionAttribute
     {
         /// <summary>

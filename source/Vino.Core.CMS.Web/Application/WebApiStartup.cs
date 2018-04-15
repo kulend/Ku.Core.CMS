@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Vino.Core.CMS.Web.Filters;
 using Vino.Core.Infrastructure.Json;
@@ -26,6 +29,8 @@ namespace Vino.Core.CMS.Web.Application
             //JWT
             services.AddJwtToken(Configuration);
             services.AddWebApiAuth(Configuration, Environment);
+
+
 
             services.AddMvc(opts =>
             {
@@ -54,6 +59,25 @@ namespace Vino.Core.CMS.Web.Application
                 option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "TwBusManagement接口文档",
+                    Description = "RESTful API for TwBusManagement",
+                    TermsOfService = "None",
+                    Contact = new Contact { Name = "Alvin_Su", Email = "asdasdasd@outlook.com", Url = "" }
+                });
+
+                //Set the comments path for the swagger json and ui.
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "Vino.Core.CMS.WebApi.xml");
+                c.IncludeXmlComments(xmlPath);
+
+                //  c.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数
+            });
+
             return base.ConfigureServices(services);
         }
 
@@ -67,6 +91,15 @@ namespace Vino.Core.CMS.Web.Application
             }
 
             app.UseWebApiAuth();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseMvc();
         }

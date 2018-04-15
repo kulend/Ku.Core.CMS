@@ -1,0 +1,53 @@
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：应用 新增&编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-04-15 10:34
+    //
+    //----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.DataCenter
+@model AppDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<AppDto>("Save"))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Id)
+            @Html.InputFor(x => x.Type, x => x.Name)
+            @Html.InputFor(x => x.Intro)
+            <div class="layui-form-item">
+                <label class="layui-form-label">图标</label>
+                <div id="icon" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.DownloadUrl)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+
+            $("#icon").vinoImagePicker({
+                field_data: "IconData",
+                max_count: 1
+            });
+
+            $("#icon").vinoImagePicker("loadData", '@Html.Raw(Model.IconData)');
+        });
+    </script>
+}

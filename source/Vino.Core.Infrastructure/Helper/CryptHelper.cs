@@ -24,6 +24,11 @@ namespace Vino.Core.Infrastructure.Helper
             return str.ToLower();
         }
 
+        public static string EncryptMD5Short(string value)
+        {
+            return EncryptMD5(value).Substring(8, 16);
+        }
+
         public static string EncryptMD5(FileStream fs)
         {
             var str = "";

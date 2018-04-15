@@ -1,0 +1,98 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：应用 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-04-15 10:34
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+            <ul class="layui-tab-title">
+                <li lay-id="list" class="layui-this">应用列表</li>
+                <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action auth-code="datacenter.app.edit" text="新增" icon="&#xe608;" action="window:/DataCenter/App/Edit" after="grid:reload['#list']" />
+                        <action auth-code="datacenter.app.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Delete']" after="grid:reload" />
+                    </div>
+                    <table id="list"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                        <action auth-code="datacenter.app.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Restore']" after="grid:reload" />
+                    </div>
+                    <table id="recycles"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+<script>
+    layui.use(['element'], function () {
+        var element = layui.element;
+
+        var cols = [
+            { field: 'Type', title: '应用类型', width: 100, enum: true },
+            { field: 'Name', title: '名称', width: 170 },
+            { field: 'AppKey', title: 'AppKey', width: 170 },
+            { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
+        ];
+
+        $("#list").vinoGrid({
+            url: 'GetList',
+            cols: [cols.concat([
+                {
+                    title: '操作', fixed: 'right', width: 160, align: 'center',
+                    toolbar: grid_templet_operate([
+                        { code: "datacenter.app.edit", text: "编辑", action: `window:/DataCenter/App/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "datacenter.app.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                    ])
+                }
+            ])],
+            onWhere: function () {
+                return {
+                    IsDeleted: false
+                };
+            }
+        });
+
+        element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            { 
+                //初始化回收站
+                $("#recycles").vinoGrid({
+                    url: 'GetList',
+                    cols: [cols.concat([
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "datacenter.app.restore", text: "恢复", action: `post:Restore?id={{d.Id}}` }
+                            ])
+                        }
+                    ])],
+                    onWhere: function () {
+                        return {
+                            IsDeleted: true
+                        };
+                    }
+                });
+            }
+        });
+    });
+</script>
+}

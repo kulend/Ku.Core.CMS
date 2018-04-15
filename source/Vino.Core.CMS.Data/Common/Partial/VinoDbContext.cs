@@ -150,5 +150,10 @@ namespace Vino.Core.CMS.Data.Common
         /// </summary>
         public DbSet<Domain.Entity.Mall.ProductSku> ProductSkus { get; set; }
 
+        /// <summary>
+        /// 应用
+        /// </summary>
+        public DbSet<Domain.Entity.DataCenter.App> Apps { get; set; }
+
     }
 }

@@ -83,7 +83,10 @@ namespace Vino.Core.CMS.Web.AutoMapper
             });
             CreateMap<Domain.Entity.Mall.ProductSku, Domain.Dto.Mall.ProductSkuDto>();
             CreateMap<Domain.Dto.Mall.ProductSkuDto, Domain.Entity.Mall.ProductSku>();
-        }
+        
+            CreateMap<Domain.Entity.DataCenter.App, Domain.Dto.DataCenter.AppDto>();
+            CreateMap<Domain.Dto.DataCenter.AppDto, Domain.Entity.DataCenter.App>();
+		}
 
         private class JsonSerializeResolver : IMemberValueResolver<object, object, object, string>
         {

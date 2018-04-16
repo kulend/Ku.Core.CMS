@@ -64,10 +64,10 @@ namespace Vino.Core.CMS.Web.Application
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "TwBusManagement接口文档",
-                    Description = "RESTful API for TwBusManagement",
+                    Title = "Vino.Core.CMS 接口文档",
+                    Description = "RESTful API for Vino.Core.CMS",
                     TermsOfService = "None",
-                    Contact = new Contact { Name = "Alvin_Su", Email = "asdasdasd@outlook.com", Url = "" }
+                    Contact = new Contact { Name = "Kulend", Email = "kulend@qq.com", Url = "" }
                 });
 
                 //Set the comments path for the swagger json and ui.

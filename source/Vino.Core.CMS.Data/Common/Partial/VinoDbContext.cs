@@ -155,5 +155,10 @@ namespace Vino.Core.CMS.Data.Common
         /// </summary>
         public DbSet<Domain.Entity.DataCenter.App> Apps { get; set; }
 
+        /// <summary>
+        /// 应用版本
+        /// </summary>
+        public DbSet<Domain.Entity.DataCenter.AppVersion> AppVersions { get; set; }
+
     }
 }

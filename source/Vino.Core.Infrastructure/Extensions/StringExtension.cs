@@ -153,7 +153,7 @@ namespace Vino.Core.Infrastructure.Extensions
         /// SubStr(0,12);
         /// </example>
         /// </summary>
-        public static string Substr(this string obj, int start, int length)
+        public static string Substr(this string obj, int start, int length, string suffix = null)
         {
             if (string.IsNullOrWhiteSpace(obj))
             {
@@ -163,7 +163,7 @@ namespace Vino.Core.Infrastructure.Extensions
             {
                 return obj.Substring(start, obj.Length);
             }
-            return obj.Substring(start, length);
+            return obj.Substring(start, length) + suffix ?? "";
         }
 
         /// <summary>

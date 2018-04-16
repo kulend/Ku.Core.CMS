@@ -1,0 +1,43 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Edit.cshtml
+// 功能描述：应用版本 新增&编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-04-16 10:59
+//
+//----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.DataCenter
+@model AppVersionDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<AppVersionDto>("VersionSave"))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Id)
+        @Html.InputFor(x => x.AppId)
+        @Html.ShowFor(x => x.App.Name, x => x.App.Type)
+        @Html.InputFor(x => x.Version)
+        @Html.InputFor(x => x.IsEnable, x=>x.Force)
+        @Html.InputFor(x => x.Content)
+        @Html.InputFor(x => x.DownLoadUrl)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForSubmitAndClose()
+    </div>
+    }
+</div>
+@section Scripts
+{
+<script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+</script>
+}

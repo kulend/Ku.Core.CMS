@@ -32,6 +32,7 @@ namespace Vino.Core.CMS.Web.Backend
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:5000")
                 .UseNLog() // NLog: setup NLog for Dependency injection
                 .Build();
     }

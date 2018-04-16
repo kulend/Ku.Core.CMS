@@ -43,7 +43,8 @@
 	//entitys.Add(new EntityItem{Area= "Mall", Name="Product", Title="商品", HasRecycle=true});
 	//entitys.Add(new EntityItem{Area= "Mall", Name="ProductSku", Title="商品SKU"});
 
-	entitys.Add(new EntityItem{Area= "DataCenter", Name="App", Title="应用", HasRecycle=true});
+	entitys.Add(new EntityItem{Area="DataCenter", Name="App", Title="应用", HasRecycle=true});
+	entitys.Add(new EntityItem{Area="DataCenter", Name="AppVersion", Title="应用版本" });
 #>
 
 <#
@@ -786,9 +787,9 @@ namespace Vino.Core.CMS.Web.Backend.Areas.<#=area#>.Views.<#=name#>
     <div class="layui-body">
         @Html.InputFor(x => x.Id)
     </div>
-        <div class="layui-footer">
-            @Html.ActionsForSubmitAndClose()
-        </div>
+    <div class="layui-footer">
+        @Html.ActionsForSubmitAndClose()
+    </div>
     }
 </div>
 @section Scripts

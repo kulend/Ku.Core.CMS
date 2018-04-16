@@ -86,6 +86,8 @@ namespace Vino.Core.CMS.Web.AutoMapper
         
             CreateMap<Domain.Entity.DataCenter.App, Domain.Dto.DataCenter.AppDto>();
             CreateMap<Domain.Dto.DataCenter.AppDto, Domain.Entity.DataCenter.App>();
+            CreateMap<Domain.Entity.DataCenter.AppVersion, Domain.Dto.DataCenter.AppVersionDto>();
+            CreateMap<Domain.Dto.DataCenter.AppVersionDto, Domain.Entity.DataCenter.AppVersion>();
 		}
 
         private class JsonSerializeResolver : IMemberValueResolver<object, object, object, string>

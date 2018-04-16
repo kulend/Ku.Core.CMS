@@ -1,0 +1,111 @@
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：VersionList.cshtml
+    // 功能描述：应用版本 列表页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-04-16 10:59
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.DataCenter
+@using Vino.Core.Infrastructure.Extensions
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3 layui-col-lg2">
+            <div class="layui-card">
+                <div class="layui-card-header">应用列表</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <table id="ID_table_apps" class="layui-table" lay-skin="row">
+                            <tbody>
+                                @foreach (AppDto app in ViewBag.Apps)
+                                {
+                                    <tr><td><input type="checkbox" title="@app.Name.Substr(0, 7, "...")" name="name_app" value="@app.Id" lay-skin="primary" lay-filter="filter-app"></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md9  layui-col-lg10">
+            <div class="layui-card">
+                <div class="layui-card-header">应用版本</div>
+                <div class="layui-card-body">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action id="btn-add" auth-code="datacenter.app.version.edit" text="新增" icon="&#xe608;" action="" after="grid:reload['#list']" />
+                    </div>
+                    <table id="list"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            form.on('checkbox(filter-app)', function (data) {
+                var name = data.elem.getAttribute("name");
+                var domArr = document.getElementsByName(name);
+                var checked = false;
+                for (var i = 0; i < domArr.length; i++) {
+                    if (domArr[i] !== data.elem) {
+                        if (data.elem.checked) {
+                            domArr[i].checked = false;
+                        } else if (domArr[i].checked) {
+                            checked = true;
+                        }
+                    }
+                }
+                data.elem.checked = !checked ? true : data.elem.checked;
+                form.render('checkbox');
+
+                doAppSelected(data.value);
+            });
+        });
+
+        var selAppId;
+        function doAppSelected(appId)
+        { 
+            if (!selAppId) {
+                selAppId = appId;
+                $("#list").vinoGrid({
+                    url: 'GetVersionList',
+                    cols: [[
+                        { field: 'Version', title: '版本号', width: 150 },
+                        { field: 'IsEnable', title: '是否可用', width: 100, switch: true },
+                        { field: 'Force', title: '是否强制', width: 100, switch: true },
+                        { field: 'DownLoadUrl', title: '下载地址', width: 250 },
+                        { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' },
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "datacenter.app.version.edit", text: "编辑", action: `window:/DataCenter/App/VersionEdit?id={{d.Id}}`, after: "grid:reload['#list']" },
+                                { code: "datacenter.app.version.delete", text: "删除", action: `post:VersionDelete?id={{d.Id}}` }
+                            ])
+                        }
+                    ]],
+                    onWhere: function () {
+                        return {
+                            AppId: selAppId
+                        };
+                    }
+                });
+            } else if (selAppId != appId) { 
+                selAppId = appId;
+                $("#list").vinoGrid("search");
+            }
+
+            $("#btn-add").attr("action", "window:/DataCenter/App/VersionEdit?AppId=" + selAppId);
+        }
+    </script>
+}

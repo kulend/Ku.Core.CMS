@@ -144,8 +144,9 @@ namespace Vino.Core.CMS.Service.System
                 item.Account = model.Account;
                 item.Name = model.Name;
                 item.Mobile = model.Mobile;
+                item.HeadImage = model.HeadImage;
                 item.IsEnable = model.IsEnable;
-                if (!model.Password.EqualOrdinalIgnoreCase("the password has not changed"))
+                if (!model.Password.EqualOrdinalIgnoreCase("********************"))
                 {
                     item.Password = model.Password;
                     //密码设置
@@ -278,6 +279,27 @@ namespace Vino.Core.CMS.Service.System
             await _repository.SaveAsync();
         }
 
+
+        #endregion
+
+        #region 验证密码
+
+        public async Task<bool> PasswordCheckAsync(long id, string password)
+        {
+            if (password.IsNullOrEmpty())
+                throw new VinoArgNullException("密码不能为空！");
+
+            var entity = await _repository.GetByIdAsync(id);
+            if (entity == null || entity.IsDeleted)
+            {
+                throw new VinoException("账户不存在！");
+            }
+            if (!entity.IsEnable)
+            {
+                throw new VinoException("该账号已被禁止登陆！");
+            }
+            return entity.CheckPassword(password);
+        }
 
         #endregion
 

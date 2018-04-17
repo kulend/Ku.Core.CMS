@@ -35,6 +35,7 @@ namespace Vino.Core.CMS.Domain.Dto.DataCenter
         /// </summary>
         [Required, StringLength(20)]
         [Display(Name = "版本号", Description = "采用点分制，如 1.0.2")]
+        [RegularExpression(@"^\d+(\.\d+)*$", ErrorMessage = "输入的版本号不符合规则，请采用点分制，如 1.0.2")]
         public string Version { set; get; }
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace Vino.Core.CMS.Domain.Dto.DataCenter
         /// </summary>
         [Required, StringLength(256)]
         [Display(Name = "下载地址")]
+        [DataType(DataType.Url)]
         public string DownLoadUrl { set; get; }
 
         /// <summary>

@@ -97,6 +97,48 @@ if (!vino.page) {
         }
         return v;
     };
+
+    //锁屏
+    vino.page.pageLock = function (callback) {
+        if (self != top) {
+            parent.vino.page.pageLock(callback);
+        } else {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+
+                //锁屏
+                var username = vino.page.cookie.get("user.name") || "&nbsp;";
+                var userimage = vino.page.cookie.get("user.headimage") || "/images/user_default.png";
+                var formId = "form" + new Date().getTime();
+                var PageLockLayerId = layer.open({
+                    title: false,
+                    type: 1,
+                    content: '<div class="admin-header-lock">' +
+                        `<div class="admin-header-lock-img"><img src="${userimage}"/></div>` +
+                        `<div class="admin-header-lock-name">${username}</div>` +
+                        `<div class="input_btn"><form id="${formId}" class="layui-form" action="/Account/PageUnlock" method="post">` +
+                        '<input type="password" class="admin-header-lock-input layui-input" lay-verify="required" autocomplete="off" placeholder="请输入密码.." name="Password"/>' +
+                        '<button class="layui-btn" lay-submit >解 锁</button>' +
+                        '</form></div>' +
+                        '</div>',
+                    closeBtn: 0,
+                    shade: 0.9
+                });
+
+                $(".admin-header-lock-input").focus();
+
+                // 解锁
+                $("#" + formId).vinoForm({
+                    onSuccess: function (reply, options) {
+                        if (callback) {
+                            callback();
+                        }
+                        layer.close(PageLockLayerId);
+                    }
+                });
+            });
+        }
+    };
 })();
 
 (function () {
@@ -145,4 +187,34 @@ if (!vino.page) {
         }
     };
     vino.page.querystring = querystring;
+})();
+
+/// <summary>cookie helper.基础jquery.cookie</summary>
+(function () {
+    var cookie = {
+        get: function (key) {
+            return $.cookie(key);
+        },
+        add: function (key, value, options) {
+            options = options || {};
+            this.remove(key, options);
+            if (options) {
+                if (typeof options.path == "undefined") {
+                    options.path = "/";
+                }
+            }
+            return $.cookie(key, value, options);
+        },
+        remove: function (key, options) {
+            options = options || {};
+
+            if (options) {
+                if (typeof options.path == "undefined") {
+                    options.path = "/";
+                }
+            }
+            return $.removeCookie(key, options);
+        }
+    };
+    vino.page.cookie = cookie;
 })();

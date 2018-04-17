@@ -19,9 +19,11 @@
     <link rel="stylesheet" href="~/lib/layui-admin/style/admin.css" />
     <environment names="Development">
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/index.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/index.css" />
     </environment>
 </head>
 <body layadmin-themealias="green" class="layui-layout-body">
@@ -54,8 +56,8 @@
                             <span class="layui-badge-dot"></span>
                         </a>
                     </li>
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect="">
-                        <a href="javascript:;" layadmin-event="theme">
+                    <li class="layui-nav-item" lay-unselect="">
+                        <a href="javascript:;" layadmin-event="lockpage">
                             <i class="layui-icon layui-icon-theme"></i>
                         </a>
                     </li>
@@ -66,9 +68,9 @@
                     </li>
 
                     <li class="layui-nav-item" lay-unselect="">
-                        <a href="javascript:;"> <cite>@ViewData["LoginUserName"]</cite> <span class="layui-nav-more"></span></a>
+                        <a href="javascript:;"> <cite>@ViewBag.LoginUser.Name</cite> <span class="layui-nav-more"></span></a>
                         <dl class="layui-nav-child layui-anim layui-anim-upbit">
-                            <dd><a lay-href="set/base/website">基本资料</a></dd> 
+                            <dd><a lay-href="set/base/website">基本资料</a></dd>
                             <dd><a class="layui-action" action="window:/Account/PasswordEdit">安全设置</a></dd>
                             <hr>
                             <dd style="text-align: center;"><a href="~/Account/Logout">退出</a></dd>
@@ -179,14 +181,20 @@
     </style>
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery/jquery.cookie.js"></script>
         <script src="~/lib/layui/layui.all.js"></script>
         <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
+        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
+        <script src="~/js/vino/vino.ajax.js" asp-append-version="true"></script>
         <script src="~/js/index.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery/jquery.cookie.js"></script>
         <script src="~/lib/layui/layui.all.js"></script>
         <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
+        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
+        <script src="~/js/vino/vino.ajax.js" asp-append-version="true"></script>
         <script src="~/js/index.js" asp-append-version="true"></script>
     </environment>
 </body>

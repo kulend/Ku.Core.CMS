@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -33,7 +35,12 @@ namespace Vino.Core.Tokens.Jwt
 
             var header = new JwtHeader(signingCredentials);
 
-            var payload = new JwtPayload(_jwtConfig.Issuer, _jwtConfig.Audience, claims, DateTime.Now, expires);
+            var claimList = claims.ToList();
+            var key = (claimList.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ?? "-") + "." + DateTime.Now.Ticks.ToString();
+
+            claimList.Add(new Claim(ClaimTypes.Hash, EncryptMD5(key)));
+
+            var payload = new JwtPayload(_jwtConfig.Issuer, _jwtConfig.Audience, claimList, DateTime.Now, expires);
 
             var secToken = new JwtSecurityToken(header, payload);
 
@@ -49,6 +56,27 @@ namespace Vino.Core.Tokens.Jwt
             }
 
             return handler.ValidateToken(validateJwtToken, validationParameters, out SecurityToken validatedToken);
+        }
+
+        public JwtConfig GetJwtConfig()
+        {
+            return _jwtConfig;
+        }
+
+        private static string EncryptMD5(string value)
+        {
+            var str = "";
+            using (MD5 md5Hash = MD5.Create())
+            {
+                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(value));
+                StringBuilder sBuilder = new StringBuilder();
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+                str = sBuilder.ToString();
+            }
+            return str.ToLower();
         }
     }
 }

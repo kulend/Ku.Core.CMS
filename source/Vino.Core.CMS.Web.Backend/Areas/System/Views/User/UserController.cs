@@ -64,7 +64,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.User
                 {
                     throw new VinoDataNotFoundException("无法取得用户数据!");
                 }
-                model.Password = "the password has not changed";
+                model.Password = "********************";
                 var userRoles = await _service.GetUserRolesAsync(model.Id);
                 ViewBag.UserRoles = userRoles;
                 ViewData["Mode"] = "Edit";

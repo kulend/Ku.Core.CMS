@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 -  Powered By Vinotec</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css" />
+    <style>
+        /*锁屏*/
+        .admin-header-lock{width: 320px; height: 170px; padding: 20px; position: relative; text-align: center;}
+        .admin-header-lock-img{width: 60px; height: 60px; margin: 0 auto;}
+        .admin-header-lock-img img{width: 60px; height: 60px; border-radius: 100%;}
+        .admin-header-lock-name{color: #009688;margin: 8px 0 15px 0;}
+        .input_btn{ overflow: hidden; margin-bottom: 10px; }
+        .admin-header-lock-input{width: 170px; color: #fff;background-color: #009688; float: left; margin:0 10px 0 40px; border:none;}
+        .admin-header-lock-input::-webkit-input-placeholder {color:#fff;}
+        .admin-header-lock-input::-moz-placeholder {color:#fff;}
+        .admin-header-lock-input::-ms-input-placeholder {color:#fff;}
+        .admin-header-lock-input:-moz-placeholder {color:#fff;}
+        .admin-header-lock .layui-btn { float: left; }
+    </style>
+</head>
+<body class="layui-layout-body">
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery/jquery.cookie.js"></script>
+        <script src="~/lib/layui/layui.all.js"></script>
+        <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
+        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery/jquery.cookie.js"></script>
+        <script src="~/lib/layui/layui.all.js"></script>
+        <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
+        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
+    </environment>
+    <script type="text/javascript">
+        layui.use(['form'], function () {
+            var form = layui.form;
+            vino.page.pageLock(function () {
+                if (self == top) {
+                    vino.page.navigateTo("/", true);
+                } else {
+                    vino.page.navigateTo("@ViewBag.ReturnUrl", true);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

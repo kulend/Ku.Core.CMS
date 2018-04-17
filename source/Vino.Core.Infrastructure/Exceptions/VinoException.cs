@@ -79,6 +79,14 @@ namespace Vino.Core.Infrastructure.Exceptions
         }
     }
 
+    public class VinoPageLockException : VinoException
+    {
+        public VinoPageLockException()
+            : base(905, "页面已锁定！")
+        {
+        }
+    }
+
     public class VinoNeedVerifyCodeException : VinoException
     {
         public VinoNeedVerifyCodeException()

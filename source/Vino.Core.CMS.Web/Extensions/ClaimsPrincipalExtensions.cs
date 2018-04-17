@@ -14,9 +14,8 @@ namespace Vino.Core.CMS.Web.Extensions
         /// </summary>
         public static string GetTokenIdOrNull(this ClaimsPrincipal self)
         {
-            var jti = self.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
-
-            return jti;
+            var value = self.FindFirst(ClaimTypes.Hash)?.Value;
+            return value;
         }
 
         /// <summary>
@@ -36,6 +35,15 @@ namespace Vino.Core.CMS.Web.Extensions
             var id = self.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             long.TryParse(id, out long result);
             return result;
+        }
+
+        /// <summary>
+        /// 获取头像
+        /// </summary>
+        public static string GetHeadImage(this ClaimsPrincipal self)
+        {
+            var value = self.FindFirst("HeadImage")?.Value;
+            return value??"";
         }
 
         /// <summary>

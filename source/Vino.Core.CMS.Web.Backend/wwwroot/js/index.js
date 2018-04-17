@@ -1,5 +1,6 @@
-﻿layui.use('element', function () {
+﻿layui.use(['element', 'layer'], function () {
     var element = layui.element;
+    var layer = layui.layer;
 
     _addNavTab("首页", 'home', '/Account/PasswordEdit');
 
@@ -196,6 +197,13 @@
             //直接跳转页面
             vino.page.navigateTo(action);
         }
+    });
+
+    //锁屏
+    $("a[layadmin-event='lockpage']").on("click", function () {
+        vino.ajax.post("/Account/PageLock", null, function () {
+            vino.page.pageLock();
+        });
     });
 });
 

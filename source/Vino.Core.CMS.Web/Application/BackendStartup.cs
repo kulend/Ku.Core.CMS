@@ -39,6 +39,7 @@ namespace Vino.Core.CMS.Web.Application
 
             services.AddMvc(opts =>
                 {
+                    opts.Filters.Add(typeof(PageLockFilter));
                     opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
                     opts.Filters.Add(typeof(JsonWrapperResultFilter));
                     opts.Filters.Add(typeof(ExceptionFilter));

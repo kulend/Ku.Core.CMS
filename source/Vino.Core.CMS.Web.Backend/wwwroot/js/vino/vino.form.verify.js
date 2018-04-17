@@ -35,7 +35,7 @@
             }
         },
         //手机号码
-        url: function (value, item) {
+        phone: function (value, item) {
             if (value && !/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value)) {
                 return '手机号码格式不正确';
             }

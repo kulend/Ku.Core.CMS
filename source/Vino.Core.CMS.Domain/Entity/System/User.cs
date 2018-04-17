@@ -49,6 +49,12 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public string Mobile { set; get; }
 
         /// <summary>
+        /// 头像
+        /// </summary>
+        [StringLength(256)]
+        public string HeadImage { set; get; }
+
+        /// <summary>
         /// 是否可用
         /// </summary>
         [DefaultValue(true)]

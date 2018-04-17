@@ -7,6 +7,8 @@ using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.CMS.Web.Filters;
+using Vino.Core.CMS.Web.Backend.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Home
 {
@@ -17,10 +19,15 @@ namespace Vino.Core.CMS.Web.Admin.Views.Home
         }
 
         [Auth]
-        [PageLockFilter]
         public IActionResult Index()
         {
-            ViewData["LoginUserName"] = User.GetUserNameOrNull();
+            var user = new LoginUser
+            {
+                Name = User.GetUserNameOrNull(),
+                HeadImage = User.GetHeadImage()
+            };
+
+            ViewBag.LoginUser = user;
             return View();
         }
     }

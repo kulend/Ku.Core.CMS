@@ -13,5 +13,7 @@ namespace Vino.Core.Tokens.Jwt
         string CreateToken(IEnumerable<Claim> claims, DateTime expires);
 
         ClaimsPrincipal ValidateToken(string validateJwtToken, TokenValidationParameters validationParameters);
+
+        JwtConfig GetJwtConfig();
     }
 }

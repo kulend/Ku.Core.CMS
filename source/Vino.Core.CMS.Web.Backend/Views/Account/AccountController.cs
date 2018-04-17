@@ -21,9 +21,13 @@ using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.EventBus;
 using Vino.Core.CMS.IService.System;
+using System.Net;
 
 namespace Vino.Core.CMS.Web.Admin.Views.Account
 {
+    /// <summary>
+    /// 账户处理
+    /// </summary>
     public class AccountController : BackendController
     {
         private IUserService userService;
@@ -45,6 +49,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             this._eventPublisher = _eventPublisher;
         }
 
+        [IgnorePageLock]
         public IActionResult Login()
         {
             var url = Request.Query["ReturnUrl"];
@@ -101,6 +106,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             {
                 new Claim("Account",user.Account)
                 ,new Claim(ClaimTypes.Name,user.Name)
+                ,new Claim("HeadImage", user.HeadImage??"")
                 ,new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
@@ -110,12 +116,23 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             {
                 HttpOnly = true
             });
-            //清楚用户权限缓存
+
+            //清除用户权限缓存
             cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCode, user.Id));
             cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCodeEncrypt, user.Id));
+
+            //Cookie中保存用户信息
+            base.Response.Cookies.Append("user.name", user.Name);
+            base.Response.Cookies.Append("user.headimage", user.HeadImage ?? "");
+
             return Json(true);
         }
 
+        /// <summary>
+        /// 退出登陆
+        /// </summary>
+        /// <returns></returns>
+        [IgnorePageLock]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -160,6 +177,50 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return Json(true);
+        }
+
+        /// <summary>
+        /// 页面加锁
+        /// </summary>
+        [Auth]
+        public async Task<IActionResult> PageLock()
+        {
+            //缓存中添加页面锁定消息
+            var tokenId = User.GetTokenIdOrNull();
+            cacheService.Add(string.Format(CacheKeyDefinition.PageLock, tokenId), true, TimeSpan.FromMinutes(_jwtProvider.GetJwtConfig().ExpiredMinutes));
+            return Json(true);
+        }
+
+        /// <summary>
+        /// 页面解锁
+        /// </summary>
+        [Auth]
+        [IgnorePageLock]
+        public async Task<IActionResult> PageUnlock([FromForm]string Password)
+        {
+            var userId = User.GetUserIdOrZero();
+            if (!await userService.PasswordCheckAsync(userId, Password))
+            {
+                throw new VinoException("解锁密码不正确！");
+            }
+
+            //缓存中去除页面锁定消息
+            var tokenId = User.GetTokenIdOrNull();
+            cacheService.Remove(string.Format(CacheKeyDefinition.PageLock, tokenId));
+
+            return Json(true);
+        }
+
+        /// <summary>
+        /// 锁定页面
+        /// </summary>
+        /// <returns></returns>
+        [Auth]
+        [IgnorePageLock]
+        public async Task<IActionResult> Lock()
+        {
+            ViewBag.ReturnUrl = WebUtility.UrlDecode(Request.Query["ReturnUrl"]);
+            return View();
         }
     }
 }

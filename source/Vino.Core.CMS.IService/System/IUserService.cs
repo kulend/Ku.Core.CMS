@@ -83,6 +83,12 @@ namespace Vino.Core.CMS.IService.System
         /// </summary>
         Task ChangePassword(long userId, string currentPwd, string newPwd);
 
+        /// <summary>
+        /// 验证密码
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> PasswordCheckAsync(long id, string password);
+
         #endregion
     }
 }

@@ -36,9 +36,9 @@ namespace Vino.Core.CMS.Domain.Dto.System
         public string Password { set; get; }
 
         /// <summary>
-        /// 名称
+        /// 昵称
         /// </summary>
-        [Display(Name = "姓名")]
+        [Display(Name = "昵称")]
         [Required, MaxLength(20)]
         public string Name { set; get; }
 
@@ -83,5 +83,13 @@ namespace Vino.Core.CMS.Domain.Dto.System
         [Display(Name = "备注")]
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
+
+        /// <summary>
+        /// 邮箱地址
+        /// </summary>
+        [StringLength(256)]
+        [Display(Name = "邮箱地址")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { set; get; }
     }
 }

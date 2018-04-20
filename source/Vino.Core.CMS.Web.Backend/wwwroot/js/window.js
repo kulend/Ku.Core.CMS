@@ -5,114 +5,16 @@
         , laydate = layui.laydate
         , form = layui.form;
 
-    //绑定form
-    $("form[auto-bind=true]").each(function () {
-        _bindForm($(this));
-    });
-
-    $(".layui-input.laydate").each(function () {
-        var self = $(this);
-        var type = self.data("type") || 'date';
-        var format = self.data("format") || 'yyyy-MM-dd';
-        laydate.render({
-            elem: self[0],
-            type: type,
-            format: format
-        });
-    });
-
     //关闭弹窗
     $(".action-close").on("click", function() {
         closeWindow();
     });
-
-    $(document).on("click", "button.layui-btn:not([lay-submit]), .layui-action", function (e) {
-        var self = this;
-        var action = $(this).data("action") || $(this).attr("action") || "";
-        var after = $(this).attr("after");
-        if (action.indexOf("window:") === 0) {
-            OpenWindow($(this).attr("title") || "&nbsp;", action.substring(7), null, function (value) {
-                eval("var $data, $this;");
-                $data = value;
-                $this = self;
-                if (after) {
-                    eval(after);
-                }
-            });
-        } else if (action.indexOf("javascript:") === 0 || action.indexOf("js:") === 0) {
-            var js = action.substring(action.indexOf(":") + 1);
-            eval("var $this;");
-            $this = self;
-            eval(js);
-        } else if (action.toLowerCase().indexOf("post:") === 0 || action.toLowerCase().indexOf("get:") === 0) {
-            var method = action.substring(0, action.indexOf(":")).toLowerCase();
-            var url = action.substring(action.indexOf(":") + 1);
-            var confirmMsg = `确定要进行${$(this).attr("title") || "当前"}操作？`;
-            vino.page.msg.confirm(confirmMsg,
-                function () {
-                    if ("get" === method) {
-                        vino.ajax.get(url, null, function (reply) {
-                            if (reply.code === 0) {
-                                vino.page.msg.tip("操作成功！", function () {
-                                    eval("var $data;");
-                                    $data = reply;
-                                    if (after) {
-                                        eval(after);
-                                    }
-                                });
-                            } else {
-                                vino.page.msg.tip(reply.message);
-                            }
-                        });
-                    } else {
-                        vino.ajax.post(url, null, function (reply) {
-                            if (reply.code === 0) {
-                                vino.page.msg.tip("操作成功！", function () {
-                                    eval("var $data;");
-                                    $data = reply;
-                                    if (after) {
-                                        eval(after);
-                                    }
-                                });
-                            } else {
-                                vino.page.msg.tip(reply.message);
-                            }
-                        });
-                    }
-                });
-        } else if (action) {
-            //直接跳转页面
-            vino.page.navigateTo(action);
-        }
-    });
 });
-
-function _bindForm($from, options) {
-    var options = $.extend({}, {
-        onSuccess: function (reply, options) {
-            vino.page.msg.tip('保存成功！', function () {
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
-                var fn = parent.winfns[index];
-                if (fn) {
-                    fn(reply);
-                }
-                parent.winfns[index] = null;
-            });
-        }
-    }, options);
-
-    $from.vinoForm(options);
-}
-
-function OpenWindow(title, src, options, onClose) {
-    parent.OpenWindow(title, src, options, onClose);
-}
 
 //关闭弹窗
 function closeWindow(data) {
-    var index = parent.layer.getFrameIndex(window.name);
-    parent.layer.close(index);
+    var index = parent.layui.layer.getFrameIndex(window.name);
+    parent.layui.layer.close(index);
     var fn = parent.winfns[index];
     if (fn && data) {
         fn(data);

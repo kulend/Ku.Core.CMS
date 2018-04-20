@@ -222,5 +222,42 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
             ViewBag.ReturnUrl = WebUtility.UrlDecode(Request.Query["ReturnUrl"]);
             return View();
         }
+
+        #region 用户档案
+
+        /// <summary>
+        /// 用户档案页面
+        /// </summary>
+        [Auth]
+        public async Task<IActionResult> Profile()
+        {
+            var userId = User.GetUserIdOrZero();
+            var user = await userService.GetByIdAsync(userId);
+            if (user == null)
+            {
+                throw new VinoDataNotFoundException("无法取得用户数据！");
+            }
+            user.Password = "******";
+
+            return View(user);
+        }
+
+        /// <summary>
+        /// 保存用户档案
+        /// </summary>
+        [Auth]
+        public async Task<IActionResult> SaveProfile(UserDto model)
+        {
+            var userId = User.GetUserIdOrZero();
+            if (userId != model.Id)
+            {
+                throw new VinoDataNotFoundException("无法取得用户数据！");
+            }
+            await userService.SaveProfileAsync(model);
+            return JsonData(true);
+        }
+
+        #endregion
+
     }
 }

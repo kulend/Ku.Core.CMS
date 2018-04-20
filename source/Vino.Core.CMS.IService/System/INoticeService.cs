@@ -1,11 +1,11 @@
 //----------------------------------------------------------------
 // Copyright (C) 2018 vino 版权所有
 //
-// 文件名：IUserService.cs
-// 功能描述：用户 业务逻辑接口类
+// 文件名：INoticeService.cs
+// 功能描述：公告 业务逻辑接口类
 //
 // 创建者：kulend@qq.com
-// 创建时间：2018-02-04 19:13
+// 创建时间：2018-04-18 09:55
 //
 //----------------------------------------------------------------
 
@@ -16,7 +16,7 @@ using Vino.Core.CMS.Domain.Entity.System;
 
 namespace Vino.Core.CMS.IService.System
 {
-    public partial interface IUserService
+    public partial interface INoticeService
     {
         #region 自动创建的接口
 
@@ -25,8 +25,8 @@ namespace Vino.Core.CMS.IService.System
         /// </summary>
         /// <param name="where">查询条件</param>
         /// <param name="sort">排序</param>
-        /// <returns>List<UserDto></returns>
-        Task<List<UserDto>> GetListAsync(UserSearch where, string sort);
+        /// <returns>List<NoticeDto></returns>
+        Task<List<NoticeDto>> GetListAsync(NoticeSearch where, string sort);
 
         /// <summary>
         /// 分页查询数据
@@ -36,19 +36,19 @@ namespace Vino.Core.CMS.IService.System
         /// <param name="where">查询条件</param>
         /// <param name="sort">排序</param>
         /// <returns>count：条数；items：分页数据</returns>
-        Task<(int count, List<UserDto> items)> GetListAsync(int page, int size, UserSearch where, string sort);
+        Task<(int count, List<NoticeDto> items)> GetListAsync(int page, int size, NoticeSearch where, string sort);
 
         /// <summary>
         /// 根据主键取得数据
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<UserDto> GetByIdAsync(long id);
+        Task<NoticeDto> GetByIdAsync(long id);
 
         /// <summary>
         /// 保存数据
         /// </summary>
-        Task SaveAsync(UserDto dto, long[] UserRoleIds);
+        Task SaveAsync(NoticeDto dto);
 
         /// <summary>
         /// 删除数据
@@ -67,33 +67,6 @@ namespace Vino.Core.CMS.IService.System
         #endregion
 
         #region 其他接口
-
-        /// <summary>
-        /// 取得用户角色列表
-        /// </summary>
-        Task<List<RoleDto>> GetUserRolesAsync(long userId);
-
-        /// <summary>
-        /// 登陆
-        /// </summary>
-        Task<UserDto> LoginAsync(string account, string password);
-
-        /// <summary>
-        /// 修改密码
-        /// </summary>
-        Task ChangePassword(long userId, string currentPwd, string newPwd);
-
-        /// <summary>
-        /// 验证密码
-        /// </summary>
-        /// <returns></returns>
-        Task<bool> PasswordCheckAsync(long id, string password);
-
-        /// <summary>
-        /// 保存用户信息
-        /// </summary>
-        /// <returns></returns>
-        Task SaveProfileAsync(UserDto dto);
 
         #endregion
     }

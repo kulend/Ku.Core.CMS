@@ -93,12 +93,15 @@
     </environment>
 
     <script type="text/javascript">
+        if (top.location != self.location) {
+            top.location = self.location;
+        }
         $(function () {
             $("#loginForm").vinoForm({
                 onSuccess: function(reply, options) {
                     vino.page.msg.tip('登陆成功！',
                         function() {
-                            vino.page.navigateTo("@ViewData["ReturnUrl"]", true);
+                            vino.page.navigateTo("/", true);
                         });
                 },
                 onError: function(reply) {

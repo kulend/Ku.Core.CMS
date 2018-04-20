@@ -144,6 +144,7 @@ namespace Vino.Core.CMS.Service.System
                 item.Account = model.Account;
                 item.Name = model.Name;
                 item.Mobile = model.Mobile;
+                item.Email = model.Email;
                 item.HeadImage = model.HeadImage;
                 item.IsEnable = model.IsEnable;
                 if (!model.Password.EqualOrdinalIgnoreCase("********************"))
@@ -299,6 +300,30 @@ namespace Vino.Core.CMS.Service.System
                 throw new VinoException("该账号已被禁止登陆！");
             }
             return entity.CheckPassword(password);
+        }
+
+        #endregion
+
+        #region 用户资料保存
+
+        public async Task SaveProfileAsync(UserDto dto)
+        {
+            User model = Mapper.Map<User>(dto);
+
+            //更新
+            var item = await _repository.GetByIdAsync(model.Id);
+            if (item == null)
+            {
+                throw new VinoDataNotFoundException("无法取得用户数据！");
+            }
+
+            item.Name = model.Name;
+            item.Mobile = model.Mobile;
+            item.HeadImage = model.HeadImage;
+            item.Email = model.Email;
+            item.Remarks = model.Remarks;
+            _repository.Update(item);
+            await _repository.SaveAsync();
         }
 
         #endregion

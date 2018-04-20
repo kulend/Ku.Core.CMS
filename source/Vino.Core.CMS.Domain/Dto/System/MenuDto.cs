@@ -42,6 +42,13 @@ namespace Vino.Core.CMS.Domain.Dto.System
         public string AuthCode { get; set; }
 
         /// <summary>
+        /// 菜单标签
+        /// </summary>
+        [StringLength(20)]
+        [Display(Name = "菜单标签")]
+        public string Tag { get; set; }
+
+        /// <summary>
         /// 菜单地址
         /// </summary>
         [MaxLength(256)]

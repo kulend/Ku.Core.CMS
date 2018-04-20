@@ -50,7 +50,7 @@
                 </ul>
                 <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
                     <li class="layui-nav-item" lay-unselect="">
-                        <a lay-href="app/message/" layadmin-event="message">
+                        <a href="javascript:;" class="layui-action" title="公告" action="window:/System/Notice/NoticeDialog">
                             <i class="layui-icon layui-icon-notice"></i>
                             <!-- 如果有新消息，则显示小圆点 -->
                             <span class="layui-badge-dot"></span>
@@ -70,8 +70,8 @@
                     <li class="layui-nav-item" lay-unselect="">
                         <a href="javascript:;"> <cite>@ViewBag.LoginUser.Name</cite> <span class="layui-nav-more"></span></a>
                         <dl class="layui-nav-child layui-anim layui-anim-upbit">
-                            <dd><a lay-href="set/base/website">基本资料</a></dd>
-                            <dd><a class="layui-action" action="window:/Account/PasswordEdit">安全设置</a></dd>
+                            <dd><a class="layui-action" action="tab:['profile', '基本资料', '/Account/Profile', false]">基本资料</a></dd>
+                            <dd><a class="layui-action" action="tab:['password', '安全设置', '/Account/PasswordEdit', false]">安全设置</a></dd>
                             <hr>
                             <dd style="text-align: center;"><a href="~/Account/Logout">退出</a></dd>
                         </dl>
@@ -90,7 +90,7 @@
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
                     <div class="layui-logo">
-                        <span>layuiAdmin Pro</span>
+                        <span>Vino.Core.CMS</span>
                     </div>
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                         @await Component.InvokeAsync("HomeMenu");
@@ -186,6 +186,7 @@
         <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
         <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
         <script src="~/js/vino/vino.ajax.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/index.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -195,6 +196,7 @@
         <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
         <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
         <script src="~/js/vino/vino.ajax.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/js/index.js" asp-append-version="true"></script>
     </environment>
 </body>

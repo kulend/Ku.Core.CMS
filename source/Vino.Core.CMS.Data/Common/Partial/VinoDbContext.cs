@@ -81,6 +81,11 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.System.SmsTemplet> SmsTemplets { get; set; }
 
         /// <summary>
+        /// 公告
+        /// </summary>
+        public DbSet<Domain.Entity.System.Notice> Notices { get; set; }
+		
+        /// <summary>
         /// 会员
         /// </summary>
         public DbSet<Domain.Entity.Membership.Member> Members { get; set; }

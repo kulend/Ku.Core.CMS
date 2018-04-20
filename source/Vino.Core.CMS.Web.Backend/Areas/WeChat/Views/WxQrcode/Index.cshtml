@@ -14,29 +14,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header">微信二维码列表</div>
-        <div class="layui-card-body">
-            <div class="toolbar">
-                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                <action id="btnAdd" auth-code="wechat.qrcode.edit" text="新增" icon="&#xe608;" action="" after="grid:reload['#list']" />
-                <span class="toolbar-right">
-                    <form class="layui-form" action="">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">公众号</label>
-                            <div class="layui-input-block">
-                                <select id="scAccount" lay-verify="required" lay-filter="account">
-                                    @foreach (var account in ViewBag.Accounts)
-                                    {
-                                        <option value="@account.Id">@account.Name</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3 layui-col-lg2">
+            <div class="layui-card">
+                <div class="layui-card-header">公众号</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <table id="ID_table_filters" class="layui-table" lay-skin="row">
+                            <tbody>
+                                @foreach (var account in ViewBag.Accounts)
+                                {
+                                    <tr><td><input type="checkbox" title="@account.Name" name="name_filter" value="@account.Id" lay-skin="primary" lay-filter="filter-item"></td></tr>
+                                }
+                            </tbody>
+                        </table>
                     </form>
-                </span>
+                </div>
             </div>
-            <table id="list"></table>
+        </div>
+        <div class="layui-col-md9  layui-col-lg10">
+            <div class="layui-card">
+                <div class="layui-card-header">微信二维码</div>
+                <div class="layui-card-body">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action id="btnAdd" auth-code="wechat.qrcode.edit" text="新增" icon="&#xe608;" action="" after="grid:reload['#list']" />
+                    </div>
+                    <table id="list"></table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -45,41 +51,63 @@
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
-            form.on('select(account)', function (data) {
-                $("#list").vinoGrid("search");
-                $("#btnAdd").attr("action", "window:WeChat/WxQrcode/Edit?AccountId=" + data.value);
+            form.on('checkbox(filter-item)', function (data) {
+                var name = data.elem.getAttribute("name");
+                var domArr = document.getElementsByName(name);
+                var checked = false;
+                for (var i = 0; i < domArr.length; i++) {
+                    if (domArr[i] !== data.elem) {
+                        if (data.elem.checked) {
+                            domArr[i].checked = false;
+                        } else if (domArr[i].checked) {
+                            checked = true;
+                        }
+                    }
+                }
+                data.elem.checked = !checked ? true : data.elem.checked;
+                form.render('checkbox');
+
+                filterChanged(data.value);
             });
         });
 
-        $(function () {
-            $("#btnAdd").attr("action", "window:WeChat/WxQrcode/Edit?AccountId=" + $("#scAccount").val());
-            $("#list").vinoGrid({
-                url: 'GetList',
-                cols: [[
-                    { field: 'SceneId', title: '场景ID', width: 120 },
-                    { field: 'SceneType', title: '场景类型', width: 100, enum: true },
-                    { field: 'PeriodType', title: '时效类型', width: 100, enum: true },
-                    { field: 'EventKey', title: '事件', width: 120 },
-                    { field: 'Purpose', title: '用途', width: 150 },
-                    { field: 'ScanCount', title: '扫描次数', width: 90 },
-                    { field: 'Ticket', title: 'Ticket', width: 150 },
-                    { field: 'Url', title: 'Url', width: 150 },
-                    {
-                        title: '操作', fixed: 'right', width: 165, align: 'center',
-                        templet: grid_templet_operate([
-                            { code: "wechat.qrcode.edit", text: "编辑", action: `window:WeChat/WxQrcode/Edit?id={{d.Id}}` },
-                            { code: "", text: "下载", action: `javascript:openDownDialog('{{d.Ticket}}')` },
-                            { code: "wechat.qrcode.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
-                        ])
+        var selFilterValue;
+        function filterChanged(filterValue) {
+            if (!selFilterValue) {
+                selFilterValue = filterValue;
+                $("#list").vinoGrid({
+                    url: 'GetList',
+                    cols: [[
+                        { field: 'SceneId', title: '场景ID', width: 120 },
+                        { field: 'SceneType', title: '场景类型', width: 100, enum: true },
+                        { field: 'PeriodType', title: '时效类型', width: 100, enum: true },
+                        { field: 'EventKey', title: '事件', width: 120 },
+                        { field: 'Purpose', title: '用途', width: 150 },
+                        { field: 'ScanCount', title: '扫描次数', width: 90 },
+                        { field: 'Ticket', title: 'Ticket', width: 150 },
+                        { field: 'Url', title: 'Url', width: 150 },
+                        {
+                            title: '操作', fixed: 'right', width: 165, align: 'center',
+                            templet: grid_templet_operate([
+                                { code: "wechat.qrcode.edit", text: "编辑", action: `window:WeChat/WxQrcode/Edit?id={{d.Id}}` },
+                                { code: "", text: "下载", action: `javascript:openDownDialog('{{d.Ticket}}')` },
+                                { code: "wechat.qrcode.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                            ])
+                        }
+                    ]],
+                    onWhere: function () {
+                        return {
+                            AccountId: selFilterValue
+                        };
                     }
-                ]],
-                onWhere: function () {
-                    return {
-                        AccountId: $("#scAccount").val()
-                    };
-                }
-            });
-        });
+                });
+            } else if (selFilterValue != filterValue) {
+                selFilterValue = filterValue;
+                $("#list").vinoGrid("search");
+            }
+
+            $("#btnAdd").attr("action", "window:/WeChat/WxQrcode/Edit?AccountId=" + selFilterValue);
+        }
 
         function openDownDialog(ticket)
         { 

@@ -78,6 +78,12 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public string Remarks { get; set; }
 
         /// <summary>
+        /// 邮箱地址
+        /// </summary>
+        [StringLength(256)]
+        public string Email { set; get; }
+
+        /// <summary>
         /// 随机因子
         /// </summary>
         public int? Factor { set; get; }

@@ -123,6 +123,7 @@ namespace Vino.Core.CMS.Service.System
                 menu.OrderIndex = model.OrderIndex;
                 menu.Icon = model.Icon;
                 menu.Url = model.Url;
+                menu.Tag = model.Tag;
                 _repository.Update(menu);
             }
             await _repository.SaveAsync();

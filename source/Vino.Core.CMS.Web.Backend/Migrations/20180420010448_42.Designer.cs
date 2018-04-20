@@ -18,9 +18,10 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180420010448_42")]
+    partial class _42
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -701,7 +702,7 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Emai")
                         .HasMaxLength(256);
 
                     b.Property<int?>("Factor");

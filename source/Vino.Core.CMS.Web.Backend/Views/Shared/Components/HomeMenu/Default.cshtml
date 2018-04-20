@@ -4,7 +4,7 @@
 <li class="layui-nav-item">
     @if (menu.SubMenus.Any())
     {
-        <a href="javascript:;" lay-tips="@menu.Name" lay-direction="2">
+        <a href="javascript:;" data-tag="@menu.Tag"  lay-tips="@menu.Name" lay-direction="2">
             <i class="fa @menu.Icon"></i>
             <cite>@menu.Name</cite>
         </a>
@@ -14,12 +14,12 @@
                 if (sub.SubMenus.Any())
                 {
                     <dd class="layui-nav-item">
-                        <a href="javascript:;" lay-tips="@sub.Name" lay-direction="3">@sub.Name</a>
+                        <a href="javascript:;" data-tag="@sub.Tag" lay-tips="@sub.Name" lay-direction="3">@sub.Name</a>
                         <dl class="layui-nav-child">
                             @foreach (var ssub in sub.SubMenus.OrderBy(x => x.OrderIndex))
                             {
                             <dd class="layui-nav-item">
-                                <a href="javascript:;" data-url="@ssub.Url" data-id="@ssub.Id">@ssub.Name</a>
+                                <a href="javascript:;" data-tag="@ssub.Tag" data-url="@ssub.Url" data-id="@ssub.Id">@ssub.Name</a>
                             </dd>
                             }
                         </dl>
@@ -28,7 +28,7 @@
                 else
                 {
                     <dd class="layui-nav-item">
-                        <a href="javascript:;" data-url="@sub.Url" data-id="@sub.Id">@sub.Name</a>
+                        <a href="javascript:;" data-tag="@sub.Tag"  data-url="@sub.Url" data-id="@sub.Id">@sub.Name</a>
                     </dd>
                 }
             }
@@ -36,7 +36,7 @@
     }
     else
     {
-        <a href="javascript:;" data-url="@menu.Url" data-id="@menu.Id" lay-tips="@menu.Name">
+        <a href="javascript:;" data-tag="@menu.Tag" data-url="@menu.Url" data-id="@menu.Id" lay-tips="@menu.Name">
             <i class="fa @menu.Icon"></i><cite>@menu.Name</cite>
         </a>
     }

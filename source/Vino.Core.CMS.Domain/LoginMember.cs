@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Vino.Core.CMS.Domain
 {
+    /// <summary>
+    /// 登陆会员信息
+    /// </summary>
     public class LoginMember
     {
         public long Id { set; get; }

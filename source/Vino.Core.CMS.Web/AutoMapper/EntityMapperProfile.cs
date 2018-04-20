@@ -47,6 +47,9 @@ namespace Vino.Core.CMS.Web.AutoMapper
             });
             CreateMap<Domain.Entity.System.SmsTemplet, Domain.Dto.System.SmsTempletDto>();
             CreateMap<Domain.Dto.System.SmsTempletDto, Domain.Entity.System.SmsTemplet>();
+            CreateMap<Domain.Entity.System.Notice, Domain.Dto.System.NoticeDto>();
+            CreateMap<Domain.Dto.System.NoticeDto, Domain.Entity.System.Notice>();
+			
             CreateMap<Domain.Entity.Membership.Member, Domain.Dto.Membership.MemberDto>();
             CreateMap<Domain.Dto.Membership.MemberDto, Domain.Entity.Membership.Member>();
             CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>();

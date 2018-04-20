@@ -9,9 +9,9 @@ namespace Vino.Core.Infrastructure.Extensions
 {
     public static class EnumExtension
     {
-        public static List<(int value, string key, string name)> GetEnuInfos(this Type obj)
+        public static List<(string value, string key, string name)> GetEnuInfos(this Type obj)
         {
-            List<(int, string, string)> list = new List<(int, string, string)>();
+            List<(string, string, string)> list = new List<(string, string, string)>();
             if (obj == null)
             {
                 return list;
@@ -31,10 +31,10 @@ namespace Vino.Core.Infrastructure.Extensions
                 }
             }
 
-            foreach (int i in Enum.GetValues(obj))
+            foreach (var i in Enum.GetValues(obj))
             {
                 var name = Enum.GetName(obj, i);
-                list.Add((i, name, dict.ContainsKey(name) ? dict[name] : name));
+                list.Add((((short)i).ToString(), name, dict.ContainsKey(name) ? dict[name] : name));
             }
             return list;
         }

@@ -48,45 +48,62 @@
         </div>
     </div>
 </div>
-
-
-
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header">会员积分</div>
-        <div class="layui-card-body">
-            <div class="toolbar">
-                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                <action auth-code="membership.memberpoint.edit" text="新增" icon="&#xe608;" action="window:/Membership/MemberPoint/Edit" after="grid:reload['#list']" />
-            </div>
-            <table id="list"></table>
-        </div>
-    </div>
-</div>
 @section Scripts
 {
     <script>
-        $(function () {
-            $("#list").vinoGrid({
-                url: 'GetList',
-                cols: [[
-                    { field: 'Name', title: '会员', width: 100 },
-                    { field: 'AuthCode', title: '权限编码', width: 180 },
-                    { field: 'Url', title: '菜单链接', width: 200 },
-                    { field: 'Icon', title: '图标', width: 100, align: 'center', templet: '<div><i class="fa {{d.Icon}}"></i></div>' },
-                    { field: 'IsShow', title: '是否显示', width: 100, align: 'center', switch: true },
-                    { field: 'HasSubMenu', title: '子菜单', width: 80, align: 'center', switch: true },
-                    { field: 'OrderIndex', title: '排序值', width: 80 },
-                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
-                    {
-                        title: '操作', fixed: 'right', width: 160, align: 'center',
-                        toolbar: grid_templet_operate([
-                            { code: "membership.memberpoint.edit", text: "编辑", action: `window:/Membership/MemberPoint/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
-                            { code: "membership.memberpoint.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
-                        ])
+        layui.use(['form'], function () {
+            var form = layui.form;
+
+            form.on('checkbox(filter-item)', function (data) {
+                var name = data.elem.getAttribute("name");
+                var domArr = document.getElementsByName(name);
+                var checked = false;
+                for (var i = 0; i < domArr.length; i++) {
+                    if (domArr[i] !== data.elem) {
+                        if (data.elem.checked) {
+                            domArr[i].checked = false;
+                        } else if (domArr[i].checked) {
+                            checked = true;
+                        }
                     }
-                ]]
+                }
+                data.elem.checked = !checked ? true : data.elem.checked;
+                form.render('checkbox');
+
+                filterChanged(data.value);
             });
         });
+
+        var selFilterValue;
+        function filterChanged(filterValue) {
+            if (!selFilterValue) {
+                selFilterValue = filterValue;
+                $("#list").vinoGrid({
+                    url: 'GetList',
+                    cols: [[
+                        { field: 'Name', title: '名称', width: 150 },
+                        { field: 'IsIndividuation', title: '个性化菜单', width: 100, switch: true },
+                        { field: 'PublishTime', title: '发布时间', width: 150 },
+                        {
+                            title: '操作', fixed: 'right', width: 165, align: 'center',
+                            templet: grid_templet_operate([
+                                { code: "wechat.menu.edit", text: "编辑", action: `window:/WeChat/WxMenu/Edit?id={{d.Id}}` },
+                                { code: "wechat.menu.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                            ])
+                        }
+                    ]],
+                    onWhere: function () {
+                        return {
+                            AccountId: selFilterValue
+                        };
+                    }
+                });
+            } else if (selFilterValue != filterValue) {
+                selFilterValue = filterValue;
+                $("#list").vinoGrid("search");
+            }
+
+            //$("#btnAdd").attr("action", "window:/WeChat/WxMenu/Edit?AccountId=" + selFilterValue);
+        }
     </script>
 }

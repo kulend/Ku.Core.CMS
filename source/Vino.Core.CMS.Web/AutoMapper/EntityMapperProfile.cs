@@ -54,6 +54,10 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.Membership.MemberDto, Domain.Entity.Membership.Member>();
             CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>();
             CreateMap<Domain.Dto.Membership.MemberTypeDto, Domain.Entity.Membership.MemberType>();
+            CreateMap<Domain.Entity.Membership.MemberPoint, Domain.Dto.Membership.MemberPointDto>();
+            CreateMap<Domain.Dto.Membership.MemberPointDto, Domain.Entity.Membership.MemberPoint>();
+            CreateMap<Domain.Entity.Membership.MemberPointRecord, Domain.Dto.Membership.MemberPointRecordDto>();
+            CreateMap<Domain.Dto.Membership.MemberPointRecordDto, Domain.Entity.Membership.MemberPointRecord>();
             CreateMap<Domain.Entity.WeChat.WxAccount, Domain.Dto.WeChat.WxAccountDto>();
             CreateMap<Domain.Dto.WeChat.WxAccountDto, Domain.Entity.WeChat.WxAccount>();
             CreateMap<Domain.Entity.WeChat.WxMenu, Domain.Dto.WeChat.WxMenuDto>();

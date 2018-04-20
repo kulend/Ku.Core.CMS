@@ -1,0 +1,92 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：会员积分 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-04-20 15:52
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Enum.Membership
+@using Vino.Core.Infrastructure.Extensions
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3 layui-col-lg2">
+            <div class="layui-card">
+                <div class="layui-card-header">积分类型</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <table id="ID_table_filters" class="layui-table" lay-skin="row">
+                            <tbody>
+                                @foreach (var item in typeof(EmMemberPointType).GetEnuInfos() )
+                                {
+                                    <tr><td><input type="checkbox" title="@item.name" name="name_filter" value="@item.value" lay-skin="primary" lay-filter="filter-item"></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md9  layui-col-lg10">
+            <div class="layui-card">
+                <div class="layui-card-header">会员积分</div>
+                <div class="layui-card-body">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action id="btnAdd" auth-code="wechat.menu.edit" text="新增" icon="&#xe608;" action="" after="grid:reload['#list']" />
+                    </div>
+                    <table id="list"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">会员积分</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action auth-code="membership.memberpoint.edit" text="新增" icon="&#xe608;" action="window:/Membership/MemberPoint/Edit" after="grid:reload['#list']" />
+            </div>
+            <table id="list"></table>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'Name', title: '会员', width: 100 },
+                    { field: 'AuthCode', title: '权限编码', width: 180 },
+                    { field: 'Url', title: '菜单链接', width: 200 },
+                    { field: 'Icon', title: '图标', width: 100, align: 'center', templet: '<div><i class="fa {{d.Icon}}"></i></div>' },
+                    { field: 'IsShow', title: '是否显示', width: 100, align: 'center', switch: true },
+                    { field: 'HasSubMenu', title: '子菜单', width: 80, align: 'center', switch: true },
+                    { field: 'OrderIndex', title: '排序值', width: 80 },
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "membership.memberpoint.edit", text: "编辑", action: `window:/Membership/MemberPoint/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                            { code: "membership.memberpoint.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

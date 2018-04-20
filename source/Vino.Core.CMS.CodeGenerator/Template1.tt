@@ -23,10 +23,12 @@
     //entitys.Add(new EntityItem{Area= "System", Name="SmsQueue", Title="短信队列"});
 	//entitys.Add(new EntityItem{Area= "System", Name="SmsAccount", Title="短信账号", HasRecycle=true});
 	//entitys.Add(new EntityItem{Area= "System", Name="SmsTemplet", Title="短信模板", HasRecycle=true});
-	entitys.Add(new EntityItem{Area= "System", Name="Notice", Title="公告", HasRecycle=true});
+	//entitys.Add(new EntityItem{Area= "System", Name="Notice", Title="公告", HasRecycle=true});
 
     //entitys.Add(new EntityItem{Area= "Membership", Name="Member", Title="会员"});
-    //entitys.Add(new EntityItem{Area= "Membership", Name="MemberType", Title="会员类型"});
+    entitys.Add(new EntityItem{Area= "Membership", Name="MemberType", Title="会员类型"});
+	entitys.Add(new EntityItem{Area= "Membership", Name="MemberPoint", Title="会员积分"});
+	entitys.Add(new EntityItem{Area= "Membership", Name="MemberPointRecord", Title="会员积分记录"});
 
     //entitys.Add(new EntityItem{Area= "WeChat", Name="WxAccount", Title="公众号", HasRecycle=true});
 	//entitys.Add(new EntityItem{Area= "WeChat", Name="WxMenu", Title="微信菜单"});
@@ -44,8 +46,8 @@
 	//entitys.Add(new EntityItem{Area= "Mall", Name="Product", Title="商品", HasRecycle=true});
 	//entitys.Add(new EntityItem{Area= "Mall", Name="ProductSku", Title="商品SKU"});
 
-	entitys.Add(new EntityItem{Area="DataCenter", Name="App", Title="应用", HasRecycle=true});
-	entitys.Add(new EntityItem{Area="DataCenter", Name="AppVersion", Title="应用版本" });
+	//entitys.Add(new EntityItem{Area="DataCenter", Name="App", Title="应用", HasRecycle=true});
+	//entitys.Add(new EntityItem{Area="DataCenter", Name="AppVersion", Title="应用版本" });
 #>
 
 <#

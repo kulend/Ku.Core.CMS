@@ -96,6 +96,16 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.Membership.MemberType> MemberTypes { get; set; }
 
         /// <summary>
+        /// 会员积分
+        /// </summary>
+        public DbSet<Domain.Entity.Membership.MemberPoint> MemberPoints { get; set; }
+
+        /// <summary>
+        /// 会员积分记录
+        /// </summary>
+        public DbSet<Domain.Entity.Membership.MemberPointRecord> MemberPointRecords { get; set; }
+		
+        /// <summary>
         /// 公众号
         /// </summary>
         public DbSet<Domain.Entity.WeChat.WxAccount> WxAccounts { get; set; }

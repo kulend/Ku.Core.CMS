@@ -1,0 +1,48 @@
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：会员积分记录 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-04-20 16:15
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">会员积分记录列表</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action auth-code="membership.memberpointrecord.edit" text="新增" icon="&#xe608;" action="window:/Membership/MemberPointRecord/Edit" after="grid:reload['#list']" />
+                <action auth-code="membership.memberpointrecord.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Delete']" after="grid:reload" />
+            </div>
+            <table id="list"></table>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "membership.memberpointrecord.edit", text: "编辑", action: `window:/Membership/MemberPointRecord/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                            { code: "membership.memberpointrecord.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

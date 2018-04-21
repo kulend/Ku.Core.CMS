@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Domain.Entity.Membership;
+using Vino.Core.CMS.Domain.Enum.Membership;
 
 namespace Vino.Core.CMS.IService.Membership
 {
@@ -67,6 +68,28 @@ namespace Vino.Core.CMS.IService.Membership
         #endregion
 
         #region 其他接口
+
+        /// <summary>
+        /// 获得积分
+        /// </summary>
+        /// <remarks>请在Transaction中使用</remarks>
+        /// <returns></returns>
+        Task GainAsync(long MemberId, EmMemberPointType MemberPointType,
+            int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId);
+
+        /// <summary>
+        /// 消费积分
+        /// </summary>
+        /// <remarks>请在Transaction中使用</remarks>
+        /// <returns></returns>
+        Task ConsumeAsync(long MemberId, EmMemberPointType MemberPointType,
+            int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId);
+
+        /// <summary>
+        /// 调整积分
+        /// </summary>
+        Task AdjustAsync(long[] MemberId, EmMemberPointType MemberPointType,
+            int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId);
 
         #endregion
     }

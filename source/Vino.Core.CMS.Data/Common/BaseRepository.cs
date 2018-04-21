@@ -88,6 +88,16 @@ namespace Vino.Core.CMS.Data.Common
         }
 
         /// <summary>
+        /// 根据lambda表达式条件获取单个实体
+        /// </summary>
+        /// <param name="predicate">lambda表达式条件</param>
+        /// <returns></returns>
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Table.FirstOrDefaultAsync(predicate);
+        }
+
+        /// <summary>
         /// 获取实体集合
         /// </summary>
         /// <returns></returns>

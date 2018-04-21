@@ -10,6 +10,9 @@ namespace Vino.Core.CMS.Domain.Enum.Membership
     /// </summary>
     public enum EmMemberPointBusType : short
     {
+        [Display(Name = "管理员调整")]
+        AdminAdjust = 1,
+
         [Display(Name = "其他")]
         Other = 99,
     }

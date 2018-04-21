@@ -120,7 +120,7 @@
         <span id="sel-tip" style="position:absolute; left:20px;">已选1个，可选10个</span>
         <span>
             <button class="layui-btn layui-btn-sm" action="javascript:doSelectOk()">确 定</button>
-            <action text="取 消" size="sm" theme="warm" action="javascript:closeWindow()" />
+            <action text="取 消" css="layui-btn-warm" action="javascript:closeWindow()" />
         </span>
     </div>
 </div>
@@ -173,7 +173,6 @@
 
                 $("#img-list label.frm_checkbox_label").on("click", function () {
                     var item = JSON.parse($(this).attr("data-item"));
-                    console.log(item);
                     if ($(this).hasClass("selected")) {
                         $(this).removeClass("selected");
                         for (var i = 0; i < selectedItemIds.length; i++) {
@@ -193,7 +192,6 @@
                         selectedItemIds.push(item.id);
                     }
                     showSelTip();
-                    console.log(selectedItemIds);
                 });
             });
         }

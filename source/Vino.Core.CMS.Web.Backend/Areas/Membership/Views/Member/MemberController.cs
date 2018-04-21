@@ -109,7 +109,17 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.Member
             await _service.RestoreAsync(id);
             return JsonData(true);
         }
-		
+
+        /// <summary>
+        /// 会员选择
+        /// </summary>
+        /// <returns></returns>
+        [Auth("select")]
+        public IActionResult Select()
+        {
+            return View();
+        }
+
         #endregion
 
         #region 会员类型

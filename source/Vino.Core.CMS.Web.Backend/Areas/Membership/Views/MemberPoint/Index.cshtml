@@ -24,7 +24,7 @@
                     <form class="layui-form">
                         <table id="ID_table_filters" class="layui-table" lay-skin="row">
                             <tbody>
-                                @foreach (var item in typeof(EmMemberPointType).GetEnuInfos() )
+                                @foreach (var item in typeof(EmMemberPointType).GetEnumInfos() )
                                 {
                                     <tr><td><input type="checkbox" title="@item.name" name="name_filter" value="@item.value" lay-skin="primary" lay-filter="filter-item"></td></tr>
                                 }
@@ -40,7 +40,7 @@
                 <div class="layui-card-body">
                     <div class="toolbar">
                         <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                        <action id="btnAdd" auth-code="wechat.menu.edit" text="新增" icon="&#xe608;" action="" after="grid:reload['#list']" />
+                        <action id="btnAdjust" auth-code="membership.member.point.adjust" text="调整" icon="&#xe608;" action="" after="grid:reload['#list']" />
                     </div>
                     <table id="list"></table>
                 </div>
@@ -81,20 +81,22 @@
                 $("#list").vinoGrid({
                     url: 'GetList',
                     cols: [[
-                        { field: 'Name', title: '名称', width: 150 },
-                        { field: 'IsIndividuation', title: '个性化菜单', width: 100, switch: true },
-                        { field: 'PublishTime', title: '发布时间', width: 150 },
+                        { field: 'MemberId', title: '会员昵称', width: 160, templet: '<div>{{d.Member.Name}}</div>'},
+                        { field: 'Points', title: '总积分', width: 100 },
+                        { field: 'UsablePoints', title: '可用积分', width: 100 },
+                        { field: 'ExpiredPoints', title: '过期积分', width: 100 },
+                        { field: 'UsedPoints', title: '已用积分', width: 100 },
                         {
                             title: '操作', fixed: 'right', width: 165, align: 'center',
                             templet: grid_templet_operate([
-                                { code: "wechat.menu.edit", text: "编辑", action: `window:/WeChat/WxMenu/Edit?id={{d.Id}}` },
-                                { code: "wechat.menu.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                                { code: "membership.member.point.adjust", text: "调整", action: `window:/Membership/MemberPoint/Adjust?id={{d.Id}}` },
+                                { code: "membership.member.point.record.view", text: "记录", action: `window:/Membership/MemberPoint/RecordList?id={{d.Id}}`, css:"layui-btn-primary" }
                             ])
                         }
                     ]],
                     onWhere: function () {
                         return {
-                            AccountId: selFilterValue
+                            Type: selFilterValue
                         };
                     }
                 });
@@ -103,7 +105,7 @@
                 $("#list").vinoGrid("search");
             }
 
-            //$("#btnAdd").attr("action", "window:/WeChat/WxMenu/Edit?AccountId=" + selFilterValue);
+            $("#btnAdjust").attr("action", "window:/Membership/MemberPoint/Adjust?type=" + selFilterValue);
         }
     </script>
 }

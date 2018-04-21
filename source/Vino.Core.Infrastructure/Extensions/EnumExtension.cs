@@ -9,7 +9,7 @@ namespace Vino.Core.Infrastructure.Extensions
 {
     public static class EnumExtension
     {
-        public static List<(string value, string key, string name)> GetEnuInfos(this Type obj)
+        public static List<(string value, string key, string name)> GetEnumInfos(this Type obj)
         {
             List<(string, string, string)> list = new List<(string, string, string)>();
             if (obj == null)
@@ -37,6 +37,28 @@ namespace Vino.Core.Infrastructure.Extensions
                 list.Add((((short)i).ToString(), name, dict.ContainsKey(name) ? dict[name] : name));
             }
             return list;
+        }
+
+        public static string GetEnumDisplayName(this object obj)
+        {
+            if (!obj.GetType().IsEnum)
+            {
+                return "";
+            }
+
+            var typeInfo = obj.GetType().GetTypeInfo();
+            MemberInfo memberInfo = typeInfo.GetMember(obj.ToString()).FirstOrDefault();
+            if (memberInfo == null)
+            {
+                return "";
+            }
+            var attr = memberInfo.GetCustomAttribute<DisplayAttribute>();
+            if (attr == null)
+            {
+                return memberInfo.Name;
+            }
+
+            return attr.Name;
         }
     }
 }

@@ -79,6 +79,6 @@ namespace Vino.Core.CMS.Domain.Entity.Membership
 
     public class MemberPointRecordSearch : BaseSearch<MemberPointRecord>
     {
-
+        public long? MemberPointId { get; set; }
     }
 }

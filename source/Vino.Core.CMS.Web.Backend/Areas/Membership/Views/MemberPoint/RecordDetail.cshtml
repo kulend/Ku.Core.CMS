@@ -1,0 +1,36 @@
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：RecordDetail.cshtml
+    // 功能描述：会员积分记录详情页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-04-20 16:15
+    //
+    //----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Domain.Dto.Membership
+@model MemberPointRecordDto
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<MemberPointRecordDto>("#"))
+    {
+    <div class="layui-body">
+        @Html.ShowFor(x => x.ChangeType, x => x.Points)
+        @Html.ShowFor(x => x.BusType, x => x.BusId)
+        @Html.ShowFor(x => x.BusDesc)
+    </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

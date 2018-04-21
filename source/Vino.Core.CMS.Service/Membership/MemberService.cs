@@ -65,7 +65,9 @@ namespace Vino.Core.CMS.Service.Membership
         /// <returns>count：条数；items：分页数据</returns>
         public async Task<(int count, List<MemberDto> items)> GetListAsync(int page, int size, MemberSearch where, string sort)
         {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
+            var includes = new List<Expression<Func<Member, object>>>();
+            includes.Add(x => x.MemberType);
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc", includes.ToArray());
             return (data.count, Mapper.Map<List<MemberDto>>(data.items));
         }
 

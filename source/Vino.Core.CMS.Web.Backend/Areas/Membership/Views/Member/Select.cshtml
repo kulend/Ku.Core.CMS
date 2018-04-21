@@ -1,0 +1,63 @@
+﻿@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Select.cshtml
+// 功能描述：会员 选择页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 20:18
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_WindowListLayout.cshtml";
+}
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <div class="toolbar">
+            <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+        </div>
+        <table id="list"></table>
+    </div>
+    <div class="layui-footer">
+        <span id="sel-tip" style="position:absolute; left:20px;">已选1个，可选10个</span>
+        <span>
+            <button class="layui-btn layui-btn-sm" action="javascript:doSelectOk()">确 定</button>
+            <action text="取 消" css="layui-btn-warm" action="javascript:closeWindow()" />
+        </span>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'Name', title: '姓名', width: 150 },
+                    { field: 'Mobile', title: '手机', width: 130 },
+                    { field: 'MemberType', title: '会员类型', width: 130, templet: '<div>{{d.MemberType.Name}}</div>' },
+                    { field: 'Points', title: '积分', width: 70 },
+                    { field: 'Level', title: '等级', width: 70 }
+                ]]
+            });
+        });
+
+        function doSelectOk() { 
+            var checkStatus = layui.table.checkStatus('list');
+            if (checkStatus.data.length == 0) { 
+                vino.page.msg.tip(`请至少选择一条数据！`);
+                return;
+            }
+            var sels = [];
+            for (var i = 0; i < checkStatus.data.length; i++) {
+                sels.push({
+                    id: checkStatus.data[i].Id,
+                    name: checkStatus.data[i].Name
+                });
+            }
+            closeWindow(sels);
+        }
+    </script>
+}

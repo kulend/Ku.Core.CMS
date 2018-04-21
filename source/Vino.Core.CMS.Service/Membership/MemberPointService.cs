@@ -12,10 +12,12 @@
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Membership;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Domain.Entity.Membership;
+using Vino.Core.CMS.Domain.Enum.Membership;
 using Vino.Core.CMS.IService.Membership;
 using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
@@ -26,12 +28,17 @@ namespace Vino.Core.CMS.Service.Membership
     public partial class MemberPointService : BaseService, IMemberPointService
     {
         protected readonly IMemberPointRepository _repository;
+        protected readonly IMemberRepository _memberRepository;
+        protected readonly IMemberPointRecordRepository _recordRepository;
 
         #region 构造函数
 
-        public MemberPointService(IMemberPointRepository repository)
+        public MemberPointService(IMemberPointRepository repository, 
+            IMemberRepository memberRepository, IMemberPointRecordRepository recordRepository)
         {
             this._repository = repository;
+            this._memberRepository = memberRepository;
+            this._recordRepository = recordRepository;
         }
 
         #endregion
@@ -60,7 +67,9 @@ namespace Vino.Core.CMS.Service.Membership
         /// <returns>count：条数；items：分页数据</returns>
         public async Task<(int count, List<MemberPointDto> items)> GetListAsync(int page, int size, MemberPointSearch where, string sort)
         {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
+            var includes = new List<Expression<Func<MemberPoint, object>>>();
+            includes.Add(x => x.Member);
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc", includes.ToArray());
             return (data.count, Mapper.Map<List<MemberPointDto>>(data.items));
         }
 
@@ -133,6 +142,189 @@ namespace Vino.Core.CMS.Service.Membership
         #endregion
 
         #region 其他方法
+
+        /// <summary>
+        /// 获得积分
+        /// </summary>
+        /// <remarks>请在Transaction中使用</remarks>
+        /// <returns></returns>
+        public async Task GainAsync(long MemberId, EmMemberPointType MemberPointType, 
+            int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId)
+        {
+            if (Points <= 0)
+            {
+                throw new VinoArgNullException("积分值必须大于0！");
+            }
+            if (Points > 9999)
+            {
+                throw new VinoArgNullException("调整积分超出范围！");
+            }
+
+            //取得会员数据
+            var member = await _memberRepository.GetByIdAsync(MemberId);
+            if (member == null)
+            {
+                throw new VinoArgNullException("无法取得会员数据！");
+            }
+
+            //取得会员积分数据
+            var memberPoint = await _repository.FirstOrDefaultAsync(x => x.MemberId == MemberId && x.Type == MemberPointType && !x.IsDeleted);
+            if (memberPoint == null)
+            {
+                //创建新会员积分数据
+                memberPoint = new MemberPoint
+                {
+                    Id = ID.NewID(),
+                    MemberId = MemberId,
+                    Type = MemberPointType,
+                    Points = Points,
+                    ExpiredPoints = 0,
+                    UsablePoints = Points,
+                    UsedPoints = 0,
+                    IsDeleted = false,
+                    CreateTime = DateTime.Now
+                };
+
+                await _repository.InsertAsync(memberPoint);
+            }
+            else
+            {
+                //积分计算
+                memberPoint.UsablePoints = memberPoint.UsablePoints + Points;
+                memberPoint.Points = memberPoint.Points + Points;
+
+                _repository.Update(memberPoint);
+            }
+
+            //log
+            MemberPointRecord record = new MemberPointRecord
+            {
+                Id = ID.NewID(),
+                MemberPointId = memberPoint.Id,
+                MemberId = MemberId,
+                ChangeType = EmMemberPointChangeType.Gain,
+                Points = Points,
+                BusType = BusType,
+                BusId = BusId,
+                BusDesc = BusDesc,
+                OperatorId = OperatorId,
+                IsDeleted = false,
+                CreateTime = DateTime.Now
+            };
+
+            await _recordRepository.InsertAsync(record);
+        }
+
+        /// <summary>
+        /// 消费积分
+        /// </summary>
+        /// <remarks>请在Transaction中使用</remarks>
+        /// <returns></returns>
+        public async Task ConsumeAsync(long MemberId, EmMemberPointType MemberPointType,
+            int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId)
+        {
+            if (Points <= 0)
+            {
+                throw new VinoArgNullException("积分值必须大于0！");
+            }
+            if (Points > 9999)
+            {
+                throw new VinoArgNullException("调整积分超出范围！");
+            }
+
+            //取得会员数据
+            var member = await _memberRepository.GetByIdAsync(MemberId);
+            if (member == null)
+            {
+                throw new VinoArgNullException("无法取得会员数据！");
+            }
+
+            //取得会员积分数据
+            var memberPoint = await _repository.FirstOrDefaultAsync(x => x.MemberId == MemberId && x.Type == MemberPointType && !x.IsDeleted);
+            if (memberPoint == null)
+            {
+                throw new VinoArgNullException($"会员[{member.Name}]积分不足！");
+            }
+            else
+            {
+                if (memberPoint.UsablePoints - Points < 0)
+                {
+                    throw new VinoArgNullException($"会员[{member.Name}]积分不足！");
+                }
+
+                //积分计算
+                memberPoint.UsablePoints = memberPoint.UsablePoints - Points;
+                memberPoint.UsedPoints = memberPoint.UsedPoints + Points;
+
+                _repository.Update(memberPoint);
+            }
+
+            //log
+            MemberPointRecord record = new MemberPointRecord
+            {
+                Id = ID.NewID(),
+                MemberPointId = memberPoint.Id,
+                MemberId = MemberId,
+                ChangeType = EmMemberPointChangeType.Consume,
+                Points = Points,
+                BusType = BusType,
+                BusId = BusId,
+                BusDesc = BusDesc,
+                OperatorId = OperatorId,
+                IsDeleted = false,
+                CreateTime = DateTime.Now
+            };
+
+            await _recordRepository.InsertAsync(record);
+        }
+
+        /// <summary>
+        /// 调整积分
+        /// </summary>
+        public async Task AdjustAsync(long[] MemberId, EmMemberPointType MemberPointType,
+            int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId)
+        {
+            if (MemberId == null || MemberId.Length == 0)
+            {
+                throw new VinoArgNullException("请选择会员！");
+            }
+            if (Points == 0)
+            {
+                throw new VinoArgNullException("调整积分不能为0！");
+            }
+            if (Points < -9999 || Points > 9999)
+            {
+                throw new VinoArgNullException("调整积分超出范围！");
+            }
+
+            using (var trans = await _repository.BeginTransactionAsync())
+            {
+                try
+                {
+                    if (Points > 0)
+                    {
+                        foreach (var id in MemberId)
+                        {
+                            await GainAsync(id, MemberPointType, Points, BusType, BusId, BusDesc, OperatorId);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var id in MemberId)
+                        {
+                            await ConsumeAsync(id, MemberPointType, Math.Abs(Points), BusType, BusId, BusDesc, OperatorId);
+                        }
+                    }
+                    await _repository.SaveAsync();
+                    trans.Commit();
+                }
+                catch (Exception)
+                {
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
 
         #endregion
     }

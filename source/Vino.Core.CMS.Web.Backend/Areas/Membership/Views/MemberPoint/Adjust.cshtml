@@ -1,0 +1,100 @@
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：Adjust.cshtml
+    // 功能描述：会员积分调整页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-04-20 15:52
+    //
+    //----------------------------------------------------------------
+}
+
+@{
+    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+}
+@using Vino.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
+@using Vino.Core.CMS.Domain.Dto.Membership
+@model MemberPointAdjustDto
+@section Css
+    {
+    <style>
+        #list {
+            width: 100%
+        }
+
+            #list li {
+                float: left;
+                margin-right: 10px;
+                line-height: 30px;
+            }
+    </style>
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<MemberPointAdjustDto>("SaveAdjust"))
+    {
+        <div class="layui-body">
+            @Html.ShowFor(x => x.Type)
+            @Html.HiddenFor(x => x.Type)
+            <div class="layui-form-item">
+                <label class="layui-form-label">会员</label>
+                <div class="layui-input-block">
+                    <ul id="list">
+                        @foreach (MemberDto member in ViewBag.Members)
+                        {
+                            <li><input type="checkbox" name="MemberId" value="@member.Id" title="@member.Name" lay-skin="primary" checked></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" action="js:doSelectMember()"><i class="layui-icon">&#xe608;</i>添加会员</button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" action="js:doClearMember()"><i class="layui-icon">&#xe640;</i>清 除</button>
+                </div>
+            </div>
+            @Html.InputFor(x => x.Points)
+            @Html.InputFor(x => x.Remark)
+
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        var ids = [];
+        layui.use(['form'], function () {
+            var form = layui.form;
+            $("#list input[name='MemberId']").each(function () { 
+                ids.push($(this).val());
+            });
+        });
+
+        function doSelectMember() {
+            OpenWindow("选择会员", "/Membership/Member/Select", null, function (data) {
+                var html = [];
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if ($.inArray(data[i].id, ids) >= 0) {
+                            continue;
+                        }
+                        ids.push(data[i].id);
+                        html.push(`<li><input type="checkbox" name="MemberId" value="${data[i].id}" title="${data[i].name}" lay-skin="primary" checked></li>`);
+                    }
+                }
+                $("#list").append(html.join(""));
+                layui.form.render();
+            });
+        }
+
+        function doClearMember() {
+            ids = [];
+            $("#list").html("");
+        }
+    </script>
+}

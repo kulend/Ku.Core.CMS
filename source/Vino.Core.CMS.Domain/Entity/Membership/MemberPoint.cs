@@ -59,6 +59,6 @@ namespace Vino.Core.CMS.Domain.Entity.Membership
 
     public class MemberPointSearch : BaseSearch<MemberPoint>
     {
-
+        public EmMemberPointType? Type { set; get; }
     }
 }

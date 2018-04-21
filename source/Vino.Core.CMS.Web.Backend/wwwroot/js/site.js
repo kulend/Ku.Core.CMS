@@ -105,7 +105,7 @@ function _action(that, action, after, data) {
         //打开tab页面
         var tag = pms[0];
         if (pms.length === 1) {
-            openTab(tag);
+            _openTab(tag);
         }
         var opts = {
             id: tag,
@@ -113,13 +113,22 @@ function _action(that, action, after, data) {
             url: pms[2],
             reload: pms[3],
         };
-        openTab(tag, opts);
+        _openTab(tag, opts);
     } else if (action) {
         //直接跳转页面
         vino.page.navigateTo(action);
     }
 }
 
+//打开Tab页
+function _openTab(tag, options) {
+    if (self != top) {
+        parent._openTab(tag, options);
+    } else {
+        openTab(tag, options);
+    }
+}
+ 
 function _bindForm($from, options) {
     var options = $.extend({}, {
         onSuccess: function (reply, options) {

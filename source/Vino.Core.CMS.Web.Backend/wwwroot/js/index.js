@@ -132,7 +132,7 @@ function _openNavMenu(options) {
             _addNavTab(options.title, options.id, options.url);
         } else {
             if (options.reload) {
-                $('#LAY_app_iframe_' + id).attr('src', options.url);
+                $('#LAY_app_iframe_' + options.id).attr('src', options.url);
             }
         }
 

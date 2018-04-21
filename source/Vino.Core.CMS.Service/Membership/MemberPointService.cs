@@ -15,12 +15,12 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Membership;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Domain.Entity.Membership;
 using Vino.Core.CMS.Domain.Enum.Membership;
 using Vino.Core.CMS.IService.Membership;
 using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
 
 namespace Vino.Core.CMS.Service.Membership

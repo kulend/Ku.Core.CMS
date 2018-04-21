@@ -16,7 +16,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Vino.Core.CMS.Domain.Enum.Mall;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.Mall
 {

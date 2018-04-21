@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.Infrastructure.Data;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain.Entity.Content;
 

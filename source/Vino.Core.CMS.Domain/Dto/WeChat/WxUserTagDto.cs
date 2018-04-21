@@ -10,7 +10,6 @@
 //----------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat
 {

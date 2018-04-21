@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -49,7 +48,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public virtual SmsTemplet SmsTemplet { set; get; }
     }
 
-    public class SmsSearch : BaseSearch<Sms>
+    public class SmsSearch : BaseProtectedSearch<Sms>
     {
 
     }

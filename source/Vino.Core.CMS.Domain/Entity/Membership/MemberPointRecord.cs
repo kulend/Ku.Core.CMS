@@ -13,7 +13,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum.Membership;
 using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.Membership
 {
@@ -77,7 +76,7 @@ namespace Vino.Core.CMS.Domain.Entity.Membership
         public virtual System.User Operator { set; get; }
     }
 
-    public class MemberPointRecordSearch : BaseSearch<MemberPointRecord>
+    public class MemberPointRecordSearch : BaseProtectedSearch<MemberPointRecord>
     {
         public long? MemberPointId { get; set; }
     }

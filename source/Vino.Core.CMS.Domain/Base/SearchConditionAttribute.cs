@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Attributes
+namespace Vino.Core.CMS.Domain
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class SearchConditionAttributeAA : Attribute
+    public class SearchConditionAttribute : Attribute
     {
         /// <summary>
         /// 属性名，如果为空，则默认为当前属性名
@@ -23,23 +23,23 @@ namespace Vino.Core.Infrastructure.Attributes
         /// </summary>
         public bool IgnoreWhenNull { set; get; } = true;
 
-        public SearchConditionAttributeAA(string propertyName, SearchConditionOperation operation)
+        public SearchConditionAttribute(string propertyName, SearchConditionOperation operation)
         {
             this.PropertyName = propertyName;
             this.Operation = operation;
         }
 
-        public SearchConditionAttributeAA(string propertyName)
+        public SearchConditionAttribute(string propertyName)
         {
             this.PropertyName = PropertyName;
         }
 
-        public SearchConditionAttributeAA(SearchConditionOperation operation)
+        public SearchConditionAttribute(SearchConditionOperation operation)
         {
             this.Operation = operation;
         }
 
-        public SearchConditionAttributeAA(bool ignoreWhenNull)
+        public SearchConditionAttribute(bool ignoreWhenNull)
         {
             this.IgnoreWhenNull = ignoreWhenNull;
         }

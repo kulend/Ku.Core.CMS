@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Attributes
+namespace Vino.Core.CMS.Domain
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class CustomConditionAttributeAA : Attribute
+    public class CustomConditionAttribute : Attribute
     {
 
     }

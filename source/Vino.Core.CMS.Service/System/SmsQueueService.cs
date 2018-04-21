@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.System;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.CMS.IService.System;

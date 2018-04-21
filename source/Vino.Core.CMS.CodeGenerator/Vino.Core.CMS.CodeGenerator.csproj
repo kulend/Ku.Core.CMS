@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Domain.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Template1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template1.cs</LastGenOutput>

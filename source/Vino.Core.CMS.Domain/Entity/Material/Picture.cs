@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.Material
 {
@@ -30,7 +29,7 @@ namespace Vino.Core.CMS.Domain.Entity.Material
         public bool IsCompressed { set; get; }
     }
 
-    public class PictureSearch : BaseSearch<Picture>
+    public class PictureSearch : BaseProtectedSearch<Picture>
     {
 
     }

@@ -15,7 +15,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum.Mall;
 using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.Mall
 {
@@ -83,7 +82,7 @@ namespace Vino.Core.CMS.Domain.Entity.Mall
         #endregion
     }
 
-    public class DeliveryTempletSearch : BaseSearch<DeliveryTemplet>
+    public class DeliveryTempletSearch : BaseProtectedSearch<DeliveryTemplet>
     {
         public bool? IsSnapshot { set; get; }
     }

@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.DataCenter;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.DataCenter;
 using Vino.Core.CMS.Domain.Entity.DataCenter;
 using Vino.Core.CMS.IService.DataCenter;

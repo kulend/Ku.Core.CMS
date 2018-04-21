@@ -25,6 +25,7 @@ using Vino.Core.Infrastructure.Exceptions;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
 using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.Domain;
 
 namespace Vino.Core.CMS.Service.System
 {

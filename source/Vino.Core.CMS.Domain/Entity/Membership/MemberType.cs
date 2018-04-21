@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.Membership
 {
@@ -33,7 +32,7 @@ namespace Vino.Core.CMS.Domain.Entity.Membership
         public int OrderIndex { set; get; }
     }
 
-    public class MemberTypeSearch : BaseSearch<MemberType>
+    public class MemberTypeSearch : BaseProtectedSearch<MemberType>
     {
 
     }

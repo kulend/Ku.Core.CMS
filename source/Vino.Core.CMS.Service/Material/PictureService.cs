@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Data.Repository.Material;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.Material;
 using Vino.Core.CMS.Domain.Entity.Material;
 using Vino.Core.CMS.IService.Material;

@@ -15,7 +15,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Vino.Core.CMS.Domain.Enum.System;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -48,7 +47,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public string Response { set; get; }
     }
 
-    public class SmsQueueSearch : BaseSearch<SmsQueue>
+    public class SmsQueueSearch : BaseProtectedSearch<SmsQueue>
     {
         public EmSmsQueueStatus? Status { set; get; }
     }

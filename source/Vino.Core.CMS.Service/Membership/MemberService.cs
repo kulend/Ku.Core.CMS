@@ -17,6 +17,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Membership;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.Membership;
 using Vino.Core.CMS.Domain.Entity.Membership;
 using Vino.Core.CMS.IService.Membership;

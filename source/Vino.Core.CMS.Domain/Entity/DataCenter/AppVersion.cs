@@ -11,8 +11,6 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.DataCenter
 {
@@ -58,7 +56,7 @@ namespace Vino.Core.CMS.Domain.Entity.DataCenter
         public bool Force { set; get; } = false;
     }
 
-    public class AppVersionSearch : BaseSearch<AppVersion>
+    public class AppVersionSearch : BaseProtectedSearch<AppVersion>
     {
         public long? AppId { set; get; }
     }

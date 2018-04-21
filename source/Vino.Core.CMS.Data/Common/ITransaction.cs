@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Data
+namespace Vino.Core.CMS.Data.Common
 {
     public interface ITransaction : IDisposable
     {

@@ -4,8 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Vino.Core.CMS.Domain;
 
-namespace Vino.Core.Infrastructure.Data
+namespace Vino.Core.CMS.Data.Common
 {
     /// <summary>
     /// 仓储接口定义

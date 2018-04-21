@@ -15,7 +15,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -61,7 +60,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public virtual ICollection<RoleFunction> RoleFunctions { get; set; }
     }
 
-    public class RoleSearch : BaseSearch<Role>
+    public class RoleSearch : BaseProtectedSearch<Role>
     {
 
     }

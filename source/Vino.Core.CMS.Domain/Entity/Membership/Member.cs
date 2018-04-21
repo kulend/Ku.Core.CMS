@@ -16,7 +16,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.Infrastructure.Data;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.Helper;
 
@@ -121,7 +120,7 @@ namespace Vino.Core.CMS.Domain.Entity.Membership
         public MemberType MemberType { set; get; }
     }
 	
-	public class MemberSearch : BaseSearch<Member>
+	public class MemberSearch : BaseProtectedSearch<Member>
     {
 
     }

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Mall;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.Mall;
 using Vino.Core.CMS.Domain.Entity.Mall;
 using Vino.Core.CMS.Domain.Enum.Mall;

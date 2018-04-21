@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -57,7 +56,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public int Level { set; get; }
     }
 
-    public class FunctionSearch : BaseSearch<Function>
+    public class FunctionSearch : BaseProtectedSearch<Function>
     {
         /// <summary>
         /// 父功能

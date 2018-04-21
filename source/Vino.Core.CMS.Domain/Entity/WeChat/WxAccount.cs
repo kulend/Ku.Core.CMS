@@ -15,7 +15,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Vino.Core.CMS.Domain.Enum.WeChat;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.WeChat
 {
@@ -46,7 +45,7 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
         public string Token { set; get; }
     }
 
-    public class WxAccountSearch : BaseSearch<WxAccount>
+    public class WxAccountSearch : BaseProtectedSearch<WxAccount>
     {
 
     }

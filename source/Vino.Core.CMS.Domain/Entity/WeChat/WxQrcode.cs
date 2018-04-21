@@ -13,7 +13,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum.WeChat;
 using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.WeChat
 {
@@ -100,7 +99,7 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
 
     }
 
-    public class WxQrcodeSearch : BaseSearch<WxQrcode>
+    public class WxQrcodeSearch : BaseProtectedSearch<WxQrcode>
     {
         public long AccountId { set; get; }
     }

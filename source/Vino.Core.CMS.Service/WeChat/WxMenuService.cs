@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.WeChat;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.WeChat;
 using Vino.Core.CMS.Domain.Entity.WeChat;
 using Vino.Core.CMS.IService.WeChat;

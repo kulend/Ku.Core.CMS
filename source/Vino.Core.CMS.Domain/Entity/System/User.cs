@@ -15,7 +15,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.Infrastructure.Data;
 using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.Helper;
 
@@ -128,7 +127,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
 		
     }
 	
-    public class UserSearch : BaseSearch<User>
+    public class UserSearch : BaseProtectedSearch<User>
     {
 
     }

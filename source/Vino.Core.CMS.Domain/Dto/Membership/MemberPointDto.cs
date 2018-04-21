@@ -13,7 +13,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum.Membership;
 using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Dto.Membership
 {

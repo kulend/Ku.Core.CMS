@@ -12,7 +12,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.WeChat
 {
@@ -41,7 +40,7 @@ namespace Vino.Core.CMS.Domain.Entity.WeChat
         public int Count { set; get; } = 0;
     }
 
-    public class WxUserTagSearch : BaseSearch<WxUserTag>
+    public class WxUserTagSearch : BaseProtectedSearch<WxUserTag>
     {
         public long AccountId { set; get; }
 

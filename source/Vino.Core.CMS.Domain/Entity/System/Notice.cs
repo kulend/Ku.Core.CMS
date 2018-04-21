@@ -15,7 +15,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum;
 using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -65,7 +64,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
 
     }
 
-    public class NoticeSearch : BaseSearch<Notice>
+    public class NoticeSearch : BaseProtectedSearch<Notice>
     {
         public bool? IsPublished { set; get; }
     }

@@ -16,7 +16,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Vino.Core.CMS.Domain.Entity.System;
 using Vino.Core.CMS.Domain.Enum.Material;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.Material
 {
@@ -45,7 +44,7 @@ namespace Vino.Core.CMS.Domain.Entity.Material
         public User CreateUser { set; get; }
     }
 
-    public class MaterialGroupSearch : BaseSearch<MaterialGroup>
+    public class MaterialGroupSearch : BaseProtectedSearch<MaterialGroup>
     {
 
     }

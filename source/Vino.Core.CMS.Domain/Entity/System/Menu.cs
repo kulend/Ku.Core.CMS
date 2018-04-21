@@ -16,7 +16,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -79,7 +78,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
         public ICollection<Menu> SubMenus { set; get; }
     }
 
-    public class MenuSearch : BaseSearch<Menu>
+    public class MenuSearch : BaseProtectedSearch<Menu>
     {
         [SearchCondition(false)]
         public long? ParentId { set; get; }

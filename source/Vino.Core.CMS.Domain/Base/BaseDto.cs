@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace Vino.Core.Infrastructure.Data
+namespace Vino.Core.CMS.Domain
 {
     public abstract partial class BaseDto
     {

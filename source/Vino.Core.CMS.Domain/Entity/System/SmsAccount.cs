@@ -13,7 +13,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vino.Core.CMS.Domain.Enum.System;
-using Vino.Core.Infrastructure.Data;
 
 namespace Vino.Core.CMS.Domain.Entity.System
 {
@@ -50,7 +49,7 @@ namespace Vino.Core.CMS.Domain.Entity.System
 
     }
 
-    public class SmsAccountSearch : BaseSearch<SmsAccount>
+    public class SmsAccountSearch : BaseProtectedSearch<SmsAccount>
     {
 
     }

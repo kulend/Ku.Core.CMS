@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.Infrastructure.Data;
-
 namespace Vino.Core.CMS.Data.Common
 {
     public class VinoDbContextTransaction : ITransaction

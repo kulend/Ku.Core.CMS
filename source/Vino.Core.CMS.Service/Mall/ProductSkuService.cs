@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Mall;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.Mall;
 using Vino.Core.CMS.Domain.Entity.Mall;
 using Vino.Core.CMS.IService.Mall;

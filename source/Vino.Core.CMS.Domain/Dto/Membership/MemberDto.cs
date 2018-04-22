@@ -17,7 +17,7 @@ using Vino.Core.CMS.Domain.Enum;
 
 namespace Vino.Core.CMS.Domain.Dto.Membership
 {
-    public class MemberDto : BaseDto
+    public class MemberDto : BaseProtectedDto
     {
         /// <summary>
         /// 账号密码

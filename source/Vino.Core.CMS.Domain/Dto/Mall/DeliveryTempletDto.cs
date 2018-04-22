@@ -19,7 +19,7 @@ using Vino.Core.CMS.Domain.Enum.Mall;
 
 namespace Vino.Core.CMS.Domain.Dto.Mall
 {
-    public class DeliveryTempletDto : BaseDto
+    public class DeliveryTempletDto : BaseProtectedDto
     {
         /// <summary>
         /// 名称

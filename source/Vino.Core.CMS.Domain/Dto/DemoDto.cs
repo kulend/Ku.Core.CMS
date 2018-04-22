@@ -7,7 +7,7 @@ using Vino.Core.CMS.Domain.Enum;
 
 namespace Vino.Core.CMS.Domain.Dto
 {
-    public class DemoDto : BaseDto
+    public class DemoDto : BaseProtectedDto
     {
         [MaxLength(30)]
         [Required]

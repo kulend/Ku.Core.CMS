@@ -15,7 +15,7 @@ using Vino.Core.CMS.Domain.Enum.DataCenter;
 
 namespace Vino.Core.CMS.Domain.Dto.DataCenter
 {
-    public class AppDto : BaseDto
+    public class AppDto : BaseProtectedDto
     {
         /// <summary>
         /// 应用类型

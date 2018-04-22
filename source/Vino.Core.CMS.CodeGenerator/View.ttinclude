@@ -1,0 +1,292 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #>
+<#
+	//生成Controller
+	var pathOfView = RootPath + "/Vino.Core.CMS.Web.Backend/Areas/" + area + "/Views/" + name;
+    if(!Directory.Exists(pathOfView))
+    {
+        Directory.CreateDirectory(pathOfView);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfView};
+	var fileNameOfController = name + "Controller.cs";
+	manager.StartBlock(fileNameOfController);
+#>
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：<#=name#>Controller.cs
+// 功能描述：<#=desc#> 后台访问控制类
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+//
+//----------------------------------------------------------------
+
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Vino.Core.CMS.Domain.Dto.<#=area#>;
+using Vino.Core.CMS.Domain.Entity.<#=area#>;
+using Vino.Core.CMS.IService.<#=area#>;
+using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Filters;
+using Vino.Core.CMS.Web.Security;
+using Vino.Core.Infrastructure.Exceptions;
+
+namespace Vino.Core.CMS.Web.Backend.Areas.<#=area#>.Views.<#=name#>
+{
+    /// <summary>
+    /// <#=desc#> 后台访问控制类
+    /// </summary>
+    [Area("<#=area#>")]
+    [Auth("<#=area.ToLower()#>.<#=name.ToLower()#>")]
+    public class <#=name#>Controller : BackendController
+    {
+        private readonly I<#=name#>Service _service;
+
+        public <#=name#>Controller(I<#=name#>Service service)
+        {
+            this._service = service;
+        }
+
+        /// <summary>
+        /// <#=desc#> 列表页
+        /// </summary>
+        [Auth("view")]
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 取得 <#=desc#> 列表数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="rows">条数</param>
+        /// <param name="where">检索条件</param>
+        [Auth("view")]
+        public async Task<IActionResult> GetList(int page, int rows, <#=name#>Search where)
+        {
+            var data = await _service.GetListAsync(page, rows, where, null);
+            return PagerData(data.items, page, rows, data.count);
+        }
+
+        /// <summary>
+        /// <#=desc#> 新增编辑页
+        /// </summary>
+        [Auth("edit")]
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id.HasValue)
+            {
+                //编辑
+                var model = await _service.GetByIdAsync(id.Value);
+                if (model == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得数据!");
+                }
+                ViewData["Mode"] = "Edit";
+                return View(model);
+            }
+            else
+            {
+                //新增
+                <#=name#>Dto dto = new <#=name#>Dto();
+                ViewData["Mode"] = "Add";
+                return View(dto);
+            }
+        }
+
+        /// <summary>
+        /// 保存 <#=desc#> 数据
+        /// </summary>
+        [HttpPost]
+        [Auth("edit")]
+		[UserAction("保存 <#=desc#> 数据")]
+        public async Task<IActionResult> Save(<#=name#>Dto model)
+        {
+            await _service.SaveAsync(model);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 删除 <#=desc#> 数据
+        /// </summary>
+        [HttpPost]
+        [Auth("delete")]
+		[UserAction("删除 <#=desc#> 数据")]
+        public async Task<IActionResult> Delete(params long[] id)
+        {
+            await _service.DeleteAsync(id);
+            return JsonData(true);
+        }
+
+        /// <summary>
+        /// 恢复 <#=desc#> 数据
+        /// </summary>
+        [HttpPost]
+        [Auth("restore")]
+		[UserAction("恢复 <#=desc#> 数据")]
+        public async Task<IActionResult> Restore(params long[] id)
+        {
+            await _service.RestoreAsync(id);
+            return JsonData(true);
+        }
+    }
+}
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>
+<#
+	//生成Index.cshtml
+	var fileNameOfIndex = "Index.cshtml";
+	manager.StartBlock(fileNameOfIndex);
+#>
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Index.cshtml
+// 功能描述：<#=desc#> 列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<#if(HasRecycle){#>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+            <ul class="layui-tab-title">
+                <li lay-id="list" class="layui-this"><#=desc#>列表</li>
+                <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action auth-code="<#=area.ToLower()#>.<#=name.ToLower()#>.edit" text="新增" icon="&#xe608;" action="window:/<#=area#>/<#=name#>/Edit" after="grid:reload['#list']" />
+                        <action auth-code="<#=area.ToLower()#>.<#=name.ToLower()#>.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Delete']" after="grid:reload" />
+                    </div>
+                    <table id="list"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                        <action auth-code="<#=area.ToLower()#>.<#=name.ToLower()#>.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Restore']" after="grid:reload" />
+                    </div>
+                    <table id="recycles"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+<script>
+    layui.use(['element'], function () {
+        var element = layui.element;
+
+        var cols = [
+            { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
+        ];
+
+        $("#list").vinoGrid({
+            url: 'GetList',
+            cols: [cols.concat([
+                {
+                    title: '操作', fixed: 'right', width: 160, align: 'center',
+                    toolbar: grid_templet_operate([
+                        { code: "<#=area.ToLower()#>.<#=name.ToLower()#>.edit", text: "编辑", action: `window:/<#=area#>/<#=name#>/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "<#=area.ToLower()#>.<#=name.ToLower()#>.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                    ])
+                }
+            ])],
+            onWhere: function () {
+                return {
+                    IsDeleted: false
+                };
+            }
+        });
+
+        element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            { 
+                //初始化回收站
+                $("#recycles").vinoGrid({
+                    url: 'GetList',
+                    cols: [cols.concat([
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "<#=area.ToLower()#>.<#=name.ToLower()#>.restore", text: "恢复", action: `post:Restore?id={{d.Id}}` }
+                            ])
+                        }
+                    ])],
+                    onWhere: function () {
+                        return {
+                            IsDeleted: true
+                        };
+                    }
+                });
+            }
+        });
+    });
+</script>
+}
+<#}else{#>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header"><#=desc#>列表</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action auth-code="<#=area.ToLower()#>.<#=name.ToLower()#>.edit" text="新增" icon="&#xe608;" action="window:/<#=area#>/<#=name#>/Edit" after="grid:reload['#list']" />
+                <action auth-code="<#=area.ToLower()#>.<#=name.ToLower()#>.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Delete']" after="grid:reload" />
+            </div>
+            <table id="list"></table>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'GetList',
+                cols: [[
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "<#=area.ToLower()#>.<#=name.ToLower()#>.edit", text: "编辑", action: `window:/<#=area#>/<#=name#>/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                            { code: "<#=area.ToLower()#>.<#=name.ToLower()#>.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}
+<#}#>
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>

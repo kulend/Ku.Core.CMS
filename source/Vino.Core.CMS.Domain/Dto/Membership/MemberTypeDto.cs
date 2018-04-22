@@ -16,7 +16,7 @@ using System.Text;
 
 namespace Vino.Core.CMS.Domain.Dto.Membership
 {
-    public class MemberTypeDto : BaseDto
+    public class MemberTypeDto : BaseProtectedDto
     {
         /// <summary>
         /// 名称

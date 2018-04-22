@@ -17,7 +17,7 @@ using Vino.Core.EventBus;
 namespace Vino.Core.CMS.Domain.Dto.System
 {
     [Event("backend_user_action_log")]
-    public class UserActionLogDto : BaseDto
+    public class UserActionLogDto : BaseProtectedDto
     {
         [Display(Name = "操作说明")]
         [MaxLength(40)]

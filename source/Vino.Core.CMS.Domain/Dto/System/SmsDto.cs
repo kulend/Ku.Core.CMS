@@ -16,7 +16,7 @@ using System.Text;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
-    public class SmsDto : BaseDto
+    public class SmsDto : BaseProtectedDto
     {
         /// <summary>
         /// 手机号

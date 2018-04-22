@@ -18,11 +18,15 @@ using Vino.Core.CMS.Domain.Dto.Content;
 using Vino.Core.CMS.Domain.Entity.Content;
 using Vino.Core.CMS.IService.Content;
 using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Filters;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
 {
+    /// <summary>
+    /// 文章 后台访问控制类
+    /// </summary>
     [Area("Content")]
     [Auth("content.article")]
     public class ArticleController : BackendController
@@ -34,12 +38,23 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
             this._service = service;
         }
 
+        /// <summary>
+        /// 列表页
+        /// </summary>
+        /// <returns></returns>
         [Auth("view")]
         public async Task<IActionResult> Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// 取得列表数据
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="rows"></param>
+        /// <param name="where"></param>
+        /// <returns></returns>
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows, ArticleSearch where)
         {
@@ -47,6 +62,10 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
             return PagerData(data.items, page, rows, data.count);
         }
 
+        /// <summary>
+        /// 新增编辑页
+        /// </summary>
+        /// <param name="id"></param>
         [Auth("edit")]
         public async Task<IActionResult> Edit(long? id)
         {
@@ -75,6 +94,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
         /// </summary>
         [HttpPost]
         [Auth("edit")]
+        [UserAction("")]
         public async Task<IActionResult> Save(ArticleDto model)
         {
             await _service.SaveAsync(model);

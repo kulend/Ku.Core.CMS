@@ -15,7 +15,7 @@ using Vino.Core.CMS.Domain.Enum;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat
 {
-    public class WxUserDto : BaseDto
+    public class WxUserDto : BaseProtectedDto
     {
         /// <summary>
         /// 公众号ID

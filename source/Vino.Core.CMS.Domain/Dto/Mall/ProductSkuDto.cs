@@ -17,7 +17,7 @@ using Vino.Core.Infrastructure.Attributes;
 
 namespace Vino.Core.CMS.Domain.Dto.Mall
 {
-    public class ProductSkuDto : BaseDto
+    public class ProductSkuDto : BaseProtectedDto
     {
         [DataType("Hidden")]
         public long ProductId { set; get; }

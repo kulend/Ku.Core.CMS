@@ -18,7 +18,7 @@ using Vino.Core.Infrastructure.Attributes;
 
 namespace Vino.Core.CMS.Domain.Dto.Mall
 {
-    public class ProductDto : BaseDto
+    public class ProductDto : BaseProtectedDto
     {
         /// <summary>
         /// 状态

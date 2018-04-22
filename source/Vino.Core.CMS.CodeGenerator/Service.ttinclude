@@ -1,0 +1,253 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #>
+<#
+	var pathOfIService = RootPath + "/Vino.Core.CMS.IService/" + area;
+    if(!Directory.Exists(pathOfIService))
+    {
+        Directory.CreateDirectory(pathOfIService);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfIService};
+	var fileNameOfIService = "I" + name + "Service.cs";
+	manager.StartBlock(fileNameOfIService);
+#>
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：<#=fileNameOfIService#>
+// 功能描述：<#=desc#> 业务逻辑接口
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+//
+//----------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Vino.Core.CMS.Domain.Dto.<#=area#>;
+using Vino.Core.CMS.Domain.Entity.<#=area#>;
+
+namespace Vino.Core.CMS.IService.<#=area#>
+{
+    public partial interface I<#=name#>Service
+    {
+        #region 自动创建的接口
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>List<<#=name#>Dto></returns>
+        Task<List<<#=name#>Dto>> GetListAsync(<#=name#>Search where, string sort);
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        Task<(int count, List<<#=name#>Dto> items)> GetListAsync(int page, int size, <#=name#>Search where, string sort);
+
+        /// <summary>
+        /// 根据主键取得数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        Task<<#=name#>Dto> GetByIdAsync(long id);
+
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        Task SaveAsync(<#=name#>Dto dto);
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        Task DeleteAsync(params long[] id);
+
+        /// <summary>
+        /// 恢复数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        Task RestoreAsync(params long[] id);
+
+        #endregion
+
+        #region 其他接口
+
+        #endregion
+    }
+}
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>
+<#
+	//开始生成Service文件
+	var pathOfService = RootPath + "/Vino.Core.CMS.Service/" + area;
+    if(!Directory.Exists(pathOfService))
+    {
+        Directory.CreateDirectory(pathOfService);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfService};
+	var fileNameOfService = name + "Service.cs";
+	manager.StartBlock(fileNameOfService);
+#>
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：<#=fileNameOfService#>
+// 功能描述：<#=desc#> 业务逻辑处理类
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+//
+//----------------------------------------------------------------
+
+using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Vino.Core.CMS.Data.Repository.<#=area#>;
+using Vino.Core.CMS.Domain.Dto.<#=area#>;
+using Vino.Core.CMS.Domain.Entity.<#=area#>;
+using Vino.Core.CMS.IService.<#=area#>;
+using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.Infrastructure.Extensions;
+using Vino.Core.Infrastructure.IdGenerator;
+
+namespace Vino.Core.CMS.Service.<#=area#>
+{
+    public partial class <#=name#>Service : BaseService, I<#=name#>Service
+    {
+        protected readonly I<#=name#>Repository _repository;
+
+        #region 构造函数
+
+        public <#=name#>Service(I<#=name#>Repository repository)
+        {
+            this._repository = repository;
+        }
+
+        #endregion
+
+        #region 自动生成的方法
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>List<<#=name#>Dto></returns>
+        public async Task<List<<#=name#>Dto>> GetListAsync(<#=name#>Search where, string sort)
+        {
+            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
+            return Mapper.Map<List<<#=name#>Dto>>(data);
+        }
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        public async Task<(int count, List<<#=name#>Dto> items)> GetListAsync(int page, int size, <#=name#>Search where, string sort)
+        {
+            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
+            return (data.count, Mapper.Map<List<<#=name#>Dto>>(data.items));
+        }
+
+        /// <summary>
+        /// 根据主键取得数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public async Task<<#=name#>Dto> GetByIdAsync(long id)
+        {
+            return Mapper.Map<<#=name#>Dto>(await this._repository.GetByIdAsync(id));
+        }
+
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        public async Task SaveAsync(<#=name#>Dto dto)
+        {
+            <#=name#> model = Mapper.Map<<#=name#>>(dto);
+            if (model.Id == 0)
+            {
+                //新增
+                model.Id = ID.NewID();
+                model.CreateTime = DateTime.Now;
+                model.IsDeleted = false;
+                await _repository.InsertAsync(model);
+            }
+            else
+            {
+                //更新
+                var item = await _repository.GetByIdAsync(model.Id);
+                if (item == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得<#=desc#>数据！");
+                }
+
+                //TODO:这里进行赋值
+
+                _repository.Update(item);
+            }
+            await _repository.SaveAsync();
+        }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public async Task DeleteAsync(params long[] id)
+        {
+            if (await _repository.DeleteAsync(id))
+            {
+                await _repository.SaveAsync();
+            }
+        }
+
+        /// <summary>
+        /// 恢复数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public async Task RestoreAsync(params long[] id)
+        {
+            if (await _repository.RestoreAsync(id))
+            {
+                await _repository.SaveAsync();
+            }
+        }
+
+        #endregion
+
+        #region 其他方法
+
+        #endregion
+    }
+}
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>

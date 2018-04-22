@@ -14,7 +14,7 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat
 {
-    public class WxQrcodeDto : BaseDto
+    public class WxQrcodeDto : BaseProtectedDto
     {
         /// <summary>
         /// ¹«ÖÚºÅID

@@ -17,7 +17,7 @@ using Vino.Core.CMS.Domain.Enum.System;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
-    public class SmsQueueDto : BaseDto
+    public class SmsQueueDto : BaseProtectedDto
     {
         /// <summary>
         /// 状态

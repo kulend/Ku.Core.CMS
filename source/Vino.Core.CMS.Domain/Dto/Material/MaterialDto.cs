@@ -7,7 +7,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 
 namespace Vino.Core.CMS.Domain.Dto.Material
 {
-    public class MaterialDto: BaseDto
+    public class MaterialDto: BaseProtectedDto
     {
         /// <summary>
         /// 标题

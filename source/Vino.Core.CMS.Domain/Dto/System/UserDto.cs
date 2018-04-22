@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
-    public class UserDto : BaseDto
+    public class UserDto : BaseProtectedDto
     {
         /// <summary>
         /// 账号

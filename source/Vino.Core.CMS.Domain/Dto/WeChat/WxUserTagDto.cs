@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat
 {
-    public class WxUserTagDto : BaseDto
+    public class WxUserTagDto : BaseProtectedDto
     {
         /// <summary>
         /// 公众号ID

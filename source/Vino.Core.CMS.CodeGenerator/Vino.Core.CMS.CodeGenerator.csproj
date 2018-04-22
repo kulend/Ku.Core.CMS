@@ -20,8 +20,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Domain.tt">
+    <None Update="All.tt">
+      <LastGenOutput>All.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="View.ttinclude">
+      <LastGenOutput>Service.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Repository.ttinclude">
+      <LastGenOutput>Service.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Service.ttinclude">
+      <LastGenOutput>Service.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Domain.ttinclude">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Service.cs</LastGenOutput>
     </None>
     <None Update="Template1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -38,6 +55,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="All.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>All.tt</DependentUpon>
+    </Compile>
     <Compile Update="Template1.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

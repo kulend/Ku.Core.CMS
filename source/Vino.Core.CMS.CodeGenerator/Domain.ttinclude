@@ -1,0 +1,98 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #> 
+<#
+	var pathOfEntity = RootPath + "/Vino.Core.CMS.Domain/Entity/" + area;
+    if(!Directory.Exists(pathOfEntity))
+    {
+        Directory.CreateDirectory(pathOfEntity);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfEntity};
+	var fileNameOfEntity = name + ".cs";
+	manager.StartBlock(fileNameOfEntity);
+#>
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：<#=fileNameOfEntity#>
+// 功能描述：<#=desc#> 实体类
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+//
+//----------------------------------------------------------------
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Vino.Core.CMS.Domain.Entity.<#=area#>
+{
+    /// <summary>
+    /// <#=desc#>
+    /// </summary>
+    [Table("<#=area.ToLower()#>_<#=table#>")]
+    public class <#=name#> : <#=logicDel?"BaseProtectedEntity":"BaseEntity"#>
+    {
+
+    }
+
+    /// <summary>
+    /// <#=desc#> 检索条件
+    /// </summary>
+    public class <#=name#>Search : <#=logicDel?"BaseProtectedSearch":"BaseSearch"#><<#=name#>>
+    {
+
+    }
+}
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>
+<#
+	//开始生成Dto文件
+	var pathOfDto = RootPath + "/Vino.Core.CMS.Domain/Dto/" + area;
+    if(!Directory.Exists(pathOfDto))
+    {
+        Directory.CreateDirectory(pathOfDto);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfDto};
+	var fileNameOfDto = name + "Dto.cs";
+	manager.StartBlock(fileNameOfDto);
+#>
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：<#=fileNameOfDto#>
+// 功能描述：<#=desc#> 数据传输类
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+//
+//----------------------------------------------------------------
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Vino.Core.CMS.Domain.Dto.<#=area#>
+{
+    /// <summary>
+    /// <#=desc#>
+    /// </summary>
+    public class <#=name#>Dto : <#=logicDel?"BaseProtectedDto":"BaseDto"#>
+    {
+
+    }
+}
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>

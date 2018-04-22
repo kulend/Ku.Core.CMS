@@ -16,7 +16,7 @@ using Vino.Core.Infrastructure.Attributes;
 
 namespace Vino.Core.CMS.Domain.Dto.DataCenter
 {
-    public class AppVersionDto : BaseDto
+    public class AppVersionDto : BaseProtectedDto
     {
         /// <summary>
         /// 应用ID

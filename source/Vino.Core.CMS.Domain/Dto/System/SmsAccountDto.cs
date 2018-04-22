@@ -18,7 +18,7 @@ using Vino.Core.Infrastructure.Attributes;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
-    public class SmsAccountDto : BaseDto
+    public class SmsAccountDto : BaseProtectedDto
     {
         /// <summary>
         /// 名称

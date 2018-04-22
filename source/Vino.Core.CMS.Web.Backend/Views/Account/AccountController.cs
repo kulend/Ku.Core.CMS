@@ -155,6 +155,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
         /// 修改密码
         /// </summary>
         [Auth]
+        [Obsolete]
         public IActionResult PasswordEdit()
         {
             return View();
@@ -166,6 +167,7 @@ namespace Vino.Core.CMS.Web.Admin.Views.Account
         [Auth]
         [UserAction("修改密码")]
         [ValidateAntiForgeryToken]
+        [Obsolete]
         public async Task<IActionResult> SavePassword(PwdData data)
         {
             if (!data.NewPassword.Equals(data.ConfirmPassword))

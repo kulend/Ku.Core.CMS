@@ -16,7 +16,7 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat
 {
-    public class WxAccountDto : BaseDto
+    public class WxAccountDto : BaseProtectedDto
     {
         [Required, MaxLength(40)]
         [Display(Name = "名称")]

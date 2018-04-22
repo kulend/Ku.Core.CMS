@@ -18,7 +18,7 @@ using Vino.Core.CMS.Domain.Enum.Content;
 
 namespace Vino.Core.CMS.Domain.Dto.Content
 {
-    public class ArticleDto : BaseDto
+    public class ArticleDto : BaseProtectedDto
     {
         /// <summary>
         /// 标题

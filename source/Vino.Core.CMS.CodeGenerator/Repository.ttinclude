@@ -1,0 +1,64 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #>
+<#
+	var pathOfRepository = RootPath + "/Vino.Core.CMS.Data/Repository/" + area + "/Partial";
+    if(!Directory.Exists(pathOfRepository))
+    {
+        Directory.CreateDirectory(pathOfRepository);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfRepository};
+	var fileNameOfRepository = name + "Repository.cs";
+	manager.StartBlock(fileNameOfRepository);
+#>
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：<#=fileNameOfRepository#>
+// 功能描述：<#=desc#> 数据访问
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+// 说明：此代码由工具自动生成，对此文件的更改可能会导致不正确的行为，
+// 并且如果重新生成代码，这些更改将会丢失。
+//
+//----------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Vino.Core.CMS.Data.Common;
+using Vino.Core.CMS.Domain.Entity.<#=area#>;
+
+namespace Vino.Core.CMS.Data.Repository.<#=area#>
+{
+    /// <summary>
+    /// <#=desc#> 仓储接口
+    /// </summary>
+    public partial interface I<#=name#>Repository : IRepository<<#=name#>>
+    {
+    }
+
+    /// <summary>
+    /// <#=desc#> 仓储接口实现
+    /// </summary>
+    public partial class <#=name#>Repository : BaseRepository<<#=name#>>, I<#=name#>Repository
+    {
+        public <#=name#>Repository(VinoDbContext dbcontext) : base(dbcontext)
+        {
+        }
+    }
+}
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>

@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Vino.Core.CMS.Domain.Dto.WeChat
 {
-    public class WxMenuDto : BaseDto
+    public class WxMenuDto : BaseProtectedDto
     {
         /// <summary>
         /// 公众号ID

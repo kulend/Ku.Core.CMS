@@ -16,7 +16,7 @@ using Vino.Core.Infrastructure.Attributes;
 
 namespace Vino.Core.CMS.Domain.Dto.Membership
 {
-    public class MemberPointRecordDto : BaseDto
+    public class MemberPointRecordDto : BaseProtectedDto
     {
         /// <summary>
         /// 会员积分ID

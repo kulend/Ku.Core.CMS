@@ -18,7 +18,7 @@ using Vino.Core.CMS.Domain.Enum.Material;
 
 namespace Vino.Core.CMS.Domain.Dto.Material
 {
-    public class MaterialGroupDto : BaseDto
+    public class MaterialGroupDto : BaseProtectedDto
     {
         /// <summary>
         /// 分组类型

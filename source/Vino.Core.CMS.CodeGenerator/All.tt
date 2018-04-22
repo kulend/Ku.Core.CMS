@@ -1,0 +1,30 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #> 
+<#@ include file="manager.ttinclude"#>
+<#
+	var name = "Member_Type";
+	var desc = "会员类型";
+	var area = "Membership";
+	var logicDel = true;
+	var HasRecycle = false;
+
+	var table = name.ToLower();
+	name = name.Replace("_", "");
+
+	var RootPath = Path.GetDirectoryName(Host.TemplateFile) + "/output";
+	Manager manager = null;
+#>
+<#@ include file="Domain.ttinclude"#>
+<#@ include file="Repository.ttinclude"#>
+<#@ include file="Service.ttinclude"#>
+<#@ include file="View.ttinclude"#>

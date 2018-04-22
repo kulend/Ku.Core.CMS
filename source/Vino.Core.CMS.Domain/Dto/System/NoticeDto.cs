@@ -21,7 +21,7 @@ namespace Vino.Core.CMS.Domain.Dto.System
     /// <summary>
     /// 公告
     /// </summary>
-    public class NoticeDto : BaseDto
+    public class NoticeDto : BaseProtectedDto
     {
         /// <summary>
         /// 标题

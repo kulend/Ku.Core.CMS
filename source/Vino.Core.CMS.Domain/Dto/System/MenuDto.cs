@@ -16,7 +16,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
-    public class MenuDto : BaseDto
+    public class MenuDto : BaseProtectedDto
     {
         /// <summary>
         /// 父级ID

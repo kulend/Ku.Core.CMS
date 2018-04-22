@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Vino.Core.CMS.Web.Security
 {
@@ -14,19 +15,27 @@ namespace Vino.Core.CMS.Web.Security
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, TRequirement requirement)
         {
-            var attributes = new List<TAttribute>();
-            var controllAttributes = new List<TAttribute>();
-            var action = (context.Resource as AuthorizationFilterContext)?.ActionDescriptor as ControllerActionDescriptor;
-            if (action != null)
+            var attrs = new List<TAttribute>();
+            var superAttrs = new List<TAttribute>();
+            var descriptor = (context.Resource as AuthorizationFilterContext)?.ActionDescriptor;
+
+            //RazorPages
+            if (descriptor is CompiledPageActionDescriptor razorPagesDescriptor)
             {
-                controllAttributes.AddRange(GetAttributes(action.ControllerTypeInfo));
-                attributes.AddRange(GetAttributes(action.MethodInfo));
+                superAttrs.AddRange(GetAttributes(razorPagesDescriptor.HandlerTypeInfo));
+                attrs.AddRange(GetAttributes(razorPagesDescriptor.HandlerMethods.FirstOrDefault()?.MethodInfo));
+            }
+            //兼容MVC Controller
+            if (descriptor is ControllerActionDescriptor controllerDescriptor)
+            {
+                superAttrs.AddRange(GetAttributes(controllerDescriptor.ControllerTypeInfo));
+                attrs.AddRange(GetAttributes(controllerDescriptor.MethodInfo));
             }
 
-            return HandleRequirementAsync(context, requirement, attributes, controllAttributes);
+            return HandleRequirementAsync(context, requirement, attrs, superAttrs);
         }
 
-        protected abstract Task HandleRequirementAsync(AuthorizationHandlerContext context, TRequirement requirement, List<TAttribute> attributes, List<TAttribute> controllAttributes);
+        protected abstract Task HandleRequirementAsync(AuthorizationHandlerContext context, TRequirement requirement, List<TAttribute> attrs, List<TAttribute> superAttrs);
 
         private static IEnumerable<TAttribute> GetAttributes(MemberInfo memberInfo)
         {

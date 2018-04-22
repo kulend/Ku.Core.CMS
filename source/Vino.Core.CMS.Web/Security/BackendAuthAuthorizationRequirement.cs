@@ -24,7 +24,7 @@ namespace Vino.Core.CMS.Web.Security
             this.service = _service;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, BackendAuthAuthorizationRequirement requirement, List<AuthAttribute> attributes, List<AuthAttribute> controllAttributes)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, BackendAuthAuthorizationRequirement requirement, List<AuthAttribute> attributes, List<AuthAttribute> superAttributes)
         {
             //var action = (context.Resource as AuthorizationFilterContext)?.ActionDescriptor as ControllerActionDescriptor;
             //if (action == null)
@@ -32,8 +32,8 @@ namespace Vino.Core.CMS.Web.Security
             //    context.Succeed(requirement);
             //    return;
             //}
-            string baseCode = controllAttributes.FirstOrDefault()?.AuthCode;
-            foreach (var attribute in controllAttributes)
+            string baseCode = superAttributes.FirstOrDefault()?.AuthCode;
+            foreach (var attribute in superAttributes)
             {
                 //检测权限
                 if (!await CheckPermissionAsync(context, attribute))

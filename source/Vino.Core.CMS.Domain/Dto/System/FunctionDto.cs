@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Vino.Core.CMS.Domain.Dto.System
 {
-    public class FunctionDto : BaseDto
+    public class FunctionDto : BaseProtectedDto
     {
         /// <summary>
         /// 父功能

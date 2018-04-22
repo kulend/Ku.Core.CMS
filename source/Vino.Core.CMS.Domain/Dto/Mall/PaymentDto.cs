@@ -20,7 +20,7 @@ using Vino.Core.Infrastructure.Attributes;
 
 namespace Vino.Core.CMS.Domain.Dto.Mall
 {
-    public class PaymentDto : BaseDto
+    public class PaymentDto : BaseProtectedDto
     {
         /// <summary>
         /// 名称

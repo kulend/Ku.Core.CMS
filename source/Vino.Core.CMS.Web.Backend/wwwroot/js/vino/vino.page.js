@@ -116,7 +116,7 @@ if (!vino.page) {
                     content: '<div class="admin-header-lock">' +
                         `<div class="admin-header-lock-img"><img src="${userimage}"/></div>` +
                         `<div class="admin-header-lock-name">${username}</div>` +
-                        `<div class="input_btn"><form id="${formId}" class="layui-form" action="/Account/PageUnlock" method="post">` +
+                        `<div class="input_btn"><form id="${formId}" class="layui-form" action="/Account/Lock">` +
                         '<input type="password" class="admin-header-lock-input layui-input" lay-verify="required" autocomplete="off" placeholder="请输入密码.." name="Password"/>' +
                         '<button class="layui-btn" lay-submit >解 锁</button>' +
                         '</form></div>' +
@@ -129,6 +129,7 @@ if (!vino.page) {
 
                 // 解锁
                 $("#" + formId).vinoForm({
+                    type: 'DELETE',
                     onSuccess: function (reply, options) {
                         if (callback) {
                             callback();

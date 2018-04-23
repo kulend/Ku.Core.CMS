@@ -3,7 +3,7 @@
     var layer = layui.layer;
 
     //打开首页
-    openTab('profile', { id: 'profile', title: '基本资料', url:'/Account/UserProfile' });
+    openTab('profile', { id: 'profile', title: '基本资料', url:'/Account/Profile' });
 
     // 菜单点击
     element.on('nav(layadmin-system-side-menu)', function () {
@@ -102,7 +102,7 @@
 
     //锁屏
     $("a[layadmin-event='lockpage']").on("click", function () {
-        vino.ajax.post("/Account/PageLock", null, function () {
+        vino.ajax.post("/Account/Lock", null, function () {
             vino.page.pageLock();
         });
     });

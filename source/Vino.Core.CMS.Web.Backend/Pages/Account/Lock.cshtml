@@ -1,4 +1,6 @@
-﻿@{
+﻿@page
+@model Vino.Core.CMS.Web.Backend.Pages.Account.LockModel
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -52,10 +54,11 @@
                 if (self == top) {
                     vino.page.navigateTo("/", true);
                 } else {
-                    vino.page.navigateTo("@ViewBag.ReturnUrl", true);
+                    vino.page.navigateTo("@ViewData["ReturnUrl"]", true);
                 }
             });
         });
     </script>
 </body>
 </html>
+

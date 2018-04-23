@@ -27,20 +27,24 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Account
         [BindProperty]
         public UserDto Dto { set; get; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             var userId = User.GetUserIdOrZero();
-            var Dto = await _userService.GetByIdAsync(userId);
+            Dto = await _userService.GetByIdAsync(userId);
             if (Dto == null)
             {
                 throw new VinoDataNotFoundException("无法取得用户数据！");
             }
             Dto.Password = "******";
+
+            return Page();
         }
 
         [UserAction("修改账户资料")]
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Remove("Dto.Account");
+            ModelState.Remove("Dto.Password");
             if (!ModelState.IsValid)
             {
                 throw new VinoArgNullException();

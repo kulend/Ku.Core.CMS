@@ -13,9 +13,10 @@
     <None Remove="Views\Home\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="Views\Account\Login.cshtml" />
-    <Content Remove="Views\Account\PasswordEdit.cshtml" />
-    <Content Remove="Views\Account\Profile.cshtml" />
+    <Compile Remove="Pages\Account\UserProfile.cshtml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Pages\Account\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />

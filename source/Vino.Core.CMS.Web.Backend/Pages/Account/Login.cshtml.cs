@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -122,6 +124,18 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Account
             base.Response.Cookies.Append("user.headimage", user.HeadImage ?? "");
 
             return JsonData(true);
+        }
+
+        /// <summary>
+        /// 退出登陆
+        /// </summary>
+        /// <returns></returns>
+        [IgnorePageLock]
+        public async Task<IActionResult> OnGetLogoutAsync()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return Redirect("/Account/Login");
         }
     }
 }

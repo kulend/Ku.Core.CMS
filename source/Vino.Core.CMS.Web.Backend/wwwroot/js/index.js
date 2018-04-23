@@ -3,7 +3,7 @@
     var layer = layui.layer;
 
     //打开首页
-    openTab('profile', { id: 'profile', title: '基本资料', url:'/Account/Profile' });
+    openTab('profile', { id: 'profile', title: '基本资料', url:'/Account/UserProfile' });
 
     // 菜单点击
     element.on('nav(layadmin-system-side-menu)', function () {

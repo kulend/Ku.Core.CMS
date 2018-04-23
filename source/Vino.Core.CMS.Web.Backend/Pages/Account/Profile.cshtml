@@ -1,0 +1,68 @@
+﻿@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：Profile.cshtml
+    // 功能描述：用户档案页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-02-04 20:18
+    //
+    //----------------------------------------------------------------
+}
+@page
+@model Vino.Core.CMS.Web.Backend.Pages.Account.ProfileModel
+@{
+    Layout = "../_FormLayout.cshtml";
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+            <ul class="layui-tab-title">
+                <li lay-id="main" class="layui-this">我的资料</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    @using (Html.BeginForm<ProfileModel>(""))
+                    {
+                        @Html.InputFor(x => x.Dto.Id)
+                        @Html.InputFor(x => x.Dto.Name)
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">头像</label>
+                            <div id="HeadImage" class="layui-input-block">
+                            </div>
+                        </div>
+                        @Html.InputFor(x => x.Dto.Mobile)
+                        @Html.InputFor(x => x.Dto.Email)
+                        @Html.InputFor(x => x.Dto.Remarks)
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <action auth-code="" text="确认修改" lay-submit="" css="layui-btn-default" type="submit" />
+                                <action text="重新填写" type="reset" css="layui-btn-primary" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script>
+        layui.use(['element', 'form'], function () {
+            var element = layui.element;
+            var form = layui.form;
+
+            $("#HeadImage").vinoImagePicker({
+                field_path: "HeadImage",
+                max_count: 1
+            });
+
+            $("#HeadImage").vinoImagePicker("loadImage", '@Html.Raw(Model.Dto.HeadImage)');
+        });
+    </script>
+}
+
+

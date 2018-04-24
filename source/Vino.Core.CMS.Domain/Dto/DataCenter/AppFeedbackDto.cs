@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,6 +37,7 @@ namespace Vino.Core.CMS.Domain.Dto.DataCenter
         /// </summary>
         [Required, StringLength(2000)]
         [Display(Name = "反馈内容")]
+        [DataType(DataType.MultilineText)]
         public string Content { set; get; }
 
         /// <summary>
@@ -51,10 +53,34 @@ namespace Vino.Core.CMS.Domain.Dto.DataCenter
         public string ProviderName { set; get; }
 
         /// <summary>
-        /// 是否已解决
+        /// 是否已处理
         /// </summary>
         [DefaultValue(false)]
-        [Display(Name = "是否已解决", Prompt = "已解决|未解决")]
+        [Display(Name = "是否已处理", Prompt = "是|否")]
         public bool Resolved { set; get; } = false;
+
+        /// <summary>
+        /// 反馈时间
+        /// </summary>
+        [Display(Name = "反馈时间")]
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
+        [DataType(DataType.DateTime)]
+        public new DateTime CreateTime { set; get; }
+
+        /// <summary>
+        /// 处理时间
+        /// </summary>
+        [Display(Name = "处理时间")]
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
+        [DataType(DataType.DateTime)]
+        public DateTime? ResolveTime { set; get; }
+
+        /// <summary>
+        /// 管理员备注
+        /// </summary>
+        [StringLength(1000)]
+        [Display(Name = "备注")]
+        [DataType(DataType.MultilineText)]
+        public string AdminRemark { set; get; }
     }
 }

@@ -1,99 +1,174 @@
 @page "{handler?}"
 @model Vino.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback.IndexModel
+@using Vino.Core.CMS.Domain.Dto.DataCenter
+@using Vino.Core.Infrastructure.Extensions
 @{
-//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
-//
-// 文件名：Index.cshtml
-// 功能描述：应用反馈 列表页面
-//
-// 创建者：kulend@qq.com
-// 创建时间：2018-04-24 08:45
-//
-//----------------------------------------------------------------
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：Index.cshtml
+    // 功能描述：应用反馈 列表页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-04-24 08:45
+    //
+    //----------------------------------------------------------------
 }
 @{
     Layout = "~/Pages/_Layout.cshtml";
 }
 <div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
-            <ul class="layui-tab-title">
-                <li lay-id="list" class="layui-this">应用反馈列表</li>
-                <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
-            </ul>
-            <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">
-                    <div class="toolbar">
-                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                        <action auth-code="datacenter.appfeedback.edit" text="新增" icon="&#xe608;" action="window:/DataCenter/AppFeedback/Edit" after="grid:reload['#list']" />
-                        <action auth-code="datacenter.appfeedback.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
-                    </div>
-                    <table id="list"></table>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3 layui-col-lg2">
+            <div class="layui-card">
+                <div class="layui-card-header">应用列表</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <table id="ID_table_filters" class="layui-table" lay-skin="row">
+                            <tbody>
+                                @foreach (AppDto app in Model.Apps)
+                                {
+                                    <tr><td><input type="checkbox" title="@app.Name.Substr(0, 7, "...")" name="name_filter" value="@app.Id" lay-skin="primary" lay-filter="filter-item"><span data-id="@app.Id" class="layui-badge layui-hide">0</span></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
-                <div class="layui-tab-item">
-                    <div class="toolbar">
-                        <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
-                        <action auth-code="datacenter.appfeedback.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
+            </div>
+        </div>
+        <div class="layui-col-md9  layui-col-lg10">
+            <div class="layui-card">
+                <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+                    <ul class="layui-tab-title">
+                        <li lay-id="list" class="layui-this">未处理</li>
+                        <li lay-id="recycles">已处理</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="toolbar">
+                                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                            </div>
+                            <table id="list"></table>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="toolbar">
+                                <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                            </div>
+                            <table id="recycles"></table>
+                        </div>
                     </div>
-                    <table id="recycles"></table>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @section Scripts
-{
-<script>
-    layui.use(['element'], function () {
-        var element = layui.element;
+    {
+    <script>
+        layui.use(['element', 'form'], function () {
+            var element = layui.element;
+            var form = layui.form;
 
-        var cols = [
-            { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
-        ];
-
-        $("#list").vinoGrid({
-            url: 'Index/Data',
-            cols: [cols.concat([
-                {
-                    title: '操作', fixed: 'right', width: 160, align: 'center',
-                    toolbar: grid_templet_operate([
-                        { code: "datacenter.appfeedback.edit", text: "编辑", action: `window:/DataCenter/AppFeedback/Edit?id={{d.Id}}`, after: "grid:reload['#list']" },
-                        { code: "datacenter.appfeedback.detail", text: "详情", action: `window:/DataCenter/AppFeedback/Detail?id={{d.Id}}`, after: "grid:reload['#list']", css: "layui-btn-primary" },
-                        { code: "datacenter.appfeedback.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
-                    ])
+            form.on('checkbox(filter-item)', function (data) {
+                var name = data.elem.getAttribute("name");
+                var domArr = document.getElementsByName(name);
+                var checked = false;
+                for (var i = 0; i < domArr.length; i++) {
+                    if (domArr[i] !== data.elem) {
+                        if (data.elem.checked) {
+                            domArr[i].checked = false;
+                        } else if (domArr[i].checked) {
+                            checked = true;
+                        }
+                    }
                 }
-            ])],
-            onWhere: function () {
-                return {
-                    IsDeleted: false
-                };
-            }
+                data.elem.checked = !checked ? true : data.elem.checked;
+                form.render('checkbox');
+
+                filterChanged(data.value);
+            });
+
+            element.on('tab(tabMian)', function () {
+                if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid") && selFilterValue) {
+                    //初始化回收站
+                    $("#recycles").vinoGrid({
+                        url: 'Index/Data',
+                        cols: [cols.concat([
+                            { field: 'ResolveTime', title: '处理时间', width: 170, align: 'center' },
+                            {
+                                title: '操作', fixed: 'right', width: 100, align: 'center',
+                                toolbar: grid_templet_operate([
+                                    { code: "datacenter.app.feedback.detail", text: "详情", action: `window:/DataCenter/AppFeedback/Detail?id={{d.Id}}`, after: "js:reload()", css: "layui-btn-primary" }
+                                ])
+                            }
+                        ])],
+                        onWhere: function () {
+                            return {
+                                AppId: selFilterValue,
+                                Resolved: true
+                            };
+                        }
+                    });
+                }
+            });
+
+            refreshResolveCount();
         });
 
-        element.on('tab(tabMian)', function () {
-            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
-            { 
-                //初始化回收站
-                $("#recycles").vinoGrid({
+        var cols = [
+            { field: 'Content', title: '反馈内容', width: 350 },
+            { field: 'ProviderName', title: '反馈者', width: 150 },
+            { field: 'CreateTime', title: '反馈时间', width: 170, align: 'center' }
+        ];
+
+        var selFilterValue;
+        function filterChanged(filterValue) {
+            if (!selFilterValue) {
+                selFilterValue = filterValue;
+                $("#list").vinoGrid({
                     url: 'Index/Data',
                     cols: [cols.concat([
                         {
-                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            title: '操作', fixed: 'right', width: 100, align: 'center',
                             toolbar: grid_templet_operate([
-                                { code: "datacenter.appfeedback.detail", text: "详情", action: `window:/DataCenter/AppFeedback/Detail?id={{d.Id}}`, after: "grid:reload['#list']", css: "layui-btn-primary" },
-                                { code: "datacenter.appfeedback.restore", text: "恢复", action: `post:Index/Restore?id={{d.Id}}` }
+                                { code: "datacenter.app.feedback.detail", text: "详情", action: `window:/DataCenter/AppFeedback/Detail?id={{d.Id}}`, after: "js:reload()", css: "layui-btn-primary" }
                             ])
                         }
                     ])],
                     onWhere: function () {
                         return {
-                            IsDeleted: true
+                            AppId: selFilterValue,
+                            Resolved: false
                         };
                     }
                 });
+            } else if (selFilterValue != filterValue) {
+                selFilterValue = filterValue;
+                $("#list").vinoGrid("search");
+                if ($("#recycles").hasClass("vino-grid")) { 
+                    $("#recycles").vinoGrid("search");
+                }
             }
-        });
-    });
-</script>
+        }
+
+        function refreshResolveCount() { 
+            vino.ajax.get("Index/UnsolvedCount", null, function (reply) {
+                $("#ID_table_filters .layui-badge").each(function () { 
+                    var id = $(this).attr("data-id");
+                    var cnt = reply.data[id] || 0;
+                    $(this).text(cnt);
+                    if (cnt) {
+                        $(this).removeClass("layui-hide");
+                    } else { 
+                        $(this).addClass("layui-hide");
+                    }
+                });
+            });
+        }
+
+        function reload() {
+            $(".vino-grid").vinoGrid("reload");
+            refreshResolveCount();
+        }
+    </script>
 }

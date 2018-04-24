@@ -19,6 +19,7 @@ using Vino.Core.CMS.Domain.Dto.DataCenter;
 using Vino.Core.CMS.Domain.Entity.DataCenter;
 using Vino.Core.CMS.IService.DataCenter;
 using Vino.Core.Infrastructure.Exceptions;
+using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.Helper;
 using Vino.Core.Infrastructure.IdGenerator;
 
@@ -140,6 +141,18 @@ namespace Vino.Core.CMS.Service.DataCenter
         #endregion
 
         #region 其他方法
+
+        /// <summary>
+        /// 根据Appkey取得应用信息
+        /// </summary>
+        public async Task<AppDto> GetByAppkeyAsync(string appkey)
+        {
+            if (appkey.IsNullOrEmpty()) return null;
+
+            var model = await this._repository.FirstOrDefaultAsync(x => x.AppKey.EqualOrdinalIgnoreCase(appkey) && !x.IsDeleted);
+
+            return Mapper.Map<AppDto>(model);
+        }
 
         #endregion
     }

@@ -68,6 +68,11 @@ namespace Vino.Core.CMS.IService.DataCenter
 
         #region 其他接口
 
+        /// <summary>
+        /// 处理反馈
+        /// </summary>
+        Task ResolveAsync(AppFeedbackDto dto);
+
         #endregion
     }
 }

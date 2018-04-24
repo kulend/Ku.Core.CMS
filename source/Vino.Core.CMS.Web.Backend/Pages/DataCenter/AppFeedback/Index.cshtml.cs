@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Vino.Core.Cache;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.DataCenter;
 using Vino.Core.CMS.Domain.Entity.DataCenter;
 using Vino.Core.CMS.IService.DataCenter;
@@ -16,15 +18,35 @@ namespace Vino.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
     public class IndexModel : BasePage
     {
         private readonly IAppFeedbackService _service;
+        private readonly IAppService _appService;
+        protected readonly ICacheService _cache;
 
-        public IndexModel(IAppFeedbackService service)
+        public IndexModel(IAppFeedbackService service, IAppService appService, ICacheService cache)
         {
             this._service = service;
+            this._appService = appService;
+            this._cache = cache;
         }
 
-		[Auth("view")]
-        public void OnGet()
+        public List<AppDto> Apps { set; get; }
+
+        [Auth("view")]
+        public async Task OnGetAsync()
         {
+            Apps = await _appService.GetListAsync(new AppSearch { IsDeleted = false }, null);
+        }
+
+        public async Task<IActionResult> OnGetUnsolvedCountAsync()
+        {
+            var apps = await _appService.GetListAsync(new AppSearch { IsDeleted = false }, null);
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach (var item in apps)
+            {
+                var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.Id));
+                dict.Add(item.Id.ToString(), UnsolvedCount);
+            }
+
+            return Json(dict);
         }
 
         /// <summary>

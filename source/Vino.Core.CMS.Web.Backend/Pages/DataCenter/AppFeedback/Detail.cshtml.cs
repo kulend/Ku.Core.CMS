@@ -12,7 +12,7 @@ using Vino.Core.Infrastructure.Exceptions;
 
 namespace Vino.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
 {
-    [Auth("datacenter.appfeedback")]
+    [Auth("datacenter.app.feedback")]
     public class DetailModel : BasePage
     {
         private readonly IAppFeedbackService _service;
@@ -22,6 +22,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
             this._service = service;
         }
 
+        [BindProperty]
         public AppFeedbackDto Dto { set; get; }
 
         [Auth("detail")]
@@ -32,6 +33,13 @@ namespace Vino.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
             {
                 throw new VinoDataNotFoundException();
             }
+        }
+
+        [Auth("resolve")]
+        public async Task<IActionResult> OnPostAsync()
+        {
+            await _service.ResolveAsync(Dto);
+            return Json(true);
         }
     }
 }

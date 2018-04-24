@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -51,6 +52,17 @@ namespace Vino.Core.CMS.Domain.Entity.DataCenter
         /// 是否已解决
         /// </summary>
         public bool Resolved { set; get; } = false;
+
+        /// <summary>
+        /// 解决时间
+        /// </summary>
+        public DateTime? ResolveTime { set; get; }
+
+        /// <summary>
+        /// 管理员备注
+        /// </summary>
+        [StringLength(1000)]
+        public string AdminRemark { set; get; }
     }
 
     /// <summary>
@@ -58,6 +70,14 @@ namespace Vino.Core.CMS.Domain.Entity.DataCenter
     /// </summary>
     public class AppFeedbackSearch : BaseProtectedSearch<AppFeedback>
     {
+        /// <summary>
+        /// 应用ID
+        /// </summary>
+        public long? AppId { set; get; }
 
+        /// <summary>
+        /// 是否已解决
+        /// </summary>
+        public bool? Resolved { set; get; }
     }
 }

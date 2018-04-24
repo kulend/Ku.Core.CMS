@@ -68,6 +68,11 @@ namespace Vino.Core.CMS.IService.DataCenter
 
         #region 其他接口
 
+        /// <summary>
+        /// 根据Appkey取得应用信息
+        /// </summary>
+        Task<AppDto> GetByAppkeyAsync(string appkey);
+
         #endregion
     }
 }

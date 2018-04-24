@@ -16,13 +16,19 @@
     Layout = "~/Pages/_WindowFormLayout.cshtml";
 }
 <div class="layui-layout layui-layout-window">
-    @using (Html.BeginForm<DetailModel>("#"))
+    @using (Html.BeginForm<DetailModel>(""))
     {
     <div class="layui-body">
-        @Html.ShowFor(x => x.Dto.CreateTime)
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.ShowFor(x => x.Dto.ProviderName)
+        @Html.ShowFor(x => x.Dto.Content)
+        @Html.ShowFor(x => x.Dto.CreateTime, x => x.Dto.ResolveTime)
+        <hr class="layui-bg-green">
+        @Html.InputFor(x => x.Dto.Resolved)
+        @Html.InputFor(x => x.Dto.AdminRemark)
     </div>
     <div class="layui-footer">
-        @Html.ActionsForClose()
+        @Html.ActionsForSubmitAndClose()
     </div>
     }
 </div>

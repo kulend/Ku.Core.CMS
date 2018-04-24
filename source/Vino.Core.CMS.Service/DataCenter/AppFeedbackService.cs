@@ -13,6 +13,7 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vino.Core.Cache;
 using Vino.Core.CMS.Data.Repository.DataCenter;
 using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.DataCenter;
@@ -27,12 +28,14 @@ namespace Vino.Core.CMS.Service.DataCenter
     public partial class AppFeedbackService : BaseService, IAppFeedbackService
     {
         protected readonly IAppFeedbackRepository _repository;
+        protected readonly ICacheService _cache;
 
         #region 构造函数
 
-        public AppFeedbackService(IAppFeedbackRepository repository)
+        public AppFeedbackService(IAppFeedbackRepository repository, ICacheService cache)
         {
             this._repository = repository;
+            this._cache = cache;
         }
 
         #endregion
@@ -81,28 +84,17 @@ namespace Vino.Core.CMS.Service.DataCenter
         public async Task SaveAsync(AppFeedbackDto dto)
         {
             AppFeedback model = Mapper.Map<AppFeedback>(dto);
-            if (model.Id == 0)
-            {
-                //新增
-                model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                model.IsDeleted = false;
-                await _repository.InsertAsync(model);
-            }
-            else
-            {
-                //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
-                {
-                    throw new VinoDataNotFoundException("无法取得应用反馈数据！");
-                }
+            model.Id = ID.NewID();
+            model.CreateTime = DateTime.Now;
+            model.IsDeleted = false;
+            model.Resolved = false;
 
-                //TODO:这里进行赋值
-
-                _repository.Update(item);
-            }
+            await _repository.InsertAsync(model);
             await _repository.SaveAsync();
+
+            var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId));
+            UnsolvedCount++;
+            _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId), UnsolvedCount);
         }
 
         /// <summary>
@@ -134,6 +126,45 @@ namespace Vino.Core.CMS.Service.DataCenter
         #endregion
 
         #region 其他方法
+
+        /// <summary>
+        /// 处理反馈
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public async Task ResolveAsync(AppFeedbackDto dto)
+        {
+            var item = await _repository.GetByIdAsync(dto.Id);
+            if (item == null)
+            {
+                throw new VinoDataNotFoundException();
+            }
+
+            var beforeStatus = item.Resolved;
+
+            item.Resolved = dto.Resolved;
+            if (item.Resolved)
+            {
+                item.ResolveTime = DateTime.Now;
+            }
+            item.AdminRemark = dto.AdminRemark;
+
+            _repository.Update(item);
+
+            await _repository.SaveAsync();
+
+            var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId));
+            if (item.Resolved && !beforeStatus)
+            {
+                UnsolvedCount--;
+                if (UnsolvedCount < 0) UnsolvedCount = 0;
+                _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
+            } else if (!item.Resolved && beforeStatus)
+            {
+                UnsolvedCount++;
+                _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
+            }
+        }
 
         #endregion
     }

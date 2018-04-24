@@ -18,5 +18,7 @@ namespace Vino.Core.CMS.Domain
 
         public static readonly string ApiMemberToken = "api.member.token:{0}.{1}";
         public static readonly string ApiExpiredToken = "api.expired.token:{0}";
+
+        public static readonly string DataCenter_AppFeedback_Unsolved = "dc.app.feedback.unsolved:{0}";
     }
 }

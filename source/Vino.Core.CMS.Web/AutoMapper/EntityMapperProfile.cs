@@ -74,6 +74,8 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.Material.MaterialGroupDto, Domain.Entity.Material.MaterialGroup>();
             CreateMap<Domain.Entity.Content.Article, Domain.Dto.Content.ArticleDto>();
             CreateMap<Domain.Dto.Content.ArticleDto, Domain.Entity.Content.Article>();
+            CreateMap<Domain.Entity.Content.Column, Domain.Dto.Content.ColumnDto>();
+            CreateMap<Domain.Dto.Content.ColumnDto, Domain.Entity.Content.Column>();
             CreateMap<Domain.Entity.Mall.DeliveryTemplet, Domain.Dto.Mall.DeliveryTempletDto>();
             CreateMap<Domain.Dto.Mall.DeliveryTempletDto, Domain.Entity.Mall.DeliveryTemplet>();
             CreateMap<Domain.Entity.Mall.Payment, Domain.Dto.Mall.PaymentDto>().ForMember(x=>x.PaymentConfig, opt=>{
@@ -95,6 +97,8 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Dto.DataCenter.AppDto, Domain.Entity.DataCenter.App>();
             CreateMap<Domain.Entity.DataCenter.AppVersion, Domain.Dto.DataCenter.AppVersionDto>();
             CreateMap<Domain.Dto.DataCenter.AppVersionDto, Domain.Entity.DataCenter.AppVersion>();
+            CreateMap<Domain.Entity.DataCenter.AppFeedback, Domain.Dto.DataCenter.AppFeedbackDto>();
+            CreateMap<Domain.Dto.DataCenter.AppFeedbackDto, Domain.Entity.DataCenter.AppFeedback>();
 		}
 
         private class JsonSerializeResolver : IMemberValueResolver<object, object, object, string>

@@ -146,6 +146,11 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.Content.Article> Articles { get; set; }
 
         /// <summary>
+        /// 栏目
+        /// </summary>
+        public DbSet<Domain.Entity.Content.Column> Columns { get; set; }
+		
+        /// <summary>
         /// 配送模板
         /// </summary>
         public DbSet<Domain.Entity.Mall.DeliveryTemplet> DeliveryTemplets { get; set; }
@@ -174,6 +179,11 @@ namespace Vino.Core.CMS.Data.Common
         /// 应用版本
         /// </summary>
         public DbSet<Domain.Entity.DataCenter.AppVersion> AppVersions { get; set; }
+		
+        /// <summary>
+        /// 应用反馈
+        /// </summary>
+        public DbSet<Domain.Entity.DataCenter.AppFeedback> AppFeedbacks { get; set; }
 
     }
 }

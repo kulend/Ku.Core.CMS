@@ -156,6 +156,45 @@
                 }
             });
         },
+        delete: function (url, data, successCallBack, errorCallBack) {
+            var ajaxParam = {
+                method: "delete",
+                url: url,
+                data: data,
+                successCallBack: successCallBack,
+                errorCallBack: errorCallBack
+            };
+            $.ajax({
+                url: _getUrl(url),
+                method: "delete",
+                contentType: "application/x-www-form-urlencoded",
+                dataType: "json",
+                headers: _getAuthHeader(),
+                data: data,
+                beforeSend: function () {
+                    _getLoading().show();
+                },
+                success: function (r) {
+                    if (_preCheckResponse(r, ajaxParam)) {
+                        successCallBack(r);
+                    }
+                },
+                complete: function () {
+                    _getLoading().hide();
+                },
+                error: function (xhr, status, errorThrown) {
+                    if (xhr.status == 403) {
+                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
+                    } else {
+                        if (errorCallBack) {
+                            errorCallBack(xhr, status, errorThrown);
+                        } else {
+                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        }
+                    }
+                }
+            });
+        },
         jsonp: function (url, data, successCallBack, errorCallBack) {
             $.ajax({
                 url: _getJsonPUrl(url),

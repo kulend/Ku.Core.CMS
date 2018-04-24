@@ -124,6 +124,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.<#=area#>;
+using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Domain.Dto.<#=area#>;
 using Vino.Core.CMS.Domain.Entity.<#=area#>;
 using Vino.Core.CMS.IService.<#=area#>;

@@ -12,14 +12,18 @@
 <#@ import namespace="System.Reflection" #> 
 <#@ include file="manager.ttinclude"#>
 <#
-	var name = "Member_Type";
-	var desc = "会员类型";
-	var area = "Membership";
+	var name = "App_Feedback";
+	var desc = "应用反馈";
+	var area = "DataCenter";
 	var logicDel = true;
-	var HasRecycle = false;
+	var HasRecycle = true;
+   	var HasDetail = true;
 
 	var table = name.ToLower();
 	name = name.Replace("_", "");
+
+	var lowArea = area.ToLower();
+	var lowName = name.ToLower();
 
 	var RootPath = Path.GetDirectoryName(Host.TemplateFile) + "/output";
 	Manager manager = null;
@@ -27,4 +31,5 @@
 <#@ include file="Domain.ttinclude"#>
 <#@ include file="Repository.ttinclude"#>
 <#@ include file="Service.ttinclude"#>
-<#@ include file="View.ttinclude"#>
+<#@ include file="Other.ttinclude"#>
+<#@ include file="IndexView.ttinclude"#>

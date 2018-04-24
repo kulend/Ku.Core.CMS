@@ -62,3 +62,61 @@ namespace Vino.Core.CMS.Data.Repository.<#=area#>
 	manager.EndBlock();
 	manager.Process(true);
 #>
+<#
+	var pathOfContext = RootPath + "/Vino.Core.CMS.Data/Common/Partial";
+    if(!Directory.Exists(pathOfContext))
+    {
+        Directory.CreateDirectory(pathOfContext);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfContext};
+	var fileNameOfContext = "VinoDbContext.cs";
+	manager.StartBlock(fileNameOfContext);
+#>
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：VinoDbContext.cs
+// 功能描述：DbContext
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-02-04 19:05
+// 说明：此代码由工具自动生成，对此文件的更改可能会导致不正确的行为，
+// 并且如果重新生成代码，这些更改将会丢失。
+//
+//----------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+namespace Vino.Core.CMS.Data.Common
+{
+    public partial class VinoDbContext : DbContext, IDbContext
+    {
+        public VinoDbContext(DbContextOptions<VinoDbContext> options)
+            : base(options)
+        {
+        }
+
+        /// <summary>
+        /// 异步保存
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> SaveChangesAsync()
+        {
+            return await base.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// <#=desc#>
+        /// </summary>
+        public DbSet<Domain.Entity.<#=area#>.<#=name#>> <#=name#>s { get; set; }
+
+    }
+}
+<#
+	manager.EndBlock();
+	manager.Process(true);
+#>

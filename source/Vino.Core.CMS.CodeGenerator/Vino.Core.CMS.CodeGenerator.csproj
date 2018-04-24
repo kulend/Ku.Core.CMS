@@ -24,7 +24,19 @@
       <LastGenOutput>All.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="View.ttinclude">
+    <None Update="Detail.ttinclude">
+      <LastGenOutput>Service.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IndexView.ttinclude">
+      <LastGenOutput>IndexView.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Other.ttinclude">
+      <LastGenOutput>Service.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Controller.ttinclude">
       <LastGenOutput>Service.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
@@ -59,6 +71,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>All.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IndexView.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexView.ttinclude</DependentUpon>
     </Compile>
     <Compile Update="Template1.cs">
       <DesignTime>True</DesignTime>

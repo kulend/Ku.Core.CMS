@@ -19,9 +19,10 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180423072912_45")]
+    partial class _45
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,34 +127,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("datacenter_app");
-                });
-
-            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.DataCenter.AppFeedback", b =>
-                {
-                    b.Property<long>("Id");
-
-                    b.Property<long>("AppId");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(2000);
-
-                    b.Property<DateTime>("CreateTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<long?>("ProviderId");
-
-                    b.Property<string>("ProviderName")
-                        .HasMaxLength(64);
-
-                    b.Property<bool>("Resolved");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppId");
-
-                    b.ToTable("datacenter_app_feedback");
                 });
 
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.DataCenter.AppVersion", b =>
@@ -1150,14 +1123,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.HasIndex("TaskId");
 
                     b.ToTable("TimedTaskLogs");
-                });
-
-            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.DataCenter.AppFeedback", b =>
-                {
-                    b.HasOne("Vino.Core.CMS.Domain.Entity.DataCenter.App", "App")
-                        .WithMany()
-                        .HasForeignKey("AppId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.DataCenter.AppVersion", b =>

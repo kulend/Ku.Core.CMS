@@ -50,12 +50,12 @@ function _action(that, action, after, data) {
         $data = data;
 
         eval(method);
-    } else if (act === "post" || act === "get") {
+    } else if (act === "post" || act === "get" || act === "ajax-get" || act === "ajax-post" || act === "ajax-delete") {
         var url = action.indexOf(":") > 0 ? action.substring(action.indexOf(":") + 1) : "";
         var confirmMsg = `确定要进行${$(that).attr("title") || "当前"}操作？`;
         vino.page.msg.confirm(confirmMsg,
             function () {
-                if ("get" === act) {
+                if ("get" === act || "ajax-get" === act) {
                     vino.ajax.get(url, data || null, function (reply) {
                         if (reply.code === 0) {
                             vino.page.msg.tip("操作成功！",
@@ -68,8 +68,21 @@ function _action(that, action, after, data) {
                             vino.page.msg.tip(reply.message);
                         }
                     });
-                } else {
+                } if ("post" === act || "ajax-post" === act) {
                     vino.ajax.post(url, data || null, function (reply) {
+                        if (reply.code === 0) {
+                            vino.page.msg.tip("操作成功！",
+                                function () {
+                                    if (after) {
+                                        _action(that, after, null, reply);
+                                    }
+                                });
+                        } else {
+                            vino.page.msg.tip(reply.message);
+                        }
+                    });
+                }else {
+                    vino.ajax.delete(url, data || null, function (reply) {
                         if (reply.code === 0) {
                             vino.page.msg.tip("操作成功！",
                                 function () {

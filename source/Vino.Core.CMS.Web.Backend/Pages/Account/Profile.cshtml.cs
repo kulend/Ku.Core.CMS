@@ -40,7 +40,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Account
             return Page();
         }
 
-        [UserAction("修改账户资料")]
+        [UserOperationAttribute("修改账户资料")]
         public async Task<IActionResult> OnPostAsync()
         {
             ModelState.Remove("Dto.Account");

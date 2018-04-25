@@ -17,7 +17,7 @@ namespace Vino.Core.CMS.Web.Filters
         { 
         }
 
-        public virtual async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public virtual async Task OnActionExecutionAsync(ActionExecutingContext context)
         {
             await Task.CompletedTask;
         }

@@ -86,7 +86,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.User
         /// </summary>
         [HttpPost]
         [Auth("edit")]
-        [UserAction("编辑用户")]
+        [UserOperationAttribute("编辑用户")]
         public async Task<IActionResult> Save(UserDto model, long[] UserRoles)
         {
             await _service.SaveAsync(model, UserRoles);

@@ -45,8 +45,10 @@ namespace Vino.Core.CMS.Web.Filters
             var attrs = GetAttrs(context);
             foreach (var attr in attrs)
             {
-                await attr.OnActionExecutionAsync(context, next);
+                await attr.OnActionExecutionAsync(context);
             }
+
+            await next();
         }
 
         public void OnPageHandlerExecuted(PageHandlerExecutedContext context)

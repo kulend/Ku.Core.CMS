@@ -13,15 +13,15 @@ namespace Vino.Core.CMS.Web.Filters
     /// 用户操作记录
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public class UserActionAttribute : VinoActionAttribute
+    public class UserOperationAttribute : VinoActionAttribute
     {
         public string Operation { set; get; }
 
-        public UserActionAttribute()
+        public UserOperationAttribute()
         {
         }
 
-        public UserActionAttribute(string operation)
+        public UserOperationAttribute(string operation)
         {
             this.Operation = operation;
         }

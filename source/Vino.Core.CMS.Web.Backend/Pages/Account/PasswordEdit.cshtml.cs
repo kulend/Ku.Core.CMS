@@ -51,7 +51,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Account
 
         }
 
-        [UserAction("修改密码")]
+        [UserOperationAttribute("修改密码")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OnPostAsync()
         {

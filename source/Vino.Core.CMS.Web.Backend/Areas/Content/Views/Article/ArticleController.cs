@@ -94,7 +94,7 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
         /// </summary>
         [HttpPost]
         [Auth("edit")]
-        [UserAction("")]
+        [UserOperationAttribute("")]
         public async Task<IActionResult> Save(ArticleDto model)
         {
             await _service.SaveAsync(model);

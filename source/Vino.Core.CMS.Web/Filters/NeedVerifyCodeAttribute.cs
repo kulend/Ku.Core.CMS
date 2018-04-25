@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Domain;
 using Vino.Core.Infrastructure.Exceptions;
@@ -13,6 +10,7 @@ namespace Vino.Core.CMS.Web.Filters
     /// <summary>
     /// 该特性指示需要图像验证码验证
     /// </summary>
+    [AttributeUsage(AttributeTargets.Method)]
     public class NeedVerifyCodeAttribute : VinoActionAttribute
     {
         /// <summary>

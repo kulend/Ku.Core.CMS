@@ -24,10 +24,9 @@ namespace Vino.Core.CMS.Web.Security
             {
                 superAttrs.AddRange(GetAttributes(razorPagesDescriptor.HandlerTypeInfo));
                 attrs.AddRange(GetAttributes(razorPagesDescriptor.HandlerMethods.FirstOrDefault()?.MethodInfo));
-            }
-            //兼容MVC Controller
-            if (descriptor is ControllerActionDescriptor controllerDescriptor)
+            }else if (descriptor is ControllerActionDescriptor controllerDescriptor)
             {
+                //兼容MVC Controller
                 superAttrs.AddRange(GetAttributes(controllerDescriptor.ControllerTypeInfo));
                 attrs.AddRange(GetAttributes(controllerDescriptor.MethodInfo));
             }

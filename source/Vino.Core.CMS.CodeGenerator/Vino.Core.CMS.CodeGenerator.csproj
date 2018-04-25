@@ -72,11 +72,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>All.tt</DependentUpon>
     </Compile>
-    <Compile Update="IndexView.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IndexView.ttinclude</DependentUpon>
-    </Compile>
     <Compile Update="Template1.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

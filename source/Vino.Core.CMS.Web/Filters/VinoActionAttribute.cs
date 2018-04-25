@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Vino.Core.Infrastructure.DependencyResolver;
 
 namespace Vino.Core.CMS.Web.Filters
@@ -16,6 +15,23 @@ namespace Vino.Core.CMS.Web.Filters
 
         public virtual void OnActionExecuted(ActionExecutedContext context)
         { 
+        }
+
+        public virtual async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            await Task.CompletedTask;
+        }
+
+        public virtual void OnPageHandlerExecuted(PageHandlerExecutedContext context)
+        {
+        }
+
+        public virtual void OnPageHandlerExecuting(PageHandlerExecutingContext context)
+        {
+        }
+
+        public virtual void OnPageHandlerSelected(PageHandlerSelectedContext context)
+        {
         }
     }
 }

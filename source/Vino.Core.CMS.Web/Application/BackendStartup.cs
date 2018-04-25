@@ -39,13 +39,12 @@ namespace Vino.Core.CMS.Web.Application
 
             services.AddMvc(opts =>
                 {
+                    opts.Filters.Add(typeof(VinoActionFilter));
                     opts.Filters.Add(typeof(PageLockFilter));
                     opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
                     opts.Filters.Add(typeof(JsonWrapperResultFilter));
                     opts.Filters.Add(typeof(ExceptionFilter));
-                    opts.Filters.Add(typeof(UserActionLogFilter));
-                })
-                .AddJsonOptions(json =>
+                }).AddJsonOptions(json =>
                 {
                     // 忽略循环引用
                     json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;

@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Net;
 using System.Reflection;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Domain;
 using Vino.Core.CMS.Web.Extensions;
-using System.Linq;
-using System.Net;
-using Vino.Core.Infrastructure.Exceptions;
 
 namespace Vino.Core.CMS.Web.Filters
 {
@@ -33,30 +27,32 @@ namespace Vino.Core.CMS.Web.Filters
 
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
-            var action = context.ActionDescriptor as ControllerActionDescriptor;
-            if (action == null)
+            if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
                 return;
             }
-            if (context.HttpContext.User.Identity.IsAuthenticated 
-                && !action.MethodInfo.CustomAttributes.Any(x=>x.AttributeType == typeof(IgnorePageLockAttribute)))
+            MethodInfo method = context.GetHandlerMethod();
+            if (method == null || method.CustomAttributes.Any(x => x.AttributeType == typeof(IgnorePageLockAttribute)))
             {
-                var tokenId = context.HttpContext.User.GetTokenIdOrNull();
-                var isLock = _cacheService.Get<bool>(string.Format(CacheKeyDefinition.PageLock, tokenId));
-                if (isLock)
+                return;
+            }
+
+            var tokenId = context.HttpContext.User.GetTokenIdOrNull();
+            var isLock = _cacheService.Get<bool>(string.Format(CacheKeyDefinition.PageLock, tokenId));
+            if (isLock)
+            {
+                if (context.HttpContext.Request.IsJsonRequest())
                 {
-                    if (context.HttpContext.Request.IsJsonRequest())
+                    context.Result = new JsonResult(new
                     {
-                        context.Result = new JsonResult(new {
-                            code = 905,
-                            message = "页面已锁定"
-                        });
-                    }
-                    else
-                    {
-                        var url = context.HttpContext.Request.Path.Value;
-                        context.Result = new RedirectResult("/Account/Lock?ReturnUrl=" + WebUtility.UrlEncode(url));
-                    }
+                        code = 905,
+                        message = "页面已锁定"
+                    });
+                }
+                else
+                {
+                    var url = context.HttpContext.Request.Path.Value;
+                    context.Result = new RedirectResult("/Account/Lock?ReturnUrl=" + WebUtility.UrlEncode(url));
                 }
             }
         }

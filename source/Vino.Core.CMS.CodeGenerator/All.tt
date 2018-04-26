@@ -12,12 +12,17 @@
 <#@ import namespace="System.Reflection" #> 
 <#@ include file="manager.ttinclude"#>
 <#
-	var name = "App_Feedback";
-	var desc = "应用反馈";
-	var area = "DataCenter";
+	var name = "Product_Category";
+	var desc = "商品类目";
+	var area = "Mall";
 	var logicDel = true;
 	var HasRecycle = true;
-   	var HasDetail = true;
+   	var HasDetail = false;
+   	//模式1，普通无回收站
+   	//模式2，普通有回收站
+   	//模式3，父子级无回收站
+   	//模式4，父子级有回收站
+	var mode = 4;
 
 	var table = name.ToLower();
 	name = name.Replace("_", "");
@@ -32,4 +37,30 @@
 <#@ include file="Repository.ttinclude"#>
 <#@ include file="Service.ttinclude"#>
 <#@ include file="Other.ttinclude"#>
-<#@ include file="IndexView.ttinclude"#>
+<#
+	var pathOfIndexView = RootPath + "/Vino.Core.CMS.Web.Backend/Pages/" + area + "/" + name;
+    if(!Directory.Exists(pathOfIndexView))
+    {
+        Directory.CreateDirectory(pathOfIndexView);
+    }
+	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfIndexView};
+#>
+<# if(mode == 1){#>
+<#@ include file="IndexView1.ttinclude"#>
+<#}#>
+<# if(mode == 2){#>
+<#@ include file="IndexView2.ttinclude"#>
+<#}#>
+<# if(mode == 3){#>
+<#@ include file="IndexView3.ttinclude"#>
+<#}#>
+<# if(mode == 4){#>
+<#@ include file="IndexView4.ttinclude"#>
+<#}#>
+<# if(HasDetail){#>
+<#@ include file="DetailView.ttinclude"#>
+<#}#>
+<#@ include file="EditView.ttinclude"#>
+<#
+	manager.Process(true);
+#>

@@ -43,8 +43,7 @@ namespace Vino.Core.CMS.Web.AutoMapper
     {
         public EntityMapperProfile()
         {
-            CreateMap<Domain.Entity.<#=area#>.<#=name#>, Domain.Dto.<#=area#>.<#=name#>Dto>();
-            CreateMap<Domain.Dto.<#=area#>.<#=name#>Dto, Domain.Entity.<#=area#>.<#=name#>>();
+            CreateMap<Domain.Entity.<#=area#>.<#=name#>, Domain.Dto.<#=area#>.<#=name#>Dto>().ReverseMap();
 		}
 
         private class JsonSerializeResolver : IMemberValueResolver<object, object, object, string>

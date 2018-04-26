@@ -7,8 +7,6 @@ namespace Vino.Core.CMS.Web.Filters
 {
     public abstract class VinoActionAttribute : Attribute
     {
-        public IIocResolver IocResolver { set; get; }
-
         public virtual void OnActionExecuting(ActionExecutingContext context)
         {
         }

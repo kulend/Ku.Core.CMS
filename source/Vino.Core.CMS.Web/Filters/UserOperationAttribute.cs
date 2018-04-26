@@ -6,6 +6,7 @@ using Vino.Core.CMS.Domain.Dto.System;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.EventBus;
 using Vino.Core.Infrastructure.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Vino.Core.CMS.Web.Filters
 {
@@ -39,7 +40,6 @@ namespace Vino.Core.CMS.Web.Filters
         private void SaveLog(ActionContext context, IActionResult result)
         {
             var userId = context.HttpContext.User.GetUserIdOrZero();
-
             UserActionLogDto log = new UserActionLogDto();
             log.Operation = Operation;
             log.ControllerName = "";
@@ -60,8 +60,8 @@ namespace Vino.Core.CMS.Web.Filters
                 log.ActionResult = file.FileDownloadName;
             }
             log.CreateTime = DateTime.Now;
-            var _dbContext = IocResolver.Resolve<IDbContext>();
-            var _publisher = IocResolver.Resolve<IEventPublisher>();
+            var _dbContext = context.HttpContext.RequestServices.GetService<IDbContext>();
+            var _publisher = context.HttpContext.RequestServices.GetService<IEventPublisher>();
             using (var trans = _dbContext.Database.BeginTransaction())
             {
                 _publisher.Publish(log);

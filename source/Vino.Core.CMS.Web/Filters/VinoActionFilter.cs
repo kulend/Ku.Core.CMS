@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Web.Extensions;
 using Vino.Core.Infrastructure.DependencyResolver;
@@ -13,13 +9,10 @@ namespace Vino.Core.CMS.Web.Filters
 {
     public class VinoActionFilter : IActionFilter, IAsyncActionFilter, IPageFilter
     {
-        public IIocResolver _iocResolver;
-
         public IEnumerable<VinoActionAttribute> _attrs;
 
-        public VinoActionFilter(IIocResolver iocResolver)
+        public VinoActionFilter()
         {
-            _iocResolver = iocResolver;
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
@@ -92,13 +85,6 @@ namespace Vino.Core.CMS.Web.Filters
             }
 
             _attrs = method.GetCustomAttributes<VinoActionAttribute>(true);
-            foreach (var attr in _attrs)
-            {
-                if (attr.IocResolver == null)
-                {
-                    attr.IocResolver = _iocResolver;
-                }
-            }
             return _attrs;
         }
     }

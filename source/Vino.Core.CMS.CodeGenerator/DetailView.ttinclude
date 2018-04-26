@@ -1,0 +1,130 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #>
+<#
+	//生成Detail View
+	var fileNameOfDetailView = "Detail.cshtml";
+	manager.StartBlock(fileNameOfDetailView);
+#>
+@page
+@model Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>.DetailModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 vino 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：<#=desc#> 详情页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DetailModel>(""))
+    {
+    <div class="layui-body">
+<# if(mode == 3 || mode == 4){#>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属层级</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show layui-breadcrumb">
+                    <a href="javascript:;">根</a>
+                    @if (Model.Parents != null)
+                    {
+                        foreach (var dto in Model.Parents)
+                        {
+                            <a href="javascript:;">@dto.Name</a>
+                        }
+                    }
+                </label>
+            </div>
+        </div>
+<#}#>
+        @Html.ShowFor(x => x.Dto.CreateTime)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}
+<#
+	manager.EndBlock();
+#>
+<#
+	//生成Detail Model
+	var fileNameOfDetailModel = "Detail.cshtml.cs";
+	manager.StartBlock(fileNameOfDetailModel);
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Vino.Core.CMS.Domain.Dto.<#=area#>;
+using Vino.Core.CMS.Domain.Entity.<#=area#>;
+using Vino.Core.CMS.IService.<#=area#>;
+using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Security;
+using Vino.Core.Infrastructure.Exceptions;
+
+namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
+{
+    /// <summary>
+    /// <#=desc#> 详情页面
+    /// </summary>
+    [Auth("<#=lowArea#>.<#=lowName#>")]
+    public class DetailModel : BasePage
+    {
+        private readonly I<#=name#>Service _service;
+
+        public DetailModel(I<#=name#>Service service)
+        {
+            this._service = service;
+        }
+
+        public <#=name#>Dto Dto { set; get; }
+
+<# if(mode == 3 || mode == 4){#>
+        public List<<#=name#>Dto> Parents { set; get; }
+<#}#>
+        [Auth("view")]
+        public async Task OnGetAsync(long id)
+        {
+            Dto = await _service.GetByIdAsync(id);
+            if (Dto == null)
+            {
+                throw new VinoDataNotFoundException();
+            }
+<# if(mode == 3 || mode == 4){#>
+            if (Dto.ParentId.HasValue)
+            {
+                Parents = await _service.GetParentsAsync(Dto.ParentId.Value);
+            }
+<#}#>
+        }
+    }
+}
+<#
+	manager.EndBlock();
+#>

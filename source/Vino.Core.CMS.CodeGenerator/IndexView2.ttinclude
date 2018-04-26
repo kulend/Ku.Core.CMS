@@ -11,39 +11,32 @@
 <#@ import namespace="System.Collections.Generic" #> 
 <#@ import namespace="System.Reflection" #>
 <#
-	//生成Index View
-	var pathOfIndexView = RootPath + "/Vino.Core.CMS.Web.Backend/Pages/" + area + "/" + name;
-    if(!Directory.Exists(pathOfIndexView))
-    {
-        Directory.CreateDirectory(pathOfIndexView);
-    }
-	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfIndexView};
-	var fileNameOfIndexView = "Index.cshtml";
-	manager.StartBlock(fileNameOfIndexView);
+	//生成Index View（模式2，普通有回收站）
+	var fileNameOfIndexView2 = "Index.cshtml";
+	manager.StartBlock(fileNameOfIndexView2);
 #>
 @page "{handler?}"
 @model Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>.IndexModel
 @{
-//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
-//
-// 文件名：Index.cshtml
-// 功能描述：<#=desc#> 列表页面
-//
-// 创建者：kulend@qq.com
-// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
-//
-//----------------------------------------------------------------
+	//----------------------------------------------------------------
+	// Copyright (C) 2018 vino 版权所有
+	//
+	// 文件名：Index.cshtml
+	// 功能描述：<#=desc#> 列表页面
+	//
+	// 创建者：kulend@qq.com
+	// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+	//
+	//----------------------------------------------------------------
 }
 @{
     Layout = "~/Pages/_Layout.cshtml";
 }
-<#if(HasRecycle){#>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
             <ul class="layui-tab-title">
-                <li lay-id="list" class="layui-this"><#=desc#>列表</li>
+                <li lay-id="list" class="layui-this"><#=desc#></li>
                 <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
             </ul>
             <div class="layui-tab-content">
@@ -125,58 +118,17 @@
     });
 </script>
 }
-<#}else{#>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header"><#=desc#>列表</div>
-        <div class="layui-card-body">
-            <div class="toolbar">
-                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                <action auth-code="<#=lowArea#>.<#=lowName#>.edit" text="新增" icon="&#xe608;" action="window:/<#=area#>/<#=name#>/Edit" after="grid:reload['#list']" />
-                <action auth-code="<#=lowArea#>.<#=lowName#>.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
-            </div>
-            <table id="list"></table>
-        </div>
-    </div>
-</div>
-@section Scripts
-{
-    <script>
-        $(function () {
-            $("#list").vinoGrid({
-                url: 'Index/Data',
-                cols: [[
-                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
-                    {
-                        title: '操作', fixed: 'right', width: 160, align: 'center',
-                        toolbar: grid_templet_operate([
-                            { code: "<#=lowArea#>.<#=lowName#>.edit", text: "编辑", action: `window:/<#=area#>/<#=name#>/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
-<#if(HasDetail){#>
-                            { code: "<#=lowArea#>.<#=lowName#>.detail", text: "详情", action: `window:/<#=area#>/<#=name#>/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
-<#}#>
-                            { code: "<#=lowArea#>.<#=lowName#>.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
-                        ])
-                    }
-                ]]
-            });
-        });
-    </script>
-}
-<#}#>
 <#
 	manager.EndBlock();
-	//manager.Process(true);
 #>
 <#
 	//生成Index Model
-	var fileNameOfIndexModel = "Index.cshtml.cs";
-	manager.StartBlock(fileNameOfIndexModel);
+	var fileNameOfIndexModel2 = "Index.cshtml.cs";
+	manager.StartBlock(fileNameOfIndexModel2);
 #>
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Vino.Core.CMS.Domain.Dto.<#=area#>;
 using Vino.Core.CMS.Domain.Entity.<#=area#>;
 using Vino.Core.CMS.IService.<#=area#>;
@@ -185,6 +137,9 @@ using Vino.Core.CMS.Web.Security;
 
 namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
 {
+    /// <summary>
+    /// <#=desc#> 列表页面
+    /// </summary>
     [Auth("<#=lowArea#>.<#=lowName#>")]
     [IgnoreAntiforgeryToken(Order = 1001)]
     public class IndexModel : BasePage
@@ -196,7 +151,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
             this._service = service;
         }
 
-		[Auth("view")]
+        [Auth("view")]
         public void OnGet()
         {
         }
@@ -234,94 +189,4 @@ namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
 }
 <#
 	manager.EndBlock();
-	//manager.Process(true);
-#>
-<#
-	//生成Detail View
-	//var pathOfDetailView = RootPath + "/Vino.Core.CMS.Web.Backend/Pages/" + area + "/" + name;
-    //if(!Directory.Exists(pathOfDetailView))
-    //{
-    //    Directory.CreateDirectory(pathOfDetailView);
-    //}
-	//manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfDetailView};
-	var fileNameOfDetailView = "Detail.cshtml";
-	manager.StartBlock(fileNameOfDetailView);
-#>
-@page
-@model Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>.DetailModel
-@{
-//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
-//
-// 文件名：Detail.cshtml
-// 功能描述：<#=desc#> 详情页面
-//
-// 创建者：kulend@qq.com
-// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
-//
-//----------------------------------------------------------------
-}
-@{
-    Layout = "~/Pages/_WindowFormLayout.cshtml";
-}
-<div class="layui-layout layui-layout-window">
-    @using (Html.BeginForm<DetailModel>("#"))
-    {
-    <div class="layui-body">
-        @Html.ShowFor(x => x.Dto.CreateTime)
-    </div>
-    <div class="layui-footer">
-        @Html.ActionsForClose()
-    </div>
-    }
-</div>
-<#
-	manager.EndBlock();
-	//manager.Process(true);
-#>
-<#
-	//生成Detail Model
-	var fileNameOfDetailModel = "Detail.cshtml.cs";
-	manager.StartBlock(fileNameOfDetailModel);
-#>
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Domain.Dto.<#=area#>;
-using Vino.Core.CMS.Domain.Entity.<#=area#>;
-using Vino.Core.CMS.IService.<#=area#>;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
-
-namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
-{
-    [Auth("<#=lowArea#>.<#=lowName#>")]
-    public class DetailModel : BasePage
-    {
-        private readonly I<#=name#>Service _service;
-
-        public DetailModel(I<#=name#>Service service)
-        {
-            this._service = service;
-        }
-
-        public <#=name#>Dto Dto { set; get; }
-
-        [Auth("view")]
-        public async Task OnGetAsync(long id)
-        {
-            Dto = await _service.GetByIdAsync(id);
-            if (Dto == null)
-            {
-                throw new VinoDataNotFoundException();
-            }
-        }
-    }
-}
-<#
-	manager.EndBlock();
-	manager.Process(true);
 #>

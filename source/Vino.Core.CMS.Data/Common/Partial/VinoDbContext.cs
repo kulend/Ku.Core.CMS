@@ -171,6 +171,11 @@ namespace Vino.Core.CMS.Data.Common
         public DbSet<Domain.Entity.Mall.ProductSku> ProductSkus { get; set; }
 
         /// <summary>
+        /// 商品类目
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.ProductCategory> ProductCategorys { get; set; }
+		
+        /// <summary>
         /// 应用
         /// </summary>
         public DbSet<Domain.Entity.DataCenter.App> Apps { get; set; }

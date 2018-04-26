@@ -1,56 +1,57 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Vino.Core.CMS.Domain.Dto.Content;
-using Vino.Core.CMS.IService.Content;
+using Vino.Core.CMS.Domain.Dto.Mall;
+using Vino.Core.CMS.Domain.Entity.Mall;
+using Vino.Core.CMS.IService.Mall;
 using Vino.Core.CMS.Web.Base;
 using Vino.Core.CMS.Web.Security;
 using Vino.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Content.Column
+namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
 {
     /// <summary>
-    /// 详情页面
+    /// 商品类目 编辑页面
     /// </summary>
-    [Auth("content.column")]
+    [Auth("mall.productcategory")]
     public class EditModel : BasePage
     {
-        private readonly IColumnService _service;
+        private readonly IProductCategoryService _service;
 
-        public EditModel(IColumnService service)
+        public EditModel(IProductCategoryService service)
         {
             this._service = service;
         }
 
         [BindProperty]
-        public ColumnDto Dto { set; get; }
+        public ProductCategoryDto Dto { set; get; }
 
-        public List<ColumnDto> Parents { set; get; }
+        public List<ProductCategoryDto> Parents { set; get; }
 
+        /// <summary>
+        /// 取得数据
+        /// </summary>
+        [Auth("edit")]
         public async Task OnGetAsync(long? id, long? pid)
         {
             if (id.HasValue)
             {
-                //编辑
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得数据!");
+                    throw new VinoDataNotFoundException();
                 }
                 if (Dto.ParentId.HasValue)
                 {
                     Parents = await _service.GetParentsAsync(Dto.ParentId.Value);
                 }
-
                 ViewData["Mode"] = "Edit";
             }
             else
             {
-                //新增
-                Dto = new ColumnDto();
+                Dto = new ProductCategoryDto();
                 if (pid.HasValue)
                 {
                     Dto.ParentId = pid.Value;
@@ -64,6 +65,9 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Content.Column
             }
         }
 
+        /// <summary>
+        /// 保存
+        /// </summary>
         [Auth("edit")]
         public async Task<IActionResult> OnPostAsync()
         {

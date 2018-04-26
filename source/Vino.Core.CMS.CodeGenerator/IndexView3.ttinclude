@@ -1,0 +1,153 @@
+﻿<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Runtime" #>
+<#@ Assembly Name="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Reflection" #>
+<#
+	//生成Index View（模式3，父子级无回收站）
+	var fileNameOfIndexView3 = "Index.cshtml";
+	manager.StartBlock(fileNameOfIndexView3);
+#>
+@page "{handler?}"
+@model Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>.IndexModel
+@{
+	//----------------------------------------------------------------
+	// Copyright (C) 2018 vino 版权所有
+	//
+	// 文件名：Index.cshtml
+	// 功能描述：<#=desc#> 列表页面
+	//
+	// 创建者：kulend@qq.com
+	// 创建时间：<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
+	//
+	//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_Layout.cshtml";
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <span class="layui-breadcrumb">
+                <a href="Index">顶级</a>
+                @foreach (var dto in Model.Parents)
+                {
+                <a href="Index?parentId=@dto.Id">@dto.Name</a>
+                }
+            </span>
+		</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action auth-code="<#=lowArea#>.<#=lowName#>.edit" text="新增" icon="&#xe608;" action="window:/<#=area#>/<#=name#>/Edit" after="grid:reload['#list']" />
+                <action auth-code="<#=lowArea#>.<#=lowName#>.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+            </div>
+            <table id="list"></table>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'Index/Data',
+                cols: [[
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "<#=lowArea#>.<#=lowName#>.edit", text: "编辑", action: `window:/<#=area#>/<#=name#>/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+<#if(HasDetail){#>
+                            { code: "<#=lowArea#>.<#=lowName#>.detail", text: "详情", action: `window:/<#=area#>/<#=name#>/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+<#}#>
+                            { code: "<#=lowArea#>.<#=lowName#>.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]],
+                onWhere: function () {
+                    return {
+                        ParentId:"@ViewData["ParentId"]"
+                    };
+                }
+            });
+        });
+    </script>
+}
+<#
+	manager.EndBlock();
+#>
+<#
+	//生成Index Model
+	var fileNameOfIndexModel3 = "Index.cshtml.cs";
+	manager.StartBlock(fileNameOfIndexModel3);
+#>
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Vino.Core.CMS.Domain.Dto.<#=area#>;
+using Vino.Core.CMS.Domain.Entity.<#=area#>;
+using Vino.Core.CMS.IService.<#=area#>;
+using Vino.Core.CMS.Web.Base;
+using Vino.Core.CMS.Web.Security;
+
+namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
+{
+    /// <summary>
+    /// <#=desc#> 列表页面
+    /// </summary>
+    [Auth("<#=lowArea#>.<#=lowName#>")]
+    [IgnoreAntiforgeryToken(Order = 1001)]
+    public class IndexModel : BasePage
+    {
+        private readonly I<#=name#>Service _service;
+
+        public IndexModel(I<#=name#>Service service)
+        {
+            this._service = service;
+        }
+
+        public List<<#=name#>Dto> Parents { set; get; }
+
+        [Auth("view")]
+        public async Task OnGetAsync(long? parentId)
+        {
+            Parents = new List<<#=name#>Dto>();
+            if (parentId.HasValue)
+            {
+                Parents = await _service.GetParentsAsync(parentId.Value);
+            }
+            ViewData["ParentId"] = parentId;
+        }
+
+        /// <summary>
+        /// 取得列表数据
+        /// </summary>
+        [Auth("view")]
+        public async Task<IActionResult> OnPostDataAsync(int page, int rows, <#=name#>Search where)
+        {
+            var data = await _service.GetListAsync(page, rows, where, null);
+            return PagerData(data.items, page, rows, data.count);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        [Auth("delete")]
+        public async Task<IActionResult> OnPostDeleteAsync(params long[] id)
+        {
+            await _service.DeleteAsync(id);
+            return JsonData(true);
+        }
+    }
+}
+<#
+	manager.EndBlock();
+#>

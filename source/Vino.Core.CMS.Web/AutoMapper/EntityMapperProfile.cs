@@ -68,6 +68,7 @@ namespace Vino.Core.CMS.Web.AutoMapper
                 opt.ResolveUsing<JsonSerializeResolver, object>(x => x.Properties);
             });
             CreateMap<Domain.Entity.Mall.ProductSku, Domain.Dto.Mall.ProductSkuDto>().ReverseMap();
+			CreateMap<Domain.Entity.Mall.ProductCategory, Domain.Dto.Mall.ProductCategoryDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.App, Domain.Dto.DataCenter.AppDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppVersion, Domain.Dto.DataCenter.AppVersionDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppFeedback, Domain.Dto.DataCenter.AppFeedbackDto>().ReverseMap();

@@ -6,12 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="output\**" />
-    <EmbeddedResource Remove="output\**" />
-    <None Remove="output\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Vino.Core.CMS.Web\Vino.Core.CMS.Web.csproj" />
     <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
@@ -24,11 +18,27 @@
       <LastGenOutput>All.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Detail.ttinclude">
-      <LastGenOutput>Service.cs</LastGenOutput>
+    <None Update="EditView.ttinclude">
+      <LastGenOutput>IndexView.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="IndexView.ttinclude">
+    <None Update="IndexView4.ttinclude">
+      <LastGenOutput>IndexView.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IndexView3.ttinclude">
+      <LastGenOutput>IndexView.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IndexView2.ttinclude">
+      <LastGenOutput>IndexView.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IndexView1.ttinclude">
+      <LastGenOutput>IndexView.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="DetailView.ttinclude">
       <LastGenOutput>IndexView.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>

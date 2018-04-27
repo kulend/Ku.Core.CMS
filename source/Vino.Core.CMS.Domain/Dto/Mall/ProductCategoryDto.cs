@@ -36,5 +36,11 @@ namespace Vino.Core.CMS.Domain.Dto.Mall
         [Required, StringLength(40)]
         [Display(Name = "类目名称")]
         public string Name { set; get; }
+
+        /// <summary>
+        /// 层级
+        /// </summary>
+        [Display(Name = "层级")]
+        public int Level { set; get; } = 1;
     }
 }

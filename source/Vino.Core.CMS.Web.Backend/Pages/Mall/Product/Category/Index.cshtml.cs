@@ -31,7 +31,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
             Parents = new List<ProductCategoryDto>();
             if (parentId.HasValue)
             {
-                Parents = await _service.GetParentsAsync(parentId.Value);
+                Parents = await _service.GetWithParentsAsync(parentId.Value);
             }
             ViewData["ParentId"] = parentId;
         }
@@ -64,6 +64,15 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
         {
             await _service.RestoreAsync(id);
             return JsonData(true);
+        }
+
+        /// <summary>
+        /// 取得Json数据
+        /// </summary>
+        public async Task<IActionResult> OnGetJsonAsync()
+        {
+            var data = await _service.GetJsonDataAsync();
+            return JsonData(data);
         }
     }
 }

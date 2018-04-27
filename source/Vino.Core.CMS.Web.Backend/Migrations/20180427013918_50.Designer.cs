@@ -19,9 +19,10 @@ using Vino.Core.CMS.Domain.Enum.WeChat;
 namespace Vino.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
-    partial class VinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180427013918_50")]
+    partial class _50
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,8 +272,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                 {
                     b.Property<long>("Id");
 
-                    b.Property<long?>("CategoryId");
-
                     b.Property<string>("Content");
 
                     b.Property<short>("ContentType");
@@ -322,8 +321,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                     b.Property<int>("Visits");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("mall_product");
                 });
@@ -1198,13 +1195,6 @@ namespace Vino.Core.CMS.Web.Backend.Migrations
                         .WithMany()
                         .HasForeignKey("AppId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Mall.Product", b =>
-                {
-                    b.HasOne("Vino.Core.CMS.Domain.Entity.Mall.ProductCategory", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("Vino.Core.CMS.Domain.Entity.Mall.ProductCategory", b =>

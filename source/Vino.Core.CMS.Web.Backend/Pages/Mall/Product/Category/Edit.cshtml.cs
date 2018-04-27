@@ -45,7 +45,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
                 }
                 if (Dto.ParentId.HasValue)
                 {
-                    Parents = await _service.GetParentsAsync(Dto.ParentId.Value);
+                    Parents = await _service.GetWithParentsAsync(Dto.ParentId.Value);
                 }
                 ViewData["Mode"] = "Edit";
             }
@@ -55,7 +55,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
                 if (pid.HasValue)
                 {
                     Dto.ParentId = pid.Value;
-                    Parents = await _service.GetParentsAsync(pid.Value);
+                    Parents = await _service.GetWithParentsAsync(pid.Value);
                 }
                 else
                 {

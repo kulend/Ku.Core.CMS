@@ -23,6 +23,7 @@ using Vino.Core.CMS.Domain.Entity.Mall;
 using Vino.Core.Cache;
 using Vino.Core.CMS.Domain;
 using Vino.Core.Infrastructure.IdGenerator;
+using Newtonsoft.Json;
 
 namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
 {
@@ -33,12 +34,16 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
         private readonly IProductService _service;
         private readonly IProductSkuService _skuService;
         private ICacheService _cacheService;
+        private readonly IProductCategoryService _productCategoryService;
 
-        public ProductController(IProductService service, IProductSkuService skuService, ICacheService cacheService)
+        public ProductController(IProductService service, IProductSkuService skuService, ICacheService cacheService
+            , IProductCategoryService productCategoryService
+            )
         {
             this._service = service;
             this._skuService = skuService;
             this._cacheService = cacheService;
+            this._productCategoryService = productCategoryService;
         }
 
         [Auth("view")]
@@ -93,6 +98,15 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
                 var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
                 _cacheService.Add(cacheKey, skus, new TimeSpan(10, 0, 0));
 
+                //取得商品类目数据
+                var dict = new Dictionary<int, long>();
+                if (model.CategoryId.HasValue)
+                {
+                    (await _productCategoryService.GetWithParentsAsync(model.CategoryId.Value)).ForEach(x=> dict.Add(x.Level, x.Id));
+                }
+
+                ViewBag.Category = JsonConvert.SerializeObject(dict);
+
                 ViewData["Mode"] = "Edit";
                 return View(model);
             }
@@ -100,6 +114,9 @@ namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
             {
                 //新增
                 ProductDto dto = new ProductDto();
+
+                ViewBag.Category = "";
+
                 ViewData["Mode"] = "Add";
                 return View(dto);
             }

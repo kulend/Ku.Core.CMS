@@ -12,6 +12,7 @@
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Vino.Core.CMS.Data.Repository.Mall;
 using Vino.Core.CMS.Domain;
@@ -87,6 +88,21 @@ namespace Vino.Core.CMS.Service.Mall
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
+
+                if (model.ParentId.HasValue)
+                {
+                    var parent = await _repository.GetByIdAsync(model.ParentId.Value);
+                    if (parent == null)
+                    {
+                        throw new VinoDataNotFoundException("无法取得商品类目数据！");
+                    }
+                    model.Level = parent.Level + 1;
+                }
+                else
+                {
+                    model.Level = 1;
+                }
+
                 await _repository.InsertAsync(model);
             }
             else
@@ -136,7 +152,7 @@ namespace Vino.Core.CMS.Service.Mall
 
         #region 其他方法
 
-        public async Task<List<ProductCategoryDto>> GetParentsAsync(long parentId)
+        public async Task<List<ProductCategoryDto>> GetWithParentsAsync(long id)
         {
             var list = new List<ProductCategory>();
             async Task GetModel(long pid)
@@ -151,9 +167,53 @@ namespace Vino.Core.CMS.Service.Mall
                     list.Add(model);
                 }
             }
-            await GetModel(parentId);
+            await GetModel(id);
             return Mapper.Map<List<ProductCategoryDto>>(list);
         }
+
+        /// <summary>
+        /// 取得json数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task<object> GetJsonDataAsync()
+        {
+            var data = await _repository.QueryAsync(x => !x.IsDeleted, null);
+            var maxLevel = data.Max(x=>x.Level);
+
+            var dict = new Dictionary<int, object>();
+            for (int i = 1; i <= maxLevel; i++)
+            {
+                if (!data.Any(x => x.Level == i))
+                {
+                    break;
+                }
+
+                var dts = new Dictionary<long, object>();
+                if (i == 1)
+                {
+                    foreach (var item in data.Where(x => x.Level == i))
+                    {
+                        dts.Add(item.Id, item.Name);
+                    }
+                }
+                else
+                {
+                    foreach (var parentId in data.Where(x => x.Level == i).Select(x => x.ParentId).Distinct())
+                    {
+                        var dt = new Dictionary<long, string>();
+                        foreach (var item in data.Where(x => x.ParentId == parentId))
+                        {
+                            dt.Add(item.Id, item.Name);
+                        }
+                        dts.Add(parentId.Value, dt);
+                    }
+                }
+                dict.Add(i, dts);
+            }
+
+            return dict;
+        }
+
 
         #endregion
     }

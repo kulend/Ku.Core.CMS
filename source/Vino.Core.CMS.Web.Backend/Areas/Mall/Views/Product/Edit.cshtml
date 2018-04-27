@@ -31,6 +31,11 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         @Html.InputFor(x => x.Id)
+                        <div class="layui-form-item" >
+                            <label class="layui-form-label">商品类目</label>
+                            <div class="layui-input-block" id="category">
+                            </div>
+                        </div>
                         @Html.InputFor(x => x.Status)
                         @Html.InputFor(x => x.Name, x => x.Title)
                         @Html.InputFor(x => x.Intro)
@@ -115,8 +120,17 @@
     <script src="~/js/vino/vino.grid.js" asp-append-version="true"></script>
     <script src="~/js/vino/vino.grid.ext.js" asp-append-version="true"></script>
     <script>
-        layui.use(['form'], function () {
+        layui.use(['form', 'multiSelect'], function () {
             var form = layui.form;
+            var multiSelect = layui.multiSelect;
+
+            multiSelect({
+                api: '/Mall/Product/Category/Index/Json',     //数据地址
+                elem: "#category",
+                name:"CategoryId",
+                //values: JSON.parse('@Html.Raw(ViewBag.Category)')
+                value : "@Model.CategoryId"
+            });
 
             $("#ImageData").vinoImagePicker({
                 field_data: "ImageData",

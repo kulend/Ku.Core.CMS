@@ -41,6 +41,16 @@ namespace Vino.Core.CMS.Domain.Entity.Mall
         public string Title { set; get; }
 
         /// <summary>
+        /// 商品类目ID
+        /// </summary>
+        public long? CategoryId { set; get; }
+
+        /// <summary>
+        /// 商品类目
+        /// </summary>
+        public virtual ProductCategory Category { set; get; }
+
+        /// <summary>
         /// 简介
         /// </summary>
         [MaxLength(512)]

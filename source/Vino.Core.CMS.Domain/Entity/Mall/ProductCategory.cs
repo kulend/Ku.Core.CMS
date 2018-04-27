@@ -33,6 +33,11 @@ namespace Vino.Core.CMS.Domain.Entity.Mall
         [Required, StringLength(40)]
         public string Name { set; get; }
 
+        /// <summary>
+        /// 层级
+        /// </summary>
+        public int Level { set; get; } = 1;
+
     }
 
     /// <summary>

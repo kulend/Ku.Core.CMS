@@ -68,7 +68,14 @@ namespace Vino.Core.CMS.IService.Mall
 
         #region 其他接口
 
-        Task<List<ProductCategoryDto>> GetParentsAsync(long parentId);
+        /// <summary>
+        /// 根据数据（包含所有父级数据）
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<List<ProductCategoryDto>> GetWithParentsAsync(long id);
+
+        Task<object> GetJsonDataAsync();
 
         #endregion
     }

@@ -198,6 +198,7 @@ namespace Vino.Core.CMS.Service.Mall
                     item.Stock = model.Stock;
                     item.OrderIndex = model.OrderIndex;
                     item.Properties = model.Properties;
+                    item.CategoryId = model.CategoryId;
 
                     item.SnapshotCount = item.SnapshotCount + 1;
                     item.EffectiveTime = DateTime.Now;

@@ -63,7 +63,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
         public async Task<IActionResult> OnPostRestoreAsync(params long[] id)
         {
             await _service.RestoreAsync(id);
-            return JsonData(true);
+            return Json(true);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
         public async Task<IActionResult> OnGetJsonAsync()
         {
             var data = await _service.GetJsonDataAsync();
-            return JsonData(data);
+            return new OriginJsonResult(data);
         }
     }
 }

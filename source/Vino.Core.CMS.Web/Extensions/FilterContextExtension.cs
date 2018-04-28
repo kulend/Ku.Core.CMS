@@ -33,6 +33,14 @@ namespace Vino.Core.CMS.Web.Extensions
             {
                 method = c3.HandlerMethod?.MethodInfo;
             }
+            else if (context is ResourceExecutingContext c4)
+            {
+                method = null;
+            }
+            else if (context is ResourceExecutedContext c5)
+            {
+                method = null;
+            }
             else if (context.ActionDescriptor is ControllerActionDescriptor controllerDescriptor)
             {
                 //兼容MVC Controller

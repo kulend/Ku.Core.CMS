@@ -48,6 +48,19 @@ namespace Vino.Core.CMS.Web.Base
         }
     }
 
+    /// <summary>
+    /// 原始Json数据，不会进行其他封装
+    /// </summary>
+    public class OriginJsonResult : JsonResult
+    {
+        public OriginJsonResult(object value) : base(value)
+        {
+
+        }
+    }
+
+    #region Layui
+
     public class LayuiPagerResult<T>
     {
         [JsonProperty("code")]
@@ -69,11 +82,14 @@ namespace Vino.Core.CMS.Web.Base
         }
     }
 
-    public class LayuiJsonResult : JsonResult
+    public class LayuiJsonResult : OriginJsonResult
     {
-        public LayuiJsonResult(object value):base(value)
+        public LayuiJsonResult(object value) : base(value)
         {
 
         }
     }
+
+    #endregion
+
 }

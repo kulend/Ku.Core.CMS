@@ -125,10 +125,9 @@
             var multiSelect = layui.multiSelect;
 
             multiSelect({
-                api: '/Mall/Product/Category/Index/Json',     //数据地址
+                url: '/Mall/Product/Category/Index/Json',     //数据地址
                 elem: "#category",
                 name:"CategoryId",
-                //values: JSON.parse('@Html.Raw(ViewBag.Category)')
                 value : "@Model.CategoryId"
             });
 

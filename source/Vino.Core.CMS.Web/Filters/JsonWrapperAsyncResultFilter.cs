@@ -13,7 +13,7 @@ namespace Vino.Core.CMS.Web.Filters
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             if (context.Result is JsonResult jsonResult 
-                && !(context.Result is LayuiJsonResult))
+                && !(context.Result is OriginJsonResult))
             {
                 var oldValue = jsonResult.Value;
                 jsonResult.Value = new

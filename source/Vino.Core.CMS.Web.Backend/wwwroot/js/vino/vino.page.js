@@ -107,6 +107,8 @@ if (!vino.page) {
                 var layer = layui.layer;
 
                 //锁屏
+
+
                 var username = vino.page.cookie.get("user.name") || "&nbsp;";
                 var userimage = vino.page.cookie.get("user.headimage") || "/images/user_default.png";
                 var formId = "form" + new Date().getTime();
@@ -122,7 +124,7 @@ if (!vino.page) {
                         '</form></div>' +
                         '</div>',
                     closeBtn: 0,
-                    shade: 0.9
+                    shade: 0.8
                 });
 
                 $(".admin-header-lock-input").focus();

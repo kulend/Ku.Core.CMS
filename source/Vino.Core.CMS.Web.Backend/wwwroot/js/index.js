@@ -106,6 +106,14 @@
             vino.page.pageLock();
         });
     });
+
+    //便签
+    var note = layui.data('note');
+    var content = note.index || "";
+    $("#LAY_adminNote textarea").val(content);
+    $("a[layadmin-event='note']").on("click", function () {
+        _showNote();
+    });
 });
 
 //打开新的Tab页面
@@ -171,3 +179,18 @@ function _addNavTab(text, id, url) {
     layui.element.tabChange('F_index_tab', id);
 }
 
+function _showNote() {
+    layer.open({
+        type: 1,
+        shade: false,
+        offset: 'rt',
+        title: "便签", //不显示标题
+        content: $("#LAY_adminNote"),
+        cancel: function () {
+            layui.data('note', {
+                key: 'index'
+                , value: $("#LAY_adminNote textarea").val()
+            });
+        }
+    });
+}

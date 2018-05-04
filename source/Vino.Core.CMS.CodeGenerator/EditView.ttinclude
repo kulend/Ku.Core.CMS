@@ -134,7 +134,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
             }
             else
             {
-                Dto = new ProductCategoryDto();
+                Dto = new <#=name#>Dto();
 <# if(mode == 3 || mode == 4){#>
                 if (pid.HasValue)
                 {

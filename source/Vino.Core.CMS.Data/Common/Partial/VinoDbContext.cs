@@ -104,8 +104,13 @@ namespace Vino.Core.CMS.Data.Common
         /// 会员积分记录
         /// </summary>
         public DbSet<Domain.Entity.Membership.MemberPointRecord> MemberPointRecords { get; set; }
-		
-        /// <summary>
+        
+		/// <summary>
+        /// 会员地址
+        /// </summary>
+        public DbSet<Domain.Entity.Membership.MemberAddress> MemberAddresss { get; set; }
+        
+		/// <summary>
         /// 公众号
         /// </summary>
         public DbSet<Domain.Entity.WeChat.WxAccount> WxAccounts { get; set; }

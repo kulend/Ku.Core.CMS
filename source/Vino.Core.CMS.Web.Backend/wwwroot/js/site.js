@@ -9,7 +9,7 @@ layui.use(['element', 'form', 'layer', 'laydate'], function () {
         , form = layui.form;
 
     //layui-action
-    $(document).on("click", "button.layui-btn:not([lay-submit]), .layui-action", function (e) {
+    $(document).on("click", "button.layui-btn:not([lay-submit]):not([action-ignore]), .layui-action", function (e) {
         var action = $(this).data("action") || $(this).attr("action") || "";
         var after = $(this).attr("after");
         _action(this, action, after);

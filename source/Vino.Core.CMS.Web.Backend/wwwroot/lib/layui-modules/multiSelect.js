@@ -6,7 +6,7 @@
     var multiSelect = function (opts) {
         var defaults = {
             url: '',     //数据地址
-            method: "get",
+            type: "get",
             filter: "multiSelect" + new Date().getTime(),
             required:true
         };
@@ -23,7 +23,7 @@
             url: options.url,
             data: options.data,
             dataType: 'json',
-            method: options.method,
+            type: options.method,
             success: function (result) {
                 var data = result;
                 var max = 1;

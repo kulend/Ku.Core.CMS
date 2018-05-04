@@ -45,7 +45,8 @@ namespace Vino.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>().ReverseMap();
             CreateMap<Domain.Entity.Membership.MemberPoint, Domain.Dto.Membership.MemberPointDto>().ReverseMap();
             CreateMap<Domain.Entity.Membership.MemberPointRecord, Domain.Dto.Membership.MemberPointRecordDto>().ReverseMap();
-            CreateMap<Domain.Entity.WeChat.WxAccount, Domain.Dto.WeChat.WxAccountDto>().ReverseMap();
+            CreateMap<Domain.Entity.Membership.MemberAddress, Domain.Dto.Membership.MemberAddressDto>().ReverseMap();
+			CreateMap<Domain.Entity.WeChat.WxAccount, Domain.Dto.WeChat.WxAccountDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxMenu, Domain.Dto.WeChat.WxMenuDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxUserTag, Domain.Dto.WeChat.WxUserTagDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxUser, Domain.Dto.WeChat.WxUserDto>().ReverseMap();

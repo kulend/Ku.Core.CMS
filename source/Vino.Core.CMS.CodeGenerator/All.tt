@@ -12,17 +12,17 @@
 <#@ import namespace="System.Reflection" #> 
 <#@ include file="manager.ttinclude"#>
 <#
-	var name = "Product_Category";
-	var desc = "商品类目";
-	var area = "Mall";
+	var name = "Member_Address";
+	var desc = "会员地址";
+	var area = "Membership";
 	var logicDel = true;
 	var HasRecycle = true;
-   	var HasDetail = false;
+   	var HasDetail = true;
    	//模式1，普通无回收站
    	//模式2，普通有回收站
    	//模式3，父子级无回收站
    	//模式4，父子级有回收站
-	var mode = 4;
+	var mode = 2;
 
 	var table = name.ToLower();
 	name = name.Replace("_", "");

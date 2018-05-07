@@ -10,6 +10,7 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Ku.Core.Extensions.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,12 +28,14 @@ namespace Vino.Core.CMS.Service.Content
     public partial class ArticleService : BaseService, IArticleService
     {
         protected readonly IArticleRepository _repository;
+        protected IDapper _dapper;
 
         #region 构造函数
 
-        public ArticleService(IArticleRepository repository)
+        public ArticleService(IArticleRepository repository, IDapper dapper)
         {
             this._repository = repository;
+            this._dapper = dapper;
         }
 
         #endregion
@@ -72,6 +75,7 @@ namespace Vino.Core.CMS.Service.Content
         /// <returns></returns>
         public async Task<ArticleDto> GetByIdAsync(long id)
         {
+            var aa = _dapper.QueryById<Article>(id);
             return Mapper.Map<ArticleDto>(await this._repository.GetByIdAsync(id));
         }
 

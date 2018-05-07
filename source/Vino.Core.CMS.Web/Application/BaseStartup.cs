@@ -38,6 +38,7 @@ namespace Vino.Core.CMS.Web.Application
             //DBContext
             string connection = Configuration.GetConnectionString("MysqlDatabase");
             services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Backend")));
+            services.AddDapper(options => options.UseMySql(connection));
 
             //缓存
             services.AddCache(Configuration);

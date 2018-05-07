@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.IService\Vino.Core.CMS.IService.csproj" />
     <ProjectReference Include="..\Vino.Core.EventBus\Vino.Core.EventBus.csproj" />

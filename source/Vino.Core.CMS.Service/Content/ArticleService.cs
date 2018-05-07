@@ -75,7 +75,6 @@ namespace Vino.Core.CMS.Service.Content
         /// <returns></returns>
         public async Task<ArticleDto> GetByIdAsync(long id)
         {
-            var aa = _dapper.QueryById<Article>(id);
             return Mapper.Map<ArticleDto>(await this._repository.GetByIdAsync(id));
         }
 

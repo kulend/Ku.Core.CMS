@@ -27,7 +27,7 @@ namespace Vino.Core.CMS.Data.Common
         /// <returns></returns>
         public TEntity GetById(TPrimaryKey id)
         {
-            return null;
+            return _dapper.QueryById<TEntity>(id);
         }
 
         /// <summary>
@@ -37,10 +37,22 @@ namespace Vino.Core.CMS.Data.Common
         /// <returns></returns>
         public async Task<TEntity> GetByIdAsync(TPrimaryKey id)
         {
-            return null;
+            return await _dapper.QueryByIdAsync<TEntity>(id);
         }
 
         #endregion
+
+        /// <summary>
+        /// 插入
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns></returns>
+        public TEntity Insert(TEntity entity)
+        {
+            Table.Add(entity);
+            return entity;
+        }
+
     }
 
     public abstract class DapperRepository<TEntity> : DapperRepository<TEntity, long> where TEntity : BaseEntity

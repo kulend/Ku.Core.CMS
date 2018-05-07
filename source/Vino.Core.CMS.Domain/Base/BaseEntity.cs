@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Ku.Core.Extensions.Dapper.Attributes;
+using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Vino.Core.CMS.Domain
@@ -25,6 +27,7 @@ namespace Vino.Core.CMS.Domain
         /// 主键
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
         public virtual TPrimaryKey Id { get; set; }
     }
 
@@ -39,6 +42,7 @@ namespace Vino.Core.CMS.Domain
     /// <summary>
     /// 默认主键类型为long的实体基类(虚拟删除)
     /// </summary>
+    [LogicalDelete(Field = "IsDeleted")]
     public abstract class BaseProtectedEntity : BaseEntity
     {
         /// <summary>

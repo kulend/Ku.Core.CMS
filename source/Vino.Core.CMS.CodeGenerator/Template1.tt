@@ -478,153 +478,8 @@ namespace Vino.Core.CMS.Domain.Entity.<#=area#>
 //
 //----------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.Infrastructure.Attributes;
-using Vino.Core.Infrastructure.Data;
-
-namespace Vino.Core.CMS.Domain.Dto.<#=area#>
-{
-    public class <#=name#>Dto : BaseDto
-    {
-
-    }
-}
-<#
-           manager.EndBlock();
-       }
-       manager.Process(true);
-   }
-#>
-
-<#
-   //ç”ŸæˆController&cshtml
-   var path66 = RootPath + "/Vino.Core.CMS.Web.Backend/Areas";
-   foreach(var entity in entitys)
-   {
-        var p = path66 + "/" + entity.Area + "/Views/" + entity.Name;
-        if(!Directory.Exists(p))
-        {
-            Directory.CreateDirectory(p);
-        }
-		var name = entity.Name;
-		var desc = entity.Title;
-		var area = entity.Area;
-		var lowArea = area.ToLower();
-		var lowName = name.ToLower();
-
-        var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = p};
-
-		manager.StartBlock(entity.Name + "Controller.cs");
-#>
-//----------------------------------------------------------------
-// Copyright (C) 2018 vino ç‰ˆæƒæ‰€æœ‰
-//
-// æ–‡ä»¶åï¼š<#=name#>Controller.cs
-// åŠŸèƒ½æè¿°ï¼š<#=desc#> åå°è®¿é—®æ§åˆ¶ç±»
-//
-// åˆ›å»ºè€…ï¼škulend@qq.com
-// åˆ›å»ºæ—¶é—´ï¼š<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm") #>
-//
-//----------------------------------------------------------------
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.CMS.Domain.Dto.<#=area#>;
-using Vino.Core.CMS.IService.<#=area#>;
-using Vino.Core.CMS.Domain.Entity.<#=area#>;
-
-namespace Vino.Core.CMS.Web.Backend.Areas.<#=area#>.Views.<#=name#>
-{
-    [Area("<#=area#>")]
-    [Auth("<#=lowArea#>.<#=lowName#>")]
-    public class <#=name#>Controller : BackendController
-    {
-        private readonly I<#=name#>Service _service;
-
-        public <#=name#>Controller(I<#=name#>Service service)
-        {
-            this._service = service;
-        }
-
-        [Auth("view")]
-        public async Task<IActionResult> Index()
-        {
-            return View();
-        }
-
-        [Auth("view")]
-        public async Task<IActionResult> GetList(int page, int rows, <#=name#>Search where)
-        {
-            var data = await _service.GetListAsync(page, rows, where, null);
-            return PagerData(data.items, page, rows, data.count);
-        }
-
-        [Auth("edit")]
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id.HasValue)
-            {
-                //ç¼–è¾‘
-                var model = await _service.GetByIdAsync(id.Value);
-                if (model == null)
-                {
-                    throw new VinoDataNotFoundException("æ— æ³•å–å¾—æ•°æ®!");
-                }
-                ViewData["Mode"] = "Edit";
-                return View(model);
-            }
-            else
-            {
-                //æ–°å¢
-                <#=name#>Dto dto = new <#=name#>Dto();
-                ViewData["Mode"] = "Add";
-                return View(dto);
-            }
-        }
-
-        /// <summary>
-        /// ä¿å­˜
-        /// </summary>
-        [HttpPost]
-        [Auth("edit")]
-        public async Task<IActionResult> Save(<#=name#>Dto model)
-        {
-            await _service.SaveAsync(model);
-            return JsonData(true);
-        }
-
-        /// <summary>
-        /// åˆ é™¤
-        /// </summary>
-        [HttpPost]
-        [Auth("delete")]
-        public async Task<IActionResult> Delete(params long[] id)
-        {
-            await _service.DeleteAsync(id);
-            return JsonData(true);
-        }
-
-        /// <summary>
-        /// æ¢å¤
-        /// </summary>
-        [HttpPost]
-        [Auth("restore")]
-        public async Task<IActionResult> Restore(params long[] id)
-        {
-            await _service.RestoreAsync(id);
-            return JsonData(true);
-        }
-    }
-}
-<#
-		manager.EndBlock();
+using System.ComponFILE0  ‹.      8                  ğ›           `           H      ªô±ˆãÓªô±ˆãÓÌ²ˆãÓªô±ˆãÓ!                             `š,    0   ¨               bn    ªô±ˆãÓªô±ˆãÓªô±ˆãÓªô±ˆãÓ             !       & 4 d 9 1 7 3 6 2 5 6 3 9 2 9 3 a c 4 3 b 2 4 5 d a 9 e 5 a 9 f 9 b 3 a 6 3 2   €   H                         @                          1†D   ÿÿÿÿ‚yG                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              FILE0  ‹.      8                  ñ›           `           H      B²ˆãÓB²ˆãÓ˜i²ˆãÓB²ˆãÓ!                             Ğœ,    0   ¨               7p    B²ˆãÓB²ˆãÓB²ˆãÓB²ˆãÓ       µ      !       & b 5 0 6 2 5 8 e 2 c 6 3 6 8 c 1 2 9 3 e 2 9 5 8 8 5 7 c c 1 d 8 8 7 2 a 5 7   €   H                         @              µ      µ      1:T   ÿÿÿÿ‚yG                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              FILE0   /      8  h                ò›           `           H      X²ËˆãÓÃ-¿Ì§ÚÓÃ-¿Ì§ÚÓX²ËˆãÓ                              ˜ç,    0   €          d     Z›    X²ËˆãÓX²ËˆãÓX²ËˆãÓX²ËˆãÓ P                       V i n o . C o r e . C M S . s l n     €   H                        @        P      J      J      1¼
+   ÿÿÿÿ‚yG                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      FILE0  E     8  °                ó›  C        `           H      ‹ ÌˆãÓ4™ÎˆãÓ4™ÎˆãÓ4™ÎˆãÓ                             Ğè,    0   `          H     Z›    ‹ ÌˆãÓ‹ ÌˆãÓ‹ ÌˆãÓ‹ ÌˆãÓ                        . v s    °               $ I 3 0 0               €   €       ô›    ` N     ó›    ñœÌˆãÓê#ÎˆãÓê#ÎˆãÓê#ÎˆãÓ                        c o n f i g                 ÿÿÿÿ‚yG4™ÎˆãÓNÀÎˆãÓNÀÎˆãÓNÀÎˆãÓ                        V i n o . C o r e .  M S                   ÿÿÿÿ‚yG                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               anager.EndBlock();
 
 		//Index.cshtml
 		manager.StartBlock("Index.cshtml");

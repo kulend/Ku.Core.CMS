@@ -59,6 +59,9 @@ namespace Vino.Core.CMS.Web.Application
 
         public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //Dapper
+            app.UseDapper();
+
             //事件消息发送订阅
             app.UseEventBus();
         }

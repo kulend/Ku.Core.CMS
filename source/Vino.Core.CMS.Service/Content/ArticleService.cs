@@ -133,9 +133,9 @@ namespace Vino.Core.CMS.Service.Content
         /// <returns></returns>
         public async Task DeleteAsync(params long[] id)
         {
-            if (await _repository.DeleteAsync(id))
+            using (var _dapper = DapperFactory.Create())
             {
-                await _repository.SaveAsync();
+                await _dapper.DeleteAsync<Article>(new DapperSql("Id IN (@Ids)", new { Ids = id }));
             }
         }
 
@@ -146,9 +146,9 @@ namespace Vino.Core.CMS.Service.Content
         /// <returns></returns>
         public async Task RestoreAsync(params long[] id)
         {
-            if (await _repository.RestoreAsync(id))
+            using (var _dapper = DapperFactory.Create())
             {
-                await _repository.SaveAsync();
+                await _dapper.RestoreAsync<Article>(new DapperSql("Id IN (@Ids)", new { Ids = id }));
             }
         }
 

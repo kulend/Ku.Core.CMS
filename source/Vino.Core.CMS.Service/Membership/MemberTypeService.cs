@@ -10,6 +10,7 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Ku.Core.Extensions.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -113,9 +114,9 @@ namespace Vino.Core.CMS.Service.Membership
         /// <returns></returns>
         public async Task DeleteAsync(params long[] id)
         {
-            if (await _repository.DeleteAsync(id))
+            using (var _dapper = DapperFactory.Create())
             {
-                await _repository.SaveAsync();
+                await _dapper.DeleteAsync<MemberType>(new DapperSql("Id IN (@Ids)", new { Ids = id }));
             }
         }
 
@@ -126,9 +127,9 @@ namespace Vino.Core.CMS.Service.Membership
         /// <returns></returns>
         public async Task RestoreAsync(params long[] id)
         {
-            if (await _repository.RestoreAsync(id))
+            using (var _dapper = DapperFactory.Create())
             {
-                await _repository.SaveAsync();
+                await _dapper.RestoreAsync<MemberType>(new DapperSql("Id IN (@Ids)", new { Ids = id }));
             }
         }
 

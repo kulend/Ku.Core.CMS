@@ -36,16 +36,13 @@ namespace Vino.Core.CMS.Service.System
         private readonly IEventPublisher _eventPublisher;
         protected readonly VinoDbContext context;
 
-        private IDapper _dapper;
-
         #region 构造函数
 
-        public UserService(IUserRepository repository, IEventPublisher _eventPublisher, VinoDbContext context, IDapper dapper)
+        public UserService(IUserRepository repository, IEventPublisher _eventPublisher, VinoDbContext context)
         {
             this._repository = repository;
 			this._eventPublisher = _eventPublisher;
             this.context = context;
-            this._dapper = dapper;
         }
 
         #endregion
@@ -224,53 +221,36 @@ namespace Vino.Core.CMS.Service.System
 
         public async Task<UserDto> LoginAsync(string account, string password)
         {
-            long id = ID.NewID();
-            var aa = await _dapper.InsertAsync(new User {
-                Id = id,
-                Name = "aa",
-                Password = "0",
-                Account = "aa"
-            });
-
-            var u = await _dapper.QueryOneAsync<User>(new { Id = id });
-
-            u.Name = "AAAAA";
-            u.Remarks = "bbb";
-            var ab = await _dapper.UpdateAsync(u);
-
-            var cnt = await _dapper.QueryCountAsync<User>(new { Id = id });
-
-            var u2 = await _dapper.QueryOneAsync<User>(new { Name = "AAAAA" });
-
-            var bb = await _dapper.DeleteAsync<User>(new { Id = id });
-
             if (account.IsNullOrEmpty())
                 throw new VinoArgNullException("账户名不能为空！");
 
             if (password.IsNullOrEmpty())
                 throw new VinoArgNullException("密码不能为空！");
 
-            var entity = await context.Users.SingleOrDefaultAsync(x => x.Account.Equals(account,
-                StringComparison.OrdinalIgnoreCase));
-            if (entity == null || entity.IsDeleted)
+            using (var _dapper = DapperFactory.Create())
             {
-                throw new VinoException("账户不存在！");
-            }
+                var entity = await _dapper.QueryOneAsync<User>(new { Account = account });
+                if (entity == null || entity.IsDeleted)
+                {
+                    throw new VinoException("账户不存在！");
+                }
+                if (!entity.CheckPassword(password))
+                {
+                    throw new VinoException("账户或密码出错！");
+                }
+                if (!entity.IsEnable)
+                {
+                    throw new VinoException("该账号已被禁止登陆！");
+                }
 
-            if (!entity.CheckPassword(password))
-            {
-                throw new VinoException("账户或密码出错！");
-            }
-            if (!entity.IsEnable)
-            {
-                throw new VinoException("该账号已被禁止登陆！");
-            }
-            var dto = Mapper.Map<UserDto>(entity);
-            dto.Password = "";
+                var dto = Mapper.Map<UserDto>(entity);
+                dto.Password = "";
 
-            //发送消息
-            await _eventPublisher.PublishAsync(new UserLoginEvent { UserId = entity.Id });
-            return dto;
+                //发送消息
+                await _eventPublisher.PublishAsync(new UserLoginEvent { UserId = entity.Id });
+
+                return dto;
+            }
         }
 
         #endregion
@@ -289,20 +269,24 @@ namespace Vino.Core.CMS.Service.System
                 //新密码不能为空
                 throw new VinoArgNullException("新密码不能为空！");
             }
-            var item = await _repository.GetByIdAsync(userId);
-            if (item == null)
+            using (var _dapper = DapperFactory.Create())
             {
-                throw new VinoDataNotFoundException("无法取得用户数据！");
-            }
+                var item = await _dapper.QueryOneAsync<User>(new { Id = userId });
+                if (item == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得用户数据！");
+                }
 
-            if (!item.CheckPassword(currentPwd))
-            {
-                throw new VinoArgNullException("当前密码出错！");
+                if (!item.CheckPassword(currentPwd))
+                {
+                    throw new VinoArgNullException("当前密码出错！");
+                }
+
+                item.Password = newPwd;
+                item.EncryptPassword();
+
+                await _dapper.UpdateAsync(item);
             }
-            item.Password = newPwd;
-            item.EncryptPassword();
-            _repository.Update(item);
-            await _repository.SaveAsync();
         }
 
 
@@ -315,40 +299,47 @@ namespace Vino.Core.CMS.Service.System
             if (password.IsNullOrEmpty())
                 throw new VinoArgNullException("密码不能为空！");
 
-            var entity = await _repository.GetByIdAsync(id);
-            if (entity == null || entity.IsDeleted)
+            using (var _dapper = DapperFactory.Create())
             {
-                throw new VinoException("账户不存在！");
+                var entity = await _dapper.QueryOneAsync<User>(new { Id = id });
+                if (entity == null || entity.IsDeleted)
+                {
+                    throw new VinoException("账户不存在！");
+                }
+                if (!entity.IsEnable)
+                {
+                    throw new VinoException("该账号已被禁止登陆！");
+                }
+                return entity.CheckPassword(password);
             }
-            if (!entity.IsEnable)
-            {
-                throw new VinoException("该账号已被禁止登陆！");
-            }
-            return entity.CheckPassword(password);
         }
 
         #endregion
 
         #region 用户资料保存
 
+        /// <summary>
+        /// 用户资料保存
+        /// </summary>
         public async Task SaveProfileAsync(UserDto dto)
         {
             User model = Mapper.Map<User>(dto);
-
-            //更新
-            var item = await _repository.GetByIdAsync(model.Id);
-            if (item == null)
+            using (var _dapper = DapperFactory.Create())
             {
-                throw new VinoDataNotFoundException("无法取得用户数据！");
-            }
+                var item = await _dapper.QueryOneAsync<User>(new { model.Id });
+                if (item == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得用户数据！");
+                }
 
-            item.Name = model.Name;
-            item.Mobile = model.Mobile;
-            item.HeadImage = model.HeadImage;
-            item.Email = model.Email;
-            item.Remarks = model.Remarks;
-            _repository.Update(item);
-            await _repository.SaveAsync();
+                item.Name = model.Name;
+                item.Mobile = model.Mobile;
+                item.HeadImage = model.HeadImage;
+                item.Email = model.Email;
+                item.Remarks = model.Remarks;
+
+                await _dapper.UpdateAsync(item);
+            }
         }
 
         #endregion

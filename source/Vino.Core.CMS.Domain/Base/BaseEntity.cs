@@ -28,7 +28,7 @@ namespace Vino.Core.CMS.Domain
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
-        public virtual TPrimaryKey Id { get; set; }
+        public TPrimaryKey Id { get; set; }
     }
 
     /// <summary>

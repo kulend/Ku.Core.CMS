@@ -13,23 +13,7 @@ namespace Vino.Core.CMS.Data.Common
 
     public interface IDapperRepository<TEntity, in TPrimaryKey> : IDapperRepository where TEntity : Entity<TPrimaryKey>
     {
-        #region 主键查询
 
-        /// <summary>
-        /// 根据主键获取实体
-        /// </summary>
-        /// <param name="id">实体主键</param>
-        /// <returns></returns>
-        TEntity GetById(TPrimaryKey id);
-
-        /// <summary>
-        /// 根据主键获取实体
-        /// </summary>
-        /// <param name="id">实体主键</param>
-        /// <returns></returns>
-        Task<TEntity> GetByIdAsync(TPrimaryKey id);
-
-        #endregion
     }
 
     /// <summary>

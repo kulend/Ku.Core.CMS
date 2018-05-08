@@ -26,6 +26,7 @@ using Vino.Core.Infrastructure.Extensions;
 using Vino.Core.Infrastructure.IdGenerator;
 using Vino.Core.CMS.Data.Common;
 using Vino.Core.CMS.Domain;
+using Ku.Core.Extensions.Dapper;
 
 namespace Vino.Core.CMS.Service.System
 {
@@ -35,13 +36,16 @@ namespace Vino.Core.CMS.Service.System
         private readonly IEventPublisher _eventPublisher;
         protected readonly VinoDbContext context;
 
+        private IDapper _dapper;
+
         #region 构造函数
 
-        public UserService(IUserRepository repository, IEventPublisher _eventPublisher, VinoDbContext context)
+        public UserService(IUserRepository repository, IEventPublisher _eventPublisher, VinoDbContext context, IDapper dapper)
         {
             this._repository = repository;
 			this._eventPublisher = _eventPublisher;
             this.context = context;
+            this._dapper = dapper;
         }
 
         #endregion
@@ -220,6 +224,26 @@ namespace Vino.Core.CMS.Service.System
 
         public async Task<UserDto> LoginAsync(string account, string password)
         {
+            long id = ID.NewID();
+            var aa = await _dapper.InsertAsync(new User {
+                Id = id,
+                Name = "aa",
+                Password = "0",
+                Account = "aa"
+            });
+
+            var u = await _dapper.QueryOneAsync<User>(new { Id = id });
+
+            u.Name = "AAAAA";
+            u.Remarks = "bbb";
+            var ab = await _dapper.UpdateAsync(u);
+
+            var cnt = await _dapper.QueryCountAsync<User>(new { Id = id });
+
+            var u2 = await _dapper.QueryOneAsync<User>(new { Name = "AAAAA" });
+
+            var bb = await _dapper.DeleteAsync<User>(new { Id = id });
+
             if (account.IsNullOrEmpty())
                 throw new VinoArgNullException("账户名不能为空！");
 

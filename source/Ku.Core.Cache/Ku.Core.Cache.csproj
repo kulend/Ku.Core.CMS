@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vino.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

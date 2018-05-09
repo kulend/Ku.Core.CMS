@@ -12,14 +12,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vino.Core.Cache\Ku.Core.Cache.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Job\Ku.Core.CMS.Job.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Service\Ku.Core.CMS.Service.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
-    <ProjectReference Include="..\Vino.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
-    <ProjectReference Include="..\Vino.Core.Tokens.Jwt\Ku.Core.Tokens.Jwt.csproj" />
+    <ProjectReference Include="..\Ku.Core.Cache\Ku.Core.Cache.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Job\Ku.Core.CMS.Job.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Service\Ku.Core.CMS.Service.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
+    <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ku.Core.Tokens.Jwt\Ku.Core.Tokens.Jwt.csproj" />
   </ItemGroup>
 
 </Project>

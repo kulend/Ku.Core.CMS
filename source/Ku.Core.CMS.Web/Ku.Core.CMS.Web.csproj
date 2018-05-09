@@ -23,15 +23,15 @@
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Layui\Ku.Core.Extensions.Layui.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Ui\Ku.Core.Extensions.Ui.csproj" />
-    <ProjectReference Include="..\Vino.Core.Cache\Ku.Core.Cache.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Service\Ku.Core.CMS.Service.csproj" />
-    <ProjectReference Include="..\Vino.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
-    <ProjectReference Include="..\Vino.Core.Session\Ku.Core.Session.csproj" />
-    <ProjectReference Include="..\Vino.Core.Tokens.Jwt\Ku.Core.Tokens.Jwt.csproj" />
-    <ProjectReference Include="..\Vino.Core.Tools\Ku.Core.Tools.csproj" />
-    <ProjectReference Include="..\Vino.Core.WeChat\Ku.Core.WeChat.csproj" />
+    <ProjectReference Include="..\Ku.Core.Cache\Ku.Core.Cache.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Service\Ku.Core.CMS.Service.csproj" />
+    <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ku.Core.Session\Ku.Core.Session.csproj" />
+    <ProjectReference Include="..\Ku.Core.Tokens.Jwt\Ku.Core.Tokens.Jwt.csproj" />
+    <ProjectReference Include="..\Ku.Core.Tools\Ku.Core.Tools.csproj" />
+    <ProjectReference Include="..\Ku.Core.WeChat\Ku.Core.WeChat.csproj" />
   </ItemGroup>
 
   <ItemGroup>

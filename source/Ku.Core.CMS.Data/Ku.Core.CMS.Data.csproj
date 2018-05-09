@@ -11,9 +11,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
-    <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask.EntityFramework\Ku.Core.TimedTask.EntityFramework.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
-    <ProjectReference Include="..\Vino.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\开源\Ku.Core.TimedTask\source\Ku.Core.TimedTask.EntityFramework\Ku.Core.TimedTask.EntityFramework.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

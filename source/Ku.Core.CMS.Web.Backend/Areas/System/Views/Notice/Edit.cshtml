@@ -14,8 +14,8 @@
 @{
     Layout = "~/Views/Shared/_WindowLayout.cshtml";
 }
-@using Vino.Core.CMS.Domain.Dto.System
-@using Vino.Core.CMS.Domain.Enum
+@using Ku.Core.CMS.Domain.Dto.System
+@using Ku.Core.CMS.Domain.Enum
 @model NoticeDto
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<NoticeDto>("Save", new { auto_bind = "false" }))

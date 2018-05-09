@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vino.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

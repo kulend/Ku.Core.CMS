@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vino.Core.Cache\Ku.Core.Cache.csproj" />
+    <ProjectReference Include="..\Ku.Core.Cache\Ku.Core.Cache.csproj" />
   </ItemGroup>
 
   <ItemGroup>

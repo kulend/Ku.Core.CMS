@@ -6,14 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vino.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Service\Ku.Core.CMS.Service.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
-    <ProjectReference Include="..\Vino.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="All.tt">
       <LastGenOutput>All.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>

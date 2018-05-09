@@ -9,10 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask\Ku.Core.TimedTask.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Service\Ku.Core.CMS.Service.csproj" />
-    <ProjectReference Include="..\Vino.Core.Communication\Ku.Core.Communication.csproj" />
+    <ProjectReference Include="..\..\..\开源\Ku.Core.TimedTask\source\Ku.Core.TimedTask\Ku.Core.TimedTask.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Ku.Core.CMS.Service\Ku.Core.CMS.Service.csproj" />
+    <ProjectReference Include="..\Ku.Core.Communication\Ku.Core.Communication.csproj" />
   </ItemGroup>
 
 </Project>

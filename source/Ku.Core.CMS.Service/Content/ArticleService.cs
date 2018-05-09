@@ -135,7 +135,7 @@ namespace Ku.Core.CMS.Service.Content
         {
             using (var _dapper = DapperFactory.Create())
             {
-                await _dapper.DeleteAsync<Article>(new DapperSql("Id IN (@Ids)", new { Ids = id }));
+                await _dapper.DeleteAsync<Article>(new DapperSql("Id IN @Ids", new { Ids = id }));
             }
         }
 
@@ -148,7 +148,7 @@ namespace Ku.Core.CMS.Service.Content
         {
             using (var _dapper = DapperFactory.Create())
             {
-                await _dapper.RestoreAsync<Article>(new DapperSql("Id IN (@Ids)", new { Ids = id }));
+                await _dapper.RestoreAsync<Article>(new DapperSql("Id IN @Ids", new { Ids = id }));
             }
         }
 

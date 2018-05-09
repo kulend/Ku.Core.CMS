@@ -285,7 +285,7 @@ namespace Ku.Core.CMS.Service.System
                 item.Password = newPwd;
                 item.EncryptPassword();
 
-                await _dapper.UpdateAsync(item);
+                await _dapper.UpdateAsync<User>(item);
             }
         }
 
@@ -338,7 +338,7 @@ namespace Ku.Core.CMS.Service.System
                 item.Email = model.Email;
                 item.Remarks = model.Remarks;
 
-                await _dapper.UpdateAsync(item);
+                await _dapper.UpdateAsync<User>(item);
             }
         }
 

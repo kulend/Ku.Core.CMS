@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.EventBus;
+using Ku.Core.EventBus;
 
-namespace Vino.Core.CMS.Service.Events.System
+namespace Ku.Core.CMS.Service.Events.System
 {
     public class UserLoginEvent : BaseEvent
     {

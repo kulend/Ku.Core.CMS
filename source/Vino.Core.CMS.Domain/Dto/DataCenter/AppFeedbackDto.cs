@@ -14,7 +14,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Dto.DataCenter
+namespace Ku.Core.CMS.Domain.Dto.DataCenter
 {
     /// <summary>
     /// 应用反馈

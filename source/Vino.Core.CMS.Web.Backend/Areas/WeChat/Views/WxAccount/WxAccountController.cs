@@ -13,15 +13,15 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Domain.Dto.WeChat;
-using Vino.Core.CMS.Domain.Enum.WeChat;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.CMS.IService.WeChat;
-using Vino.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Domain.Dto.WeChat;
+using Ku.Core.CMS.Domain.Enum.WeChat;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.CMS.Domain.Entity.WeChat;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxAccount
+namespace Ku.Core.CMS.Web.Backend.Areas.WeChat.Views.WxAccount
 {
     [Area("WeChat")]
     [Auth("wechat.wxaccount")]

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Vino.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Base;
 
-namespace Vino.Core.CMS.Web.Filters
+namespace Ku.Core.CMS.Web.Filters
 {
     public class JsonWrapperResultFilter : IResultFilter
     {

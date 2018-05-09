@@ -14,15 +14,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.Content;
-using Vino.Core.CMS.Domain.Entity.Content;
-using Vino.Core.CMS.IService.Content;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Filters;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.Content;
+using Ku.Core.CMS.Domain.Entity.Content;
+using Ku.Core.CMS.IService.Content;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.Content.Views.Article
+namespace Ku.Core.CMS.Web.Backend.Areas.Content.Views.Article
 {
     /// <summary>
     /// 文章 后台访问控制类

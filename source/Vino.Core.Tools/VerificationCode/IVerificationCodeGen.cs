@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Vino.Core.Tools.VerificationCode
+namespace Ku.Core.Tools.VerificationCode
 {
     public interface IVerificationCodeGen
     {

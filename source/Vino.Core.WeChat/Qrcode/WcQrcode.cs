@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.WeChat.Qrcode
+namespace Ku.Core.WeChat.Qrcode
 {
     public class WcQrcode
     {

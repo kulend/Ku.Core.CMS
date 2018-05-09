@@ -11,10 +11,10 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.CMS.Domain.Enum.DataCenter;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.CMS.Domain.Enum.DataCenter;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Entity.DataCenter
+namespace Ku.Core.CMS.Domain.Entity.DataCenter
 {
     [Table("datacenter_app")]
     public class App : BaseProtectedEntity

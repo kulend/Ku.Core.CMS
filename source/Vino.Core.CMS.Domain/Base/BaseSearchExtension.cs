@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using Vino.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.Extensions;
 
-namespace Vino.Core.CMS.Domain
+namespace Ku.Core.CMS.Domain
 {
     public static class BaseSearchExtension
     {

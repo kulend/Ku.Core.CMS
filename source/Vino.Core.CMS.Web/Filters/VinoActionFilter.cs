@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Web.Extensions;
-using Vino.Core.Infrastructure.DependencyResolver;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.Infrastructure.DependencyResolver;
 
-namespace Vino.Core.CMS.Web.Filters
+namespace Ku.Core.CMS.Web.Filters
 {
     public class VinoActionFilter : IActionFilter, IAsyncActionFilter, IPageFilter
     {

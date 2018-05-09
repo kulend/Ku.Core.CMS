@@ -14,10 +14,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.CMS.Domain.Enum;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Entity.WeChat
+namespace Ku.Core.CMS.Domain.Entity.WeChat
 {
     [Table("wechat_user")]
     public class WxUser : BaseProtectedEntity

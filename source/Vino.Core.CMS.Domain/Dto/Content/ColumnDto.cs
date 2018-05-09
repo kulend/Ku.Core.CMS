@@ -12,7 +12,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Dto.Content
+namespace Ku.Core.CMS.Domain.Dto.Content
 {
     /// <summary>
     /// 栏目

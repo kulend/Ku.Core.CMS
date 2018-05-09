@@ -11,10 +11,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.WeChat;
-using Vino.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.Domain.Dto.WeChat;
+using Ku.Core.CMS.Domain.Entity.WeChat;
 
-namespace Vino.Core.CMS.IService.WeChat
+namespace Ku.Core.CMS.IService.WeChat
 {
     public partial interface IWxQrcodeService
     {

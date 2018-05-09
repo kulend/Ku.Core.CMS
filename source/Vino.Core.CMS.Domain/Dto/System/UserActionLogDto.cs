@@ -12,9 +12,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Vino.Core.EventBus;
+using Ku.Core.EventBus;
 
-namespace Vino.Core.CMS.Domain.Dto.System
+namespace Ku.Core.CMS.Domain.Dto.System
 {
     [Event("backend_user_action_log")]
     public class UserActionLogDto : BaseProtectedDto

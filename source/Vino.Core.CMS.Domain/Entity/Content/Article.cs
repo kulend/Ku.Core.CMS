@@ -14,9 +14,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.CMS.Domain.Enum.Content;
+using Ku.Core.CMS.Domain.Enum.Content;
 
-namespace Vino.Core.CMS.Domain.Entity.Content
+namespace Ku.Core.CMS.Domain.Entity.Content
 {
     [Table("content_article")]
     public class Article : BaseProtectedEntity

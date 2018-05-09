@@ -1,7 +1,7 @@
 ﻿
-using Vino.Core.WeChat.AccessToken;
-using Vino.Core.WeChat.Qrcode;
-using Vino.Core.WeChat.User;
+using Ku.Core.WeChat.AccessToken;
+using Ku.Core.WeChat.Qrcode;
+using Ku.Core.WeChat.User;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

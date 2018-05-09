@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Vino.Core.Cache.Redis
+namespace Ku.Core.Cache.Redis
 {
     public class RedisCacheService: ICacheService
     {

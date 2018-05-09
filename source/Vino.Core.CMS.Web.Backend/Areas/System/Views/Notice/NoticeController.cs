@@ -14,14 +14,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.CMS.Domain.Dto.System;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.CMS.Domain.Entity.System;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.Domain.Entity.System;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Notice
+namespace Ku.Core.CMS.Web.Backend.Areas.System.Views.Notice
 {
     [Area("System")]
     [Auth("system.notice")]

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Enum.Membership;
+using Ku.Core.CMS.Domain.Enum.Membership;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
+namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
 {
     public class MemberPointAdjustDto
     {

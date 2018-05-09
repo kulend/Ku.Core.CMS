@@ -13,19 +13,19 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Data.Repository.WeChat;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.WeChat;
-using Vino.Core.CMS.Domain.Entity.WeChat;
-using Vino.Core.CMS.Domain.Enum.WeChat;
-using Vino.Core.CMS.IService.WeChat;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.IdGenerator;
-using Vino.Core.WeChat.Qrcode;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Data.Repository.WeChat;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.WeChat;
+using Ku.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.Domain.Enum.WeChat;
+using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.IdGenerator;
+using Ku.Core.WeChat.Qrcode;
 
-namespace Vino.Core.CMS.Service.WeChat
+namespace Ku.Core.CMS.Service.WeChat
 {
     public partial class WxQrcodeService : BaseService, IWxQrcodeService
     {

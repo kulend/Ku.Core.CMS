@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vino.Core.CMS.Web.Security
+namespace Ku.Core.CMS.Web.Security
 {
     public class JwtTicketDataFormat : ISecureDataFormat<AuthenticationTicket>
     {

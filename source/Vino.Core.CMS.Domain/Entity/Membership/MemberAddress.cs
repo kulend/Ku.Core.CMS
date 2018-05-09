@@ -12,7 +12,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Entity.Membership
+namespace Ku.Core.CMS.Domain.Entity.Membership
 {
     /// <summary>
     /// 会员地址

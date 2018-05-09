@@ -13,17 +13,17 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Data.Repository.DataCenter;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.DataCenter;
-using Vino.Core.CMS.Domain.Entity.DataCenter;
-using Vino.Core.CMS.IService.DataCenter;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Data.Repository.DataCenter;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.DataCenter;
+using Ku.Core.CMS.Domain.Entity.DataCenter;
+using Ku.Core.CMS.IService.DataCenter;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.IdGenerator;
 
-namespace Vino.Core.CMS.Service.DataCenter
+namespace Ku.Core.CMS.Service.DataCenter
 {
     public partial class AppFeedbackService : BaseService, IAppFeedbackService
     {

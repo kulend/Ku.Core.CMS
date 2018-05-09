@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Communication.SMS
+namespace Ku.Core.Communication.SMS
 {
     public class SmsObject
     {

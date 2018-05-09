@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Vino.Core.CMS.Domain
+namespace Ku.Core.CMS.Domain
 {
     public abstract class BaseDto
     {

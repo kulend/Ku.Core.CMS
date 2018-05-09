@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.TimedTask.Attribute;
+using Ku.Core.TimedTask.Attribute;
 
-namespace Vino.Core.CMS.Job
+namespace Ku.Core.CMS.Job
 {
     [TimedTask]
     public class VinoJob

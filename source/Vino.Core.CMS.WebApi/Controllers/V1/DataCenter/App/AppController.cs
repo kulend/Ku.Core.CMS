@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Base;
 
-namespace Vino.Core.CMS.WebApi.Controllers.V1.DataCenter
+namespace Ku.Core.CMS.WebApi.Controllers.V1.DataCenter
 {
     /// <summary>
     /// 应用相关接口

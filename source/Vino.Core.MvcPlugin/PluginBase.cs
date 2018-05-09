@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Vino.Core.MvcPlugin
+namespace Ku.Core.MvcPlugin
 {
     public abstract class PluginBase : IPluginStartup
     {

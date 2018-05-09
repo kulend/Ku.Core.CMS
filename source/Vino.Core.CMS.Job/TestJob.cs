@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.TimedTask.Attribute;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.TimedTask.Attribute;
 
-namespace Vino.Core.CMS.Job
+namespace Ku.Core.CMS.Job
 {
     public class TestJob: VinoJob
     {

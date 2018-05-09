@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 
-namespace Vino.Core.CMS.TaskApp.Extensions
+namespace Ku.Core.CMS.TaskApp.Extensions
 {
     public static class LogExtension
     {

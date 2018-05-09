@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Reflection;
-using Vino.Core.CMS.Domain.Enum.WeChat;
+using Ku.Core.CMS.Domain.Enum.WeChat;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Vino.Core.CMS.Tests
+namespace Ku.Core.CMS.Tests
 {
     public class Class1 : BaseTest
     {

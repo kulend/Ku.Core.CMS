@@ -9,20 +9,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.System;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.CMS.Web.Backend.Models;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Configs;
-using Vino.Core.CMS.Web.Filters;
-using Vino.Core.EventBus;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Tokens.Jwt;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.Web.Backend.Models;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Configs;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.EventBus;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Tokens.Jwt;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Account
+namespace Ku.Core.CMS.Web.Backend.Pages.Account
 {
     public class LoginModel : BasePage
     {
@@ -66,7 +66,7 @@ namespace Vino.Core.CMS.Web.Backend.Pages.Account
 
             //图片验证码
 #if !DEBUG
-            if(data.ImageCode.IsNullOrEmpty())
+            if(Input.ImageCode.IsNullOrEmpty())
             {
                 throw new VinoException("请输入验证码!");
             }

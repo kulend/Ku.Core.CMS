@@ -11,9 +11,9 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using Vino.Core.CMS.Domain.Enum;
+using Ku.Core.CMS.Domain.Enum;
 
-namespace Vino.Core.CMS.Domain.Dto.WeChat
+namespace Ku.Core.CMS.Domain.Dto.WeChat
 {
     public class WxUserDto : BaseProtectedDto
     {

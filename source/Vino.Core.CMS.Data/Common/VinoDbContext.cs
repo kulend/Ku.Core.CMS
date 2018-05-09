@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.TimedTask.EntityFramework;
-using Vino.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.Domain.Entity.System;
+using Ku.Core.TimedTask.EntityFramework;
+using Ku.Core.CMS.Domain.Entity.WeChat;
 
-namespace Vino.Core.CMS.Data.Common
+namespace Ku.Core.CMS.Data.Common
 {
     public partial class VinoDbContext: ITimedTaskContext
     {

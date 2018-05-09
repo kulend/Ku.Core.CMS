@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vino.Core.Communication.SMS
+namespace Ku.Core.Communication.SMS
 {
     public interface ISmsSender
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace Vino.Core.MvcPlugin
+namespace Ku.Core.MvcPlugin
 {
     public interface IPluginLoader
     {

@@ -11,10 +11,10 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.CMS.Domain.Enum.Membership;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.CMS.Domain.Enum.Membership;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Dto.Membership
+namespace Ku.Core.CMS.Domain.Dto.Membership
 {
     public class MemberPointDto : BaseProtectedDto
     {

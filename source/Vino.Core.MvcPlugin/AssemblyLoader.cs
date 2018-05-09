@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyModel;
 
-namespace Vino.Core.MvcPlugin
+namespace Ku.Core.MvcPlugin
 {
     public class AssemblyLoader : AssemblyLoadContext
     {

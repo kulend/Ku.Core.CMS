@@ -11,10 +11,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.Mall;
-using Vino.Core.CMS.Domain.Entity.Mall;
+using Ku.Core.CMS.Domain.Dto.Mall;
+using Ku.Core.CMS.Domain.Entity.Mall;
 
-namespace Vino.Core.CMS.IService.Mall
+namespace Ku.Core.CMS.IService.Mall
 {
     public partial interface IProductService
     {

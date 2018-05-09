@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.Web.Extensions;
 
-namespace Vino.Core.CMS.Web.Filters
+namespace Ku.Core.CMS.Web.Filters
 {
     public class WebApiResultFilter : IAsyncResultFilter
     {

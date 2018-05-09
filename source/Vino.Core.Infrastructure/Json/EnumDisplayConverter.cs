@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Vino.Core.Infrastructure.Json
+namespace Ku.Core.Infrastructure.Json
 {
     public class EnumDisplayConverter : JsonConverter
     {

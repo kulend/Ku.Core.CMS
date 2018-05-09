@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.WebApi.Controllers.V1.Content
+namespace Ku.Core.CMS.WebApi.Controllers.V1.Content
 {
     [ApiVersion("1.0")]
     [Route("api/content/[controller]")]

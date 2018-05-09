@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Enum.WeChat
+namespace Ku.Core.CMS.Domain.Enum.WeChat
 {
     /// <summary>
     /// 微信二维码场景类型

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Vino.Core.MvcPlugin
+namespace Ku.Core.MvcPlugin
 {
     public class ActionDescriptorProvider : IActionDescriptorProvider
     {

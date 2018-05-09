@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Cache.Redis
+namespace Ku.Core.Cache.Redis
 {
     public class RedisConfig
     {

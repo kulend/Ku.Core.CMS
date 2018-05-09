@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.WeChat
+namespace Ku.Core.WeChat
 {
     public class WcReply<T>
     {

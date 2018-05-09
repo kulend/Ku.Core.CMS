@@ -14,17 +14,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.CMS.Domain.Dto.Membership;
-using Vino.Core.CMS.IService.Membership;
-using Vino.Core.CMS.Domain.Entity.Membership;
-using Vino.Core.CMS.Domain.Enum.Membership;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.Membership;
+using Ku.Core.CMS.IService.Membership;
+using Ku.Core.CMS.Domain.Entity.Membership;
+using Ku.Core.CMS.Domain.Enum.Membership;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.CMS.Web.Extensions;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
+namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
 {
     [Area("Membership")]
     [Auth("membership.member.point")]

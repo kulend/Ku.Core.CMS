@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Vino.Core.MvcPlugin
+namespace Ku.Core.MvcPlugin
 {
     public class DeveloperViewFileProvider : IFileProvider
     {

@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Vino.Core.CMS.Web.Configs;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Configs;
+using Ku.Core.CMS.Web.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Microsoft.Extensions.DependencyInjection

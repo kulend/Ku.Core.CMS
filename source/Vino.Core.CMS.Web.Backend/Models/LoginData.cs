@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Vino.Core.CMS.Web.Backend.Models
+namespace Ku.Core.CMS.Web.Backend.Models
 {
     public class LoginData
     {

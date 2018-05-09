@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.Web.Extensions;
 
-namespace Vino.Core.CMS.Web.Base
+namespace Ku.Core.CMS.Web.Base
 {
     /// <summary>
     /// 基础Controller

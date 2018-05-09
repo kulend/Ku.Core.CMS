@@ -15,7 +15,7 @@ using AutoMapper;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Vino.Core.CMS.TaskApp.AutoMapper
+namespace Ku.Core.CMS.TaskApp.AutoMapper
 {
     public class EntityMapperProfile: Profile
     {

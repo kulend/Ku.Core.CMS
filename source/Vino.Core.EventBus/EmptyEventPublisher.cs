@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vino.Core.EventBus
+namespace Ku.Core.EventBus
 {
     public class EmptyEventPublisher : IEventPublisher
     {

@@ -11,9 +11,9 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Dto.System
+namespace Ku.Core.CMS.Domain.Dto.System
 {
     public class SmsTempletDto : BaseProtectedDto
     {

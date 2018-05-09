@@ -15,10 +15,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.Helper;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.Helper;
 
-namespace Vino.Core.CMS.Domain.Entity.System
+namespace Ku.Core.CMS.Domain.Entity.System
 {
     [Table("system_user")]
     public class User : BaseProtectedEntity

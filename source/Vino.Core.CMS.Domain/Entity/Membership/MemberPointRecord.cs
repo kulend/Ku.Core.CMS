@@ -11,10 +11,10 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.CMS.Domain.Enum.Membership;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.CMS.Domain.Enum.Membership;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Entity.Membership
+namespace Ku.Core.CMS.Domain.Entity.Membership
 {
     [Table("membership_member_point_record")]
     public class MemberPointRecord : BaseProtectedEntity

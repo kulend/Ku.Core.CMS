@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.EventBus
+namespace Ku.Core.EventBus
 {
     public class EventBusConfig
     {

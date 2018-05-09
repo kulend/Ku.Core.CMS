@@ -11,8 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Vino.Core.CMS.Web.Configs;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Configs;
+using Ku.Core.CMS.Web.Security;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

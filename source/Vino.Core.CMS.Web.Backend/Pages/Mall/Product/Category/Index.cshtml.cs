@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.Mall;
-using Vino.Core.CMS.Domain.Entity.Mall;
-using Vino.Core.CMS.IService.Mall;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Domain.Dto.Mall;
+using Ku.Core.CMS.Domain.Entity.Mall;
+using Ku.Core.CMS.IService.Mall;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
+namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Category
 {
     /// <summary>
     /// 商品类目 列表页面

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetCore.CAP;
 
-namespace Vino.Core.EventBus.CAP
+namespace Ku.Core.EventBus.CAP
 {
     public class CapEventPublisher: IEventPublisher
     {

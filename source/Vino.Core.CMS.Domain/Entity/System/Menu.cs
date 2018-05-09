@@ -15,9 +15,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Entity.System
+namespace Ku.Core.CMS.Domain.Entity.System
 {
     [Table("system_menu")]
     public class Menu : BaseEntity

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Enum.Mall
+namespace Ku.Core.CMS.Domain.Enum.Mall
 {
     public enum EmProductStatus : short
     {

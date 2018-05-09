@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.WeChat.User
+namespace Ku.Core.WeChat.User
 {
     public class WcUserDetailRsp
     {

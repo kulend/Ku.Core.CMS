@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Extensions
+namespace Ku.Core.Infrastructure.Extensions
 {
     public static class ObjectExtension
     {

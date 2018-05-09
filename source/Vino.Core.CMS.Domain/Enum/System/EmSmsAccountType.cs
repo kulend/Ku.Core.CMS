@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Enum.System
+namespace Ku.Core.CMS.Domain.Enum.System
 {
     public enum EmSmsAccountType : short
     {

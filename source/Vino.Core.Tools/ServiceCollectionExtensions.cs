@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices.ComTypes;
 using QRCoder;
-using Vino.Core.Tools.QRCode;
-using Vino.Core.Tools.VerificationCode;
-using Vino.Core.Tools.ImageCompressor;
+using Ku.Core.Tools.QRCode;
+using Ku.Core.Tools.VerificationCode;
+using Ku.Core.Tools.ImageCompressor;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

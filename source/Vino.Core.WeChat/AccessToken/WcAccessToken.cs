@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Vino.Core.WeChat.AccessToken
+namespace Ku.Core.WeChat.AccessToken
 {
     public class WcAccessToken
     {

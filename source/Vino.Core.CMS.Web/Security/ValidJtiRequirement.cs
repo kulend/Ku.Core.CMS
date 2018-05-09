@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Vino.Core.CMS.Web.Security
+namespace Ku.Core.CMS.Web.Security
 {
     public class ValidJtiRequirement : IAuthorizationRequirement
     {

@@ -13,10 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Vino.Core.CMS.Web.Filters;
-using Vino.Core.Infrastructure.Json;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.Infrastructure.Json;
 
-namespace Vino.Core.CMS.Web.Application
+namespace Ku.Core.CMS.Web.Application
 {
     public class WebApiStartup : BaseStartup
     {

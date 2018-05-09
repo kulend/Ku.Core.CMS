@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Tokens.Jwt
+namespace Ku.Core.Tokens.Jwt
 {
     public struct JwtRegisteredClaimNames
     {

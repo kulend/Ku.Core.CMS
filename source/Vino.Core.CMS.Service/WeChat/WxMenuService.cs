@@ -13,16 +13,16 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.WeChat;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.WeChat;
-using Vino.Core.CMS.Domain.Entity.WeChat;
-using Vino.Core.CMS.IService.WeChat;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.CMS.Data.Repository.WeChat;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.WeChat;
+using Ku.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.IdGenerator;
 
-namespace Vino.Core.CMS.Service.WeChat
+namespace Ku.Core.CMS.Service.WeChat
 {
     public partial class WxMenuService : BaseService, IWxMenuService
     {

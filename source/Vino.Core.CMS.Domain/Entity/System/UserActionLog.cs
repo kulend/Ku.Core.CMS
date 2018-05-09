@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Entity.System
+namespace Ku.Core.CMS.Domain.Entity.System
 {
     [Table("system_action_log")]
     public class UserActionLog : BaseEntity

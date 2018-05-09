@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.CMS.Web.Base
+namespace Ku.Core.CMS.Web.Base
 {
     public class BasePage : PageModel
     {

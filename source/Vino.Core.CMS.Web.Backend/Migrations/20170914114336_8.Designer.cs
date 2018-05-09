@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.CMS.Domain.Enum.System;
-using Vino.Core.CMS.Domain.Enum.WeChat;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Domain.Enum;
+using Ku.Core.CMS.Domain.Enum.System;
+using Ku.Core.CMS.Domain.Enum.WeChat;
 
-namespace Vino.Core.CMS.Web.Backend.Migrations
+namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(VinoDbContext))]
     [Migration("20170914114336_8")]

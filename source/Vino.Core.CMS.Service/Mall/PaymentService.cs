@@ -13,16 +13,16 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.Mall;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.Mall;
-using Vino.Core.CMS.Domain.Entity.Mall;
-using Vino.Core.CMS.IService.Mall;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.CMS.Data.Repository.Mall;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.Mall;
+using Ku.Core.CMS.Domain.Entity.Mall;
+using Ku.Core.CMS.IService.Mall;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.IdGenerator;
 
-namespace Vino.Core.CMS.Service.Mall
+namespace Ku.Core.CMS.Service.Mall
 {
     public partial class PaymentService : BaseService, IPaymentService
     {

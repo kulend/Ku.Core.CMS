@@ -14,18 +14,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.CMS.Domain.Dto.Mall;
-using Vino.Core.CMS.IService.Mall;
-using Vino.Core.CMS.Domain.Entity.Mall;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Domain;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.Mall;
+using Ku.Core.CMS.IService.Mall;
+using Ku.Core.CMS.Domain.Entity.Mall;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Domain;
+using Ku.Core.Infrastructure.IdGenerator;
 using Newtonsoft.Json;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.Mall.Views.Product
+namespace Ku.Core.CMS.Web.Backend.Areas.Mall.Views.Product
 {
     [Area("Mall")]
     [Auth("mall.product")]

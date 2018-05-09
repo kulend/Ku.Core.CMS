@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Entity.Membership
+namespace Ku.Core.CMS.Domain.Entity.Membership
 {
     [Table("membership_member_type")]
     public class MemberType : BaseProtectedEntity

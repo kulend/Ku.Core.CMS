@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Domain.Dto.DataCenter;
-using Vino.Core.CMS.Domain.Entity.DataCenter;
-using Vino.Core.CMS.IService.DataCenter;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.DataCenter;
+using Ku.Core.CMS.Domain.Entity.DataCenter;
+using Ku.Core.CMS.IService.DataCenter;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
+namespace Ku.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
 {
     [Auth("datacenter.app.feedback")]
     public class DetailModel : BasePage

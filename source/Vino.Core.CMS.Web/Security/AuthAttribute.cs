@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.CMS.Web.Security
+namespace Ku.Core.CMS.Web.Security
 {
     public class AuthAttribute : AuthorizeAttribute
     {

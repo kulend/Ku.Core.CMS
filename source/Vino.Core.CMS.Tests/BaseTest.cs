@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using Xunit.Abstractions;
 
-namespace Vino.Core.CMS.Tests
+namespace Ku.Core.CMS.Tests
 {
 
     public class BaseTest

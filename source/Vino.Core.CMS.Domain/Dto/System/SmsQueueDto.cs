@@ -13,9 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Vino.Core.CMS.Domain.Enum.System;
+using Ku.Core.CMS.Domain.Enum.System;
 
-namespace Vino.Core.CMS.Domain.Dto.System
+namespace Ku.Core.CMS.Domain.Dto.System
 {
     public class SmsQueueDto : BaseProtectedDto
     {

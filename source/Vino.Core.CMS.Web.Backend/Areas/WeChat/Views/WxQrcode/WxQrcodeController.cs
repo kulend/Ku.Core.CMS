@@ -14,15 +14,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.WeChat;
-using Vino.Core.CMS.Domain.Entity.WeChat;
-using Vino.Core.CMS.IService.WeChat;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Filters;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.WeChat;
+using Ku.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxQrcode
+namespace Ku.Core.CMS.Web.Backend.Areas.WeChat.Views.WxQrcode
 {
     [Area("WeChat")]
     [Auth("wechat.wxqrcode")]

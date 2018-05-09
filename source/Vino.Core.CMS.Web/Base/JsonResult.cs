@@ -4,7 +4,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Vino.Core.CMS.Web.Base
+namespace Ku.Core.CMS.Web.Base
 {
     public class PagerResult<T>
     {

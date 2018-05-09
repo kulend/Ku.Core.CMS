@@ -6,14 +6,14 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.Material;
-using Vino.Core.CMS.Domain.Dto.Material;
-using Vino.Core.EventBus;
-using Vino.Core.EventBus.CAP;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Tools.ImageCompressor;
+using Ku.Core.CMS.Data.Repository.Material;
+using Ku.Core.CMS.Domain.Dto.Material;
+using Ku.Core.EventBus;
+using Ku.Core.EventBus.CAP;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Tools.ImageCompressor;
 
-namespace Vino.Core.CMS.Service.Events.Material
+namespace Ku.Core.CMS.Service.Events.Material
 {
     public class PictureUploadEventSubscriberService: IEventSubscriberService
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.CMS.Web.Configs
+namespace Ku.Core.CMS.Web.Configs
 {
     public class JwtAuthConfig
     {

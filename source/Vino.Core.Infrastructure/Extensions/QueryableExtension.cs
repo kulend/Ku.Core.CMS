@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Extensions
+namespace Ku.Core.Infrastructure.Extensions
 {
     public static class QueryableExtension
     {

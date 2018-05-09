@@ -13,13 +13,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.CMS.Domain.Dto.Membership;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.IService.Membership;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.Membership;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.CMS.IService.Membership;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.Membership.Views.Member
+namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.Member
 {
     [Area("Membership")]
     [Auth("membership.member")]

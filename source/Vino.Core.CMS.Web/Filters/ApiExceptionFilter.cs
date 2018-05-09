@@ -4,11 +4,11 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Vino.Core.CMS.Web.Extensions;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
 
-namespace Vino.Core.CMS.Web.Filters
+namespace Ku.Core.CMS.Web.Filters
 {
     public class ApiExceptionFilter : IExceptionFilter
     {

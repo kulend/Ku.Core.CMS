@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.Cache;
-using Vino.Core.Infrastructure.Helper;
-using Vino.Core.WeChat.AccessToken;
+using Ku.Core.Cache;
+using Ku.Core.Infrastructure.Helper;
+using Ku.Core.WeChat.AccessToken;
 
-namespace Vino.Core.WeChat.User
+namespace Ku.Core.WeChat.User
 {
     public class WcUserTool: IWcUserTool
     {

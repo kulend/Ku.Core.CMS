@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Domain.Dto.Mall;
-using Vino.Core.CMS.Domain.Entity.Mall;
-using Vino.Core.CMS.IService.Mall;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.Mall;
+using Ku.Core.CMS.Domain.Entity.Mall;
+using Ku.Core.CMS.IService.Mall;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Mall.Product.Category
+namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Category
 {
     /// <summary>
     /// 商品类目 编辑页面

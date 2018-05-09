@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Vino.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
-    <ProjectReference Include="..\..\..\开源\Vino.Core.Extensions\Vino.Core.Extensions.Layui\Vino.Core.Extensions.Layui.csproj" />
-    <ProjectReference Include="..\..\..\开源\Vino.Core.Extensions\Vino.Core.Extensions.Ui\Vino.Core.Extensions.Ui.csproj" />
+    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
+    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Layui\Ku.Core.Extensions.Layui.csproj" />
+    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Ui\Ku.Core.Extensions.Ui.csproj" />
     <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
     <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
     <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />

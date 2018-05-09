@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using Autofac;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.CMS.Service.System;
-using Vino.Core.Infrastructure.DependencyResolver;
-using Vino.Core.Tokens.Jwt;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.Service.System;
+using Ku.Core.Infrastructure.DependencyResolver;
+using Ku.Core.Tokens.Jwt;
 
-namespace Vino.Core.CMS.TaskApp.Application
+namespace Ku.Core.CMS.TaskApp.Application
 {
     public class AppModule : Autofac.Module
     {

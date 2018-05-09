@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Extensions
+namespace Ku.Core.Infrastructure.Extensions
 {
     public static class EnumerableExtension
     {

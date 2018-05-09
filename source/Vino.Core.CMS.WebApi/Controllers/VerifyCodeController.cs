@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.Tools.VerificationCode;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.Tools.VerificationCode;
 
-namespace Vino.Core.CMS.WebApi.Controllers
+namespace Ku.Core.CMS.WebApi.Controllers
 {
     [Route("api/[controller]")]
     public class VerifyCodeController : WebApiController

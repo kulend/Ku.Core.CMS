@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Enum
+namespace Ku.Core.CMS.Domain.Enum
 {
     /// <summary>
     /// 性别

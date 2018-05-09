@@ -14,9 +14,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Vino.Core.CMS.Domain.Enum.Content;
+using Ku.Core.CMS.Domain.Enum.Content;
 
-namespace Vino.Core.CMS.Domain.Dto.Content
+namespace Ku.Core.CMS.Domain.Dto.Content
 {
     public class ArticleDto : BaseProtectedDto
     {

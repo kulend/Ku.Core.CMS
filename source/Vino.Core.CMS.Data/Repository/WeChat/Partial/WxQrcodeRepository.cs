@@ -14,10 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Domain.Entity.WeChat;
 
-namespace Vino.Core.CMS.Data.Repository.WeChat
+namespace Ku.Core.CMS.Data.Repository.WeChat
 {
     /// <summary>
     /// 微信二维码 仓储接口

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Vino.Core.CMS.Domain;
-using Vino.Core.Infrastructure.Extensions;
+using Ku.Core.CMS.Domain;
+using Ku.Core.Infrastructure.Extensions;
 
-namespace Vino.Core.CMS.Data.Common
+namespace Ku.Core.CMS.Data.Common
 {
     public abstract class BaseRepository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : Entity<TPrimaryKey>
     {

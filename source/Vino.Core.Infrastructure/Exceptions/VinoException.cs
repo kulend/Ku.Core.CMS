@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Exceptions
+namespace Ku.Core.Infrastructure.Exceptions
 {
     public class VinoException : System.Exception
     {

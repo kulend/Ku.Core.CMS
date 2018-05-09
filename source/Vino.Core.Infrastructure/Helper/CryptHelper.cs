@@ -4,7 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Vino.Core.Infrastructure.Helper
+namespace Ku.Core.Infrastructure.Helper
 {
     public class CryptHelper
     {

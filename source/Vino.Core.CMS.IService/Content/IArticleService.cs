@@ -11,10 +11,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.Content;
-using Vino.Core.CMS.Domain.Entity.Content;
+using Ku.Core.CMS.Domain.Dto.Content;
+using Ku.Core.CMS.Domain.Entity.Content;
 
-namespace Vino.Core.CMS.IService.Content
+namespace Ku.Core.CMS.IService.Content
 {
     public partial interface IArticleService
     {

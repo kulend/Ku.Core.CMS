@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Entity.System
+namespace Ku.Core.CMS.Domain.Entity.System
 {
     [Table("system_sms")]
     public class Sms : BaseProtectedEntity

@@ -2,8 +2,8 @@
 using System.IO;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.IdGenerator;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
     }
 }
 
-namespace Vino.Core.Infrastructure.IdGenerator
+namespace Ku.Core.Infrastructure.IdGenerator
 {
     /// <summary>
     /// ID 生成帮助类

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.CMS.Web.Extensions;
-using Vino.Core.Infrastructure.Extensions;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.Infrastructure.Extensions;
 
-namespace Vino.Core.CMS.Web.Security
+namespace Ku.Core.CMS.Web.Security
 {
     public class BackendAuthAuthorizationRequirement : IAuthorizationRequirement
     {

@@ -14,10 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Domain.Entity.Material;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Domain.Entity.Material;
 
-namespace Vino.Core.CMS.Data.Repository.Material
+namespace Ku.Core.CMS.Data.Repository.Material
 {
     /// <summary>
     /// 图片素材 仓储接口

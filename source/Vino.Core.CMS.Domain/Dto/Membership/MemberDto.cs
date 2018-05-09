@@ -13,9 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Vino.Core.CMS.Domain.Enum;
+using Ku.Core.CMS.Domain.Enum;
 
-namespace Vino.Core.CMS.Domain.Dto.Membership
+namespace Ku.Core.CMS.Domain.Dto.Membership
 {
     public class MemberDto : BaseProtectedDto
     {

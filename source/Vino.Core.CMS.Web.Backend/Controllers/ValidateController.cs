@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.Tools.VerificationCode;
+using Ku.Core.Tools.VerificationCode;
 
-namespace Vino.Core.CMS.Web.Admin.Controllers
+namespace Ku.Core.CMS.Web.Admin.Controllers
 {
     public class ValidateController: Controller
     {

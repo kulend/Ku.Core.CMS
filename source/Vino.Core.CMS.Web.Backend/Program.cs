@@ -7,7 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using NLog.Web;
 
-namespace Vino.Core.CMS.Web.Backend
+namespace Ku.Core.CMS.Web.Backend
 {
     public class Program
     {

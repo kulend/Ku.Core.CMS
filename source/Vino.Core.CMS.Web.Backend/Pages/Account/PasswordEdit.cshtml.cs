@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Extensions;
-using Vino.Core.CMS.Web.Filters;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Account
+namespace Ku.Core.CMS.Web.Backend.Pages.Account
 {
     [Auth]
     public class PasswordEditModel : BasePage

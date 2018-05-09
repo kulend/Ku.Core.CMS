@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.Cache;
-using Vino.Core.Infrastructure.Helper;
+using Ku.Core.Cache;
+using Ku.Core.Infrastructure.Helper;
 
-namespace Vino.Core.WeChat.AccessToken
+namespace Ku.Core.WeChat.AccessToken
 {
     public class WcAccessTokenTool : IWcAccessTokenTool
     {

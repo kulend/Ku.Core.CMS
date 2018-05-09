@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using QRCoder;
 
-namespace Vino.Core.Tools.QRCode
+namespace Ku.Core.Tools.QRCode
 {
     public enum QRCodeLevel
     {

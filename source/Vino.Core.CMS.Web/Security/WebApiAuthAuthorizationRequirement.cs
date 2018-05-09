@@ -5,12 +5,12 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.CMS.Web.Extensions;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.Web.Extensions;
 
-namespace Vino.Core.CMS.Web.Security
+namespace Ku.Core.CMS.Web.Security
 {
     public class WebApiAuthAuthorizationRequirement : IAuthorizationRequirement
     {

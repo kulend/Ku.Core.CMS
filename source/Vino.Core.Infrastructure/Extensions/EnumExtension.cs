@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Linq;
 
-namespace Vino.Core.Infrastructure.Extensions
+namespace Ku.Core.Infrastructure.Extensions
 {
     public static class EnumExtension
     {

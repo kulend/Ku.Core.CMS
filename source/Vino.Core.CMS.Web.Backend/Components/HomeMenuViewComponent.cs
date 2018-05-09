@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Service.System;
-using Vino.Core.CMS.Domain.Dto.System;
-using Vino.Core.CMS.IService.System;
+using Ku.Core.CMS.Service.System;
+using Ku.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.IService.System;
 
-namespace Vino.Core.CMS.Web.Backend.Components
+namespace Ku.Core.CMS.Web.Backend.Components
 {
     [ViewComponent(Name = "HomeMenu")]
     public class HomeMenuViewComponent : ViewComponent

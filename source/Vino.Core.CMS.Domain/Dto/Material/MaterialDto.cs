@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Vino.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.Domain.Dto.System;
 
-namespace Vino.Core.CMS.Domain.Dto.Material
+namespace Ku.Core.CMS.Domain.Dto.Material
 {
     public class MaterialDto: BaseProtectedDto
     {

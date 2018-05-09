@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Vino.Core.CMS.Domain.Entity.System;
+using Ku.Core.CMS.Domain.Entity.System;
 
-namespace Vino.Core.CMS.Domain.Entity.Material
+namespace Ku.Core.CMS.Domain.Entity.Material
 {
     public class Material : BaseProtectedEntity
     {

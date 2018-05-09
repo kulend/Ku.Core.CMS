@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Entity.System
+namespace Ku.Core.CMS.Domain.Entity.System
 {
     [Table("system_user_role")]
     public class UserRole

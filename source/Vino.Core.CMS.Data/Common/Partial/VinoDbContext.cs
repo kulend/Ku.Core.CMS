@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Vino.Core.CMS.Data.Common
+namespace Ku.Core.CMS.Data.Common
 {
     public partial class VinoDbContext : DbContext, IDbContext
     {

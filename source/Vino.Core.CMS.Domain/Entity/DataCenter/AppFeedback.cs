@@ -13,7 +13,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Entity.DataCenter
+namespace Ku.Core.CMS.Domain.Entity.DataCenter
 {
     /// <summary>
     /// 应用反馈

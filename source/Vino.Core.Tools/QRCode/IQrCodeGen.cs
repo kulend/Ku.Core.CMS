@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.Tools.QRCode
+namespace Ku.Core.Tools.QRCode
 {
     public interface IQrCodeGen
     {

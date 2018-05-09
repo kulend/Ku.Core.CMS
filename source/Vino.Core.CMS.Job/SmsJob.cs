@@ -7,13 +7,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.System;
-using Vino.Core.CMS.Domain.Enum.System;
-using Vino.Core.Communication.SMS;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.TimedTask.Attribute;
+using Ku.Core.CMS.Data.Repository.System;
+using Ku.Core.CMS.Domain.Enum.System;
+using Ku.Core.Communication.SMS;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.TimedTask.Attribute;
 
-namespace Vino.Core.CMS.Job
+namespace Ku.Core.CMS.Job
 {
     public class SmsJob : VinoJob
     {

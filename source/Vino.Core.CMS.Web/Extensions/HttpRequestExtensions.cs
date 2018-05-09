@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 
-namespace Vino.Core.CMS.Web.Extensions
+namespace Ku.Core.CMS.Web.Extensions
 {
     public static class HttpRequestExtensions
     {

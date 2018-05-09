@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Vino.Core.Infrastructure.Helper
+namespace Ku.Core.Infrastructure.Helper
 {
     public static class HttpHelper
     {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Extensions;
-using Vino.Core.CMS.IService.System;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.IService.System;
 
-namespace Vino.Core.CMS.Web.Backend.Components
+namespace Ku.Core.CMS.Web.Backend.Components
 {
     [ViewComponent(Name = "AuthCodeJs")]
     public class AuthCodeJsViewComponent : ViewComponent

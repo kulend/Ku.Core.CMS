@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vino.Core.WeChat.AccessToken
+namespace Ku.Core.WeChat.AccessToken
 {
     public interface IWcAccessTokenTool
     {

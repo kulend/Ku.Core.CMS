@@ -8,9 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Vino.Core.CMS.Web.Application;
+using Ku.Core.CMS.Web.Application;
 
-namespace Vino.Core.CMS.WebApi
+namespace Ku.Core.CMS.WebApi
 {
     public class Startup : WebApiStartup
     {

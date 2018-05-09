@@ -13,10 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Vino.Core.CMS.Domain.Dto.System;
-using Vino.Core.CMS.Domain.Enum.Material;
+using Ku.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.Domain.Enum.Material;
 
-namespace Vino.Core.CMS.Domain.Dto.Material
+namespace Ku.Core.CMS.Domain.Dto.Material
 {
     public class MaterialGroupDto : BaseProtectedDto
     {

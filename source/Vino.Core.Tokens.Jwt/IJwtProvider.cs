@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vino.Core.Tokens.Jwt
+namespace Ku.Core.Tokens.Jwt
 {
     public interface IJwtProvider
     {

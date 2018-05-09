@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Vino.Core.CMS.Web.Extensions
+namespace Ku.Core.CMS.Web.Extensions
 {
     public static class FilterContextExtension
     {

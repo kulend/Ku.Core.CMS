@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TinifyAPI;
 
-namespace Vino.Core.Tools.ImageCompressor
+namespace Ku.Core.Tools.ImageCompressor
 {
     public class TinifyCompressor : IImageCompressor
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vino.Core.CMS.CodeGenerator
+namespace Ku.Core.CMS.CodeGenerator
 {
     class Program
     {

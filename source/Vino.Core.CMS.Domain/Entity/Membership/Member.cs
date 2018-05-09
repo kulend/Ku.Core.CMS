@@ -15,11 +15,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.Helper;
+using Ku.Core.CMS.Domain.Enum;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.Helper;
 
-namespace Vino.Core.CMS.Domain.Entity.Membership
+namespace Ku.Core.CMS.Domain.Entity.Membership
 {
     [Table("membership_member")]
     public class Member : BaseProtectedEntity

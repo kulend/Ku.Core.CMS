@@ -10,10 +10,10 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Vino.Core.CMS.Web.Filters;
-using Vino.Core.Infrastructure.Json;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.Infrastructure.Json;
 
-namespace Vino.Core.CMS.Web.Application
+namespace Ku.Core.CMS.Web.Application
 {
     public class BackendStartup : BaseStartup
     {

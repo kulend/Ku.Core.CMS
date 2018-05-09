@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.CMS.Domain.Dto.WeChat;
-using Vino.Core.CMS.IService.WeChat;
-using Vino.Core.CMS.Domain.Entity.WeChat;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.WeChat;
+using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.CMS.Domain.Entity.WeChat;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.WeChat.Views.WxMenu
+namespace Ku.Core.CMS.Web.Backend.Areas.WeChat.Views.WxMenu
 {
     [Area("WeChat")]
     [Auth("wechat.menu")]

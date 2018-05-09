@@ -3,7 +3,7 @@ using System.DrawingCore;
 using System.DrawingCore.Imaging;
 using System.IO;
 
-namespace Vino.Core.Tools.VerificationCode
+namespace Ku.Core.Tools.VerificationCode
 {
     public class VerificationCodeGen : IVerificationCodeGen
     {

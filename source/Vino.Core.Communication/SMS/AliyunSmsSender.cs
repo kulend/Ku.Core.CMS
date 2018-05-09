@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Vino.Core.Communication.SMS
+namespace Ku.Core.Communication.SMS
 {
     public class AliyunSmsSender : ISmsSender
     {

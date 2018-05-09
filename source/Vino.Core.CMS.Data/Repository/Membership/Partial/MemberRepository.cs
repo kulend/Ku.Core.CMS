@@ -14,10 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Domain.Entity.Membership;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Domain.Entity.Membership;
 
-namespace Vino.Core.CMS.Data.Repository.Membership
+namespace Ku.Core.CMS.Data.Repository.Membership
 {
     /// <summary>
     /// 会员 仓储接口

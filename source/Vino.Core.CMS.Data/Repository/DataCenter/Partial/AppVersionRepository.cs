@@ -14,10 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Domain.Entity.DataCenter;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Domain.Entity.DataCenter;
 
-namespace Vino.Core.CMS.Data.Repository.DataCenter
+namespace Ku.Core.CMS.Data.Repository.DataCenter
 {
     /// <summary>
     /// 应用版本 仓储接口

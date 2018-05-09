@@ -11,10 +11,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.System;
-using Vino.Core.CMS.Domain.Entity.System;
+using Ku.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.Domain.Entity.System;
 
-namespace Vino.Core.CMS.IService.System
+namespace Ku.Core.CMS.IService.System
 {
     public partial interface INoticeService
     {

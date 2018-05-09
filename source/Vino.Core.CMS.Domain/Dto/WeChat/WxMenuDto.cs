@@ -15,7 +15,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Dto.WeChat
+namespace Ku.Core.CMS.Domain.Dto.WeChat
 {
     public class WxMenuDto : BaseProtectedDto
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain;
+using Ku.Core.CMS.Domain;
 
-namespace Vino.Core.CMS.Data.Common
+namespace Ku.Core.CMS.Data.Common
 {
     public interface IDapperRepository
     {

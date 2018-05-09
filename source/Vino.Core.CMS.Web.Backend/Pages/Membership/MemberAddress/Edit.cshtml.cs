@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Domain.Dto.Membership;
-using Vino.Core.CMS.Domain.Entity.Membership;
-using Vino.Core.CMS.IService.Membership;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.Membership;
+using Ku.Core.CMS.Domain.Entity.Membership;
+using Ku.Core.CMS.IService.Membership;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Membership.MemberAddress
+namespace Ku.Core.CMS.Web.Backend.Pages.Membership.MemberAddress
 {
     /// <summary>
     /// 会员地址 编辑页面

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Dto.Membership
+namespace Ku.Core.CMS.Domain.Dto.Membership
 {
     public class MemberTypeDto : BaseProtectedDto
     {

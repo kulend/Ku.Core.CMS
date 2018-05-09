@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Vino.Core.MvcPlugin
+namespace Ku.Core.MvcPlugin
 {
     public class PluginRazorViewEngineOptionsSetup : ConfigureOptions<RazorViewEngineOptions>
     {

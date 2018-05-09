@@ -11,10 +11,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.Membership;
-using Vino.Core.CMS.Domain.Entity.Membership;
+using Ku.Core.CMS.Domain.Dto.Membership;
+using Ku.Core.CMS.Domain.Entity.Membership;
 
-namespace Vino.Core.CMS.IService.Membership
+namespace Ku.Core.CMS.IService.Membership
 {
     public partial interface IMemberService
     {

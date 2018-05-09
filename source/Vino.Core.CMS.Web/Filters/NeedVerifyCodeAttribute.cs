@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using Vino.Core.Cache;
-using Vino.Core.CMS.Domain;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Domain;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Filters
+namespace Ku.Core.CMS.Web.Filters
 {
     /// <summary>
     /// 该特性指示需要图像验证码验证

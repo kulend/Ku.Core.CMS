@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using StackExchange.Redis;
 
-namespace Vino.Core.Cache.Redis
+namespace Ku.Core.Cache.Redis
 {
     public static class RedisDatabaseExtensions
     {

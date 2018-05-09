@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Vino.Core.CMS.Domain.Dto.Content;
-using Vino.Core.CMS.Domain.Entity.Content;
-using Vino.Core.CMS.IService.Content;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Domain.Dto.Content;
+using Ku.Core.CMS.Domain.Entity.Content;
+using Ku.Core.CMS.IService.Content;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Content.Column
+namespace Ku.Core.CMS.Web.Backend.Pages.Content.Column
 {
     [Auth("content.column")]
     [IgnoreAntiforgeryToken(Order = 1001)]

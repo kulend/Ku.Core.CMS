@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.Infrastructure.Helper;
+using Ku.Core.Infrastructure.Helper;
 
-namespace Vino.Core.Infrastructure.Extensions
+namespace Ku.Core.Infrastructure.Extensions
 {
     public static class StringExtension
     {

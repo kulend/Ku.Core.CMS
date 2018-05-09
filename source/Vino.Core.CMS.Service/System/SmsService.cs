@@ -13,16 +13,16 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.System;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.System;
-using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.CMS.IService.System;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.CMS.Data.Repository.System;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.Domain.Entity.System;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.IdGenerator;
 
-namespace Vino.Core.CMS.Service.System
+namespace Ku.Core.CMS.Service.System
 {
     public partial class SmsService : BaseService, ISmsService
     {

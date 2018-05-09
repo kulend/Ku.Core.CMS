@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Vino.Core.CMS.Domain.Enum;
+using Ku.Core.CMS.Domain.Enum;
 
-namespace Vino.Core.CMS.Domain.Dto
+namespace Ku.Core.CMS.Domain.Dto
 {
     public class DemoDto : BaseProtectedDto
     {

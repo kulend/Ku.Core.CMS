@@ -10,9 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Vino.Core.CMS.Data.Common;
+using Ku.Core.CMS.Data.Common;
 
-namespace Vino.Core.CMS.Web.Application
+namespace Ku.Core.CMS.Web.Application
 {
     public class BaseStartup
     {

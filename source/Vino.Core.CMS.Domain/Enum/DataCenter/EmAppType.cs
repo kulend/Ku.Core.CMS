@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Enum.DataCenter
+namespace Ku.Core.CMS.Domain.Enum.DataCenter
 {
     public enum EmAppType : short
     {

@@ -15,9 +15,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Vino.Core.CMS.Domain.Enum.Mall;
+using Ku.Core.CMS.Domain.Enum.Mall;
 
-namespace Vino.Core.CMS.Domain.Dto.Mall
+namespace Ku.Core.CMS.Domain.Dto.Mall
 {
     public class DeliveryTempletDto : BaseProtectedDto
     {

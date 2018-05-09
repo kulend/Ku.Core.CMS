@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Vino.Core.WeChat.AccessToken;
+using Ku.Core.WeChat.AccessToken;
 
-namespace Vino.Core.WeChat.Qrcode
+namespace Ku.Core.WeChat.Qrcode
 {
     public interface IWcQrcodeTool
     {

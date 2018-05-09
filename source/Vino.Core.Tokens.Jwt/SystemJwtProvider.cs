@@ -8,7 +8,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vino.Core.Tokens.Jwt
+namespace Ku.Core.Tokens.Jwt
 {
     public class SystemJwtProvider : IJwtProvider
     {

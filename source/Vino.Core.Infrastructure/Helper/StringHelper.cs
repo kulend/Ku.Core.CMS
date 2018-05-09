@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Vino.Core.Infrastructure.Helper
+namespace Ku.Core.Infrastructure.Helper
 {
     public class StringHelper
     {

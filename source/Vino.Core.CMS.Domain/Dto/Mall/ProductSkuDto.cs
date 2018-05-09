@@ -11,11 +11,11 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.CMS.Domain.Enum.Mall;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.CMS.Domain.Enum;
+using Ku.Core.CMS.Domain.Enum.Mall;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Dto.Mall
+namespace Ku.Core.CMS.Domain.Dto.Mall
 {
     public class ProductSkuDto : BaseProtectedDto
     {

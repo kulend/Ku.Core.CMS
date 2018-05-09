@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.TaskApp.Application;
-using Vino.Core.CMS.TaskApp.AutoMapper;
-using Vino.Core.Infrastructure.Extensions;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.TaskApp.Application;
+using Ku.Core.CMS.TaskApp.AutoMapper;
+using Ku.Core.Infrastructure.Extensions;
 using AutoMapper;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
-using Vino.Core.CMS.IService.System;
+using Ku.Core.CMS.IService.System;
 
-namespace Vino.Core.CMS.TaskApp
+namespace Ku.Core.CMS.TaskApp
 {
     class Program
     {

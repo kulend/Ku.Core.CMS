@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.System.Views.Location
+namespace Ku.Core.CMS.Web.Backend.Areas.System.Views.Location
 {
     [Area("System")]
     [Auth("system.location")]

@@ -14,9 +14,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.CMS.Domain.Enum.WeChat;
+using Ku.Core.CMS.Domain.Enum.WeChat;
 
-namespace Vino.Core.CMS.Domain.Entity.WeChat
+namespace Ku.Core.CMS.Domain.Entity.WeChat
 {
     [Table("wechat_account")]
     public class WxAccount : BaseProtectedEntity

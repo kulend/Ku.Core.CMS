@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Vino.Core.EventBus;
-using Vino.Core.EventBus.CAP;
+using Ku.Core.EventBus;
+using Ku.Core.EventBus.CAP;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

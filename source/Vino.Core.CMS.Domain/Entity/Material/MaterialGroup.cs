@@ -14,10 +14,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Vino.Core.CMS.Domain.Entity.System;
-using Vino.Core.CMS.Domain.Enum.Material;
+using Ku.Core.CMS.Domain.Entity.System;
+using Ku.Core.CMS.Domain.Enum.Material;
 
-namespace Vino.Core.CMS.Domain.Entity.Material
+namespace Ku.Core.CMS.Domain.Entity.Material
 {
     [Table("material_group")]
     public class MaterialGroup : BaseProtectedEntity

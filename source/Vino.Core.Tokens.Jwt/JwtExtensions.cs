@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Vino.Core.Tokens.Jwt;
+using Ku.Core.Tokens.Jwt;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

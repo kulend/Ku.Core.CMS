@@ -13,10 +13,10 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.CMS.Domain.Enum;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.CMS.Domain.Enum;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Dto.System
+namespace Ku.Core.CMS.Domain.Dto.System
 {
     /// <summary>
     /// 公告

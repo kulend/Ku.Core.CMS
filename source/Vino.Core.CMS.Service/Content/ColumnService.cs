@@ -13,15 +13,15 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.Content;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.Content;
-using Vino.Core.CMS.Domain.Entity.Content;
-using Vino.Core.CMS.IService.Content;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.CMS.Data.Repository.Content;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.Content;
+using Ku.Core.CMS.Domain.Entity.Content;
+using Ku.Core.CMS.IService.Content;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.IdGenerator;
 
-namespace Vino.Core.CMS.Service.Content
+namespace Ku.Core.CMS.Service.Content
 {
     public partial class ColumnService : BaseService, IColumnService
     {

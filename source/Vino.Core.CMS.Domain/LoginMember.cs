@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain
+namespace Ku.Core.CMS.Domain
 {
     /// <summary>
     /// 登陆会员信息

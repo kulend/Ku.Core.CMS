@@ -14,16 +14,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Data.Repository.Membership;
-using Vino.Core.CMS.Domain;
-using Vino.Core.CMS.Domain.Dto.Membership;
-using Vino.Core.CMS.Domain.Entity.Membership;
-using Vino.Core.CMS.Domain.Enum.Membership;
-using Vino.Core.CMS.IService.Membership;
-using Vino.Core.Infrastructure.Exceptions;
-using Vino.Core.Infrastructure.IdGenerator;
+using Ku.Core.CMS.Data.Repository.Membership;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.Membership;
+using Ku.Core.CMS.Domain.Entity.Membership;
+using Ku.Core.CMS.Domain.Enum.Membership;
+using Ku.Core.CMS.IService.Membership;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.IdGenerator;
 
-namespace Vino.Core.CMS.Service.Membership
+namespace Ku.Core.CMS.Service.Membership
 {
     public partial class MemberPointService : BaseService, IMemberPointService
     {

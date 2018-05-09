@@ -11,10 +11,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.DataCenter;
-using Vino.Core.CMS.Domain.Entity.DataCenter;
+using Ku.Core.CMS.Domain.Dto.DataCenter;
+using Ku.Core.CMS.Domain.Entity.DataCenter;
 
-namespace Vino.Core.CMS.IService.DataCenter
+namespace Ku.Core.CMS.IService.DataCenter
 {
     public partial interface IAppService
     {

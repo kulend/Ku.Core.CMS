@@ -13,10 +13,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.CMS.Domain.Enum.System;
-using Vino.Core.Infrastructure.Attributes;
+using Ku.Core.CMS.Domain.Enum.System;
+using Ku.Core.Infrastructure.Attributes;
 
-namespace Vino.Core.CMS.Domain.Dto.System
+namespace Ku.Core.CMS.Domain.Dto.System
 {
     public class SmsAccountDto : BaseProtectedDto
     {

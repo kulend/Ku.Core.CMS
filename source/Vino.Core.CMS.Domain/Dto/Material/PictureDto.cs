@@ -12,9 +12,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.EventBus;
+using Ku.Core.EventBus;
 
-namespace Vino.Core.CMS.Domain.Dto.Material
+namespace Ku.Core.CMS.Domain.Dto.Material
 {
     public class PictureDto : MaterialDto
     {

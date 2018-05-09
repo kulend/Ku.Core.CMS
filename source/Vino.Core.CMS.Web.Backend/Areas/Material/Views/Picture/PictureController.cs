@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
-using Vino.Core.Infrastructure.Helper;
-using Vino.Core.CMS.Domain.Dto.Material;
-using Vino.Core.CMS.Web.Extensions;
-using Vino.Core.CMS.Service.Material;
-using Vino.Core.Infrastructure.Extensions;
-using Vino.Core.EventBus.CAP;
-using Vino.Core.Infrastructure.IdGenerator;
-using Vino.Core.CMS.IService.Material;
+using Ku.Core.Infrastructure.Helper;
+using Ku.Core.CMS.Domain.Dto.Material;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.Service.Material;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.EventBus.CAP;
+using Ku.Core.Infrastructure.IdGenerator;
+using Ku.Core.CMS.IService.Material;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.Material.Views.Picture
+namespace Ku.Core.CMS.Web.Backend.Areas.Material.Views.Picture
 {
     [Area("Material")]
     [Auth("material.picture")]

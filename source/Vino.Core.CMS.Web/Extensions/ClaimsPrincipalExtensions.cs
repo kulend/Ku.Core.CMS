@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Web.Security;
 
-namespace Vino.Core.CMS.Web.Extensions
+namespace Ku.Core.CMS.Web.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

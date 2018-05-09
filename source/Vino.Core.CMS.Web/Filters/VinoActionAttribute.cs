@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Threading.Tasks;
-using Vino.Core.Infrastructure.DependencyResolver;
+using Ku.Core.Infrastructure.DependencyResolver;
 
-namespace Vino.Core.CMS.Web.Filters
+namespace Ku.Core.CMS.Web.Filters
 {
     public abstract class VinoActionAttribute : Attribute
     {

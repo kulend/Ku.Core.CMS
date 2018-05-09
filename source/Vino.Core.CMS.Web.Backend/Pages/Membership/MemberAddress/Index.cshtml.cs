@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.Membership;
-using Vino.Core.CMS.Domain.Entity.Membership;
-using Vino.Core.CMS.IService.Membership;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Domain.Dto.Membership;
+using Ku.Core.CMS.Domain.Entity.Membership;
+using Ku.Core.CMS.IService.Membership;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.Membership.MemberAddress
+namespace Ku.Core.CMS.Web.Backend.Pages.Membership.MemberAddress
 {
     /// <summary>
     /// 会员地址 列表页面

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Enum.Content
+namespace Ku.Core.CMS.Domain.Enum.Content
 {
     public enum EmArticleContentType : short
     {

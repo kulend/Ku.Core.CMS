@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Vino.Core.CMS.WebApi.Controllers
+namespace Ku.Core.CMS.WebApi.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller

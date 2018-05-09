@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using Vino.Core.Cache;
-using Vino.Core.Cache.Redis;
+using Ku.Core.Cache;
+using Ku.Core.Cache.Redis;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

@@ -11,9 +11,9 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Vino.Core.CMS.Domain.Enum.DataCenter;
+using Ku.Core.CMS.Domain.Enum.DataCenter;
 
-namespace Vino.Core.CMS.Domain.Dto.DataCenter
+namespace Ku.Core.CMS.Domain.Dto.DataCenter
 {
     public class AppDto : BaseProtectedDto
     {

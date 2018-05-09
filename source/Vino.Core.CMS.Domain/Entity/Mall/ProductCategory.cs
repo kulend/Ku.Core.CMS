@@ -12,7 +12,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Entity.Mall
+namespace Ku.Core.CMS.Domain.Entity.Mall
 {
     /// <summary>
     /// 商品类目

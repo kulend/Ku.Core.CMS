@@ -11,10 +11,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.Material;
-using Vino.Core.CMS.Domain.Entity.Material;
+using Ku.Core.CMS.Domain.Dto.Material;
+using Ku.Core.CMS.Domain.Entity.Material;
 
-namespace Vino.Core.CMS.IService.Material
+namespace Ku.Core.CMS.IService.Material
 {
     public partial interface IPictureService
     {

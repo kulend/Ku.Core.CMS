@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Autofac;
 
-namespace Vino.Core.Infrastructure.DependencyResolver
+namespace Ku.Core.Infrastructure.DependencyResolver
 {
     public class AutofacResolver : IIocResolver
     {

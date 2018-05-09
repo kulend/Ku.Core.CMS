@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Vino.Core.CMS.Domain.Entity.Material
+namespace Ku.Core.CMS.Domain.Entity.Material
 {
     [Table("material_picture")]
     public class Picture : Material

@@ -1,8 +1,8 @@
 ﻿using System;
 using StackExchange.Redis;
-using Vino.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.Extensions;
 
-namespace Vino.Core.Cache.Redis
+namespace Ku.Core.Cache.Redis
 {
     public class RedisConnectionMultiplexer
     {

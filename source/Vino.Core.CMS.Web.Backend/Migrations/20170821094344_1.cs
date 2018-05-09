@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace Vino.Core.CMS.Web.Backend.Migrations
+namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     public partial class _1 : Migration
     {

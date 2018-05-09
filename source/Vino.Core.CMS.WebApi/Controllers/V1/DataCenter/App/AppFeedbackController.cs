@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Vino.Core.CMS.Domain.Dto.DataCenter;
-using Vino.Core.CMS.IService.DataCenter;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.DataCenter;
+using Ku.Core.CMS.IService.DataCenter;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.WebApi.Controllers.V1.DataCenter.App
+namespace Ku.Core.CMS.WebApi.Controllers.V1.DataCenter.App
 {
     /// <summary>
     /// 应用相关接口

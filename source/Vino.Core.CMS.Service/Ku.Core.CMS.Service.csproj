@@ -19,14 +19,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
-    <ProjectReference Include="..\Vino.Core.Cache\Vino.Core.Cache.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.IService\Vino.Core.CMS.IService.csproj" />
-    <ProjectReference Include="..\Vino.Core.EventBus\Vino.Core.EventBus.csproj" />
-    <ProjectReference Include="..\Vino.Core.Infrastructure\Vino.Core.Infrastructure.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Data\Vino.Core.CMS.Data.csproj" />
-    <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
-    <ProjectReference Include="..\Vino.Core.Tools\Vino.Core.Tools.csproj" />
-    <ProjectReference Include="..\Vino.Core.WeChat\Vino.Core.WeChat.csproj" />
+    <ProjectReference Include="..\Vino.Core.Cache\Ku.Core.Cache.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.IService\Ku.Core.CMS.IService.csproj" />
+    <ProjectReference Include="..\Vino.Core.EventBus\Ku.Core.EventBus.csproj" />
+    <ProjectReference Include="..\Vino.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\Vino.Core.Tools\Ku.Core.Tools.csproj" />
+    <ProjectReference Include="..\Vino.Core.WeChat\Ku.Core.WeChat.csproj" />
   </ItemGroup>
 
 </Project>

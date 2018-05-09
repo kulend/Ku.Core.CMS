@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vino.Core.CMS.Domain\Vino.Core.CMS.Domain.csproj" />
-    <ProjectReference Include="..\Vino.Core.WeChat\Vino.Core.WeChat.csproj" />
+    <ProjectReference Include="..\Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
+    <ProjectReference Include="..\Vino.Core.WeChat\Ku.Core.WeChat.csproj" />
   </ItemGroup>
 
 </Project>

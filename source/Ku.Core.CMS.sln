@@ -7,51 +7,51 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.表现", "1.表现", "{5F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.其他", "8.其他", "{38AE7166-6167-4D42-A479-647797CD1A83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Infrastructure", "Vino.Core.Infrastructure\Ku.Core.Infrastructure.csproj", "{73C2FAAC-7BCB-420E-913E-37CE2F21470F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Infrastructure", "Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj", "{73C2FAAC-7BCB-420E-913E-37CE2F21470F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.数据", "4.数据", "{710A57A2-44CD-4A89-A01A-1AF755B90113}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Data", "Vino.Core.CMS.Data\Ku.Core.CMS.Data.csproj", "{02FBBBAB-95BC-4C92-BABA-B0F1F84EA50B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Data", "Ku.Core.CMS.Data\Ku.Core.CMS.Data.csproj", "{02FBBBAB-95BC-4C92-BABA-B0F1F84EA50B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.服务", "3.服务", "{55C35987-B209-43DB-A627-3E77CC97586F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Service", "Vino.Core.CMS.Service\Ku.Core.CMS.Service.csproj", "{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Service", "Ku.Core.CMS.Service\Ku.Core.CMS.Service.csproj", "{CF98FC79-1E4E-4AE0-80F6-428ED33F4CBB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Cache", "Vino.Core.Cache\Ku.Core.Cache.csproj", "{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Cache", "Ku.Core.Cache\Ku.Core.Cache.csproj", "{5B0EFC0F-BCCB-4661-8EAB-5700FD6CE25C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Web", "Vino.Core.CMS.Web\Ku.Core.CMS.Web.csproj", "{865F844C-DD2F-4F05-B534-B7EA154DF883}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Web", "Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj", "{865F844C-DD2F-4F05-B534-B7EA154DF883}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Job", "Vino.Core.CMS.Job\Ku.Core.CMS.Job.csproj", "{3A2B4850-8EA0-4094-996E-BE982B5AE65D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Job", "Ku.Core.CMS.Job\Ku.Core.CMS.Job.csproj", "{3A2B4850-8EA0-4094-996E-BE982B5AE65D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.基础", "0.基础", "{92B8B0CA-E355-4FC9-8F1A-C056112CB388}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Tokens.Jwt", "Vino.Core.Tokens.Jwt\Ku.Core.Tokens.Jwt.csproj", "{38BA2F99-2E0B-4B17-AEEB-AA1319DF0985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Tokens.Jwt", "Ku.Core.Tokens.Jwt\Ku.Core.Tokens.Jwt.csproj", "{38BA2F99-2E0B-4B17-AEEB-AA1319DF0985}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Domain", "Vino.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj", "{3B9DB242-13E5-401A-8592-3BAB515AEDEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Domain", "Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj", "{3B9DB242-13E5-401A-8592-3BAB515AEDEF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.定时任务", "5.定时任务", "{AAA4FAE3-F8E8-441D-A1F7-CEE3153858D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.TimedTask", "..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask\Ku.Core.TimedTask.csproj", "{EE0DB9D1-1226-430E-9BB2-1B1B680D0DF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.TimedTask", "..\..\开源\Ku.Core.TimedTask\source\Ku.Core.TimedTask\Ku.Core.TimedTask.csproj", "{EE0DB9D1-1226-430E-9BB2-1B1B680D0DF5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.TimedTask.EntityFramework", "..\..\开源\Vino.Core.TimedTask\source\Vino.Core.TimedTask.EntityFramework\Ku.Core.TimedTask.EntityFramework.csproj", "{00A492FB-10A7-433D-8374-95D0329D6C16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.TimedTask.EntityFramework", "..\..\开源\Ku.Core.TimedTask\source\Ku.Core.TimedTask.EntityFramework\Ku.Core.TimedTask.EntityFramework.csproj", "{00A492FB-10A7-433D-8374-95D0329D6C16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.TaskApp", "Vino.Core.CMS.TaskApp\Ku.Core.CMS.TaskApp.csproj", "{2BE05EA2-E672-401A-98F5-519CE4088AEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.TaskApp", "Ku.Core.CMS.TaskApp\Ku.Core.CMS.TaskApp.csproj", "{2BE05EA2-E672-401A-98F5-519CE4088AEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.CodeGenerator", "Vino.Core.CMS.CodeGenerator\Ku.Core.CMS.CodeGenerator.csproj", "{1D36842E-C60C-460A-905E-8E8B604B04D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.CodeGenerator", "Ku.Core.CMS.CodeGenerator\Ku.Core.CMS.CodeGenerator.csproj", "{1D36842E-C60C-460A-905E-8E8B604B04D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.测试", "6.测试", "{90D6C3DB-5BAC-4192-B281-6F553849024E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Tests", "Vino.Core.CMS.Tests\Ku.Core.CMS.Tests.csproj", "{63ED8391-D0AA-43B1-B0CD-3628F89895E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Tests", "Ku.Core.CMS.Tests\Ku.Core.CMS.Tests.csproj", "{63ED8391-D0AA-43B1-B0CD-3628F89895E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.EventBus", "Vino.Core.EventBus\Ku.Core.EventBus.csproj", "{30BFE056-3FD9-4120-86B8-DD14A007127B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.EventBus", "Ku.Core.EventBus\Ku.Core.EventBus.csproj", "{30BFE056-3FD9-4120-86B8-DD14A007127B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Tools", "Vino.Core.Tools\Ku.Core.Tools.csproj", "{326151C5-9475-407F-BA21-2925151DC8A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Tools", "Ku.Core.Tools\Ku.Core.Tools.csproj", "{326151C5-9475-407F-BA21-2925151DC8A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Web.Backend", "Vino.Core.CMS.Web.Backend\Ku.Core.CMS.Web.Backend.csproj", "{F09D0224-A801-44F5-8B42-9301F22372CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Web.Backend", "Ku.Core.CMS.Web.Backend\Ku.Core.CMS.Web.Backend.csproj", "{F09D0224-A801-44F5-8B42-9301F22372CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.开源项目", "7.开源项目", "{3FFD240A-9650-4B56-ADEA-A094642369E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Session", "Vino.Core.Session\Ku.Core.Session.csproj", "{8549DD05-26F6-4202-A1B0-AC9CF7309590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Session", "Ku.Core.Session\Ku.Core.Session.csproj", "{8549DD05-26F6-4202-A1B0-AC9CF7309590}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.CAP", "..\..\开源\CAP\src\DotNetCore.CAP\DotNetCore.CAP.csproj", "{661BD796-CEBB-40A1-9B37-29ADB4CA7F7E}"
 EndProject
@@ -61,15 +61,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.CAP.MySql", "..\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.接口", "2.接口", "{9D86126B-0723-4E1C-B95A-DCD1E079D624}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.MvcPlugin", "Vino.Core.MvcPlugin\Ku.Core.MvcPlugin.csproj", "{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.MvcPlugin", "Ku.Core.MvcPlugin\Ku.Core.MvcPlugin.csproj", "{FBBBB8A1-38CF-4D85-87BF-5F0496CCC29D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.IService", "Vino.Core.CMS.IService\Ku.Core.CMS.IService.csproj", "{87DCC404-9023-44AF-9CCF-C978B8BF5FC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.IService", "Ku.Core.CMS.IService\Ku.Core.CMS.IService.csproj", "{87DCC404-9023-44AF-9CCF-C978B8BF5FC3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.WeChat", "Vino.Core.WeChat\Ku.Core.WeChat.csproj", "{758526A6-BC28-4883-A392-3A22DE484F16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.WeChat", "Ku.Core.WeChat\Ku.Core.WeChat.csproj", "{758526A6-BC28-4883-A392-3A22DE484F16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.WebApi", "Vino.Core.CMS.WebApi\Ku.Core.CMS.WebApi.csproj", "{4DB286CD-6FD4-4AE7-86B1-BAA046109256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.WebApi", "Ku.Core.CMS.WebApi\Ku.Core.CMS.WebApi.csproj", "{4DB286CD-6FD4-4AE7-86B1-BAA046109256}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Communication", "Vino.Core.Communication\Ku.Core.Communication.csproj", "{5AF55AE7-924B-46E0-A71C-C05A5A653146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Communication", "Ku.Core.Communication\Ku.Core.Communication.csproj", "{5AF55AE7-924B-46E0-A71C-C05A5A653146}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Dapper", "..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj", "{E7487AB4-C2CC-4781-8FAA-277E85EEFE6F}"
 EndProject

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using Ku.Core.Extensions.Dapper;
+using Ku.Core.Extensions.Dapper.SqlDialect;
 using Ku.Core.Infrastructure.Extensions;
 
 namespace Ku.Core.CMS.Domain
@@ -98,6 +101,84 @@ namespace Ku.Core.CMS.Domain
 
             var exp = Expression.Lambda<Func<T, bool>>(body, parameter);
             return exp;
+        }
+
+        public static DapperSql ParseToDapperSql<T>(this BaseSearch<T> search, ISqlDialect dialect)
+        {
+            if (search == null)
+            {
+                return null;
+            }
+
+            List<string> sqls = new List<string>();
+            Dictionary<string, object> allParameters = new Dictionary<string, object>();
+            foreach (PropertyInfo p in search.GetType().GetProperties())
+            {
+                (string sql, Dictionary<string, object> parameters) = ParseProperty(search, p, dialect);
+                if (sql != null)
+                {
+                    sqls.Add(sql);
+                    allParameters.TryConcat(parameters);
+                }
+            }
+
+            var allSql = string.Join(" AND ", sqls.ToArray());
+
+            return new DapperSql(allSql, allParameters);
+        }
+
+        private static (string sql, Dictionary<string, object> parameters) ParseProperty<T>(BaseSearch<T> search, PropertyInfo p, ISqlDialect dialect)
+        {
+            //如果有CustomConditionAttribute，则跳过该条件
+            if (p.GetCustomAttribute<CustomConditionAttribute>() != null)
+            {
+                return (null, null);
+            }
+
+            //取得SearchConditionAttribute特性
+            var attr = p.GetCustomAttribute<SearchConditionAttribute>();
+            var ignoreWhenNull = attr != null ? attr.IgnoreWhenNull : true;
+            var value = p.GetValue(search);
+
+            //值为NULL的处理
+            if (value == null && ignoreWhenNull)
+            {
+                return (null, null);
+            }
+            if (p.PropertyType == typeof(string) && string.IsNullOrEmpty((string)value) && ignoreWhenNull)
+            {
+                return (null, null);
+            }
+
+            //取得字段名
+            var name = (attr != null && attr.PropertyName.IsNotNullOrEmpty()) ? attr.PropertyName : p.Name;
+
+            SearchConditionOperation operation = attr != null ? attr.Operation : SearchConditionOperation.Equal;
+            string sql = null;
+            Dictionary<string, object> pms = new Dictionary<string, object>();
+            switch (operation)
+            {
+                case SearchConditionOperation.Equal:
+                    sql = dialect.QuoteFiled(name) + "=@" + name;
+                    pms.TryAdd(name, value);
+                    break;
+                case SearchConditionOperation.NotEqual:
+                    sql = dialect.QuoteFiled(name) + "<>@" + name;
+                    pms.TryAdd(name, value);
+                    break;
+                case SearchConditionOperation.Contains:
+                    sql = $"{dialect.QuoteFiled(name)} LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
+                    pms.TryAdd(name, value);
+                    break;
+                case SearchConditionOperation.NotContains:
+                    sql = $"{dialect.QuoteFiled(name)} NOT LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
+                    pms.TryAdd(name, value);
+                    break;
+                default:
+                    break;
+            }
+
+            return (sql, pms);
         }
     }
 }

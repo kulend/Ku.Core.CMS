@@ -10,72 +10,31 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using Ku.Core.Extensions.Dapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Ku.Core.CMS.Data.Repository.Content;
 using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.Content;
 using Ku.Core.CMS.Domain.Entity.Content;
 using Ku.Core.CMS.IService.Content;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
+using System;
+using System.Collections.Generic;
 using System.Dynamic;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.Content
 {
-    public partial class ArticleService : BaseService, IArticleService
+    public partial class ArticleService : BaseService<Article, ArticleDto, ArticleSearch>, IArticleService
     {
-        protected readonly IArticleRepository _repository;
-
         #region 构造函数
 
-        public ArticleService(IArticleRepository repository)
+        public ArticleService()
         {
-            this._repository = repository;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<ArticleDto></returns>
-        public async Task<List<ArticleDto>> GetListAsync(ArticleSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<ArticleDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<ArticleDto> items)> GetListAsync(int page, int size, ArticleSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<ArticleDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<ArticleDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<ArticleDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -132,37 +91,5 @@ namespace Ku.Core.CMS.Service.Content
 
             }
         }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            using (var _dapper = DapperFactory.Create())
-            {
-                await _dapper.DeleteAsync<Article>(new DapperSql("Id IN @Ids", new { Ids = id }));
-            }
-        }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            using (var _dapper = DapperFactory.Create())
-            {
-                await _dapper.RestoreAsync<Article>(new DapperSql("Id IN @Ids", new { Ids = id }));
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
-
-        #endregion
     }
 }

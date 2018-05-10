@@ -16,58 +16,11 @@ using Ku.Core.CMS.Domain.Entity.Content;
 
 namespace Ku.Core.CMS.IService.Content
 {
-    public partial interface IArticleService
+    public partial interface IArticleService : IBaseService<Article, ArticleDto, ArticleSearch>
     {
-        #region 自动创建的接口
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<ArticleDto></returns>
-        Task<List<ArticleDto>> GetListAsync(ArticleSearch where, string sort);
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        Task<(int count, List<ArticleDto> items)> GetListAsync(int page, int size, ArticleSearch where, string sort);
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        Task<ArticleDto> GetByIdAsync(long id);
-
         /// <summary>
         /// 保存数据
         /// </summary>
         Task SaveAsync(ArticleDto dto);
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        Task DeleteAsync(params long[] id);
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        Task RestoreAsync(params long[] id);
-
-        #endregion
-
-        #region 其他接口
-
-        #endregion
     }
 }

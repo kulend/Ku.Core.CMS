@@ -22,20 +22,19 @@ using Ku.Core.CMS.IService.Content;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
+using System.Dynamic;
 
 namespace Ku.Core.CMS.Service.Content
 {
     public partial class ArticleService : BaseService, IArticleService
     {
         protected readonly IArticleRepository _repository;
-        protected IDapper _dapper;
 
         #region 构造函数
 
-        public ArticleService(IArticleRepository repository, IDapper dapper)
+        public ArticleService(IArticleRepository repository)
         {
             this._repository = repository;
-            this._dapper = dapper;
         }
 
         #endregion
@@ -96,34 +95,42 @@ namespace Ku.Core.CMS.Service.Content
                     model.PublishedTime = DateTime.Now;
                 }
                 model.IsDeleted = false;
-                await _repository.InsertAsync(model);
+
+                using (var dapper = DapperFactory.Create())
+                {
+                    await dapper.InsertAsync(model);
+                }
             }
             else
             {
                 //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                using (var dapper = DapperFactory.Create())
                 {
-                    throw new VinoDataNotFoundException("无法取得文章数据！");
+                    var entity = await dapper.QueryOneAsync<Article>(new { model.Id });
+                    if (entity == null)
+                    {
+                        throw new VinoDataNotFoundException("无法取得相关数据！");
+                    }
+
+                    dynamic item = new ExpandoObject();
+                    item.Title = model.Title;
+                    item.Author = model.Author;
+                    item.Provenance = model.Provenance;
+                    item.OrderIndex = model.OrderIndex;
+                    item.Keyword = model.Keyword.R("，", ",");
+                    item.SubTitle = model.SubTitle;
+                    item.IsPublished = model.IsPublished;
+                    item.PublishedTime = model.PublishedTime;
+                    item.Content = model.Content;
+                    item.ContentType = model.ContentType;
+                    if (model.IsPublished && !entity.PublishedTime.HasValue)
+                    {
+                        item.PublishedTime = DateTime.Now;
+                    }
+                    await dapper.UpdateAsync<Article>(item, new { model.Id });
                 }
 
-                item.Title = model.Title;
-                item.Author = model.Author;
-                item.Provenance = model.Provenance;
-                item.OrderIndex = model.OrderIndex;
-                item.Keyword = model.Keyword.R("，", ",");
-                item.SubTitle = model.SubTitle;
-                item.IsPublished = model.IsPublished;
-                item.PublishedTime = model.PublishedTime;
-                item.Content = model.Content;
-                item.ContentType = model.ContentType;
-                if (item.IsPublished && !item.PublishedTime.HasValue)
-                {
-                    item.PublishedTime = DateTime.Now;
-                }
-                _repository.Update(item);
             }
-            await _repository.SaveAsync();
         }
 
         /// <summary>

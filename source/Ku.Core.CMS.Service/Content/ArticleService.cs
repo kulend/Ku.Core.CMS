@@ -88,7 +88,6 @@ namespace Ku.Core.CMS.Service.Content
                     }
                     await dapper.UpdateAsync<Article>(item, new { model.Id });
                 }
-
             }
         }
     }

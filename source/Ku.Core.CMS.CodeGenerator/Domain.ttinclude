@@ -11,7 +11,7 @@
 <#@ import namespace="System.Collections.Generic" #> 
 <#@ import namespace="System.Reflection" #> 
 <#
-	var pathOfEntity = RootPath + "/Vino.Core.CMS.Domain/Entity/" + area;
+	var pathOfEntity = RootPath + "/Ku.Core.CMS.Domain/Entity/" + area;
     if(!Directory.Exists(pathOfEntity))
     {
         Directory.CreateDirectory(pathOfEntity);
@@ -21,7 +21,7 @@
 	manager.StartBlock(fileNameOfEntity);
 #>
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：<#=fileNameOfEntity#>
 // 功能描述：<#=desc#> 实体类
@@ -34,7 +34,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Entity.<#=area#>
+namespace Ku.Core.CMS.Domain.Entity.<#=area#>
 {
     /// <summary>
     /// <#=desc#>
@@ -59,7 +59,7 @@ namespace Vino.Core.CMS.Domain.Entity.<#=area#>
 #>
 <#
 	//开始生成Dto文件
-	var pathOfDto = RootPath + "/Vino.Core.CMS.Domain/Dto/" + area;
+	var pathOfDto = RootPath + "/Ku.Core.CMS.Domain/Dto/" + area;
     if(!Directory.Exists(pathOfDto))
     {
         Directory.CreateDirectory(pathOfDto);
@@ -69,7 +69,7 @@ namespace Vino.Core.CMS.Domain.Entity.<#=area#>
 	manager.StartBlock(fileNameOfDto);
 #>
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：<#=fileNameOfDto#>
 // 功能描述：<#=desc#> 数据传输类
@@ -82,7 +82,7 @@ namespace Vino.Core.CMS.Domain.Entity.<#=area#>
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vino.Core.CMS.Domain.Dto.<#=area#>
+namespace Ku.Core.CMS.Domain.Dto.<#=area#>
 {
     /// <summary>
     /// <#=desc#>

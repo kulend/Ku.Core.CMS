@@ -16,10 +16,10 @@
 	manager.StartBlock(fileNameOfIndexView1);
 #>
 @page "{handler?}"
-@model Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>.IndexModel
+@model Ku.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>.IndexModel
 @{
 	//----------------------------------------------------------------
-	// Copyright (C) 2018 vino 版权所有
+	// Copyright (C) 2018 kulend 版权所有
 	//
 	// 文件名：Index.cshtml
 	// 功能描述：<#=desc#> 列表页面
@@ -79,13 +79,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.<#=area#>;
-using Vino.Core.CMS.Domain.Entity.<#=area#>;
-using Vino.Core.CMS.IService.<#=area#>;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Security;
+using Ku.Core.CMS.Domain.Dto.<#=area#>;
+using Ku.Core.CMS.Domain.Entity.<#=area#>;
+using Ku.Core.CMS.IService.<#=area#>;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Security;
 
-namespace Vino.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
+namespace Ku.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
 {
     /// <summary>
     /// <#=desc#> 列表页面

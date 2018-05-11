@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="All.tt">
       <LastGenOutput>All.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -54,10 +58,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Service.cs</LastGenOutput>
     </None>
-    <None Update="Template1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template1.cs</LastGenOutput>
-    </None>
     <None Update="Template2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template2.cs</LastGenOutput>
@@ -73,11 +73,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>All.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Template1.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template1.tt</DependentUpon>
     </Compile>
     <Compile Update="Template2.cs">
       <DesignTime>True</DesignTime>

@@ -9,12 +9,16 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Collections.Generic" #> 
-<#@ import namespace="System.Reflection" #> 
+<#@ import namespace="System.Reflection" #>
 <#@ include file="manager.ttinclude"#>
 <#
+	//var aa = new MemberAddress();
+    //Type type = typeof(MemberAddress);
+	//var name1 = type.Name;
 	var name = "Member_Address";
 	var desc = "会员地址";
 	var area = "Membership";
+	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = true;
 	var HasRecycle = true;
    	var HasDetail = true;
@@ -34,11 +38,10 @@
 	Manager manager = null;
 #>
 <#@ include file="Domain.ttinclude"#>
-<#@ include file="Repository.ttinclude"#>
 <#@ include file="Service.ttinclude"#>
 <#@ include file="Other.ttinclude"#>
 <#
-	var pathOfIndexView = RootPath + "/Vino.Core.CMS.Web.Backend/Pages/" + area + "/" + name;
+	var pathOfIndexView = RootPath + "/Ku.Core.CMS.Web.Backend/Pages/" + area + "/" + name;
     if(!Directory.Exists(pathOfIndexView))
     {
         Directory.CreateDirectory(pathOfIndexView);

@@ -6,40 +6,50 @@ layui.define(['form', 'layer'], function (exports) {
     var form = layui.form;
     var layer = layui.layer;
 
-    var areaSelect = function (parameter, getApi) {
-        if (typeof parameter == 'function') { //重载
-            getApi = parameter;
-            parameter = {};
-        } else {
-            parameter = parameter || {};
-            getApi = getApi || function () { };
-        }
+    var areaSelect = function (parameter) {
         var defaults = {
             dataApi: 'http://passer-by.com/data_location/list.json',     //数据接口地址
+            streetDataApi: function (region) {
+                return 'http://passer-by.com/data_location/town/' + region + '.json';
+            },
             crossDomain: true,        //是否开启跨域
             dataType: 'json',          //数据库类型:'json'或'jsonp'
-            label: "地区",
             filter: "areaSelect" + new Date().getTime(),
-            provinceField: 'province', //省份字段名
-            cityField: 'city',         //城市字段名
-            regionField: 'region',         //地区字段名
-            valueType: 'code',         //下拉框值的类型,code行政区划代码,name地名
+            hasStreet:true,
+            provinceField: 'province', //省份字段名code
+            cityField: 'city',         //城市字段名code
+            regionField: 'region',     //地区字段名code
+            streetField: 'street',     //街道字段名code
             required: true,
             code: 0,                   //地区编码
             province: 0,               //省份,可以为地区编码或者名称
             city: 0,                   //城市,可以为地区编码或者名称
-            region: 0,                   //地区,可以为地区编码或者名称
+            region: 0,                 //地区,可以为地区编码或者名称
+            street: 0, 
+            provinceNameField: '', //省份字段名name
+            cityNameField: '',         //城市字段名name
+            regionNameField: '',     //地区字段名name
+            streetNameField: '',     //街道字段名name
+            onChange: function (selectData) { }
         };
 
         var options = $.extend({}, defaults, parameter);
 
+        if (options.code && typeof options.code == "string") options.code = parseInt(options.code);
+        //if (options.province && typeof options.province == "string") options.province = parseInt(options.province);
+        //if (options.city && typeof options.city == "string") options.city = parseInt(options.city);
+        //if (options.region && typeof options.region == "string") options.region = parseInt(options.region);
+        //if (options.street && typeof options.street == "string") options.street = parseInt(options.street);
+
         return $(options.elem).each(function () {
-            var _api = {};
             var $this = $(this);
 
             var html = [];
             html.push('<div class="layui-inline" style="width: 130px;">');
-            html.push(`<select name="${options.provinceField}" ${options.required ? "lay-verify=\"required\"" : ""} lay-filter="${options.filter}">`);
+            if (options.provinceNameField) {
+                html.push(`<input type="hidden" name="${options.provinceNameField}" />`);
+            }
+            html.push(`<select name="${options.provinceField}" ${options.required ? "lay-verify=\"required\"" : ""} lay-filter="${options.filter}" lay-search>`);
             html.push(`<option value="">请选择省份</option>`);
             html.push('</select>');
             html.push('</div>');
@@ -48,6 +58,7 @@ layui.define(['form', 'layer'], function (exports) {
             var $province = $this.find('select[name="' + options.provinceField + '"]');
             var $city;
             var $region;
+            var $street;
             $.ajax({
                 url: options.dataApi,
                 type: 'GET',
@@ -57,17 +68,36 @@ layui.define(['form', 'layer'], function (exports) {
                 success: function (data) {
                     var province, city, region, hasCity;
                     if (options.code) {   //如果设置地区编码，则忽略单独设置的信息
-                        var c = options.code - options.code % 1e4;
-                        if (data[c]) {
-                            options.province = c;
-                        }
-                        c = options.code - (options.code % 1e4 ? options.code % 1e2 : options.code);
-                        if (data[c]) {
-                            options.city = c;
-                        }
-                        c = options.code % 1e2 ? options.code : 0;
-                        if (data[c]) {
-                            options.region = c;
+                        if (options.code >= 100000000) {
+                            //options.code为街道Code
+                            var pcrCode = parseInt(options.code / 1000);
+                            var c = pcrCode - pcrCode % 1e4;
+                            if (data[c]) {
+                                options.province = c;
+                            }
+                            c = pcrCode - (pcrCode % 1e4 ? pcrCode % 1e2 : pcrCode);
+                            if (data[c]) {
+                                options.city = c;
+                            }
+                            c = pcrCode % 1e2 ? pcrCode : 0;
+                            if (data[c]) {
+                                options.region = c;
+                            }
+                            options.street = options.code;
+                        } else {
+                            var c = options.code - options.code % 1e4;
+                            if (data[c]) {
+                                options.province = c;
+                            }
+                            c = options.code - (options.code % 1e4 ? options.code % 1e2 : options.code);
+                            if (data[c]) {
+                                options.city = c;
+                            }
+                            c = options.code % 1e2 ? options.code : 0;
+                            if (data[c]) {
+                                options.region = c;
+                            }
+                            options.street = 0;
                         }
                     }
 
@@ -77,13 +107,7 @@ layui.define(['form', 'layer'], function (exports) {
                         for (var code in data) {
                             if (!(code % 1e4)) {     //获取所有的省级行政单位
                                 province[code] = data[code];
-                                if (options.required && !options.province) {
-                                    if (options.city && !(options.city % 1e4)) {  //省未填，并判断为直辖市
-                                        options.province = options.city;
-                                    } else {
-                                        options.province = code;
-                                    }
-                                } else if (isNaN(options.province) && data[code].indexOf(options.province) > -1) {
+                                if (isNaN(options.province) && data[code].indexOf(options.province) > -1) {
                                     options.province = code;
                                 }
                             } else {
@@ -92,33 +116,25 @@ layui.define(['form', 'layer'], function (exports) {
                                     if (!(code % 100)) {
                                         hasCity = true;
                                         city[code] = data[code];
-                                        if (options.required && !options.city) {
-                                            options.city = code;
-                                        } else if (isNaN(options.city) && data[code].indexOf(options.city) > -1) {
+                                        if (isNaN(options.city) && data[code].indexOf(options.city) > -1) {
                                             options.city = code;
                                         }
                                     } else if (p > 8000) {                 //省直辖县级行政单位
                                         city[code] = data[code];
-                                        if (options.required && !options.city) {
-                                            options.city = code;
-                                        } else if (isNaN(options.city) && data[code].indexOf(options.city) > -1) {
+                                        if (isNaN(options.city) && data[code].indexOf(options.city) > -1) {
                                             options.city = code;
                                         }
                                     } else if (hasCity) {                  //非直辖市
                                         var c = code - options.city;
                                         if (options.city && c > 0 && c < 100) {     //同个城市的地区
                                             region[code] = data[code];
-                                            if (options.required && !options.region) {
-                                                options.region = code;
-                                            } else if (isNaN(options.region) && data[code].indexOf(options.region) > -1) {
+                                            if (isNaN(options.region) && data[code].indexOf(options.region) > -1) {
                                                 options.region = code;
                                             }
                                         }
                                     } else {
                                         region[code] = data[code];            //直辖市
-                                        if (options.required && !options.region) {
-                                            options.region = code;
-                                        } else if (isNaN(options.region) && data[code].indexOf(options.region) > -1) {
+                                        if (isNaN(options.region) && data[code].indexOf(options.region) > -1) {
                                             options.region = code;
                                         }
                                     }
@@ -131,55 +147,118 @@ layui.define(['form', 'layer'], function (exports) {
                             $province.empty();
                             $province.append('<option value="">请选择省份</option>');
                             for (var i in province) {
-                                $province.append('<option value="' + (options.valueType == 'code' ? i : province[i]) + '" data-code="' + i + '">' + province[i] + '</option>');
+                                $province.append('<option value="' + i + '">' + province[i] + '</option>');
                             }
                             if (options.province) {
-                                var value = options.valueType == 'code' ? options.province : province[options.province];
-                                $province.val(value);
+                                $province.val(options.province);
+                                $this.find('input[name="' + options.provinceNameField + '"]').val($province.find("option:selected").text());
                             }
-                            this.city();
+                            if ($province.val()) {
+                                this.city();
+                            }
                         },
                         city: function () {
                             $this.find('select[name="' + options.cityField + '"]').closest(".layui-inline").remove();
                             if (hasCity) {
                                 var chtml = [];
                                 chtml.push('<div class="layui-inline" style="width: 130px;">');
+                                if (options.cityNameField) {
+                                    chtml.push(`<input type="hidden" name="${options.cityNameField}" />`);
+                                }
                                 chtml.push(`<select name="${options.cityField}" ${options.required ? "lay-verify=\"required\"" : ""} lay-filter="${options.filter}">`);
                                 chtml.push(`<option value="">请选择城市</option>`);
                                 for (var i in city) {
-                                    chtml.push('<option value="' + (options.valueType == 'code' ? i : city[i]) + '" data-code="' + i + '">' + city[i] + '</option>');
+                                    chtml.push(`<option value="${i}">${city[i]}</option>`);
                                 }
                                 chtml.push('</select>');
                                 chtml.push('</div>');
                                 $province.closest(".layui-inline").after(chtml.join(""));
                                 $city = $this.find('select[name="' + options.cityField + '"]');
                                 if (options.city) {
-                                    var value = options.valueType == 'code' ? options.city : city[options.city];
-                                    $city.val(value);
-                                } else if (options.area) {
-                                    var value = options.valueType == 'code' ? options.area : city[options.area];
-                                    $city.val(value);
+                                    $city.val(options.city);
+                                    $this.find('input[name="' + options.cityNameField + '"]').val($city.find("option:selected").text());
+                                } else if (options.region) {
+                                    $city.val(options.region);
+                                    $this.find('input[name="' + options.cityNameField + '"]').val($city.find("option:selected").text());
                                 }
+                                if ($city.val()) {
+                                    this.region();
+                                }
+                            } else {
+                                $city = null;
+                                this.region();
                             }
-                            this.region();
                         },
                         region: function () {
                             $this.find('select[name="' + options.regionField + '"]').closest(".layui-inline").remove();
                             var rhtml = [];
                             rhtml.push('<div class="layui-inline" style="width: 130px;">');
+                            if (options.regionNameField) {
+                                rhtml.push(`<input type="hidden" name="${options.regionNameField}" />`);
+                            }
                             rhtml.push(`<select name="${options.regionField}" ${options.required ? "lay-verify=\"required\"" : ""} lay-filter="${options.filter}">`);
                             rhtml.push(`<option value="">请选择地区</option>`);
                             for (var i in region) {
-                                rhtml.push('<option value="' + (options.valueType == 'code' ? i : region[i]) + '" data-code="' + i + '">' + region[i] + '</option>');
+                                rhtml.push(`<option value="${i}">${region[i]}</option>`);
                             }
                             rhtml.push('</select>');
                             rhtml.push('</div>');
-                            $this.append(rhtml.join(""));
+                            if ($city) {
+                                $city.closest(".layui-inline").after(rhtml.join(""));
+                            } else {
+                                $province.closest(".layui-inline").after(rhtml.join(""));
+                            }
                             $region = $this.find('select[name="' + options.regionField + '"]');
                             if (options.region) {
-                                var value = options.valueType == 'code' ? options.region : region[options.region];
-                                $region.val(value);
+                                $region.val(options.region);
+                                $this.find('input[name="' + options.regionNameField + '"]').val($region.find("option:selected").text());
                             }
+                            if ($region.val()) {
+                                this.street();
+                            }
+                        },
+                        street: function () {
+                            if (!options.hasStreet) {
+                                return;
+                            }
+                            $this.find('select[name="' + options.streetField + '"]').closest(".layui-inline").remove();
+                            var regionCode = options.region;
+                            if (regionCode >= 710000) {
+                                //香港、澳门、台湾地区
+                                return;
+                            }
+                            //取得街道数据
+                            $.ajax({
+                                url: options.streetDataApi(regionCode),
+                                dataType: 'json',
+                                success: function (town) {
+                                    var rhtml = [];
+                                    rhtml.push('<div class="layui-inline" style="width: 130px;">');
+                                    if (options.streetNameField) {
+                                        rhtml.push(`<input type="hidden" name="${options.streetNameField}" />`);
+                                    }
+                                    rhtml.push(`<select name="${options.streetField}" ${options.required ? "lay-verify=\"required\"" : ""} lay-filter="${options.filter}">`);
+                                    rhtml.push(`<option value="">请选择街道</option>`);
+
+                                    var street = {};
+                                    for (i in town) {
+                                        street[i] = town[i];
+                                        rhtml.push(`<option value="${i}">${town[i]}</option>`);
+                                    }
+
+                                    rhtml.push('</select>');
+                                    rhtml.push('</div>');
+                                    $region.closest(".layui-inline").after(rhtml.join(""));
+
+                                    $street = $this.find('select[name="' + options.streetField + '"]');
+                                    if (options.street) {
+                                        $street.val(options.street);
+                                        $this.find('input[name="' + options.streetNameField + '"]').val($street.find("option:selected").text());
+                                    }
+                                    $street.closest(".layui-inline").removeClass("layui-hide");
+                                    form.render();
+                                }
+                            });
                         }
                     };
                     //初始化
@@ -190,20 +269,52 @@ layui.define(['form', 'layer'], function (exports) {
                     form.on(`select(${options.filter})`, function (selectData) {
                         var name = $(selectData.elem).attr("name");
                         if (name == options.provinceField) {
-                            options.province = selectData.value || 0;
-                            options.city = 0;
-                            options.region = 0;
-                            updateData();
-                            format.city();
+                            $this.find('input[name="' + options.provinceNameField + '"]').val($province.find("option:selected").text());
+                            $this.find('select[name="' + options.cityField + '"]').closest(".layui-inline").remove();
+                            $this.find('select[name="' + options.regionField + '"]').closest(".layui-inline").remove();
+                            $this.find('select[name="' + options.streetField + '"]').closest(".layui-inline").remove();
+                            if (selectData.value) {
+                                options.province = selectData.value || 0;
+                                options.city = 0;
+                                options.region = 0;
+                                options.street = 0;
+                                updateData();
+                                format.city();
+                            } else {
+                                options.city = 0;
+                                options.region = 0;
+                                options.street = 0;
+                            }
                         } else if (name == options.cityField) {
-                            options.city = selectData.value || 0;
-                            options.region = 0;
-                            updateData();
-                            format.region();
+                            $this.find('input[name="' + options.cityNameField + '"]').val($city.find("option:selected").text());
+                            $this.find('select[name="' + options.regionField + '"]').closest(".layui-inline").remove();
+                            $this.find('select[name="' + options.streetField + '"]').closest(".layui-inline").remove();
+                            if (selectData.value) {
+                                options.city = selectData.value || 0;
+                                options.region = 0;
+                                options.street = 0;
+                                updateData();
+                                format.region();
+                            } else {
+                                options.region = 0;
+                                options.street = 0;
+                            }
+                        } else if (name == options.regionField) {
+                            $this.find('input[name="' + options.regionNameField + '"]').val($region.find("option:selected").text());
+                            $this.find('select[name="' + options.streetField + '"]').closest(".layui-inline").remove();
+                            if (selectData.value) {
+                                options.region = selectData.value || 0;
+                                options.street = 0;
+                                format.street();
+                            } else {
+                                options.street = 0;
+                            }
                         } else {
-                            options.region = selectData.value || 0;
+                            $this.find('input[name="' + options.streetNameField + '"]').val($street.find("option:selected").text());
+                            options.street = selectData.value || 0;
                         }
                         form.render();
+                        options.onChange(selectData);
                     });
                 }
             });

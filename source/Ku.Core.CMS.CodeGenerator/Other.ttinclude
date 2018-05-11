@@ -11,7 +11,7 @@
 <#@ import namespace="System.Collections.Generic" #> 
 <#@ import namespace="System.Reflection" #> 
 <#
-	var pathOfProfile = RootPath + "/Vino.Core.CMS.Web/AutoMapper";
+	var pathOfProfile = RootPath + "/Ku.Core.CMS.Web/AutoMapper";
     if(!Directory.Exists(pathOfProfile))
     {
         Directory.CreateDirectory(pathOfProfile);
@@ -21,7 +21,7 @@
 	manager.StartBlock(fileNameOfProfile);
 #>
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：EntityMapperProfile.cs
 // 功能描述：AutoMapper初始化
@@ -37,7 +37,7 @@ using AutoMapper;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Vino.Core.CMS.Web.AutoMapper
+namespace Ku.Core.CMS.Web.AutoMapper
 {
     public class EntityMapperProfile: Profile
     {

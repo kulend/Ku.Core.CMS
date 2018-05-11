@@ -11,7 +11,7 @@
 <#@ import namespace="System.Collections.Generic" #> 
 <#@ import namespace="System.Reflection" #>
 <#
-	var pathOfRepository = RootPath + "/Vino.Core.CMS.Data/Repository/" + area + "/Partial";
+	var pathOfRepository = RootPath + "/Ku.Core.CMS.Data/Repository/" + area + "/Partial";
     if(!Directory.Exists(pathOfRepository))
     {
         Directory.CreateDirectory(pathOfRepository);
@@ -21,7 +21,7 @@
 	manager.StartBlock(fileNameOfRepository);
 #>
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：<#=fileNameOfRepository#>
 // 功能描述：<#=desc#> 数据访问
@@ -36,10 +36,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vino.Core.CMS.Data.Common;
-using Vino.Core.CMS.Domain.Entity.<#=area#>;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Domain.Entity.<#=area#>;
 
-namespace Vino.Core.CMS.Data.Repository.<#=area#>
+namespace Ku.Core.CMS.Data.Repository.<#=area#>
 {
     /// <summary>
     /// <#=desc#> 仓储接口
@@ -63,7 +63,7 @@ namespace Vino.Core.CMS.Data.Repository.<#=area#>
 	manager.Process(true);
 #>
 <#
-	var pathOfContext = RootPath + "/Vino.Core.CMS.Data/Common/Partial";
+	var pathOfContext = RootPath + "/Ku.Core.CMS.Data/Common/Partial";
     if(!Directory.Exists(pathOfContext))
     {
         Directory.CreateDirectory(pathOfContext);
@@ -91,7 +91,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Vino.Core.CMS.Data.Common
+namespace Ku.Core.CMS.Data.Common
 {
     public partial class VinoDbContext : DbContext, IDbContext
     {

@@ -12,7 +12,7 @@
 <#@ import namespace="System.Reflection" #>
 <#
 	//生成Controller
-	var pathOfView = RootPath + "/Vino.Core.CMS.Web.Backend/Areas/" + area + "/Views/" + name;
+	var pathOfView = RootPath + "/Ku.Core.CMS.Web.Backend/Areas/" + area + "/Views/" + name;
     if(!Directory.Exists(pathOfView))
     {
         Directory.CreateDirectory(pathOfView);
@@ -22,7 +22,7 @@
 	manager.StartBlock(fileNameOfController);
 #>
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：<#=name#>Controller.cs
 // 功能描述：<#=desc#> 后台访问控制类
@@ -37,15 +37,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Vino.Core.CMS.Domain.Dto.<#=area#>;
-using Vino.Core.CMS.Domain.Entity.<#=area#>;
-using Vino.Core.CMS.IService.<#=area#>;
-using Vino.Core.CMS.Web.Base;
-using Vino.Core.CMS.Web.Filters;
-using Vino.Core.CMS.Web.Security;
-using Vino.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Dto.<#=area#>;
+using Ku.Core.CMS.Domain.Entity.<#=area#>;
+using Ku.Core.CMS.IService.<#=area#>;
+using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 
-namespace Vino.Core.CMS.Web.Backend.Areas.<#=area#>.Views.<#=name#>
+namespace Ku.Core.CMS.Web.Backend.Areas.<#=area#>.Views.<#=name#>
 {
     /// <summary>
     /// <#=desc#> 后台访问控制类

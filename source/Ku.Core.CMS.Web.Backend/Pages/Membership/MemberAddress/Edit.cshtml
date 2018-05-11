@@ -2,7 +2,7 @@
 @model Ku.Core.CMS.Web.Backend.Pages.Membership.MemberAddress.EditModel
 @{
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Detail.cshtml
 // 功能描述：会员地址 编辑页面
@@ -52,7 +52,17 @@
 
             var areaSelect = layui.areaSelect;
             areaSelect({
-                elem: "#ID_Area"
+                elem: "#ID_Area",
+                hasStreet:true,
+                provinceField: "Dto.ProvinceCode",
+                cityField: "Dto.CityCode",
+                regionField: "Dto.RegionCode",
+                streetField: "Dto.StreetCode",
+                provinceNameField: "Dto.Province",
+                cityNameField: "Dto.City",
+                regionNameField: "Dto.Region",
+                streetNameField: "Dto.Street",
+                code: 140000
             });
         });
     </script>

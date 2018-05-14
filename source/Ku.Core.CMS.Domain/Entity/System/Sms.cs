@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Sms.cs
 // 功能描述：短信 实体类
@@ -16,6 +16,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 短信
+    /// </summary>
     [Table("system_sms")]
     public class Sms : BaseProtectedEntity
     {
@@ -48,6 +51,9 @@ namespace Ku.Core.CMS.Domain.Entity.System
         public virtual SmsTemplet SmsTemplet { set; get; }
     }
 
+    /// <summary>
+    /// 短信 检索条件
+    /// </summary>
     public class SmsSearch : BaseProtectedSearch<Sms>
     {
 

@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：SmsQueue.cs
 // 功能描述：短信队列 实体类
@@ -18,6 +18,9 @@ using Ku.Core.CMS.Domain.Enum.System;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 短信队列
+    /// </summary>
     [Table("system_sms_queue")]
     public class SmsQueue : BaseProtectedEntity
     {
@@ -47,6 +50,9 @@ namespace Ku.Core.CMS.Domain.Entity.System
         public string Response { set; get; }
     }
 
+    /// <summary>
+    /// 短信队列 检索条件
+    /// </summary>
     public class SmsQueueSearch : BaseProtectedSearch<SmsQueue>
     {
         public EmSmsQueueStatus? Status { set; get; }

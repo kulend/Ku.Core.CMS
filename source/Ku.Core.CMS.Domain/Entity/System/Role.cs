@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Role.cs
 // 功能描述：角色 实体类
@@ -18,6 +18,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 角色
+    /// </summary>
     [Table("system_role")]
     public class Role : BaseProtectedEntity
     {
@@ -60,6 +63,9 @@ namespace Ku.Core.CMS.Domain.Entity.System
         public virtual ICollection<RoleFunction> RoleFunctions { get; set; }
     }
 
+    /// <summary>
+    /// 角色 检索条件
+    /// </summary>
     public class RoleSearch : BaseProtectedSearch<Role>
     {
 

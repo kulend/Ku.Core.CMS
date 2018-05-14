@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Menu.cs
 // 功能描述：菜单 实体类
@@ -19,6 +19,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 菜单
+    /// </summary>
     [Table("system_menu")]
     public class Menu : BaseEntity
     {
@@ -78,7 +81,10 @@ namespace Ku.Core.CMS.Domain.Entity.System
         public ICollection<Menu> SubMenus { set; get; }
     }
 
-    public class MenuSearch : BaseProtectedSearch<Menu>
+    /// <summary>
+    /// 菜单 检索条件
+    /// </summary>
+    public class MenuSearch : BaseSearch<Menu>
     {
         [SearchCondition(false)]
         public long? ParentId { set; get; }

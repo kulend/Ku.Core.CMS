@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MenuDto.cs
 // 功能描述：菜单 数据传输类
@@ -16,7 +16,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ku.Core.CMS.Domain.Dto.System
 {
-    public class MenuDto : BaseProtectedDto
+    /// <summary>
+    /// 菜单
+    /// </summary>
+    public class MenuDto : BaseDto
     {
         /// <summary>
         /// 父级ID

@@ -30,10 +30,10 @@
                     @item.Title
                     <span style="float:right;">@item.PublishedTime 发布</span></h2>
                 <div class="layui-colla-content">
-                @if (item.ContentType == Vino.Core.CMS.Domain.Enum.EmDefaultContentType.Text)
+                @if (item.ContentType == Ku.Core.CMS.Domain.Enum.EmDefaultContentType.Text)
                 {
                     @Html.Raw(item.Content.Replace("\r\n", "</br>").Replace("\n", "</br>"))
-                }else if (item.ContentType == Vino.Core.CMS.Domain.Enum.EmDefaultContentType.RichText)
+                }else if (item.ContentType == Ku.Core.CMS.Domain.Enum.EmDefaultContentType.RichText)
                 {
                     @Html.Raw(item.Content)
                 }

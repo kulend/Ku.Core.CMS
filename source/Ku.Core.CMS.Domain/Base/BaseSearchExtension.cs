@@ -103,18 +103,20 @@ namespace Ku.Core.CMS.Domain
             return exp;
         }
 
-        public static DapperSql ParseToDapperSql<T>(this BaseSearch<T> search, ISqlDialect dialect)
+        public static DapperSql ParseToDapperSql<T>(this BaseSearch<T> search, ISqlDialect dialect, string tableAlias = null)
         {
             if (search == null)
             {
                 return null;
             }
 
+            tableAlias = string.IsNullOrEmpty(tableAlias) ? "" : tableAlias + ".";
+
             List<string> sqls = new List<string>();
             Dictionary<string, object> allParameters = new Dictionary<string, object>();
             foreach (PropertyInfo p in search.GetType().GetProperties())
             {
-                (string sql, Dictionary<string, object> parameters) = ParseProperty(search, p, dialect);
+                (string sql, Dictionary<string, object> parameters) = ParseProperty(search, p, dialect, tableAlias);
                 if (sql != null)
                 {
                     sqls.Add(sql);
@@ -127,7 +129,7 @@ namespace Ku.Core.CMS.Domain
             return new DapperSql(allSql, allParameters);
         }
 
-        private static (string sql, Dictionary<string, object> parameters) ParseProperty<T>(BaseSearch<T> search, PropertyInfo p, ISqlDialect dialect)
+        private static (string sql, Dictionary<string, object> parameters) ParseProperty<T>(BaseSearch<T> search, PropertyInfo p, ISqlDialect dialect, string tableAlias)
         {
             //如果有CustomConditionAttribute，则跳过该条件
             if (p.GetCustomAttribute<CustomConditionAttribute>() != null)
@@ -159,19 +161,19 @@ namespace Ku.Core.CMS.Domain
             switch (operation)
             {
                 case SearchConditionOperation.Equal:
-                    sql = dialect.QuoteFiled(name) + "=@" + name;
+                    sql = tableAlias + dialect.QuoteFiled(name) + "=@" + name;
                     pms.TryAdd(name, value);
                     break;
                 case SearchConditionOperation.NotEqual:
-                    sql = dialect.QuoteFiled(name) + "<>@" + name;
+                    sql = tableAlias + dialect.QuoteFiled(name) + "<>@" + name;
                     pms.TryAdd(name, value);
                     break;
                 case SearchConditionOperation.Contains:
-                    sql = $"{dialect.QuoteFiled(name)} LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
+                    sql = $"{tableAlias}{dialect.QuoteFiled(name)} LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
                     pms.TryAdd(name, value);
                     break;
                 case SearchConditionOperation.NotContains:
-                    sql = $"{dialect.QuoteFiled(name)} NOT LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
+                    sql = $"{tableAlias}{dialect.QuoteFiled(name)} NOT LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
                     pms.TryAdd(name, value);
                     break;
                 default:

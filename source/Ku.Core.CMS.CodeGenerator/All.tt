@@ -15,8 +15,8 @@
 	//var aa = new MemberAddress();
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
-	var name = "Notice";
-	var desc = "公告";
+	var name = "SmsTemplet";
+	var desc = "短信模板";
 	var area = "System";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = true;

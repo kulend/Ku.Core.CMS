@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：SmsAccountDto.cs
 // 功能描述：短信账号 数据传输类
@@ -18,6 +18,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Dto.System
 {
+    /// <summary>
+    /// 短信账号
+    /// </summary>
     public class SmsAccountDto : BaseProtectedDto
     {
         /// <summary>

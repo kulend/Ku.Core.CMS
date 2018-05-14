@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：SmsService.cs
 // 功能描述：短信 业务逻辑处理类
@@ -10,135 +10,26 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.System;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.System;
 using Ku.Core.CMS.Domain.Entity.System;
 using Ku.Core.CMS.IService.System;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
+using System;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.System
 {
-    public partial class SmsService : BaseService, ISmsService
+    public partial class SmsService : BaseService<Sms, SmsDto, SmsSearch>, ISmsService
     {
-        protected readonly ISmsRepository _repository;
-        protected readonly ISmsQueueRepository _queueRepository;
-        protected readonly ISmsTempletRepository _templetRepository;
-
         #region 构造函数
 
-        public SmsService(ISmsRepository repository, 
-            ISmsQueueRepository queueRepository, ISmsTempletRepository templetRepository)
+        public SmsService()
         {
-            this._repository = repository;
-            this._queueRepository = queueRepository;
-            this._templetRepository = templetRepository;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<SmsDto></returns>
-        public async Task<List<SmsDto>> GetListAsync(SmsSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<SmsDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<SmsDto> items)> GetListAsync(int page, int size, SmsSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<SmsDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<SmsDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<SmsDto>(await this._repository.GetByIdAsync(id));
-        }
-
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        public async Task SaveAsync(SmsDto dto)
-        {
-            Sms model = Mapper.Map<Sms>(dto);
-            if (model.Id == 0)
-            {
-                //新增
-                model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                model.IsDeleted = false;
-                await _repository.InsertAsync(model);
-            }
-            else
-            {
-                //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
-                {
-                    throw new VinoDataNotFoundException("无法取得短信数据！");
-                }
-
-                //TODO:这里进行赋值
-
-                _repository.Update(item);
-            }
-            await _repository.SaveAsync();
-        }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
 
         /// <summary>
         /// 新增
@@ -152,48 +43,47 @@ namespace Ku.Core.CMS.Service.System
                 throw new VinoArgNullException("未设置手机号！");
             }
 
-            var templet = await _templetRepository.GetByIdAsync(model.SmsTempletId);
-            if (templet == null || templet.IsDeleted)
+            using (var dapper = DapperFactory.Create())
             {
-                throw new VinoDataNotFoundException("无法取得短信模板数据！");
-            }
-            if (!templet.IsEnable)
-            {
-                throw new VinoDataNotFoundException("短信模板已禁用！");
-            }
+                var templet = await dapper.QueryOneAsync<SmsTemplet>(new { Id = model.SmsTempletId });
+                if (templet == null || templet.IsDeleted)
+                {
+                    throw new VinoDataNotFoundException("无法取得短信模板数据！");
+                }
+                if (!templet.IsEnable)
+                {
+                    throw new VinoDataNotFoundException("短信模板已禁用！");
+                }
 
-            var content = templet.Templet;
-            foreach (var item in dto.Data)
-            {
-                content = content.Replace("${" + item.Key + "}", item.Value);
-            }
-            model.Content = content + $"【{templet.Signature}】";
+                var content = templet.Templet;
+                foreach (var item in dto.Data)
+                {
+                    content = content.Replace("${" + item.Key + "}", item.Value);
+                }
+                model.Content = content + $"【{templet.Signature}】";
 
-            model.Id = ID.NewID();
-            model.CreateTime = DateTime.Now;
-            model.IsDeleted = false;
+                model.Id = ID.NewID();
+                model.CreateTime = DateTime.Now;
+                model.IsDeleted = false;
 
-            //创建队列
-            var queue = new SmsQueue {
-                Id = ID.NewID(),
-                CreateTime = DateTime.Now,
-                IsDeleted = false,
-                Status = Domain.Enum.System.EmSmsQueueStatus.WaitSend,
-                SmsId = model.Id,
-                ExpireTime = templet.ExpireMinute == 0 ? DateTime.Now.AddDays(1) : DateTime.Now.AddMinutes(templet.ExpireMinute)
-            };
+                //创建队列
+                var queue = new SmsQueue
+                {
+                    Id = ID.NewID(),
+                    CreateTime = DateTime.Now,
+                    IsDeleted = false,
+                    Status = Domain.Enum.System.EmSmsQueueStatus.WaitSend,
+                    SmsId = model.Id,
+                    ExpireTime = templet.ExpireMinute == 0 ? DateTime.Now.AddDays(1) : DateTime.Now.AddMinutes(templet.ExpireMinute)
+                };
 
-            using (var trans = await _repository.BeginTransactionAsync())
-            {
-                await _repository.InsertAsync(model);
-                await _queueRepository.InsertAsync(queue);
-                await _repository.SaveAsync();
-
-                trans.Commit();
+                using (var trans = dapper.BeginTrans())
+                {
+                    await dapper.InsertAsync(model);
+                    await dapper.InsertAsync(queue);
+                    trans.Commit();
+                }
             }
         }
-
-
-        #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：SmsQueueDto.cs
 // 功能描述：短信队列 数据传输类
@@ -17,6 +17,9 @@ using Ku.Core.CMS.Domain.Enum.System;
 
 namespace Ku.Core.CMS.Domain.Dto.System
 {
+    /// <summary>
+    /// 短信队列
+    /// </summary>
     public class SmsQueueDto : BaseProtectedDto
     {
         /// <summary>

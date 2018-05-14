@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：SmsTemplet.cs
 // 功能描述：短信模板 实体类
@@ -15,6 +15,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 短信模板
+    /// </summary>
     [Table("system_sms_templet")]
     public class SmsTemplet : BaseProtectedEntity
     {
@@ -75,6 +78,9 @@ namespace Ku.Core.CMS.Domain.Entity.System
         public virtual SmsAccount SmsAccount { set; get; }
     }
 
+    /// <summary>
+    /// 短信模板 检索条件
+    /// </summary>
     public class SmsTempletSearch : BaseProtectedSearch<SmsTemplet>
     {
 

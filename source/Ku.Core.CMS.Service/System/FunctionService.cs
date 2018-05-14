@@ -10,79 +10,37 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Data.Repository.System;
+using Ku.Core.CMS.Domain;
+using Ku.Core.CMS.Domain.Dto.System;
+using Ku.Core.CMS.Domain.Entity.System;
+using Ku.Core.CMS.IService.System;
+using Ku.Core.Extensions.Dapper;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.Helper;
+using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Ku.Core.CMS.Domain.Dto.System;
-using Ku.Core.CMS.Domain.Entity.System;
-using Ku.Core.CMS.IService.System;
-using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Helper;
-using Ku.Core.Infrastructure.Extensions;
-using Ku.Core.Infrastructure.IdGenerator;
-using Ku.Core.CMS.Domain;
-using Ku.Core.CMS.Data.Repository.System;
-using Ku.Core.Cache;
-using Ku.Core.CMS.Data.Common;
 
 namespace Ku.Core.CMS.Service.System
 {
-    public partial class FunctionService : BaseService, IFunctionService
+    public partial class FunctionService : BaseService<Function, FunctionDto, FunctionSearch>, IFunctionService
     {
-        protected readonly IFunctionRepository _repository;
         protected readonly ICacheService _cache;
-        protected readonly VinoDbContext _context;
 
         #region 构造函数
 
-        public FunctionService(IFunctionRepository repository, ICacheService cache, VinoDbContext context)
+        public FunctionService(ICacheService cache)
         {
-            this._repository = repository;
             this._cache = cache;
-            this._context = context;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<FunctionDto></returns>
-        public async Task<List<FunctionDto>> GetListAsync(FunctionSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<FunctionDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<FunctionDto> items)> GetListAsync(int page, int size, FunctionSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<FunctionDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<FunctionDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<FunctionDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -93,123 +51,86 @@ namespace Ku.Core.CMS.Service.System
             if (model.Id == 0)
             {
                 //新增
-                //取得父功能              
-                if (model.ParentId.HasValue)
+                using (var dapper = DapperFactory.CreateWithTrans())
                 {
-                    var pModel = await _repository.GetByIdAsync(model.ParentId.Value);
-                    if (pModel == null)
+                    //取得父功能              
+                    if (model.ParentId.HasValue)
                     {
-                        throw new VinoDataNotFoundException("无法取得父模块数据!");
+                        var pModel = await dapper.QueryOneAsync<Function>(new { Id = model.ParentId.Value });
+                        if (pModel == null)
+                        {
+                            throw new VinoDataNotFoundException("无法取得父模块数据!");
+                        }
+                        if (!pModel.HasSub)
+                        {
+                            pModel.HasSub = true;
+
+                            await dapper.UpdateAsync<Function>(new { HasSub = true}, new { pModel.Id });
+                        }
+                        model.Level = pModel.Level + 1;
                     }
-                    if (!pModel.HasSub)
+                    else
                     {
-                        pModel.HasSub = true;
-                        _repository.Update(pModel);
+                        model.ParentId = null;
+                        model.Level = 1;
                     }
-                    model.Level = pModel.Level + 1;
-                }
-                else
-                {
-                    model.ParentId = null;
-                    model.Level = 1;
-                }
 
-                model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                await _repository.InsertAsync(model);
+                    model.Id = ID.NewID();
+                    model.CreateTime = DateTime.Now;
+                    await dapper.InsertAsync(model);
 
+                    dapper.Commit();
+                }
             }
             else
             {
                 //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                using (var dapper = DapperFactory.Create())
                 {
-                    throw new VinoDataNotFoundException("无法取得功能数据！");
+                    var item = new
+                    {
+                        //这里进行赋值
+                        model.Name,
+                        model.AuthCode,
+                        model.IsEnable,
+                    };
+                    await dapper.UpdateAsync<Function>(item, new { model.Id });
                 }
-
-                //TODO:这里进行赋值
-
-                item.Name = model.Name;
-                item.AuthCode = model.AuthCode;
-                item.IsEnable = model.IsEnable;
-                _repository.Update(item);
-            }
-            await _repository.SaveAsync();
-        }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
             }
         }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
 
         #region 其他方法
 		
-        public Task<List<FunctionDto>> GetParentsAsync(long parentId)
+        public async Task<List<FunctionDto>> GetParentsAsync(long parentId)
         {
-            List<FunctionDto> Gets()
+            using (var dapper = DapperFactory.Create())
             {
-                return GetParents(parentId);
-            }
-            return Task.FromResult(Gets());
-        }
-		
-        private List<FunctionDto> GetParents(long parentId)
-        {
-            var list = new List<Function>();
-            void GetModel(long pid)
-            {
-                var model = _repository.FirstOrDefault(x => x.Id == pid);
-                if (model != null)
+                var list = new List<Function>();
+                async Task GetWhithParentAsync(long pid)
                 {
-                    if (model.ParentId.HasValue)
+                    var model = await dapper.QueryOneAsync<Function>(new { Id = pid });
+                    if (model != null)
                     {
-                        GetModel(model.ParentId.Value);
+                        if (model.ParentId.HasValue)
+                        {
+                            await GetWhithParentAsync(model.ParentId.Value);
+                        }
+                        list.Add(model);
                     }
-                    list.Add(model);
                 }
+
+                await GetWhithParentAsync(parentId);
+                return Mapper.Map<List<FunctionDto>>(list);
             }
-            GetModel(parentId);
-            return Mapper.Map<List<FunctionDto>>(list);
         }
 		
         public async Task<List<FunctionDto>> GetSubsAsync(long? parentId)
         {
-            var queryable = _repository.GetQueryable();
-            if (parentId.HasValue)
+            using (var dapper = DapperFactory.Create())
             {
-                queryable = queryable.Where(u => u.ParentId == parentId);
+                var list = await dapper.QueryListAsync<Function>(new { ParentId = parentId }, new { CreateTime = "asc" });
+                return Mapper.Map<List<FunctionDto>>(list);
             }
-            else
-            {
-                queryable = queryable.Where(u => u.ParentId == null);
-            }
-
-            var query = queryable.OrderBy(x => x.CreateTime);
-            return Mapper.Map<List<FunctionDto>>(await query.ToListAsync());
         }
 		
         #endregion
@@ -229,24 +150,35 @@ namespace Ku.Core.CMS.Service.System
                 //取得用户所有权限码
                 List<string> codes = new List<string>();
                 //取得所有角色
-                var roles = await _context.UserRoles.Include(t=>t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
-                if (roles.Any(x=>x.Role.NameEn.Equals("vino.developer")))
+                IEnumerable<UserRole> roles = null;
+                using (var dapper = DapperFactory.Create())
                 {
-                    authcodes = new List<string> {"vino.develop"};
-                }
-                else
-                {
-                    foreach (var role in roles)
+                    var sql = "SELECT t1.*, t2.* FROM system_user_role t1 INNER JOIN system_role t2 ON t1.RoleId=t2.Id AND t2.IsEnable=@IsEnable WHERE t1.UserId=@UserId";
+                    roles = await dapper.QueryAsync<UserRole, Role, UserRole>(sql, (t1, t2) =>
                     {
-                        var cds = await GetRoleAuthCodes(role.RoleId);
-                        codes.AddRange(cds);
-                    }
-                    //去重
-                    authcodes = codes.Distinct().ToList();
-                }
+                        t1.Role = t2;
+                        return t1;
+                    }, param: new { IsEnable= true, UserId = userId }, buffered: true, splitOn:"Id");
 
-                //缓存
-                _cache.Add(key, authcodes);
+                    authcodes = new List<string>();
+                    if (roles != null && roles.Any(x => x.Role.NameEn.Equals("vino.developer")))
+                    {
+                        authcodes.Add("vino.develop");
+                    }
+                    else if (roles != null)
+                    {
+                        foreach (var role in roles)
+                        {
+                            var cds = await GetRoleAuthCodes(dapper, role.RoleId);
+                            codes.AddRange(cds);
+                        }
+                        //去重
+                        authcodes = codes.Distinct().ToList();
+                    }
+
+                    //缓存
+                    _cache.Add(key, authcodes);
+                }
             }
             if (authcodes.Contains("vino.develop"))
             {
@@ -287,11 +219,15 @@ namespace Ku.Core.CMS.Service.System
             return authcodes.Contains(authCode);
         }
 
-        private async Task<List<string>> GetRoleAuthCodes(long roleId)
+        private async Task<List<string>> GetRoleAuthCodes(IDapper dapper, long roleId)
         {
-            var functions = await _context.RoleFunctions.Include(t => t.Function)
-                .Where(x => x.RoleId == roleId && x.Function.IsEnable).ToListAsync();
-            return functions.Select(x => x.Function.AuthCode).ToList();
+            var sql = "SELECT t1.*, t2.* FROM system_role_function t1 INNER JOIN system_function t2 ON t1.FunctionId=t2.Id AND t2.IsEnable=@IsEnable WHERE t1.RoleId=@RoleId";
+            var items = await dapper.QueryAsync<RoleFunction, Function, RoleFunction>(sql, (t1, t2) =>
+            {
+                t1.Function = t2;
+                return t1;
+            }, param: new { IsEnable = true, RoleId = roleId }, buffered: true, splitOn: "Id");
+            return items.Select(x => x.Function.AuthCode).ToList();
         }
 
         public async Task<List<string>> GetUserAuthCodesAsync(long userId, bool encrypt = false)
@@ -303,27 +239,38 @@ namespace Ku.Core.CMS.Service.System
                 //取得用户所有权限码
                 List<string> codes = new List<string>();
                 //取得所有角色
-                var roles = await _context.UserRoles.Include(t => t.Role).Where(x => x.UserId == userId && x.Role.IsEnable).ToListAsync();
-                if (roles.Any(x => x.Role.NameEn.Equals("vino.developer")))
+                IEnumerable<UserRole> roles = null;
+                using (var dapper = DapperFactory.Create())
                 {
-                    authcodes = new List<string> { "vino.develop" };
-                }
-                else
-                {
-                    foreach (var role in roles)
+                    var sql = "SELECT t1.*, t2.* FROM system_user_role t1 INNER JOIN system_role t2 ON t1.RoleId=t2.Id AND t2.IsEnable=@IsEnable WHERE t1.UserId=@UserId";
+                    roles = await dapper.QueryAsync<UserRole, Role, UserRole>(sql, (t1, t2) =>
                     {
-                        var cds = await GetRoleAuthCodes(role.RoleId);
-                        codes.AddRange(cds);
+                        t1.Role = t2;
+                        return t1;
+                    }, param: new { IsEnable = true, UserId = userId }, buffered: true, splitOn: "Id");
+
+                    authcodes = new List<string>();
+                    if (roles != null && roles.Any(x => x.Role.NameEn.Equals("vino.developer")))
+                    {
+                        authcodes.Add("vino.develop");
                     }
-                    //去重
-                    authcodes = codes.Distinct().ToList();
+                    else if (roles != null)
+                    {
+                        foreach (var role in roles)
+                        {
+                            var cds = await GetRoleAuthCodes(dapper, role.RoleId);
+                            codes.AddRange(cds);
+                        }
+                        //去重
+                        authcodes = codes.Distinct().ToList();
+                    }
+                    if (encrypt)
+                    {
+                        authcodes = authcodes.Select(CryptHelper.EncryptMD5).ToList();
+                    }
+                    //缓存
+                    _cache.Add(key, authcodes);
                 }
-                if (encrypt)
-                {
-                    authcodes = authcodes.Select(CryptHelper.EncryptMD5).ToList();
-                }
-                //缓存
-                _cache.Add(key, authcodes);
             }
             return authcodes;
         }

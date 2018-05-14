@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Notice.cs
 // 功能描述：公告 实体类
@@ -64,6 +64,9 @@ namespace Ku.Core.CMS.Domain.Entity.System
 
     }
 
+    /// <summary>
+    /// 公告 检索条件
+    /// </summary>
     public class NoticeSearch : BaseProtectedSearch<Notice>
     {
         public bool? IsPublished { set; get; }

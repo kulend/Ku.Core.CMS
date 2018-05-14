@@ -43,7 +43,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.System.Views.Notice
         [Auth("view")]
         public async Task<IActionResult> GetList(int page, int rows, NoticeSearch where)
         {
-            var data = await _service.GetListAsync(page, rows, where, "StickyNum desc,PublishedTime desc");
+            var data = await _service.GetListAsync(page, rows, where, new {StickyNum = "desc", PublishedTime = "desc" });
             return PagerData(data.items, page, rows, data.count);
         }
 
@@ -106,7 +106,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.System.Views.Notice
         [Auth("show")]
         public async Task<IActionResult> NoticeDialog()
         {
-            var data = await _service.GetListAsync(1, 10, new NoticeSearch { IsDeleted = false, IsPublished = true}, "StickyNum desc,PublishedTime desc");
+            var data = await _service.GetListAsync(1, 10, new NoticeSearch { IsDeleted = false, IsPublished = true}, new { StickyNum = "desc", PublishedTime = "desc" });
             return View(data.items);
         }
     }

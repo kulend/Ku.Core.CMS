@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Function.cs
 // 功能描述：功能 实体类
@@ -17,6 +17,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 功能
+    /// </summary>
     [Table("system_function")]
     public class Function : BaseEntity
     {
@@ -56,7 +59,10 @@ namespace Ku.Core.CMS.Domain.Entity.System
         public int Level { set; get; }
     }
 
-    public class FunctionSearch : BaseProtectedSearch<Function>
+    /// <summary>
+    /// 功能 检索条件
+    /// </summary>
+    public class FunctionSearch : BaseSearch<Function>
     {
         /// <summary>
         /// 父功能

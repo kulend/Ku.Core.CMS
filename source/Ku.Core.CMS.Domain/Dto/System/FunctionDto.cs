@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：FunctionDto.cs
 // 功能描述：功能 数据传输类
@@ -15,7 +15,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ku.Core.CMS.Domain.Dto.System
 {
-    public class FunctionDto : BaseProtectedDto
+    /// <summary>
+    /// 功能
+    /// </summary>
+    public class FunctionDto : BaseDto
     {
         /// <summary>
         /// 父功能

@@ -10,8 +10,6 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using Ku.Core.CMS.Data.Repository.Content;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.Content;
 using Ku.Core.CMS.Domain.Entity.Content;
 using Ku.Core.CMS.IService.Content;
@@ -20,7 +18,6 @@ using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
 

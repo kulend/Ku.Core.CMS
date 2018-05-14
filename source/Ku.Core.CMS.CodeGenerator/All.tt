@@ -15,9 +15,9 @@
 	//var aa = new MemberAddress();
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
-	var name = "Member_Address";
-	var desc = "会员地址";
-	var area = "Membership";
+	var name = "Notice";
+	var desc = "公告";
+	var area = "System";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = true;
 	var HasRecycle = true;
@@ -26,7 +26,7 @@
    	//模式2，普通有回收站
    	//模式3，父子级无回收站
    	//模式4，父子级有回收站
-	var mode = 2;
+	var mode = 3;
 
 	var table = name.ToLower();
 	name = name.Replace("_", "");

@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 /source/Vino.Core.CMS.CodeGenerator/output
 /source/Ku.Core.CMS.Web.Backend/appsettings.Development.json
+/source/Ku.Core.CMS.WebApi/appsettings.Development.json

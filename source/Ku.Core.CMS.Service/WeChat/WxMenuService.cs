@@ -10,34 +10,19 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.WeChat;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.WeChat;
 using Ku.Core.CMS.Domain.Entity.WeChat;
 using Ku.Core.CMS.IService.WeChat;
-using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Extensions;
-using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.Extensions.Dapper;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.IdGenerator;
+using System;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.WeChat
 {
     public partial class WxMenuService : BaseService<WxMenu, WxMenuDto, WxMenuSearch>, IWxMenuService
     {
-        protected readonly IWxMenuRepository _repository;
-
-        #region 构造函数
-
-        public WxMenuService(IWxMenuRepository repository)
-        {
-            this._repository = repository;
-        }
-
-        #endregion
-
         /// <summary>
         /// 保存数据
         /// </summary>
@@ -70,57 +55,56 @@ namespace Ku.Core.CMS.Service.WeChat
             }
             else
             {
-                //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
-                {
-                    throw new VinoDataNotFoundException("无法取得微信菜单数据！");
-                }
+                ////更新
+                //var item = await _repository.GetByIdAsync(model.Id);
+                //if (item == null)
+                //{
+                //    throw new VinoDataNotFoundException("无法取得微信菜单数据！");
+                //}
 
-                //TODO:这里进行赋值
-                item.Name = model.Name;
-                item.MenuData = model.MenuData;
-                item.IsIndividuation = model.IsIndividuation;
-                if (!model.IsIndividuation)
-                {
-                    model.MatchRule = new WxMenuMatchRule
-                    {
-                        TagId = "",
-                        Sex = "",
-                        Client = "",
-                        Country = "",
-                        Province = "",
-                        City = "",
-                        Language = "",
-                    };
-                }
+                ////TODO:这里进行赋值
+                //item.Name = model.Name;
+                //item.MenuData = model.MenuData;
+                //item.IsIndividuation = model.IsIndividuation;
+                //if (!model.IsIndividuation)
+                //{
+                //    model.MatchRule = new WxMenuMatchRule
+                //    {
+                //        TagId = "",
+                //        Sex = "",
+                //        Client = "",
+                //        Country = "",
+                //        Province = "",
+                //        City = "",
+                //        Language = "",
+                //    };
+                //}
 
-                if (item.MatchRule != null)
-                {
-                    item.MatchRule.TagId = model.MatchRule.TagId;
-                    item.MatchRule.Sex = model.MatchRule.Sex;
-                    item.MatchRule.Client = model.MatchRule.Client;
-                    item.MatchRule.Country = model.MatchRule.Country;
-                    item.MatchRule.Province = model.MatchRule.Province;
-                    item.MatchRule.City = model.MatchRule.City;
-                    item.MatchRule.Language = model.MatchRule.Language;
-                }
-                else
-                {
-                    item.MatchRule = new WxMenuMatchRule
-                    {
-                        TagId = model.MatchRule.TagId,
-                        Sex = model.MatchRule.Sex,
-                        Client = model.MatchRule.Client,
-                        Country = model.MatchRule.Country,
-                        Province = model.MatchRule.Province,
-                        City = model.MatchRule.City,
-                        Language = model.MatchRule.Language,
-                    };
-                }
-                _repository.Update(item);
+                //if (item.MatchRule != null)
+                //{
+                //    item.MatchRule.TagId = model.MatchRule.TagId;
+                //    item.MatchRule.Sex = model.MatchRule.Sex;
+                //    item.MatchRule.Client = model.MatchRule.Client;
+                //    item.MatchRule.Country = model.MatchRule.Country;
+                //    item.MatchRule.Province = model.MatchRule.Province;
+                //    item.MatchRule.City = model.MatchRule.City;
+                //    item.MatchRule.Language = model.MatchRule.Language;
+                //}
+                //else
+                //{
+                //    item.MatchRule = new WxMenuMatchRule
+                //    {
+                //        TagId = model.MatchRule.TagId,
+                //        Sex = model.MatchRule.Sex,
+                //        Client = model.MatchRule.Client,
+                //        Country = model.MatchRule.Country,
+                //        Province = model.MatchRule.Province,
+                //        City = model.MatchRule.City,
+                //        Language = model.MatchRule.Language,
+                //    };
+                //}
+                //_repository.Update(item);
             }
-            await _repository.SaveAsync();
         }
 
     }

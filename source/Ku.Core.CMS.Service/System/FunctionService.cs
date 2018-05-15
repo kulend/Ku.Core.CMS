@@ -11,8 +11,6 @@
 
 using AutoMapper;
 using Ku.Core.Cache;
-using Ku.Core.CMS.Data.Common;
-using Ku.Core.CMS.Data.Repository.System;
 using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.System;
 using Ku.Core.CMS.Domain.Entity.System;

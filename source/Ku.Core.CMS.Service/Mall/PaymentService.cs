@@ -10,18 +10,15 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.Mall;
 using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.Mall;
 using Ku.Core.CMS.Domain.Entity.Mall;
 using Ku.Core.CMS.IService.Mall;
-using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Extensions;
-using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.Extensions.Dapper;
+using Ku.Core.Infrastructure.IdGenerator;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.Mall
 {
@@ -37,11 +34,13 @@ namespace Ku.Core.CMS.Service.Mall
         /// <returns>count：条数；items：分页数据</returns>
         public override async Task<(int count, List<PaymentDto> items)> GetListAsync(int page, int size, PaymentSearch where, dynamic sort)
         {
-            //var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            //return (data.count, Mapper.Map<List<PaymentDto>>(data.items, opt => {
-            //    opt.Items.Add("JsonDeserializeIgnore", true);
-            //}));
-            return (0, null);
+            using (var dapper = DapperFactory.Create())
+            {
+                var data = await dapper.QueryPageAsync<Payment>(page, size, where.ParseToDapperSql(dapper.Dialect), sort as object);
+                return (data.count, Mapper.Map<List<PaymentDto>>(data.items, opt => {
+                    opt.Items.Add("JsonDeserializeIgnore", true);
+                }));
+            }
         }
 
         /// <summary>

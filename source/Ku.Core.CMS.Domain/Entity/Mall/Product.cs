@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Product.cs
 // 功能描述：商品 实体类
@@ -17,6 +17,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.Mall
 {
+    /// <summary>
+    /// 商品
+    /// </summary>
     [Table("mall_product")]
     public class Product : BaseProtectedEntity
     {
@@ -142,6 +145,9 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         #endregion
     }
 
+    /// <summary>
+    /// 商品 检索条件
+    /// </summary>
     public class ProductSearch : BaseProtectedSearch<Product>
     {
         public bool? IsSnapshot { set; get; }

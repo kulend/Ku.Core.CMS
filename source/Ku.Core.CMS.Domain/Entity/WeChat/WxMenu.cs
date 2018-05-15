@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxMenu.cs
 // 功能描述：微信菜单 实体类
@@ -18,6 +18,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Entity.WeChat
 {
+    /// <summary>
+    /// 微信菜单
+    /// </summary>
     [Table("wechat_menu")]
     public class WxMenu : BaseProtectedEntity
     {
@@ -94,7 +97,10 @@ namespace Ku.Core.CMS.Domain.Entity.WeChat
         [Display(Name = "语言")]
         public string Language { set; get; }
     }
-	
+    
+	/// <summary>
+    /// 微信菜单 检索条件
+    /// </summary>
 	public class WxMenuSearch : BaseProtectedSearch<WxMenu>
     {
         public long? AccountId { set; get; }

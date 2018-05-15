@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Payment.cs
 // 功能描述：支付方式 实体类
@@ -18,6 +18,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.Mall
 {
+    /// <summary>
+    /// 支付方式
+    /// </summary>
     [Table("mall_payment")]
     public class Payment : BaseProtectedEntity
     {
@@ -85,6 +88,9 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         #endregion
     }
 
+    /// <summary>
+    /// 支付方式 检索条件
+    /// </summary>
     public class PaymentSearch : BaseProtectedSearch<Payment>
     {
         public bool? IsSnapshot { set; get; }

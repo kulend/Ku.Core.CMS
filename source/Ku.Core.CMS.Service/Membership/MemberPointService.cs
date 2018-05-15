@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MemberPointService.cs
 // 功能描述：会员积分 业务逻辑处理类
@@ -9,146 +9,44 @@
 //
 //----------------------------------------------------------------
 
-using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.Membership;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.Membership;
 using Ku.Core.CMS.Domain.Entity.Membership;
 using Ku.Core.CMS.Domain.Enum.Membership;
 using Ku.Core.CMS.IService.Membership;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.IdGenerator;
+using System;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.Membership
 {
-    public partial class MemberPointService : BaseService, IMemberPointService
+    public partial class MemberPointService : BaseService<MemberPoint, MemberPointDto, MemberPointSearch>, IMemberPointService
     {
-        protected readonly IMemberPointRepository _repository;
-        protected readonly IMemberRepository _memberRepository;
-        protected readonly IMemberPointRecordRepository _recordRepository;
-
-        #region 构造函数
-
-        public MemberPointService(IMemberPointRepository repository, 
-            IMemberRepository memberRepository, IMemberPointRecordRepository recordRepository)
-        {
-            this._repository = repository;
-            this._memberRepository = memberRepository;
-            this._recordRepository = recordRepository;
-        }
-
-        #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<MemberPointDto></returns>
-        public async Task<List<MemberPointDto>> GetListAsync(MemberPointSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<MemberPointDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<MemberPointDto> items)> GetListAsync(int page, int size, MemberPointSearch where, string sort)
-        {
-            var includes = new List<Expression<Func<MemberPoint, object>>>();
-            includes.Add(x => x.Member);
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc", includes.ToArray());
-            return (data.count, Mapper.Map<List<MemberPointDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<MemberPointDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<MemberPointDto>(await this._repository.GetByIdAsync(id));
-        }
-
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        public async Task SaveAsync(MemberPointDto dto)
-        {
-            MemberPoint model = Mapper.Map<MemberPoint>(dto);
-            if (model.Id == 0)
-            {
-                //新增
-                model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                model.IsDeleted = false;
-                await _repository.InsertAsync(model);
-            }
-            else
-            {
-                //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
-                {
-                    throw new VinoDataNotFoundException("无法取得会员积分数据！");
-                }
-
-                //TODO:这里进行赋值
-
-                _repository.Update(item);
-            }
-            await _repository.SaveAsync();
-        }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
-
         /// <summary>
         /// 获得积分
         /// </summary>
         /// <remarks>请在Transaction中使用</remarks>
         /// <returns></returns>
         public async Task GainAsync(long MemberId, EmMemberPointType MemberPointType, 
+            int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId)
+        {
+            using (var dapper = DapperFactory.CreateWithTrans())
+            {
+                try
+                {
+                    await _GainAsync(dapper, MemberId, MemberPointType, Points, BusType, BusId, BusDesc, OperatorId);
+                    dapper.Commit();
+                }
+                catch (Exception)
+                {
+                    dapper.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        private async Task _GainAsync(IDapper dapper, long MemberId, EmMemberPointType MemberPointType,
             int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId)
         {
             if (Points <= 0)
@@ -161,14 +59,14 @@ namespace Ku.Core.CMS.Service.Membership
             }
 
             //取得会员数据
-            var member = await _memberRepository.GetByIdAsync(MemberId);
+            var member = await dapper.QueryOneAsync<Member>(new { Id = MemberId });
             if (member == null)
             {
                 throw new VinoArgNullException("无法取得会员数据！");
             }
 
             //取得会员积分数据
-            var memberPoint = await _repository.FirstOrDefaultAsync(x => x.MemberId == MemberId && x.Type == MemberPointType && !x.IsDeleted);
+            var memberPoint = await dapper.QueryOneAsync<MemberPoint>(new { MemberId = MemberId, Type = MemberPointType, IsDeleted = false });
             if (memberPoint == null)
             {
                 //创建新会员积分数据
@@ -184,16 +82,18 @@ namespace Ku.Core.CMS.Service.Membership
                     IsDeleted = false,
                     CreateTime = DateTime.Now
                 };
-
-                await _repository.InsertAsync(memberPoint);
+                await dapper.InsertAsync(memberPoint);
             }
             else
             {
                 //积分计算
-                memberPoint.UsablePoints = memberPoint.UsablePoints + Points;
-                memberPoint.Points = memberPoint.Points + Points;
+                var data = new
+                {
+                    UsablePoints = memberPoint.UsablePoints + Points,
+                    Points = memberPoint.Points + Points
+                };
 
-                _repository.Update(memberPoint);
+                await dapper.UpdateAsync<MemberPoint>(data, new { Id = memberPoint.Id });
             }
 
             //log
@@ -211,8 +111,7 @@ namespace Ku.Core.CMS.Service.Membership
                 IsDeleted = false,
                 CreateTime = DateTime.Now
             };
-
-            await _recordRepository.InsertAsync(record);
+            await dapper.InsertAsync(record);
         }
 
         /// <summary>
@@ -223,6 +122,24 @@ namespace Ku.Core.CMS.Service.Membership
         public async Task ConsumeAsync(long MemberId, EmMemberPointType MemberPointType,
             int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId)
         {
+            using (var dapper = DapperFactory.CreateWithTrans())
+            {
+                try
+                {
+                    await _ConsumeAsync(dapper, MemberId, MemberPointType, Points, BusType, BusId, BusDesc, OperatorId);
+                    dapper.Commit();
+                }
+                catch (Exception)
+                {
+                    dapper.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        private async Task _ConsumeAsync(IDapper dapper, long MemberId, EmMemberPointType MemberPointType,
+                int Points, EmMemberPointBusType BusType, long BusId, string BusDesc, long? OperatorId)
+        {
             if (Points <= 0)
             {
                 throw new VinoArgNullException("积分值必须大于0！");
@@ -231,16 +148,15 @@ namespace Ku.Core.CMS.Service.Membership
             {
                 throw new VinoArgNullException("调整积分超出范围！");
             }
-
             //取得会员数据
-            var member = await _memberRepository.GetByIdAsync(MemberId);
+            var member = await dapper.QueryOneAsync<Member>(new { Id = MemberId });
             if (member == null)
             {
                 throw new VinoArgNullException("无法取得会员数据！");
             }
 
             //取得会员积分数据
-            var memberPoint = await _repository.FirstOrDefaultAsync(x => x.MemberId == MemberId && x.Type == MemberPointType && !x.IsDeleted);
+            var memberPoint = await dapper.QueryOneAsync<MemberPoint>(new { MemberId = MemberId, Type = MemberPointType, IsDeleted = false });
             if (memberPoint == null)
             {
                 throw new VinoArgNullException($"会员[{member.Name}]积分不足！");
@@ -253,10 +169,13 @@ namespace Ku.Core.CMS.Service.Membership
                 }
 
                 //积分计算
-                memberPoint.UsablePoints = memberPoint.UsablePoints - Points;
-                memberPoint.UsedPoints = memberPoint.UsedPoints + Points;
+                var data = new
+                {
+                    UsablePoints = memberPoint.UsablePoints - Points,
+                    UsedPoints = memberPoint.UsedPoints + Points
+                };
 
-                _repository.Update(memberPoint);
+                await dapper.UpdateAsync<MemberPoint>(data, new { Id = memberPoint.Id });
             }
 
             //log
@@ -275,7 +194,7 @@ namespace Ku.Core.CMS.Service.Membership
                 CreateTime = DateTime.Now
             };
 
-            await _recordRepository.InsertAsync(record);
+            await dapper.InsertAsync(record);
         }
 
         /// <summary>
@@ -297,7 +216,7 @@ namespace Ku.Core.CMS.Service.Membership
                 throw new VinoArgNullException("调整积分超出范围！");
             }
 
-            using (var trans = await _repository.BeginTransactionAsync())
+            using (var dapper = DapperFactory.CreateWithTrans())
             {
                 try
                 {
@@ -305,27 +224,24 @@ namespace Ku.Core.CMS.Service.Membership
                     {
                         foreach (var id in MemberId)
                         {
-                            await GainAsync(id, MemberPointType, Points, BusType, BusId, BusDesc, OperatorId);
+                            await _GainAsync(dapper, id, MemberPointType, Points, BusType, BusId, BusDesc, OperatorId);
                         }
                     }
                     else
                     {
                         foreach (var id in MemberId)
                         {
-                            await ConsumeAsync(id, MemberPointType, Math.Abs(Points), BusType, BusId, BusDesc, OperatorId);
+                            await _ConsumeAsync(dapper, id, MemberPointType, Math.Abs(Points), BusType, BusId, BusDesc, OperatorId);
                         }
                     }
-                    await _repository.SaveAsync();
-                    trans.Commit();
+                    dapper.Commit();
                 }
                 catch (Exception)
                 {
-                    trans.Rollback();
+                    dapper.Rollback();
                     throw;
                 }
             }
         }
-
-        #endregion
     }
 }

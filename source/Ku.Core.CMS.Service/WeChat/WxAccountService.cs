@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxAccountService.cs
 // 功能描述：公众号 业务逻辑处理类
@@ -10,75 +10,31 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.WeChat;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.WeChat;
 using Ku.Core.CMS.Domain.Entity.WeChat;
 using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.WeChat.AccessToken;
+using System;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.WeChat
 {
-    public partial class WxAccountService : BaseService, IWxAccountService
+    public partial class WxAccountService : BaseService<WxAccount, WxAccountDto, WxAccountSearch>, IWxAccountService
     {
-        protected readonly IWxAccountRepository _repository;
         private readonly IWcAccessTokenTool wcAccessTokenTool;
 
         #region 构造函数
 
-        public WxAccountService(IWxAccountRepository repository, IWcAccessTokenTool _wcAccessTokenTool)
+        public WxAccountService(IWcAccessTokenTool _wcAccessTokenTool)
         {
-            this._repository = repository;
-            this.wcAccessTokenTool = _wcAccessTokenTool;
+            wcAccessTokenTool = _wcAccessTokenTool;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<WxAccountDto></returns>
-        public async Task<List<WxAccountDto>> GetListAsync(WxAccountSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<WxAccountDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<WxAccountDto> items)> GetListAsync(int page, int size, WxAccountSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<WxAccountDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<WxAccountDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<WxAccountDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -89,73 +45,46 @@ namespace Ku.Core.CMS.Service.WeChat
             if (model.Id == 0)
             {
                 //新增
-                //检查AppID
-                if (model.AppId.IsNotNullOrEmpty())
+                using (var dapper = DapperFactory.Create())
                 {
-                    //是否重复
-                    var cnt = await _repository.GetQueryable().Where(x => x.AppId.EqualOrdinalIgnoreCase(model.AppId)).CountAsync();
-                    if (cnt > 0)
+                    //检查AppID
+                    if (model.AppId.IsNotNullOrEmpty())
                     {
-                        throw new VinoDataNotFoundException("AppId重复！");
+                        //是否重复
+                        var count = await dapper.QueryCountAsync<WxAccount>(new { AppId = model.AppId });
+                        if (count > 0)
+                        {
+                            throw new VinoDataNotFoundException("AppId重复！");
+                        }
                     }
-                }
 
-                model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                model.IsDeleted = false;
-                await _repository.InsertAsync(model);
+                    model.Id = ID.NewID();
+                    model.CreateTime = DateTime.Now;
+                    model.IsDeleted = false;
+                    await dapper.InsertAsync(model);
+                }
             }
             else
             {
                 //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                using (var dapper = DapperFactory.Create())
                 {
-                    throw new VinoDataNotFoundException("无法取得公众号数据！");
+                    var item = new
+                    {
+                        //这里进行赋值
+                        model.Name,
+                        model.OriginalId,
+                        model.Type,
+                        model.WeixinId,
+                        model.Image,
+                        model.AppId,
+                        model.AppSecret,
+                        model.Token,
+                    };
+                    await dapper.UpdateAsync<WxAccount>(item, new { model.Id });
                 }
-
-                item.Name = model.Name;
-                item.OriginalId = model.OriginalId;
-                item.Type = model.Type;
-                item.WeixinId = model.WeixinId;
-                item.Image = model.Image;
-                item.AppId = model.AppId;
-                item.AppSecret = model.AppSecret;
-                item.Token = model.Token;
-                _repository.Update(item);
-            }
-            await _repository.SaveAsync();
-        }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
             }
         }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
 
         /// <summary>
         /// 获取微信AccessToken
@@ -165,24 +94,25 @@ namespace Ku.Core.CMS.Service.WeChat
         public async Task<WcAccessToken> GetAccessToken(long id)
         {
             //取得公众号信息
-            var account = await _repository.GetByIdAsync(id);
-            if (account == null)
+            using (var dapper = DapperFactory.Create())
             {
-                throw new VinoDataNotFoundException("无法取得公众号数据！");
-            }
-            if (account.AppId.IsNullOrEmpty() || account.AppSecret.IsNullOrEmpty())
-            {
-                throw new VinoDataNotFoundException("公众号未设置AppId或AppSecret！");
-            }
+                var account = await dapper.QueryOneAsync<WxAccount>(new { Id = id });
+                if (account == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得公众号数据！");
+                }
+                if (account.AppId.IsNullOrEmpty() || account.AppSecret.IsNullOrEmpty())
+                {
+                    throw new VinoDataNotFoundException("公众号未设置AppId或AppSecret！");
+                }
 
-            var token = await wcAccessTokenTool.GetAsync(account.AppId, account.AppSecret);
-            if (token == null || token.Data == null)
-            {
-                throw new VinoDataNotFoundException("无法取得微信AccessToken，请检查AppId和AppSecret设置是否正确！");
+                var token = await wcAccessTokenTool.GetAsync(account.AppId, account.AppSecret);
+                if (token == null || token.Data == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得微信AccessToken，请检查AppId和AppSecret设置是否正确！");
+                }
+                return token.Data;
             }
-            return token.Data;
         }
-
-        #endregion
     }
 }

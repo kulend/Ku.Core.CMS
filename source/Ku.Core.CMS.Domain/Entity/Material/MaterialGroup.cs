@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MaterialGroup.cs
 // 功能描述：素材分组 实体类
@@ -19,6 +19,9 @@ using Ku.Core.CMS.Domain.Enum.Material;
 
 namespace Ku.Core.CMS.Domain.Entity.Material
 {
+    /// <summary>
+    /// 素材分组
+    /// </summary>
     [Table("material_group")]
     public class MaterialGroup : BaseProtectedEntity
     {
@@ -44,6 +47,9 @@ namespace Ku.Core.CMS.Domain.Entity.Material
         public User CreateUser { set; get; }
     }
 
+    /// <summary>
+    /// 素材分组 检索条件
+    /// </summary>
     public class MaterialGroupSearch : BaseProtectedSearch<MaterialGroup>
     {
 

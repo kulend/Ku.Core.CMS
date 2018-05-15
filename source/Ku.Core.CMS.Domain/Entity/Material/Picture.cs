@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Picture.cs
 // 功能描述：图片素材 实体类
@@ -17,6 +17,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Entity.Material
 {
+    /// <summary>
+    /// 图片素材
+    /// </summary>
     [Table("material_picture")]
     public class Picture : Material
     {
@@ -29,6 +32,9 @@ namespace Ku.Core.CMS.Domain.Entity.Material
         public bool IsCompressed { set; get; }
     }
 
+    /// <summary>
+    /// 图片素材 检索条件
+    /// </summary>
     public class PictureSearch : BaseProtectedSearch<Picture>
     {
 

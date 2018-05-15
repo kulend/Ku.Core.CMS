@@ -81,16 +81,16 @@ namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
             }
         }
 
-        /// <summary>
-        /// 保存
-        /// </summary>
-        [HttpPost]
-        [Auth("edit")]
-        public async Task<IActionResult> Save(MemberPointDto model)
-        {
-            await _service.SaveAsync(model);
-            return JsonData(true);
-        }
+        ///// <summary>
+        ///// 保存
+        ///// </summary>
+        //[HttpPost]
+        //[Auth("edit")]
+        //public async Task<IActionResult> Save(MemberPointDto model)
+        //{
+        //    await _service.SaveAsync(model);
+        //    return JsonData(true);
+        //}
 
         /// <summary>
         /// 删除

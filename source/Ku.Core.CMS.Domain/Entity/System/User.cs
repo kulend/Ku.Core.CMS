@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：User.cs
 // 功能描述：用户 实体类
@@ -20,6 +20,9 @@ using Ku.Core.Infrastructure.Helper;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     [Table("system_user")]
     public class User : BaseProtectedEntity
     {
@@ -127,6 +130,9 @@ namespace Ku.Core.CMS.Domain.Entity.System
 		
     }
 	
+    /// <summary>
+    /// 用户 检索条件
+    /// </summary>
     public class UserSearch : BaseProtectedSearch<User>
     {
 

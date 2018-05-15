@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxAccountDto.cs
-// 功能描述：公众号 数据传输类
+// 功能描述：微信账户 数据传输类
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-04 19:13
@@ -16,6 +16,9 @@ using Ku.Core.CMS.Domain.Enum.WeChat;
 
 namespace Ku.Core.CMS.Domain.Dto.WeChat
 {
+    /// <summary>
+    /// 微信账户
+    /// </summary>
     public class WxAccountDto : BaseProtectedDto
     {
         [Required, MaxLength(40)]

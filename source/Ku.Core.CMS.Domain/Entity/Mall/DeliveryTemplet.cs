@@ -1,8 +1,8 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：DeliveryTemplet.cs
-// 功能描述：配送模板 实体类
+// 功能描述：运费模板 实体类
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-05 10:25
@@ -82,6 +82,9 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         #endregion
     }
 
+    /// <summary>
+    /// 运费模板 检索条件
+    /// </summary>
     public class DeliveryTempletSearch : BaseProtectedSearch<DeliveryTemplet>
     {
         public bool? IsSnapshot { set; get; }

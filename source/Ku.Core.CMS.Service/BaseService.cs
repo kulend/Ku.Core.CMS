@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Ku.Core.Cache;
-using Ku.Core.CMS.Data.Common;
+﻿using AutoMapper;
 using Ku.Core.CMS.Domain;
 using Ku.Core.Extensions.Dapper;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service
 {
@@ -29,7 +25,7 @@ namespace Ku.Core.CMS.Service
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryListAsync<TEntity>(where.ParseToDapperSql(dapper.Dialect), sort);
+                var data = await dapper.QueryListAsync<TEntity>(where.ParseToDapperSql(dapper.Dialect), sort as object);
                 return Mapper.Map<List<TDto>>(data);
             }
         }

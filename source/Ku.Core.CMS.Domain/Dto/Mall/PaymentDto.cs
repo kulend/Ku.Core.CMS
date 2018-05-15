@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：PaymentDto.cs
 // 功能描述：支付方式 数据传输类
@@ -20,6 +20,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Dto.Mall
 {
+    /// <summary>
+    /// 支付方式
+    /// </summary>
     public class PaymentDto : BaseProtectedDto
     {
         /// <summary>

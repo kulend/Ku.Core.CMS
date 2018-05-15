@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MemberTypeDto.cs
 // 功能描述：会员类型 数据传输类
@@ -16,6 +16,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Dto.Membership
 {
+    /// <summary>
+    /// 会员类型
+    /// </summary>
     public class MemberTypeDto : BaseProtectedDto
     {
         /// <summary>

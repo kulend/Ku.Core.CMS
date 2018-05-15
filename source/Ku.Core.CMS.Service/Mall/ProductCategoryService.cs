@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：ProductCategoryService.cs
 // 功能描述：商品类目 业务逻辑处理类
@@ -10,72 +10,21 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Ku.Core.CMS.Domain.Dto.Mall;
+using Ku.Core.CMS.Domain.Entity.Mall;
+using Ku.Core.CMS.IService.Mall;
+using Ku.Core.Extensions.Dapper;
+using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.Mall;
-using Ku.Core.CMS.Domain;
-using Ku.Core.CMS.Domain.Dto.Mall;
-using Ku.Core.CMS.Domain.Entity.Mall;
-using Ku.Core.CMS.IService.Mall;
-using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Extensions;
-using Ku.Core.Infrastructure.IdGenerator;
 
 namespace Ku.Core.CMS.Service.Mall
 {
-    public partial class ProductCategoryService : BaseService, IProductCategoryService
+    public partial class ProductCategoryService : BaseService<ProductCategory, ProductCategoryDto, ProductCategorySearch>, IProductCategoryService
     {
-        protected readonly IProductCategoryRepository _repository;
-
-        #region 构造函数
-
-        public ProductCategoryService(IProductCategoryRepository repository)
-        {
-            this._repository = repository;
-        }
-
-        #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<ProductCategoryDto></returns>
-        public async Task<List<ProductCategoryDto>> GetListAsync(ProductCategorySearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<ProductCategoryDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<ProductCategoryDto> items)> GetListAsync(int page, int size, ProductCategorySearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<ProductCategoryDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<ProductCategoryDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<ProductCategoryDto>(await this._repository.GetByIdAsync(id));
-        }
-
         /// <summary>
         /// 保存数据
         /// </summary>
@@ -89,86 +38,60 @@ namespace Ku.Core.CMS.Service.Mall
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
 
-                if (model.ParentId.HasValue)
+                using (var dapper = DapperFactory.Create())
                 {
-                    var parent = await _repository.GetByIdAsync(model.ParentId.Value);
-                    if (parent == null)
+                    if (model.ParentId.HasValue)
                     {
-                        throw new VinoDataNotFoundException("无法取得商品类目数据！");
+                        var parent = await dapper.QueryOneAsync<ProductCategory>(new { Id = model.ParentId.Value });
+                        if (parent == null)
+                        {
+                            throw new VinoDataNotFoundException("无法取得商品类目数据！");
+                        }
+                        model.Level = parent.Level + 1;
                     }
-                    model.Level = parent.Level + 1;
-                }
-                else
-                {
-                    model.Level = 1;
-                }
+                    else
+                    {
+                        model.Level = 1;
+                    }
 
-                await _repository.InsertAsync(model);
+                    await dapper.InsertAsync(model);
+                }
             }
             else
             {
                 //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                using (var dapper = DapperFactory.Create())
                 {
-                    throw new VinoDataNotFoundException("无法取得商品类目数据！");
+                    var item = new
+                    {
+                        model.Name
+                    };
+                    await dapper.UpdateAsync<ProductCategory>(item, new { model.Id });
                 }
-
-                //这里进行赋值
-                item.Name = model.Name;
-
-                _repository.Update(item);
-            }
-            await _repository.SaveAsync();
-        }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
             }
         }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
 
         public async Task<List<ProductCategoryDto>> GetWithParentsAsync(long id)
         {
-            var list = new List<ProductCategory>();
-            async Task GetModel(long pid)
+            using (var dapper = DapperFactory.Create())
             {
-                var model = _repository.FirstOrDefault(x => x.Id == pid);
-                if (model != null)
+                var list = new List<ProductCategory>();
+                async Task GetWhithParentAsync(long pid)
                 {
-                    if (model.ParentId.HasValue)
+                    var model = await dapper.QueryOneAsync<ProductCategory>(new { Id = pid });
+                    if (model != null)
                     {
-                        await GetModel(model.ParentId.Value);
+                        if (model.ParentId.HasValue)
+                        {
+                            await GetWhithParentAsync(model.ParentId.Value);
+                        }
+                        list.Add(model);
                     }
-                    list.Add(model);
                 }
+
+                await GetWhithParentAsync(id);
+                return Mapper.Map<List<ProductCategoryDto>>(list);
             }
-            await GetModel(id);
-            return Mapper.Map<List<ProductCategoryDto>>(list);
         }
 
         /// <summary>
@@ -177,7 +100,12 @@ namespace Ku.Core.CMS.Service.Mall
         /// <returns></returns>
         public async Task<object> GetJsonDataAsync()
         {
-            var data = await _repository.QueryAsync(x => !x.IsDeleted, null);
+            IEnumerable<ProductCategory> data = new List<ProductCategory>();
+            using (var dapper = DapperFactory.Create())
+            {
+                data = await dapper.QueryListAsync<ProductCategory>(new { IsDeleted = false});
+            }
+
             var maxLevel = data.Max(x=>x.Level);
 
             var dict = new Dictionary<int, object>();
@@ -213,8 +141,5 @@ namespace Ku.Core.CMS.Service.Mall
 
             return dict;
         }
-
-
-        #endregion
     }
 }

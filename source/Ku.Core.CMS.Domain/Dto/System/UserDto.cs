@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：UserDto.cs
 // 功能描述：用户 数据传输类
@@ -17,6 +17,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Dto.System
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     public class UserDto : BaseProtectedDto
     {
         /// <summary>

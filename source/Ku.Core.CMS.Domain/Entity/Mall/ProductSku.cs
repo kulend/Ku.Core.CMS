@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：ProductSku.cs
 // 功能描述：商品SKU 实体类
@@ -17,6 +17,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.Mall
 {
+    /// <summary>
+    /// 商品SKU
+    /// </summary>
     [Table("mall_product_sku")]
     public class ProductSku : BaseProtectedEntity
     {
@@ -97,6 +100,9 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         public EmEntityModifyStatus ModifyStatus { set; get; } = EmEntityModifyStatus.UnChange;
     }
 
+    /// <summary>
+    /// 商品SKU 检索条件
+    /// </summary>
     public class ProductSkuSearch : BaseProtectedSearch<ProductSku>
     {
         public long? ProductId { set; get; }

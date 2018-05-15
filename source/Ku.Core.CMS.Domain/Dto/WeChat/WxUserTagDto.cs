@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxUserTagDto.cs
 // 功能描述：微信用户标签 数据传输类
@@ -13,6 +13,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ku.Core.CMS.Domain.Dto.WeChat
 {
+    /// <summary>
+    /// 微信用户标签
+    /// </summary>
     public class WxUserTagDto : BaseProtectedDto
     {
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxUser.cs
 // 功能描述：微信用户 实体类
@@ -9,16 +9,16 @@
 //
 //----------------------------------------------------------------
 
+using Ku.Core.CMS.Domain.Enum;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Ku.Core.CMS.Domain.Enum;
-using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.WeChat
 {
+    /// <summary>
+    /// 微信用户
+    /// </summary>
     [Table("wechat_user")]
     public class WxUser : BaseProtectedEntity
     {
@@ -88,6 +88,9 @@ namespace Ku.Core.CMS.Domain.Entity.WeChat
         public string UserTags { get; set; }
     }
 
+    /// <summary>
+    /// 微信用户 检索条件
+    /// </summary>
     public class WxUserSearch : BaseProtectedSearch<WxUser>
     {
         public long AccountId { set; get; }

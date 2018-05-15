@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：App.cs
 // 功能描述：应用 实体类
@@ -16,6 +16,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.DataCenter
 {
+    /// <summary>
+    /// 应用
+    /// </summary>
     [Table("datacenter_app")]
     public class App : BaseProtectedEntity
     {
@@ -56,6 +59,9 @@ namespace Ku.Core.CMS.Domain.Entity.DataCenter
         public string AppKey { set; get; }
     }
 
+    /// <summary>
+    /// 应用 检索条件
+    /// </summary>
     public class AppSearch : BaseProtectedSearch<App>
     {
 

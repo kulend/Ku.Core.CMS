@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxUserTagService.cs
 // 功能描述：微信用户标签 业务逻辑处理类
@@ -10,80 +10,34 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ku.Core.Cache;
-using Ku.Core.CMS.Data.Common;
-using Ku.Core.CMS.Data.Repository.WeChat;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.WeChat;
 using Ku.Core.CMS.Domain.Entity.WeChat;
 using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.IdGenerator;
-using Ku.Core.WeChat.AccessToken;
 using Ku.Core.WeChat.User;
+using System;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.WeChat
 {
-    public partial class WxUserTagService : BaseService, IWxUserTagService
+    public partial class WxUserTagService : BaseService<WxUserTag, WxUserTagDto, WxUserTagSearch>, IWxUserTagService
     {
-        private readonly IWxUserTagRepository _repository;
         private readonly IWcUserTool wcUserTool;
         private readonly IWxAccountService wxAccountService;
 		
         #region 构造函数
 		
         public WxUserTagService(
-            IWxUserTagRepository repository,
             IWxAccountService _wxAccountService,
             IWcUserTool _wcUserTool)
         {
-            this._repository = repository;
-            this.wcUserTool = _wcUserTool;
-            this.wxAccountService = _wxAccountService;
+            wcUserTool = _wcUserTool;
+            wxAccountService = _wxAccountService;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<WxUserTagDto></returns>
-        public async Task<List<WxUserTagDto>> GetListAsync(WxUserTagSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<WxUserTagDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<WxUserTagDto> items)> GetListAsync(int page, int size, WxUserTagSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<WxUserTagDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<WxUserTagDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<WxUserTagDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -110,37 +64,38 @@ namespace Ku.Core.CMS.Service.WeChat
 
                 model.TagId = rsp.Data.Tag.Id;
 
-                await _repository.InsertAsync(model);
+                using (var dapper = DapperFactory.Create())
+                {
+                    await dapper.InsertAsync(model);
+                }
             }
             else
             {
                 //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                using (var dapper = DapperFactory.Create())
                 {
-                    throw new VinoDataNotFoundException("无法取得微信用户标签数据！");
-                }
-                if (item.Name.Equals(model.Name))
-                {
-                    //没有变动
-                    return;
-                }
+                    var item = await dapper.QueryOneAsync<WxUserTag>(new { model.Id });
+                    if (item == null)
+                    {
+                        throw new VinoDataNotFoundException("无法取得微信用户标签数据！");
+                    }
+                    if (item.Name.Equals(model.Name))
+                    {
+                        //没有变动
+                        return;
+                    }
+                    //远程更新
+                    //取得AccessToken
+                    var token = await wxAccountService.GetAccessToken(item.AccountId);
+                    var rsp = await wcUserTool.UpdateUserTag(token, item.TagId, model.Name);
+                    if (rsp.ErrCode != 0)
+                    {
+                        throw new VinoDataNotFoundException(rsp.ToString());
+                    }
 
-                //TODO:这里进行赋值
-                item.Name = model.Name;
-
-                //远程更新
-                //取得AccessToken
-                var token = await wxAccountService.GetAccessToken(item.AccountId);
-                var rsp = await wcUserTool.UpdateUserTag(token, item.TagId, model.Name);
-                if (rsp.ErrCode != 0)
-                {
-                    throw new VinoDataNotFoundException(rsp.ToString());
+                    await dapper.UpdateAsync<WxUserTag>(new { model.Name }, new { model.Id });
                 }
-
-                _repository.Update(item);
             }
-            await _repository.SaveAsync();
         }
 
         /// <summary>
@@ -148,50 +103,31 @@ namespace Ku.Core.CMS.Service.WeChat
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
+        public override async Task DeleteAsync(params long[] id)
         {
-            foreach (var i in id)
+            using (var dapper = DapperFactory.Create())
             {
-                //取得信息
-                var item = await _repository.GetByIdAsync(i);
-                if (item == null)
+                foreach (var i in id)
                 {
-                    throw new VinoDataNotFoundException("无法取得微信用户标签数据！");
-                }
+                    //取得信息
+                    var item = await dapper.QueryOneAsync<WxUserTag>(new { Id = id });
+                    if (item == null)
+                    {
+                        continue;
+                    }
 
-                //远程删除
-                //取得AccessToken
-                var token = await wxAccountService.GetAccessToken(item.AccountId);
-                var rsp = await wcUserTool.DeleteUserTag(token, item.TagId);
-                if (rsp.ErrCode != 0)
-                {
-                    throw new VinoDataNotFoundException(rsp.ToString());
-                }
-
-                if (await _repository.DeleteAsync(id))
-                {
-                    await _repository.SaveAsync();
+                    //远程删除
+                    //取得AccessToken
+                    var token = await wxAccountService.GetAccessToken(item.AccountId);
+                    var rsp = await wcUserTool.DeleteUserTag(token, item.TagId);
+                    if (rsp.ErrCode != 0)
+                    {
+                        throw new VinoDataNotFoundException(rsp.ToString());
+                    }
+                    await dapper.DeleteAsync<WxUserTag>(new { Id = id });
                 }
             }
+
         }
-		
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
-
-        #endregion
     }
 }

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxUserService.cs
 // 功能描述：微信用户 业务逻辑处理类
@@ -9,89 +9,43 @@
 //
 //----------------------------------------------------------------
 
-using AutoMapper;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.WeChat;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.WeChat;
 using Ku.Core.CMS.Domain.Entity.WeChat;
 using Ku.Core.CMS.Domain.Enum;
 using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.WeChat.AccessToken;
 using Ku.Core.WeChat.User;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.WeChat
 {
-    public partial class WxUserService : BaseService, IWxUserService
+    public partial class WxUserService : BaseService<WxUser, WxUserDto, WxUserSearch>, IWxUserService
     {
         private readonly ILogger<WxUserService> _logger;
-        private readonly IWxUserRepository _repository;
-        private readonly IWxUserTagRepository wxUserTagRepository;
         private readonly IWxAccountService _wxAccountService;
         private readonly IWcUserTool wcUserTool;
 		
         #region 构造函数
 		
         public WxUserService(
-            IWxUserRepository repository,
             ILogger<WxUserService> logger,
             IWxAccountService wxAccountService, 
-            IWcUserTool _wcUserTool, 
-            IWxUserTagRepository _wxUserTagRepository)
+            IWcUserTool _wcUserTool)
         {
-            this._repository = repository;
             this._logger = logger;
-            this.wxUserTagRepository = _wxUserTagRepository;
             this._wxAccountService = wxAccountService;
             this.wcUserTool = _wcUserTool;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<WxUserDto></returns>
-        public async Task<List<WxUserDto>> GetListAsync(WxUserSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<WxUserDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<WxUserDto> items)> GetListAsync(int page, int size, WxUserSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<WxUserDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<WxUserDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<WxUserDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -124,58 +78,30 @@ namespace Ku.Core.CMS.Service.WeChat
         }
 
         /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
-
-        /// <summary>
         /// 保存备注
         /// </summary>
         public async Task SaveRemarkAsync(WxUserDto dto)
         {
-            var item = await _repository.GetByIdAsync(dto.Id);
-            if (item == null)
+            using (var dapper = DapperFactory.Create())
             {
-                throw new VinoDataNotFoundException("无法取得微信用户数据！");
-            }
+                var item = await dapper.QueryOneAsync<WxUser>(new { Id = dto.Id });
+                if (item == null)
+                {
+                    throw new VinoDataNotFoundException("无法取得微信用户数据！");
+                }
+                item.Remark = dto.Remark;
 
-            item.Remark = dto.Remark;
+                //远程更新备注
+                //取得微信AccessToken
+                var token = await _wxAccountService.GetAccessToken(item.AccountId);
+                var rsp = await wcUserTool.UpdateUserRemark(token, item.OpenId, item.Remark);
+                if (rsp.ErrCode != 0)
+                {
+                    throw new VinoArgNullException(rsp.ToString());
+                }
 
-            //远程更新备注
-            //取得微信AccessToken
-            var token = await _wxAccountService.GetAccessToken(item.AccountId);
-            var rsp = await wcUserTool.UpdateUserRemark(token, item.OpenId, item.Remark);
-            if (rsp.ErrCode != 0)
-            {
-                throw new VinoArgNullException(rsp.ToString());
+                await dapper.UpdateAsync<WxUser>(new { dto.Remark }, new { dto.Id });
             }
-            _repository.Update(item);
-            await _repository.SaveAsync();
         }
 
         /// <summary>
@@ -194,78 +120,90 @@ namespace Ku.Core.CMS.Service.WeChat
             }
             var tags = tagsRsp.Data.Tags;
 
-            //取得当前所有标签
-            var tagsSerarch = new WxUserTagSearch { AccountId = accountId };
-            var localTags = await wxUserTagRepository.QueryAsync(tagsSerarch.GetExpression(), null);
-            foreach (var item in localTags)
+            using (var dapper = DapperFactory.CreateWithTrans())
             {
-                //判断是否还有该数据
-                var newTag = tags.FirstOrDefault(x=>x.Id == item.TagId);
-                if (newTag == null)
+                //取得当前所有标签
+                var localTags = await dapper.QueryListAsync<WxUserTag>(new { AccountId = accountId });
+
+                var deltags = new List<long>();
+                foreach (var item in localTags)
                 {
-                    //远端已删除
-                    await wxUserTagRepository.DeleteAsync(item.Id);
-                }
-                else
-                {
-                    //更新本地数据
-                    if (!item.Name.Equals(newTag.Name) || item.Count != newTag.Count)
+                    //判断是否还有该数据
+                    var newTag = tags.FirstOrDefault(x => x.Id == item.TagId);
+                    if (newTag == null)
                     {
-                        item.Name = newTag.Name;
-                        item.Count = newTag.Count;
-                        wxUserTagRepository.Update(item);
+                        //远端已删除
+                        deltags.Add(item.Id);
+                        //await wxUserTagRepository.DeleteAsync(item.Id);
                     }
-                    tags.Remove(newTag);
+                    else
+                    {
+                        //更新本地数据
+                        if (!item.Name.Equals(newTag.Name) || item.Count != newTag.Count)
+                        {
+                            item.Name = newTag.Name;
+                            item.Count = newTag.Count;
+                            await dapper.UpdateAsync<WxUserTag>(new { newTag.Name, newTag.Count }, new { item.Id });
+                        }
+                        tags.Remove(newTag);
+                    }
                 }
+
+                if (deltags.Any())
+                {
+                    await dapper.DeleteAsync<WxUserTag>(new DapperSql("Id IN @Ids", new { Ids = deltags.ToArray() }));
+                }
+
+                //保存新的标签
+                var newTags = tags.Select(item => new WxUserTag
+                {
+                    Id = ID.NewID(),
+                    AccountId = accountId,
+                    TagId = item.Id,
+                    Name = item.Name,
+                    Count = item.Count
+                });
+                await dapper.InsertAsync(newTags);
+                //保存
+                dapper.Commit();
             }
 
-            //保存新的标签
-            var newTags = tags.Select(item => new WxUserTag {
-                Id = ID.NewID(),
-                AccountId = accountId,
-                TagId = item.Id,
-                Name = item.Name,
-                Count = item.Count
-            }).ToList();
-            await wxUserTagRepository.InsertRangeAsync(newTags);
-
-            //保存
-            await wxUserTagRepository.SaveAsync();
-
-            //开始同步用户
-            string nextOpenId = null;
-            do {
-                var rsp = await wcUserTool.GetUserListAsync(token, nextOpenId);
-                if (rsp.ErrCode != 0)
+            using (var dapper = DapperFactory.Create())
+            {
+                //开始同步用户
+                string nextOpenId = null;
+                do
                 {
-                    throw new VinoArgNullException(rsp.ToString());
-                }
-                if (rsp.Data.Data.Openid == null 
-                    || rsp.Data.Data.Openid.Length == 0)
-                {
-                    break;
-                }
+                    var rsp = await wcUserTool.GetUserListAsync(token, nextOpenId);
+                    if (rsp.ErrCode != 0)
+                    {
+                        throw new VinoArgNullException(rsp.ToString());
+                    }
+                    if (rsp.Data.Data.Openid == null
+                        || rsp.Data.Data.Openid.Length == 0)
+                    {
+                        break;
+                    }
 
-                //处理数据
-                foreach (var openid in rsp.Data.Data.Openid)
-                {
-                    await SyncOneOpenidAsync(token, accountId, openid);
-                }
+                    //处理数据
+                    foreach (var openid in rsp.Data.Data.Openid)
+                    {
+                        await SyncOneOpenidAsync(dapper, token, accountId, openid);
+                    }
 
-                nextOpenId = rsp.Data.Data.NextOpenid;
-                if (nextOpenId.IsNullOrEmpty())
-                {
-                    break;
-                }
+                    nextOpenId = rsp.Data.Data.NextOpenid;
+                    if (nextOpenId.IsNullOrEmpty())
+                    {
+                        break;
+                    }
 
-            } while (true);
+                } while (true);
+            }
+
             //结束同步
-
-            //保存
-            await _repository.SaveAsync();
         }
 
-        private async Task SyncOneOpenidAsync(WcAccessToken token, long accountId, string openid)
+        private async Task SyncOneOpenidAsync(IDapper dapper, WcAccessToken token, long accountId, string openid)
         {
             if(openid.IsNullOrEmpty()) return;
 
@@ -279,7 +217,7 @@ namespace Ku.Core.CMS.Service.WeChat
             var wcUser = rsp.Data;
 
             //取得本地用户信息
-            var user = _repository.FirstOrDefault(x=>x.AccountId == accountId && x.OpenId.Equals(openid));
+            var user = await dapper.QueryOneAsync<WxUser>(new { AccountId = accountId, OpenId = openid });
             if (user == null)
             {
                 if (wcUser.Subscribe == 1)
@@ -305,7 +243,7 @@ namespace Ku.Core.CMS.Service.WeChat
                         CreateTime = DateTime.Now,
                         IsDeleted = false,
                     };
-                    await _repository.InsertAsync(user);
+                    await dapper.InsertAsync(user);
                 }
             }
             else
@@ -313,28 +251,27 @@ namespace Ku.Core.CMS.Service.WeChat
                 //更新当前信息
                 if (wcUser.Subscribe == 1)
                 {
-                    user.UnionId = wcUser.Unionid;
-                    user.IsSubscribe = true;
-                    user.NickName = wcUser.Nickname;
-                    user.HeadImgUrl = wcUser.Headimgurl;
-                    user.Sex = (EmSex)wcUser.Sex;
-                    user.Country = wcUser.Country;
-                    user.Province = wcUser.Province;
-                    user.City = wcUser.City;
-                    user.Language = wcUser.Language;
-                    user.Remark = wcUser.Remark;
-                    user.SubscribeTime = new DateTime(1970, 1, 1).AddSeconds(wcUser.SubscribeTime);
-                    user.UserTags = string.Join(",", wcUser.TagidList);
+                    var item = new {
+                        UnionId = wcUser.Unionid,
+                        IsSubscribe = true,
+                        NickName = wcUser.Nickname,
+                        HeadImgUrl = wcUser.Headimgurl,
+                        Sex = (EmSex)wcUser.Sex,
+                        Country = wcUser.Country,
+                        Province = wcUser.Province,
+                        City = wcUser.City,
+                        Language = wcUser.Language,
+                        Remark = wcUser.Remark,
+                        SubscribeTime = new DateTime(1970, 1, 1).AddSeconds(wcUser.SubscribeTime),
+                        UserTags = string.Join(",", wcUser.TagidList),
+                    };
+                    await dapper.UpdateAsync<WxUser>(item, new { user.Id });
                 }
                 else
                 {
-                    user.IsSubscribe = false;
+                    await dapper.UpdateAsync<WxUser>(new { IsSubscribe = false }, new { user.Id });
                 }
-
-                _repository.Update(user);
             }
         }
-
-        #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxUserTag.cs
 // 功能描述：微信用户标签 实体类
@@ -15,6 +15,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.WeChat
 {
+    /// <summary>
+    /// 微信用户标签
+    /// </summary>
     [Table("wechat_user_tag")]
     public class WxUserTag : BaseEntity
     {
@@ -40,7 +43,10 @@ namespace Ku.Core.CMS.Domain.Entity.WeChat
         public int Count { set; get; } = 0;
     }
 
-    public class WxUserTagSearch : BaseProtectedSearch<WxUserTag>
+    /// <summary>
+    /// 微信用户标签 检索条件
+    /// </summary>
+    public class WxUserTagSearch : BaseSearch<WxUserTag>
     {
         public long AccountId { set; get; }
 

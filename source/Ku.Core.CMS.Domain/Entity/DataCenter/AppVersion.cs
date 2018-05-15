@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：AppVersion.cs
 // 功能描述：应用版本 实体类
@@ -14,6 +14,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ku.Core.CMS.Domain.Entity.DataCenter
 {
+    /// <summary>
+    /// 应用版本
+    /// </summary>
     [Table("DataCenter_AppVersion")]
     public class AppVersion : BaseProtectedEntity
     {
@@ -56,6 +59,9 @@ namespace Ku.Core.CMS.Domain.Entity.DataCenter
         public bool Force { set; get; } = false;
     }
 
+    /// <summary>
+    /// 应用版本 检索条件
+    /// </summary>
     public class AppVersionSearch : BaseProtectedSearch<AppVersion>
     {
         public long? AppId { set; get; }

@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MaterialGroupDto.cs
 // 功能描述：素材分组 数据传输类
@@ -18,6 +18,9 @@ using Ku.Core.CMS.Domain.Enum.Material;
 
 namespace Ku.Core.CMS.Domain.Dto.Material
 {
+    /// <summary>
+    /// 素材分组
+    /// </summary>
     public class MaterialGroupDto : BaseProtectedDto
     {
         /// <summary>

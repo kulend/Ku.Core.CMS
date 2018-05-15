@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxAccount.cs
-// 功能描述：公众号 实体类
+// 功能描述：微信账户 实体类
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-04 19:13
@@ -18,6 +18,9 @@ using Ku.Core.CMS.Domain.Enum.WeChat;
 
 namespace Ku.Core.CMS.Domain.Entity.WeChat
 {
+    /// <summary>
+    /// 微信账户
+    /// </summary>
     [Table("wechat_account")]
     public class WxAccount : BaseProtectedEntity
     {
@@ -45,6 +48,9 @@ namespace Ku.Core.CMS.Domain.Entity.WeChat
         public string Token { set; get; }
     }
 
+    /// <summary>
+    /// 微信账户 检索条件
+    /// </summary>
     public class WxAccountSearch : BaseProtectedSearch<WxAccount>
     {
 

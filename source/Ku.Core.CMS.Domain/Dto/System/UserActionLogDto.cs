@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：UserActionLogDto.cs
-// 功能描述：用户操作日志 数据传输类
+// 功能描述：用户操作记录 数据传输类
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-04 19:13
@@ -16,6 +16,9 @@ using Ku.Core.EventBus;
 
 namespace Ku.Core.CMS.Domain.Dto.System
 {
+    /// <summary>
+    /// 用户操作记录
+    /// </summary>
     [Event("backend_user_action_log")]
     public class UserActionLogDto : BaseProtectedDto
     {

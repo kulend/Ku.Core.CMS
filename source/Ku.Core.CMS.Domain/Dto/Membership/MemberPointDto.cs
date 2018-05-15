@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MemberPointDto.cs
 // 功能描述：会员积分 数据传输类
@@ -16,6 +16,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Dto.Membership
 {
+    /// <summary>
+    /// 会员积分
+    /// </summary>
     public class MemberPointDto : BaseProtectedDto
     {
         /// <summary>

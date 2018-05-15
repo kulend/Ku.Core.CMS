@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxMenuService.cs
 // 功能描述：微信菜单 业务逻辑处理类
@@ -21,10 +21,11 @@ using Ku.Core.CMS.IService.WeChat;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
+using Ku.Core.Extensions.Dapper;
 
 namespace Ku.Core.CMS.Service.WeChat
 {
-    public partial class WxMenuService : BaseService, IWxMenuService
+    public partial class WxMenuService : BaseService<WxMenu, WxMenuDto, WxMenuSearch>, IWxMenuService
     {
         protected readonly IWxMenuRepository _repository;
 
@@ -36,44 +37,6 @@ namespace Ku.Core.CMS.Service.WeChat
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<WxMenuDto></returns>
-        public async Task<List<WxMenuDto>> GetListAsync(WxMenuSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<WxMenuDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<WxMenuDto> items)> GetListAsync(int page, int size, WxMenuSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<WxMenuDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<WxMenuDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<WxMenuDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -100,7 +63,10 @@ namespace Ku.Core.CMS.Service.WeChat
                         Language = "",
                     };
                 }
-                await _repository.InsertAsync(model);
+                using (var dapper = DapperFactory.Create())
+                {
+                    await dapper.InsertAsync(model);
+                }
             }
             else
             {
@@ -157,36 +123,5 @@ namespace Ku.Core.CMS.Service.WeChat
             await _repository.SaveAsync();
         }
 
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
-
-        #endregion
     }
 }

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxQrcodeService.cs
 // 功能描述：微信二维码 业务逻辑处理类
@@ -10,80 +10,35 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Common;
-using Ku.Core.CMS.Data.Repository.WeChat;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.WeChat;
 using Ku.Core.CMS.Domain.Entity.WeChat;
 using Ku.Core.CMS.Domain.Enum.WeChat;
 using Ku.Core.CMS.IService.WeChat;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.WeChat.Qrcode;
+using System;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.WeChat
 {
-    public partial class WxQrcodeService : BaseService, IWxQrcodeService
+    public partial class WxQrcodeService : BaseService<WxQrcode, WxQrcodeDto, WxQrcodeSearch>, IWxQrcodeService
     {
-        protected readonly IWxQrcodeRepository _repository;
         private readonly IWxAccountService _wxAccountService;
         private readonly IWcQrcodeTool _wcQrcodeTool;
 
         #region 构造函数
 
-        public WxQrcodeService(IWxQrcodeRepository repository,
-            IWxAccountService wxAccountService,
+        public WxQrcodeService(IWxAccountService wxAccountService,
             IWcQrcodeTool wcQrcodeTool
             )
         {
-            this._repository = repository;
             this._wxAccountService = wxAccountService;
             this._wcQrcodeTool = wcQrcodeTool;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<WxQrcodeDto></returns>
-        public async Task<List<WxQrcodeDto>> GetListAsync(WxQrcodeSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<WxQrcodeDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<WxQrcodeDto> items)> GetListAsync(int page, int size, WxQrcodeSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<WxQrcodeDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<WxQrcodeDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<WxQrcodeDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -99,91 +54,60 @@ namespace Ku.Core.CMS.Service.WeChat
                 model.IsDeleted = false;
 
                 //取得新场景值
-                var count = await _repository.CountAsync(x => x.AccountId == model.AccountId && x.PeriodType == model.PeriodType);
-                if (model.PeriodType == EmWxPeriodType.Temp)
+                using (var dapper = DapperFactory.Create())
                 {
-                    model.SceneId = 100000 + count + 1;
-                }
-                else
-                {
-                    model.SceneId = count + 1;
-                }
-
-                //取得微信AccessToken
-                var token = await _wxAccountService.GetAccessToken(model.AccountId);
-                //远程创建
-                if (model.PeriodType == EmWxPeriodType.Temp)
-                {
-                    var rsp = await _wcQrcodeTool.CreateTemp(token, model.SceneId, model.ExpireSeconds);
-                    if (rsp.ErrCode != 0)
+                    var count = await dapper.QueryCountAsync<WxQrcode>(new { model.AccountId, model.PeriodType });
+                    if (model.PeriodType == EmWxPeriodType.Temp)
                     {
-                        throw new VinoArgNullException(rsp.ToString());
+                        model.SceneId = 100000 + count + 1;
                     }
-                    model.Url = rsp.Data.Url;
-                    model.Ticket = rsp.Data.Ticket;
-                    model.ExpireSeconds = model.ExpireSeconds;
-                }
-                else
-                {
-                    var rsp = await _wcQrcodeTool.Create(token, model.SceneId);
-                    if (rsp.ErrCode != 0)
+                    else
                     {
-                        throw new VinoArgNullException(rsp.ToString());
+                        model.SceneId = count + 1;
                     }
-                    model.Url = rsp.Data.Url;
-                    model.Ticket = rsp.Data.Ticket;
-                }
 
-                await _repository.InsertAsync(model);
+                    //取得微信AccessToken
+                    var token = await _wxAccountService.GetAccessToken(model.AccountId);
+                    //远程创建
+                    if (model.PeriodType == EmWxPeriodType.Temp)
+                    {
+                        var rsp = await _wcQrcodeTool.CreateTemp(token, model.SceneId, model.ExpireSeconds);
+                        if (rsp.ErrCode != 0)
+                        {
+                            throw new VinoArgNullException(rsp.ToString());
+                        }
+                        model.Url = rsp.Data.Url;
+                        model.Ticket = rsp.Data.Ticket;
+                        model.ExpireSeconds = model.ExpireSeconds;
+                    }
+                    else
+                    {
+                        var rsp = await _wcQrcodeTool.Create(token, model.SceneId);
+                        if (rsp.ErrCode != 0)
+                        {
+                            throw new VinoArgNullException(rsp.ToString());
+                        }
+                        model.Url = rsp.Data.Url;
+                        model.Ticket = rsp.Data.Ticket;
+                    }
+
+                    await dapper.InsertAsync(model);
+                }
             }
             else
             {
                 //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                using (var dapper = DapperFactory.Create())
                 {
-                    throw new VinoDataNotFoundException("无法取得微信二维码数据！");
+                    var item = new
+                    {
+                        //这里进行赋值
+                        model.EventKey,
+                        model.Purpose
+                    };
+                    await dapper.UpdateAsync<WxQrcode>(item, new { model.Id });
                 }
-
-                //TODO:这里进行赋值
-                item.EventKey = model.EventKey;
-                item.Purpose = model.Purpose;
-
-                _repository.Update(item);
-            }
-            await _repository.SaveAsync();
-        }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
             }
         }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
-
-        #endregion
     }
 }

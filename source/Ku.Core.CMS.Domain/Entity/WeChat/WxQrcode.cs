@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：WxQrcode.cs
 // 功能描述：微信二维码 实体类
@@ -16,6 +16,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.WeChat
 {
+    /// <summary>
+    /// 微信二维码
+    /// </summary>
     [Table("wechat_qrcode")]
     public class WxQrcode : BaseProtectedEntity
     {
@@ -99,6 +102,9 @@ namespace Ku.Core.CMS.Domain.Entity.WeChat
 
     }
 
+    /// <summary>
+    /// 微信二维码 检索条件
+    /// </summary>
     public class WxQrcodeSearch : BaseProtectedSearch<WxQrcode>
     {
         public long AccountId { set; get; }

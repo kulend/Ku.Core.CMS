@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Member.cs
 // 功能描述：会员 实体类
@@ -21,6 +21,9 @@ using Ku.Core.Infrastructure.Helper;
 
 namespace Ku.Core.CMS.Domain.Entity.Membership
 {
+    /// <summary>
+    /// 会员
+    /// </summary>
     [Table("membership_member")]
     public class Member : BaseProtectedEntity
     {
@@ -119,8 +122,11 @@ namespace Ku.Core.CMS.Domain.Entity.Membership
 
         public MemberType MemberType { set; get; }
     }
-	
-	public class MemberSearch : BaseProtectedSearch<Member>
+    
+	/// <summary>
+    /// 会员 检索条件
+    /// </summary>
+    public class MemberSearch : BaseProtectedSearch<Member>
     {
 
     }

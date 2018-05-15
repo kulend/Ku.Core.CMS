@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MemberPointRecord.cs
 // 功能描述：会员积分记录 实体类
@@ -16,6 +16,9 @@ using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.Membership
 {
+    /// <summary>
+    /// 会员积分记录
+    /// </summary>
     [Table("membership_member_point_record")]
     public class MemberPointRecord : BaseProtectedEntity
     {
@@ -76,6 +79,9 @@ namespace Ku.Core.CMS.Domain.Entity.Membership
         public virtual System.User Operator { set; get; }
     }
 
+    /// <summary>
+    /// 会员积分记录 检索条件
+    /// </summary>
     public class MemberPointRecordSearch : BaseProtectedSearch<MemberPointRecord>
     {
         public long? MemberPointId { get; set; }

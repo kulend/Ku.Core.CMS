@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：UserActionLog.cs
-// 功能描述：用户操作日志 实体类
+// 功能描述：用户操作记录 实体类
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-04 19:13
@@ -17,6 +17,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Entity.System
 {
+    /// <summary>
+    /// 用户操作记录
+    /// </summary>
     [Table("system_action_log")]
     public class UserActionLog : BaseEntity
     {
@@ -55,7 +58,10 @@ namespace Ku.Core.CMS.Domain.Entity.System
         public string QueryString { set; get; }
     }
 
-    public class UserActionLogSearch : BaseProtectedSearch<UserActionLog>
+    /// <summary>
+    /// 用户操作记录 检索条件
+    /// </summary>
+    public class UserActionLogSearch : BaseSearch<UserActionLog>
     {
 
     }

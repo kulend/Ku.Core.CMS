@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：AppFeedbackService.cs
 // 功能描述：应用反馈 业务逻辑处理类
@@ -10,73 +10,32 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Ku.Core.Cache;
-using Ku.Core.CMS.Data.Repository.DataCenter;
 using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.DataCenter;
 using Ku.Core.CMS.Domain.Entity.DataCenter;
 using Ku.Core.CMS.IService.DataCenter;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
+using System;
+using System.Dynamic;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.DataCenter
 {
-    public partial class AppFeedbackService : BaseService, IAppFeedbackService
+    public partial class AppFeedbackService : BaseService<AppFeedback, AppFeedbackDto, AppFeedbackSearch>, IAppFeedbackService
     {
-        protected readonly IAppFeedbackRepository _repository;
         protected readonly ICacheService _cache;
 
         #region 构造函数
 
-        public AppFeedbackService(IAppFeedbackRepository repository, ICacheService cache)
+        public AppFeedbackService(ICacheService cache)
         {
-            this._repository = repository;
-            this._cache = cache;
+            _cache = cache;
         }
 
         #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<AppFeedbackDto></returns>
-        public async Task<List<AppFeedbackDto>> GetListAsync(AppFeedbackSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<AppFeedbackDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<AppFeedbackDto> items)> GetListAsync(int page, int size, AppFeedbackSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<AppFeedbackDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<AppFeedbackDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<AppFeedbackDto>(await this._repository.GetByIdAsync(id));
-        }
 
         /// <summary>
         /// 保存数据
@@ -88,44 +47,15 @@ namespace Ku.Core.CMS.Service.DataCenter
             model.CreateTime = DateTime.Now;
             model.IsDeleted = false;
             model.Resolved = false;
-
-            await _repository.InsertAsync(model);
-            await _repository.SaveAsync();
+            using (var dapper = DapperFactory.Create())
+            {
+                await dapper.InsertAsync(model);
+            }
 
             var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId));
             UnsolvedCount++;
             _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId), UnsolvedCount);
         }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
 
         /// <summary>
         /// 处理反馈
@@ -134,38 +64,37 @@ namespace Ku.Core.CMS.Service.DataCenter
         /// <returns></returns>
         public async Task ResolveAsync(AppFeedbackDto dto)
         {
-            var item = await _repository.GetByIdAsync(dto.Id);
-            if (item == null)
+            using (var dapper = DapperFactory.Create())
             {
-                throw new VinoDataNotFoundException();
-            }
+                var item = await dapper.QueryOneAsync<AppFeedback>(new { Id = dto.Id });
+                if (item == null)
+                {
+                    throw new VinoDataNotFoundException();
+                }
 
-            var beforeStatus = item.Resolved;
+                dynamic data = new ExpandoObject();
+                data.Resolved = dto.Resolved;
+                data.AdminRemark = dto.AdminRemark;
+                if (dto.Resolved)
+                {
+                    data.ResolveTime = DateTime.Now;
+                }
 
-            item.Resolved = dto.Resolved;
-            if (item.Resolved)
-            {
-                item.ResolveTime = DateTime.Now;
-            }
-            item.AdminRemark = dto.AdminRemark;
+                await dapper.UpdateAsync<AppFeedback>(data, new { Id = dto.Id });
 
-            _repository.Update(item);
-
-            await _repository.SaveAsync();
-
-            var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId));
-            if (item.Resolved && !beforeStatus)
-            {
-                UnsolvedCount--;
-                if (UnsolvedCount < 0) UnsolvedCount = 0;
-                _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
-            } else if (!item.Resolved && beforeStatus)
-            {
-                UnsolvedCount++;
-                _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
+                var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId));
+                if (dto.Resolved && !item.Resolved)
+                {
+                    UnsolvedCount--;
+                    if (UnsolvedCount < 0) UnsolvedCount = 0;
+                    _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
+                }
+                else if (!dto.Resolved && item.Resolved)
+                {
+                    UnsolvedCount++;
+                    _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
+                }
             }
         }
-
-        #endregion
     }
 }

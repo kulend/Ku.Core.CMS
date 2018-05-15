@@ -1,8 +1,8 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：DeliveryTempletService.cs
-// 功能描述：配送模板 业务逻辑处理类
+// 功能描述：运费模板 业务逻辑处理类
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-05 10:25
@@ -10,71 +10,18 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ku.Core.CMS.Data.Repository.Mall;
-using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.Mall;
 using Ku.Core.CMS.Domain.Entity.Mall;
 using Ku.Core.CMS.IService.Mall;
-using Ku.Core.Infrastructure.Exceptions;
-using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.IdGenerator;
+using System;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.Mall
 {
-    public partial class DeliveryTempletService : BaseService, IDeliveryTempletService
+    public partial class DeliveryTempletService : BaseService<DeliveryTemplet, DeliveryTempletDto, DeliveryTempletSearch>, IDeliveryTempletService
     {
-        protected readonly IDeliveryTempletRepository _repository;
-
-        #region 构造函数
-
-        public DeliveryTempletService(IDeliveryTempletRepository repository)
-        {
-            this._repository = repository;
-        }
-
-        #endregion
-
-        #region 自动生成的方法
-
-        /// <summary>
-        /// 查询数据
-        /// </summary>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>List<DeliveryTempletDto></returns>
-        public async Task<List<DeliveryTempletDto>> GetListAsync(DeliveryTempletSearch where, string sort)
-        {
-            var data = await _repository.QueryAsync(where.GetExpression(), sort ?? "CreateTime desc");
-            return Mapper.Map<List<DeliveryTempletDto>>(data);
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="sort">排序</param>
-        /// <returns>count：条数；items：分页数据</returns>
-        public async Task<(int count, List<DeliveryTempletDto> items)> GetListAsync(int page, int size, DeliveryTempletSearch where, string sort)
-        {
-            var data = await _repository.PageQueryAsync(page, size, where.GetExpression(), sort ?? "CreateTime desc");
-            return (data.count, Mapper.Map<List<DeliveryTempletDto>>(data.items));
-        }
-
-        /// <summary>
-        /// 根据主键取得数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task<DeliveryTempletDto> GetByIdAsync(long id)
-        {
-            return Mapper.Map<DeliveryTempletDto>(await this._repository.GetByIdAsync(id));
-        }
-
         /// <summary>
         /// 保存数据
         /// </summary>
@@ -91,89 +38,62 @@ namespace Ku.Core.CMS.Service.Mall
                 model.SnapshotCount = 0;
                 model.OriginId = null;
                 model.EffectiveTime = DateTime.Now;
-
-                await _repository.InsertAsync(model);
-                await _repository.SaveAsync();
+                using (var dapper = DapperFactory.Create())
+                {
+                    await dapper.InsertAsync(model);
+                }
             }
             else
             {
                 //更新
-                var item = await _repository.GetByIdAsync(model.Id);
-                if (item == null)
+                using (var dapper = DapperFactory.Create())
                 {
-                    throw new VinoDataNotFoundException("无法取得配送模板数据！");
-                }
-
-                using (var trans = await _repository.BeginTransactionAsync())
-                {
-                    //生成快照
-                    if (item.ChargeMode != model.ChargeMode
-                        || !item.ChargeConfig.Equals(model.ChargeConfig))
+                    var item = new
                     {
-                        DeliveryTemplet snapshot = new DeliveryTemplet();
-                        snapshot.Id = ID.NewID();
-                        snapshot.IsDeleted = false;
-                        snapshot.CreateTime = DateTime.Now;
-                        snapshot.Name = item.Name;
-                        snapshot.Description = item.Description;
-                        snapshot.IsEnable = item.IsEnable;
-                        snapshot.ChargeConfig = item.ChargeConfig;
-                        snapshot.ChargeMode = item.ChargeMode;
-                        snapshot.SnapshotCount = item.SnapshotCount;
-                        snapshot.EffectiveTime = item.EffectiveTime;
-                        snapshot.ExpireTime = DateTime.Now;
-                        snapshot.IsSnapshot = true;
-                        snapshot.OriginId = item.OriginId;
+                        //这里进行赋值
 
-                        await _repository.InsertAsync(snapshot);
-
-                        item.ChargeMode = model.ChargeMode;
-                        item.ChargeConfig = model.ChargeConfig;
-                        item.EffectiveTime = DateTime.Now;
-                        item.SnapshotCount = item.SnapshotCount + 1;
-                    }
-                    item.Name = model.Name;
-                    item.Description = model.Description;
-                    item.IsEnable = model.IsEnable;
-
-                    _repository.Update(item);
-                    await _repository.SaveAsync();
-
-                    trans.Commit();
+                    };
+                    await dapper.UpdateAsync<DeliveryTemplet>(item, new { model.Id });
                 }
+
+                //using (var trans = await _repository.BeginTransactionAsync())
+                //{
+                //    //生成快照
+                //    if (item.ChargeMode != model.ChargeMode
+                //        || !item.ChargeConfig.Equals(model.ChargeConfig))
+                //    {
+                //        DeliveryTemplet snapshot = new DeliveryTemplet();
+                //        snapshot.Id = ID.NewID();
+                //        snapshot.IsDeleted = false;
+                //        snapshot.CreateTime = DateTime.Now;
+                //        snapshot.Name = item.Name;
+                //        snapshot.Description = item.Description;
+                //        snapshot.IsEnable = item.IsEnable;
+                //        snapshot.ChargeConfig = item.ChargeConfig;
+                //        snapshot.ChargeMode = item.ChargeMode;
+                //        snapshot.SnapshotCount = item.SnapshotCount;
+                //        snapshot.EffectiveTime = item.EffectiveTime;
+                //        snapshot.ExpireTime = DateTime.Now;
+                //        snapshot.IsSnapshot = true;
+                //        snapshot.OriginId = item.OriginId;
+
+                //        await _repository.InsertAsync(snapshot);
+
+                //        item.ChargeMode = model.ChargeMode;
+                //        item.ChargeConfig = model.ChargeConfig;
+                //        item.EffectiveTime = DateTime.Now;
+                //        item.SnapshotCount = item.SnapshotCount + 1;
+                //    }
+                //    item.Name = model.Name;
+                //    item.Description = model.Description;
+                //    item.IsEnable = model.IsEnable;
+
+                //    _repository.Update(item);
+                //    await _repository.SaveAsync();
+
+                //    trans.Commit();
+                //}
             }    
         }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(params long[] id)
-        {
-            if (await _repository.DeleteAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        /// <summary>
-        /// 恢复数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        public async Task RestoreAsync(params long[] id)
-        {
-            if (await _repository.RestoreAsync(id))
-            {
-                await _repository.SaveAsync();
-            }
-        }
-
-        #endregion
-
-        #region 其他方法
-
-        #endregion
     }
 }

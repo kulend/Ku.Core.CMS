@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：MemberType.cs
 // 功能描述：会员类型 实体类
@@ -17,6 +17,9 @@ using System.Text;
 
 namespace Ku.Core.CMS.Domain.Entity.Membership
 {
+    /// <summary>
+    /// 会员类型
+    /// </summary>
     [Table("membership_member_type")]
     public class MemberType : BaseProtectedEntity
     {
@@ -32,6 +35,9 @@ namespace Ku.Core.CMS.Domain.Entity.Membership
         public int OrderIndex { set; get; }
     }
 
+    /// <summary>
+    /// 会员类型 检索条件
+    /// </summary>
     public class MemberTypeSearch : BaseProtectedSearch<MemberType>
     {
 

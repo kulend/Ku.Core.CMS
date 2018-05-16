@@ -37,16 +37,13 @@ namespace Ku.Core.CMS.Service.WeChat
                 model.IsDeleted = false;
                 if (!model.IsIndividuation)
                 {
-                    model.MatchRule = new WxMenuMatchRule
-                    {
-                        TagId = "",
-                        Sex = "",
-                        Client = "",
-                        Country = "",
-                        Province = "",
-                        City = "",
-                        Language = "",
-                    };
+                    model.MatchRuleTagId = null;
+                    model.MatchRuleSex = null;
+                    model.MatchRuleClient = null;
+                    model.MatchRuleCountry = null;
+                    model.MatchRuleProvince = null;
+                    model.MatchRuleCity = null;
+                    model.MatchRuleLanguage = null;
                 }
                 using (var dapper = DapperFactory.Create())
                 {

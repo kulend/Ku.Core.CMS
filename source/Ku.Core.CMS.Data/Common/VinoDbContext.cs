@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Ku.Core.CMS.Domain.Entity.System;
+﻿using Ku.Core.CMS.Domain.Entity.System;
 using Ku.Core.TimedTask.EntityFramework;
-using Ku.Core.CMS.Domain.Entity.WeChat;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ku.Core.CMS.Data.Common
 {
@@ -33,9 +28,6 @@ namespace Ku.Core.CMS.Data.Common
 
             //菜单
             modelBuilder.Entity<Menu>().HasMany(m => m.SubMenus).WithOne(m => m.Parent);
-
-            //微信菜单
-            modelBuilder.Entity<WxMenu>().OwnsOne(t=>t.MatchRule);
 
             base.OnModelCreating(modelBuilder);
 

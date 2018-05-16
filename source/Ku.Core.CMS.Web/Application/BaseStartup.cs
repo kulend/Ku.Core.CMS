@@ -37,7 +37,7 @@ namespace Ku.Core.CMS.Web.Application
             services.AddIdGenerator(Configuration);
             //DBContext
             string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.Web.Backend")));
+            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend")));
             services.AddDapper(options => options.UseMySql(connection));
 
             //缓存

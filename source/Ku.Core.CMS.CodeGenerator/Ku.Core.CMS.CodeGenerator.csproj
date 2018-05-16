@@ -46,6 +46,10 @@
       <LastGenOutput>Service.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
+    <None Update="Data.ttinclude">
+      <LastGenOutput>Service.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Repository.ttinclude">
       <LastGenOutput>Service.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>

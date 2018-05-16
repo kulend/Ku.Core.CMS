@@ -14,6 +14,7 @@ using AutoMapper;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.Data.EntityFramework;
 
 namespace Ku.Core.CMS.TaskApp
 {
@@ -39,7 +40,7 @@ namespace Ku.Core.CMS.TaskApp
             services.AddIdGenerator(Configuration);
 
             string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")));
+            services.AddDbContext<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")));
 
             //string connection = Configuration.GetConnectionString("Default");
             //services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")), ServiceLifetime.Transient);
@@ -48,9 +49,9 @@ namespace Ku.Core.CMS.TaskApp
             services.AddCache(Configuration);
 
             //事件消息发送订阅
-            services.AddEventBus<VinoDbContext>(Configuration);
+            services.AddEventBus<KuDbContext>(Configuration);
 
-            services.AddTimedTask().AddEntityFrameworkTimedTask<VinoDbContext>();
+            //services.AddTimedTask().AddEntityFrameworkTimedTask<KuDbContext>();
 
             var builder = new ContainerBuilder();
             builder.RegisterModule(new AppModule());

@@ -21,6 +21,8 @@ namespace Ku.Core.CMS.Web.AutoMapper
     {
         public EntityMapperProfile()
         {
+            CreateMap<Domain.Entity.UserCenter.User, Domain.Dto.UserCenter.UserDto>().ReverseMap();
+			CreateMap<Domain.Entity.UserCenter.Role, Domain.Dto.UserCenter.RoleDto>().ReverseMap();
             CreateMap<Domain.Entity.System.User, Domain.Dto.System.UserDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Role, Domain.Dto.System.RoleDto>().ReverseMap();
             CreateMap<Domain.Entity.System.UserActionLog, Domain.Dto.System.UserActionLogDto>().ReverseMap();

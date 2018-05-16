@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Ku.Core.CMS.Data.Common;
+using Ku.Core.CMS.Data.EntityFramework;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -37,14 +37,14 @@ namespace Ku.Core.CMS.Web.Application
             services.AddIdGenerator(Configuration);
             //DBContext
             string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend")));
+            services.AddDbContext<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend")));
             services.AddDapper(options => options.UseMySql(connection));
 
             //缓存
             services.AddCache(Configuration);
 
             //事件消息发送订阅
-            services.AddEventBus<VinoDbContext>(Configuration);
+            services.AddEventBus<KuDbContext>(Configuration);
 
             //微信
             services.AddWeChat();

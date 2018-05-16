@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using Autofac;
-using Ku.Core.CMS.Data.Common;
-using Ku.Core.Tokens.Jwt;
-using Ku.Core.Infrastructure.DependencyResolver;
-using Ku.Core.CMS.IService.System;
+﻿using Autofac;
+using Ku.Core.CMS.Data.EntityFramework;
 using Ku.Core.CMS.Service.System;
+using Ku.Core.Infrastructure.DependencyResolver;
+using Ku.Core.Tokens.Jwt;
+using System;
+using System.Reflection;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -15,14 +12,14 @@ namespace Ku.Core.CMS.Web.Application
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<VinoDbContext>().As<IDbContext>().InstancePerLifetimeScope();
+            builder.RegisterType<KuDbContext>().As<IDbContext>().InstancePerLifetimeScope();
             builder.RegisterType<AutofacResolver>().As<IIocResolver>().InstancePerLifetimeScope();
 
             //Repository
-            builder.RegisterAssemblyTypes(typeof(BaseRepository<,>).GetTypeInfo().Assembly)
-                .Where(t => t.Name.EndsWith("Repository", StringComparison.CurrentCultureIgnoreCase))
-                .AsImplementedInterfaces()
-                .InstancePerDependency();
+            //builder.RegisterAssemblyTypes(typeof(BaseRepository<,>).GetTypeInfo().Assembly)
+            //    .Where(t => t.Name.EndsWith("Repository", StringComparison.CurrentCultureIgnoreCase))
+            //    .AsImplementedInterfaces()
+            //    .InstancePerDependency();
 
             //Service
             builder.RegisterAssemblyTypes(typeof(UserService).GetTypeInfo().Assembly)

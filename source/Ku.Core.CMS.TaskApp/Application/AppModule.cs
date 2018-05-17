@@ -6,6 +6,7 @@ using Autofac;
 using Ku.Core.CMS.Data.EntityFramework;
 using Ku.Core.CMS.IService.System;
 using Ku.Core.CMS.Service.System;
+using Ku.Core.CMS.Service.UserCenter;
 using Ku.Core.Infrastructure.DependencyResolver;
 using Ku.Core.Tokens.Jwt;
 

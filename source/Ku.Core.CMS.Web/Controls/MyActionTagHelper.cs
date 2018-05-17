@@ -9,15 +9,16 @@ using Ku.Core.CMS.IService.System;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.Extensions.Ui;
 using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.CMS.IService.UserCenter;
 
 namespace Ku.Core.CMS.Web.Controls
 {
     [HtmlTargetElement("action")]
     public class MyActionTagHelper : ActionTagHelper
     {
-        private IFunctionService _service;
+        private IBackendAuthService _service;
 
-        public MyActionTagHelper(IFunctionService service, IActionTagProcess process)
+        public MyActionTagHelper(IBackendAuthService service, IActionTagProcess process)
             : base(process)
         {
             this._service = service;
@@ -35,7 +36,7 @@ namespace Ku.Core.CMS.Web.Controls
                 {
                     return;
                 }
-                var result = await _service.CheckUserAuth(userId, AuthCode);
+                var result = await _service.CheckUserAuthAsync(userId, AuthCode);
                 if (!result)
                 {
                     return;

@@ -74,47 +74,48 @@ namespace Ku.Core.CMS.Service.System
         /// </summary>
         public async Task<List<FunctionDto>> GetFunctionsWithRoleAuthAsync(long roleId, long? parentFunctionId)
         {
-            using (var dapper = DapperFactory.Create())
-            {
-                //取得功能列表
-                var functions = Mapper.Map<List<FunctionDto>>(await dapper.QueryListAsync<Function>(new { ParentId = parentFunctionId }));
+            //using (var dapper = DapperFactory.Create())
+            //{
+            //    //取得功能列表
+            //    var functions = Mapper.Map<List<FunctionDto>>(await dapper.QueryListAsync<Function>(new { ParentId = parentFunctionId }));
 
-                //取得角色功能列表
-                var roleFunctions = await dapper.QueryListAsync<RoleFunction>(new { RoleId = roleId });
+            //    //取得角色功能列表
+            //    var roleFunctions = await dapper.QueryListAsync<RoleFunction>(new { RoleId = roleId });
 
-                foreach (var function in functions)
-                {
-                    if (roleFunctions.Any(x => x.FunctionId == function.Id))
-                    {
-                        function.IsRoleHasAuth = true;
-                    }
-                }
+            //    foreach (var function in functions)
+            //    {
+            //        if (roleFunctions.Any(x => x.FunctionId == function.Id))
+            //        {
+            //            function.IsRoleHasAuth = true;
+            //        }
+            //    }
 
-                return functions;
-            }
+            //    return functions;
+            //}
+            return null;
         }
 
         public async Task SaveRoleAuthAsync(long RoleId, long FunctionId, bool hasAuth)
         {
-            using (var dapper = DapperFactory.Create())
-            {
-                var model = await dapper.QueryOneAsync<RoleFunction>(where: new { RoleId, FunctionId });
-                if (hasAuth)
-                {
-                    if (model == null)
-                    {
-                        model = new RoleFunction();
-                        model.RoleId = RoleId;
-                        model.FunctionId = FunctionId;
-                        await dapper.InsertAsync<RoleFunction>(model);
-                    }
-                }
-                else if (model != null)
-                {
-                    await dapper.DeleteAsync<RoleFunction>(where: new { RoleId, FunctionId });
-                }
+            //using (var dapper = DapperFactory.Create())
+            //{
+            //    var model = await dapper.QueryOneAsync<RoleFunction>(where: new { RoleId, FunctionId });
+            //    if (hasAuth)
+            //    {
+            //        if (model == null)
+            //        {
+            //            model = new RoleFunction();
+            //            model.RoleId = RoleId;
+            //            model.FunctionId = FunctionId;
+            //            await dapper.InsertAsync<RoleFunction>(model);
+            //        }
+            //    }
+            //    else if (model != null)
+            //    {
+            //        await dapper.DeleteAsync<RoleFunction>(where: new { RoleId, FunctionId });
+            //    }
 
-            }
+            //}
         }
 
         #endregion

@@ -1,16 +1,16 @@
 @page
 @model Ku.Core.CMS.Web.Backend.Pages.UserCenter.User.EditModel
 @{
-//----------------------------------------------------------------
-// Copyright (C) 2018 kulend 版权所有
-//
-// 文件名：Detail.cshtml
-// 功能描述：用户 编辑页面
-//
-// 创建者：kulend@qq.com
-// 创建时间：2018-05-16 10:45
-//
-//----------------------------------------------------------------
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：用户 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-16 10:45
+    //
+    //----------------------------------------------------------------
 }
 @{
     Layout = "~/Pages/_WindowFormLayout.cshtml";
@@ -20,6 +20,27 @@
     {
         <div class="layui-body">
             @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Account, x => x.Dto.Password)
+            @Html.InputFor(x => x.Dto.NickName, x => x.Dto.RealName)
+            @Html.InputFor(x => x.Dto.Mobile, x => x.Dto.Email)
+            @Html.InputFor(x => x.Dto.Sex, x => x.Dto.IsEnable)
+            <div class="layui-form-item">
+                <label class="layui-form-label">头像</label>
+                <div id="HeadImage" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.Remarks)
+            @Html.InputFor(x => x.Dto.IsAdmin, new { lay_filter = "IsAdmin" })
+
+            <div id="ID_UserRoles" class="layui-form-item @(!Model.Dto.IsAdmin?"layui-hide":"")">
+                <label class="layui-form-label">用户角色</label>
+                <div class="layui-input-block">
+                    @foreach (Ku.Core.CMS.Domain.Dto.UserCenter.RoleDto role in Model.Roles)
+                    {
+                        <input type="checkbox" name="UserRoles" value="@role.Id" title="@role.Name" lay-skin="primary" @(role.IsEnable ? "" : "disabled") @(Model.UserRoles.Any(x => x == role.Id) ? "checked" : "") />
+                    }
+                </div>
+            </div>
         </div>
         <div class="layui-footer">
             @Html.ActionsForSubmitAndClose()
@@ -27,10 +48,26 @@
     }
 </div>
 @section Scripts
-{
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
+
+            $("#HeadImage").vinoImagePicker({
+                field_path: "Dto.HeadImage",
+                max_count: 1
+            });
+
+            $("#HeadImage").vinoImagePicker("loadImage", '@Html.Raw(Model.Dto.HeadImage)');
+
+            form.on('switch(IsAdmin)', function (data) {
+                if (data.elem.checked) {
+                    $("#ID_UserRoles").removeClass("layui-hide");
+                } else { 
+                    $("#ID_UserRoles").addClass("layui-hide");
+                }
+            });
         });
     </script>
 }

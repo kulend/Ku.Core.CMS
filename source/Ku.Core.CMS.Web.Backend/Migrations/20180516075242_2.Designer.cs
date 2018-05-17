@@ -19,9 +19,10 @@ using System;
 namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(KuDbContext))]
-    partial class KuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180516075242_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1021,17 +1022,6 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("usercenter_role");
-                });
-
-            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.UserCenter.RoleFunction", b =>
-                {
-                    b.Property<long>("RoleId");
-
-                    b.Property<long>("FunctionId");
-
-                    b.HasKey("RoleId", "FunctionId");
-
-                    b.ToTable("usercenter_role_function");
                 });
 
             modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.UserCenter.User", b =>

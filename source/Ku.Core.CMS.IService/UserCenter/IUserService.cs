@@ -11,6 +11,7 @@
 
 using Ku.Core.CMS.Domain.Dto.UserCenter;
 using Ku.Core.CMS.Domain.Entity.UserCenter;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.IService.UserCenter
@@ -20,6 +21,25 @@ namespace Ku.Core.CMS.IService.UserCenter
         /// <summary>
         /// 保存数据
         /// </summary>
-        Task SaveAsync(UserDto dto);
+        Task SaveAsync(UserDto dto, long[] userRoles);
+
+        Task<List<RoleDto>> GetUserRolesAsync(long userId);
+
+        Task<UserDto> LoginAsync(string account, string password);
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        Task ChangePasswordAsync(long userId, string currentPwd, string newPwd);
+
+        /// <summary>
+        /// 用户资料保存
+        /// </summary>
+        Task SaveProfileAsync(UserDto dto);
+
+        /// <summary>
+        /// 密码验证
+        /// </summary>
+        Task<bool> PasswordCheckAsync(long id, string password);
     }
 }

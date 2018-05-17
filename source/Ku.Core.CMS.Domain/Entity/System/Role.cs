@@ -51,16 +51,6 @@ namespace Ku.Core.CMS.Domain.Entity.System
         [MaxLength(200)]
         [Display(Name = "备注")]
         public string Remarks { get; set; }
-
-        /// <summary>
-        /// 用户角色集合
-        /// </summary>
-        public virtual ICollection<UserRole> UserRoles { get; set; }
-
-        /// <summary>
-        /// 用户功能权限集合
-        /// </summary>
-        public virtual ICollection<RoleFunction> RoleFunctions { get; set; }
     }
 
     /// <summary>

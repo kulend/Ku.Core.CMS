@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Ku.Core.CMS.IService.System;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.Web.Filters;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.IService.UserCenter;
 
 namespace Ku.Core.CMS.Web.Backend.Pages.Account
 {
@@ -64,7 +64,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
             {
                 throw new VinoArgNullException("两次输入的密码不一致！");
             }
-            await _userService.ChangePassword(User.GetUserIdOrZero(), CurrentPassword, NewPassword);
+            await _userService.ChangePasswordAsync(User.GetUserIdOrZero(), CurrentPassword, NewPassword);
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 

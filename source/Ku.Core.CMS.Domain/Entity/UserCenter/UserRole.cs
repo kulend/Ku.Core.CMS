@@ -22,5 +22,7 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
     {
         public long UserId { set; get; }
         public long RoleId { set; get; }
+
+        public virtual Role Role { set; get; }
     }
 }

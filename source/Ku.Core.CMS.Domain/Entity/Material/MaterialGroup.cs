@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Ku.Core.CMS.Domain.Entity.System;
+using Ku.Core.CMS.Domain.Entity.UserCenter;
 using Ku.Core.CMS.Domain.Enum.Material;
 
 namespace Ku.Core.CMS.Domain.Entity.Material

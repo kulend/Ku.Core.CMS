@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Ku.Core.CMS.Domain.Entity.UserCenter;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Ku.Core.CMS.Domain.Entity.System;
 
 namespace Ku.Core.CMS.Domain.Entity.Material
 {

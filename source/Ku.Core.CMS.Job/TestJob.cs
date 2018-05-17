@@ -12,13 +12,5 @@ namespace Ku.Core.CMS.Job
         public void Run()
         {
         }
-
-        [SingleTask]
-        //[Invoke(Interval = 5000)]
-        public void RunXXXX(IUserService service)
-        {
-            var aa = service.GetListAsync(0, 10, null, null);
-            Debug.WriteLine(DateTime.Now + " Test RunXXXX invoke...");
-        }
     }
 }

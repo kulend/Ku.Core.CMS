@@ -1,17 +1,5 @@
-.layui-input-inline.long {
-    width: 75%;
-}
-
-.layui-input-inline.short {
-    width: 120px;
-}
-
-.layui-input-inline.middle {
-    width: 200px;
-}
-
-.layui-input-inline.num {
-    width: 100px;
+.layui-form-item .layui-input-inline {
+    width: 220px;
 }
 .layui-form-label {
     width: 110px;
@@ -19,22 +7,6 @@
 
 .layui-input-block {
     margin-left:140px;
-}
-
-.layui-input-block.long {
-    width: 75%;
-}
-
-.layui-input-block.short {
-    width: 20%;
-}
-
-.layui-input-block.middle {
-    width: 40%;
-}
-
-.layui-input-block.num {
-    width: 100px;
 }
 
 .layui-textarea {

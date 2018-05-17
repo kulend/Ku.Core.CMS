@@ -20,6 +20,10 @@
     {
         <div class="layui-body">
             @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Name)
+            @Html.InputFor(x => x.Dto.NameEn)
+            @Html.InputFor(x => x.Dto.IsEnable)
+            @Html.InputFor(x => x.Dto.Remarks)
         </div>
         <div class="layui-footer">
             @Html.ActionsForSubmitAndClose()

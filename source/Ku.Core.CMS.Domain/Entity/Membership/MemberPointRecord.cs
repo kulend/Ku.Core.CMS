@@ -11,6 +11,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Ku.Core.CMS.Domain.Entity.UserCenter;
 using Ku.Core.CMS.Domain.Enum.Membership;
 using Ku.Core.Infrastructure.Attributes;
 
@@ -76,7 +77,7 @@ namespace Ku.Core.CMS.Domain.Entity.Membership
         /// <summary>
         /// 操作员
         /// </summary>
-        public virtual System.User Operator { set; get; }
+        public virtual User Operator { set; get; }
     }
 
     /// <summary>

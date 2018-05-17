@@ -26,14 +26,15 @@
                     @using (Html.BeginForm<ProfileModel>(""))
                     {
                         @Html.InputFor(x => x.Dto.Id)
-                        @Html.InputFor(x => x.Dto.Name)
+                        @Html.ShowFor(x => x.Dto.Account)
+                        @Html.InputFor(x => x.Dto.NickName, x => x.Dto.RealName)
                         <div class="layui-form-item">
                             <label class="layui-form-label">头像</label>
                             <div id="HeadImage" class="layui-input-block">
                             </div>
                         </div>
-                        @Html.InputFor(x => x.Dto.Mobile)
-                        @Html.InputFor(x => x.Dto.Email)
+                        @Html.InputFor(x => x.Dto.Mobile, x => x.Dto.Email)
+                        @Html.InputFor(x => x.Dto.Sex)
                         @Html.InputFor(x => x.Dto.Remarks)
                         <div class="layui-form-item">
                             <div class="layui-input-block">

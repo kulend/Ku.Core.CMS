@@ -10,6 +10,8 @@
 //----------------------------------------------------------------
 
 using Ku.Core.CMS.Domain.Enum;
+using Ku.Core.Infrastructure.Extensions;
+using Ku.Core.Infrastructure.Helper;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -86,6 +88,52 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
         /// 随机因子
         /// </summary>
         public int? Factor { set; get; }
+
+        /// <summary>
+        /// 是否是管理员
+        /// </summary>
+        public bool IsAdmin { set; get; } = false;
+
+        /// <summary>
+        /// 密码加密
+        /// </summary>
+        public void EncryptPassword()
+        {
+            if (Password.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var result = CryptHelper.EncryptMD5(Password);
+            if (this.Factor.HasValue)
+            {
+                result = CryptHelper.EncryptMD5(result + this.Factor.Value);
+            }
+            result = CryptHelper.EncryptSha256(result);
+            Password = result;
+        }
+
+        /// <summary>
+        /// 密码验证
+        /// </summary>
+        /// <param name="pwd"></param>
+        /// <returns></returns>
+        public bool CheckPassword(string pwd)
+        {
+            if (pwd.IsNullOrEmpty())
+            {
+                return false;
+            }
+
+            var result = CryptHelper.EncryptMD5(pwd);
+            if (this.Factor.HasValue)
+            {
+                result = CryptHelper.EncryptMD5(result + this.Factor.Value);
+            }
+            result = CryptHelper.EncryptSha256(result);
+
+            return result.EqualOrdinalIgnoreCase(this.Password);
+        }
     }
 
     /// <summary>
@@ -93,6 +141,6 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
     /// </summary>
     public class UserSearch : BaseProtectedSearch<User>
     {
-
+        public bool? IsAdmin { set; get; }
     }
 }

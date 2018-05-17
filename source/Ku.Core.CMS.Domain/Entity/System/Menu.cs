@@ -30,7 +30,7 @@ namespace Ku.Core.CMS.Domain.Entity.System
         /// </summary>
         public long? ParentId { get; set; }
 
-        public Menu Parent { get; set; }
+        public virtual Menu Parent { get; set; }
 
         /// <summary>
         /// 菜单名称
@@ -78,7 +78,7 @@ namespace Ku.Core.CMS.Domain.Entity.System
         /// </summary>
         public bool HasSubMenu { set; get; }
 
-        public ICollection<Menu> SubMenus { set; get; }
+        public virtual ICollection<Menu> SubMenus { set; get; }
     }
 
     /// <summary>

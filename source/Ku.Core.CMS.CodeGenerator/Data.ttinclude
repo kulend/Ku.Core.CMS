@@ -17,7 +17,7 @@
         Directory.CreateDirectory(pathOfContext);
     }
 	manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = pathOfContext};
-	var fileNameOfContext = "KuDbContext.cs";
+	var fileNameOfContext = "KuDbContextDbSet.cs";
 	manager.StartBlock(fileNameOfContext);
 #>
 //----------------------------------------------------------------
@@ -33,34 +33,16 @@
 //
 //----------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ku.Core.CMS.Data.EntityFramework
 {
-    public partial class KuDbContext : DbContext, IDbContext
+    public partial class KuDbContext
     {
-        public KuDbContext(DbContextOptions<KuDbContext> options)
-            : base(options)
-        {
-        }
-
         /// <summary>
-        /// 异步保存
+        /// <#=area#> <#=desc#>
         /// </summary>
-        /// <returns></returns>
-        public async Task<int> SaveChangesAsync()
-        {
-            return await base.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// <#=desc#>
-        /// </summary>
-        public DbSet<Domain.Entity.<#=area#>.<#=name#>> <#=name#>s { get; set; }
+        public DbSet<Domain.Entity.<#=area#>.<#=name#>> <#=area#><#=name#>s { get; set; }
 
     }
 }

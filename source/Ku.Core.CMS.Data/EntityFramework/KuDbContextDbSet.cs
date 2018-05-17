@@ -17,20 +17,6 @@ namespace Ku.Core.CMS.Data.EntityFramework
 {
     public partial class KuDbContext
     {
-        public DbSet<Domain.Entity.System.UserRole> SystemUserRoles { get; set; }
-
-        public DbSet<Domain.Entity.System.RoleFunction> SystemRoleFunctions { get; set; }
-
-        /// <summary>
-        /// 用户
-        /// </summary>
-        public DbSet<Domain.Entity.System.User> SystemUsers { get; set; }
-
-        /// <summary>
-        /// 角色
-        /// </summary>
-        public DbSet<Domain.Entity.System.Role> SystemRoles { get; set; }
-
         /// <summary>
         /// 用户操作日志
         /// </summary>
@@ -184,17 +170,22 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// <summary>
         /// 用户角色关联
         /// </summary>
-        public DbSet<Domain.Entity.UserCenter.User> Users { get; set; }
+        public DbSet<Domain.Entity.UserCenter.User> UserCenterUsers { get; set; }
 
         /// <summary>
         /// 用户角色关联
         /// </summary>
-        public DbSet<Domain.Entity.UserCenter.Role> Roles { get; set; }
+        public DbSet<Domain.Entity.UserCenter.Role> UserCenterRoles { get; set; }
 
         /// <summary>
         /// 用户角色关联
         /// </summary>
-        public DbSet<Domain.Entity.UserCenter.UserRole> UserRoles { get; set; }
+        public DbSet<Domain.Entity.UserCenter.UserRole> UserCenterUserRoles { get; set; }
+		
+        /// <summary>
+        /// UserCenter 角色功能关联
+        /// </summary>
+        public DbSet<Domain.Entity.UserCenter.RoleFunction> UserCenterRoleFunctions { get; set; }
 
     }
 }

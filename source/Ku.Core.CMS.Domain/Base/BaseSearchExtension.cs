@@ -161,12 +161,26 @@ namespace Ku.Core.CMS.Domain
             switch (operation)
             {
                 case SearchConditionOperation.Equal:
-                    sql = tableAlias + dialect.QuoteFiled(name) + "=@" + name;
-                    pms.TryAdd(name, value);
+                    if (value == null)
+                    {
+                        sql = tableAlias + dialect.QuoteFiled(name) + " IS NULL";
+                    }
+                    else
+                    {
+                        sql = tableAlias + dialect.QuoteFiled(name) + "=@" + name;
+                        pms.TryAdd(name, value);
+                    }
                     break;
                 case SearchConditionOperation.NotEqual:
-                    sql = tableAlias + dialect.QuoteFiled(name) + "<>@" + name;
-                    pms.TryAdd(name, value);
+                    if (value == null)
+                    {
+                        sql = tableAlias + dialect.QuoteFiled(name) + " IS NOT NULL";
+                    }
+                    else
+                    {
+                        sql = tableAlias + dialect.QuoteFiled(name) + "<>@" + name;
+                        pms.TryAdd(name, value);
+                    }
                     break;
                 case SearchConditionOperation.Contains:
                     sql = $"{tableAlias}{dialect.QuoteFiled(name)} LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";

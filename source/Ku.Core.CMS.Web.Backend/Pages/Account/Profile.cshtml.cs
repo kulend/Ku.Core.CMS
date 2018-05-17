@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Ku.Core.CMS.Domain.Dto.System;
-using Ku.Core.CMS.IService.System;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.Web.Filters;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.IService.UserCenter;
+using Ku.Core.CMS.Domain.Dto.UserCenter;
 
 namespace Ku.Core.CMS.Web.Backend.Pages.Account
 {

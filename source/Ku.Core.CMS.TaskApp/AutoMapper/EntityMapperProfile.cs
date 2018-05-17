@@ -21,10 +21,6 @@ namespace Ku.Core.CMS.TaskApp.AutoMapper
     {
         public EntityMapperProfile()
         {
-            CreateMap<Domain.Entity.System.User, Domain.Dto.System.UserDto>();
-            CreateMap<Domain.Dto.System.UserDto, Domain.Entity.System.User>();
-            CreateMap<Domain.Entity.System.Role, Domain.Dto.System.RoleDto>();
-            CreateMap<Domain.Dto.System.RoleDto, Domain.Entity.System.Role>();
             CreateMap<Domain.Entity.System.UserActionLog, Domain.Dto.System.UserActionLogDto>();
             CreateMap<Domain.Dto.System.UserActionLogDto, Domain.Entity.System.UserActionLog>();
             CreateMap<Domain.Entity.System.Function, Domain.Dto.System.FunctionDto>();

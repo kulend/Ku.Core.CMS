@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Ku.Core.CMS.IService.System;
+﻿using Ku.Core.CMS.IService.UserCenter;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Web.Security
 {
@@ -17,9 +15,9 @@ namespace Ku.Core.CMS.Web.Security
 
     public class BackendAuthAuthorizationHandler : DefaultAttributeAuthorizationHandler<BackendAuthAuthorizationRequirement, AuthAttribute>
     {
-        private IFunctionService service;
+        private IBackendAuthService service;
 
-        public BackendAuthAuthorizationHandler(IFunctionService _service)
+        public BackendAuthAuthorizationHandler(IBackendAuthService _service)
         {
             this.service = _service;
         }
@@ -72,7 +70,7 @@ namespace Ku.Core.CMS.Web.Security
             {
                 return false;
             }
-            return await service.CheckUserAuth(userId,
+            return await service.CheckUserAuthAsync(userId,
                 (baseCode.IsNullOrEmpty() || attribute.IsFullAuthCode) ? attribute.AuthCode : $"{baseCode}.{attribute.AuthCode}");
         }
     }

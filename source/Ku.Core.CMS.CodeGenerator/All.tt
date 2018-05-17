@@ -15,8 +15,8 @@
 	//var aa = new MemberAddress();
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
-	var name = "UserRole";
-	var desc = "用户角色关联";
+	var name = "RoleFunction";
+	var desc = "角色功能关联";
 	var area = "UserCenter";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = false;

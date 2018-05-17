@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Ku.Core.CMS.Domain.Entity.UserCenter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

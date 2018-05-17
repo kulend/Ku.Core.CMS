@@ -4,15 +4,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.IService.System;
+using Ku.Core.CMS.IService.UserCenter;
 
 namespace Ku.Core.CMS.Web.Backend.Components
 {
     [ViewComponent(Name = "AuthCodeJs")]
     public class AuthCodeJsViewComponent : ViewComponent
     {
-        private IFunctionService service;
+        private IBackendAuthService service;
 
-        public AuthCodeJsViewComponent(IFunctionService _service)
+        public AuthCodeJsViewComponent(IBackendAuthService _service)
         {
             this.service = _service;
         }

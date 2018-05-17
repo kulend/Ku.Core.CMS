@@ -51,14 +51,15 @@
         var cols = [
             { field: 'Name', fixed: 'left', title: '名称', width: 100 },
             { field: 'NameEn', title: '英文名', width: 140 },
-            { field: 'IsEnable', title: '是否启用', width: 100, switch: true }
+            { field: 'IsEnable', title: '是否启用', width: 100, switch: true },
+            { field: 'Remarks', title: '备注', width: 350 },
         ];
 
         $("#list").vinoGrid({
             url: 'Index/Data',
             cols: [cols.concat([
                 {
-                    title: '操作', fixed: 'right', width: 160, align: 'center',
+                    title: '操作', fixed: 'right', width: 180, align: 'center',
                     toolbar: grid_templet_operate([
                         { code: "usercenter.role.function", text: "权限分配", action: `window:/UserCenter/Role/RoleFunction?RoleId={{d.Id}}`, css: "layui-btn-primary" },
                         { code: "usercenter.role.edit", text: "编辑", action: `window:/UserCenter/Role/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },

@@ -39,11 +39,6 @@ namespace Ku.Core.CMS.Domain.Entity.Material
         /// </summary>
         public long UploadUserId { set; get; }
 
-        /// <summary>
-        /// 上传用户
-        /// </summary>
-        public User UploadUser { set; get; }
-
         [MaxLength(256)]
         public string FilePath { set; get; }
 

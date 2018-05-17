@@ -19,7 +19,8 @@
     <div class="layui-card">
         <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
             <ul class="layui-tab-title">
-                <li lay-id="list" class="layui-this">用户</li>
+                <li lay-id="list" class="layui-this">全部用户</li>
+                <li lay-id="list2">后台人员</li>
                 <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
             </ul>
             <div class="layui-tab-content">
@@ -30,6 +31,14 @@
                         <action auth-code="usercenter.user.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
                     </div>
                     <table id="list"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="toolbar">
+                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list2']" />
+                        <action auth-code="usercenter.user.edit" text="新增" icon="&#xe608;" action="window:/UserCenter/User/Edit" after="grid:reload" />
+                        <action auth-code="usercenter.user.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+                    </div>
+                    <table id="list2"></table>
                 </div>
                 <div class="layui-tab-item">
                     <div class="toolbar">
@@ -54,6 +63,7 @@
             { field: 'RealName', title: '姓名', width: 120 },
             { field: 'Mobile', title: '手机', width: 140 },
             { field: 'Email', title: '邮箱', width: 250 },
+            { field: 'IsAdmin', title: '后台人员', width: 100, switch: true },
             { field: 'IsEnable', title: '是否启用', width: 100, switch: true },
             { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
         ];
@@ -78,6 +88,28 @@
         });
 
         element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "list2" && !$("#list2").hasClass("vino-grid")) {
+                //初始化回收站
+                $("#list2").vinoGrid({
+                    url: 'Index/Data',
+                    cols: [cols.concat([
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "usercenter.user.edit", text: "编辑", action: `window:/UserCenter/User/Edit?id={{d.Id}}`, after: "grid:reload" },
+                                { code: "usercenter.user.detail", text: "详情", action: `window:/UserCenter/User/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                                { code: "usercenter.user.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                            ])
+                        }
+                    ])],
+                    onWhere: function () {
+                        return {
+                            IsAdmin:true,
+                            IsDeleted: false
+                        };
+                    }
+                });
+            }
             if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
             { 
                 //初始化回收站

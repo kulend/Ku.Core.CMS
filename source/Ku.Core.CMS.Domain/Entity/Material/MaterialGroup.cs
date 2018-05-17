@@ -41,11 +41,6 @@ namespace Ku.Core.CMS.Domain.Entity.Material
         /// 创建用户ID
         /// </summary>
         public long CreateUserId { set; get; }
-
-        /// <summary>
-        /// 创建用户
-        /// </summary>
-        public User CreateUser { set; get; }
     }
 
     /// <summary>

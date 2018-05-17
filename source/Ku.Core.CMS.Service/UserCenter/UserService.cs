@@ -116,7 +116,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                             throw new VinoException("账户名重复！");
                         }
                     }
-                    if (!user.Mobile.Equals(model.Mobile) && !string.IsNullOrEmpty(model.Mobile))
+                    if (!string.IsNullOrEmpty(model.Mobile) && !model.Mobile.Equals(user.Mobile))
                     {
                         //检查手机号
                         //格式

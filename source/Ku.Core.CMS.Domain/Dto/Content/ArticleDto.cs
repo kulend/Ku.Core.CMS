@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：ArticleDto.cs
 // 功能描述：文章 数据传输类
@@ -18,6 +18,9 @@ using Ku.Core.CMS.Domain.Enum.Content;
 
 namespace Ku.Core.CMS.Domain.Dto.Content
 {
+    /// <summary>
+    /// 文章
+    /// </summary>
     public class ArticleDto : BaseProtectedDto
     {
         /// <summary>

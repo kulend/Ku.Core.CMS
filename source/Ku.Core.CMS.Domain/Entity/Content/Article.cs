@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：Article.cs
 // 功能描述：文章 实体类
@@ -18,6 +18,9 @@ using Ku.Core.CMS.Domain.Enum.Content;
 
 namespace Ku.Core.CMS.Domain.Entity.Content
 {
+    /// <summary>
+    /// 文章
+    /// </summary>
     [Table("content_article")]
     public class Article : BaseProtectedEntity
     {
@@ -101,6 +104,9 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         public string CoverData { set; get; }
     }
 
+    /// <summary>
+    /// 文章 检索条件
+    /// </summary>
     public class ArticleSearch : BaseProtectedSearch<Article>
     {
 

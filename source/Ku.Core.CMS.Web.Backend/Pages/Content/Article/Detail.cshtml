@@ -1,0 +1,87 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Content.Article.DetailModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：文章 详情页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-17 13:35
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Enum.Content
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DetailModel>(""))
+    {
+        <div class="layui-body">
+            @Html.ShowFor(x => x.Dto.Title)
+            @Html.ShowFor(x => x.Dto.SubTitle)
+            @Html.ShowFor(x => x.Dto.Author, x => x.Dto.Provenance)
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面</label>
+                <div id="coverList" class="layui-input-block">
+                </div>
+            </div>
+            @Html.ShowFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
+            @Html.ShowFor(x => x.Dto.Keyword, x => x.Dto.OrderIndex)
+            @Html.ShowFor(x => x.Dto.Visits, x => x.Dto.CreateTime)
+            @Html.ShowFor(x => x.Dto.ContentType)
+            @if (Model.Dto.ContentType == EmArticleContentType.Text)
+            {
+                @Html.ShowFor(x => x.Dto.Content, "textarea")
+            }
+            @if (Model.Dto.ContentType == EmArticleContentType.RichText)
+            {
+                <div class="layui-form-item">
+                    <label class="layui-form-label">详情</label>
+                    <div class="layui-input-block">
+                        @Html.Raw(Model.Dto.Content)
+                    </div>
+                </div>
+            }
+            @if (Model.Dto.ContentType == EmArticleContentType.Picture)
+            {
+                <div class="layui-form-item">
+                    <label class="layui-form-label">详情图</label>
+                    <div id="ID_content_3" class="layui-input-block">
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+
+            $("#coverList").vinoImagePicker({
+                max_count: 1,
+                enable: false
+            });
+
+            $("#coverList").vinoImagePicker("loadData", '@Html.Raw(Model.Dto.CoverData)');
+
+            if ($("#ID_content_3").length) { 
+                $("#ID_content_3").vinoImagePicker({
+                    max_count: 10,
+                    enable: false
+                });
+                
+                $("#ID_content_3").vinoImagePicker("loadData", $("input[name=Content]").val());
+            }
+
+        });
+    </script>
+}

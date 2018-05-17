@@ -120,7 +120,7 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// <summary>
         /// 文章
         /// </summary>
-        public DbSet<Domain.Entity.Content.Article> Articles { get; set; }
+        public DbSet<Domain.Entity.Content.Article> ContentArticles { get; set; }
 
         /// <summary>
         /// 栏目

@@ -1,0 +1,42 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.DataCenter.AppVersion.EditModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：应用版本 编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-05-18 16:46
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.AppId)
+            @Html.ShowFor(x => x.Dto.App.Name, x => x.Dto.App.Type)
+            @Html.InputFor(x => x.Dto.Version)
+            @Html.InputFor(x => x.Dto.IsEnable, x=>x.Dto.Force)
+            @Html.InputFor(x => x.Dto.Content)
+            @Html.InputFor(x => x.Dto.DownLoadUrl)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

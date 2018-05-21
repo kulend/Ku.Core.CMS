@@ -1,34 +1,33 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.DataCenter.App.EditModel
 @{
     //----------------------------------------------------------------
-    // Copyright (C) 2018 vino 版权所有
+    // Copyright (C) 2018 kulend 版权所有
     //
-    // 文件名：Edit.cshtml
-    // 功能描述：应用 新增&编辑页面
+    // 文件名：Detail.cshtml
+    // 功能描述：应用 编辑页面
     //
     // 创建者：kulend@qq.com
-    // 创建时间：2018-04-15 10:34
+    // 创建时间：2018-05-18 16:38
     //
     //----------------------------------------------------------------
 }
-
 @{
-    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
 }
-@using Ku.Core.CMS.Domain.Dto.DataCenter
-@model AppDto
 <div class="layui-layout layui-layout-window">
-    @using (Html.BeginForm<AppDto>("Save"))
+    @using (Html.BeginForm<EditModel>(""))
     {
         <div class="layui-body">
-            @Html.InputFor(x => x.Id)
-            @Html.InputFor(x => x.Type, x => x.Name)
-            @Html.InputFor(x => x.Intro)
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Type, x => x.Dto.Name)
+            @Html.InputFor(x => x.Dto.Intro)
             <div class="layui-form-item">
                 <label class="layui-form-label">图标</label>
                 <div id="icon" class="layui-input-block">
                 </div>
             </div>
-            @Html.InputFor(x => x.DownloadUrl)
+            @Html.InputFor(x => x.Dto.DownloadUrl)
         </div>
         <div class="layui-footer">
             @Html.ActionsForSubmitAndClose()
@@ -47,7 +46,7 @@
                 max_count: 1
             });
 
-            $("#icon").vinoImagePicker("loadData", '@Html.Raw(Model.IconData)');
+            $("#icon").vinoImagePicker("loadData", '@Html.Raw(Model.Dto.IconData)');
         });
     </script>
 }

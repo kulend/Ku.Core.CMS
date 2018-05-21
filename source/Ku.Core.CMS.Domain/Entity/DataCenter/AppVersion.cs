@@ -17,7 +17,7 @@ namespace Ku.Core.CMS.Domain.Entity.DataCenter
     /// <summary>
     /// 应用版本
     /// </summary>
-    [Table("DataCenter_AppVersion")]
+    [Table("datacenter_app_version")]
     public class AppVersion : BaseProtectedEntity
     {
         /// <summary>

@@ -153,14 +153,14 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.Mall.ProductCategory> ProductCategorys { get; set; }
 
         /// <summary>
-        /// 应用
+        /// DataCenter 应用
         /// </summary>
-        public DbSet<Domain.Entity.DataCenter.App> Apps { get; set; }
+        public DbSet<Domain.Entity.DataCenter.App> DataCenterApps { get; set; }
 
         /// <summary>
-        /// 应用版本
+        /// DataCenter 应用版本
         /// </summary>
-        public DbSet<Domain.Entity.DataCenter.AppVersion> AppVersions { get; set; }
+        public DbSet<Domain.Entity.DataCenter.AppVersion> DataCenterAppVersions { get; set; }
 
         /// <summary>
         /// 应用反馈

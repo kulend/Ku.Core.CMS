@@ -39,6 +39,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\DataCenter\" />
     <Folder Include="wwwroot\lib\layui-admin\" />
   </ItemGroup>
   <ItemGroup>

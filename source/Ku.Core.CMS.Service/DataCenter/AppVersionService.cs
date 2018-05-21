@@ -51,7 +51,7 @@ namespace Ku.Core.CMS.Service.DataCenter
                         model.Content,
                         model.DownLoadUrl,
                     };
-                    await dapper.UpdateAsync<AppFeedback>(item, new { model.Id });
+                    await dapper.UpdateAsync<AppVersion>(item, new { model.Id });
                 }
             }
         }

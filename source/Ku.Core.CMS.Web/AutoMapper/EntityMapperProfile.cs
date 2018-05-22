@@ -27,20 +27,20 @@ namespace Ku.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Entity.System.UserActionLog, Domain.Dto.System.UserActionLogDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Function, Domain.Dto.System.FunctionDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Menu, Domain.Dto.System.MenuDto>().ReverseMap();
-            CreateMap<Domain.Entity.System.Sms, Domain.Dto.System.SmsDto>().ForMember(x => x.Data, opt => {
+            CreateMap<Domain.Entity.Communication.Sms, Domain.Dto.Communication.SmsDto>().ForMember(x => x.Data, opt => {
                 opt.ResolveUsing<JsonDeserializeResolver<IDictionary<string, string>>, string>(x => x.Data);
             });
-            CreateMap<Domain.Dto.System.SmsDto, Domain.Entity.System.Sms>().ForMember(x => x.Data, opt => {
+            CreateMap<Domain.Dto.Communication.SmsDto, Domain.Entity.Communication.Sms>().ForMember(x => x.Data, opt => {
                 opt.ResolveUsing<JsonSerializeResolver, object>(x => x.Data);
             });
-            CreateMap<Domain.Entity.System.SmsQueue, Domain.Dto.System.SmsQueueDto>().ReverseMap();
-            CreateMap<Domain.Entity.System.SmsAccount, Domain.Dto.System.SmsAccountDto>().ForMember(x => x.ParameterConfig, opt => {
+            CreateMap<Domain.Entity.Communication.SmsQueue, Domain.Dto.Communication.SmsQueueDto>().ReverseMap();
+            CreateMap<Domain.Entity.Communication.SmsAccount, Domain.Dto.Communication.SmsAccountDto>().ForMember(x => x.ParameterConfig, opt => {
                 opt.ResolveUsing<JsonDeserializeResolver<IDictionary<string, string>>, string>(x => x.ParameterConfig);
             });
-            CreateMap<Domain.Dto.System.SmsAccountDto, Domain.Entity.System.SmsAccount>().ForMember(x => x.ParameterConfig, opt => {
+            CreateMap<Domain.Dto.Communication.SmsAccountDto, Domain.Entity.Communication.SmsAccount>().ForMember(x => x.ParameterConfig, opt => {
                 opt.ResolveUsing<JsonSerializeResolver, object>(x => x.ParameterConfig);
             });
-            CreateMap<Domain.Entity.System.SmsTemplet, Domain.Dto.System.SmsTempletDto>().ReverseMap();
+            CreateMap<Domain.Entity.Communication.SmsTemplet, Domain.Dto.Communication.SmsTempletDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Notice, Domain.Dto.System.NoticeDto>().ReverseMap();
             CreateMap<Domain.Entity.Membership.Member, Domain.Dto.Membership.MemberDto>().ReverseMap();
             CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>().ReverseMap();

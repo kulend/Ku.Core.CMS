@@ -6,7 +6,6 @@ using Ku.Core.CMS.Domain.Enum.DataCenter;
 using Ku.Core.CMS.Domain.Enum.Mall;
 using Ku.Core.CMS.Domain.Enum.Material;
 using Ku.Core.CMS.Domain.Enum.Membership;
-using Ku.Core.CMS.Domain.Enum.System;
 using Ku.Core.CMS.Domain.Enum.WeChat;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;

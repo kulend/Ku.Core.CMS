@@ -23,39 +23,19 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.System.UserActionLog> UserActionLogs { get; set; }
 
         /// <summary>
-        /// 功能
+        /// System 功能
         /// </summary>
-        public DbSet<Domain.Entity.System.Function> Functions { get; set; }
+        public DbSet<Domain.Entity.System.Function> SystemFunctions { get; set; }
 
         /// <summary>
-        /// 菜单
+        /// System 菜单
         /// </summary>
-        public DbSet<Domain.Entity.System.Menu> Menus { get; set; }
+        public DbSet<Domain.Entity.System.Menu> SystemMenus { get; set; }
 
         /// <summary>
-        /// 短信
+        /// System 公告
         /// </summary>
-        public DbSet<Domain.Entity.System.Sms> Smss { get; set; }
-
-        /// <summary>
-        /// 短信队列
-        /// </summary>
-        public DbSet<Domain.Entity.System.SmsQueue> SmsQueues { get; set; }
-
-        /// <summary>
-        /// 短信账号
-        /// </summary>
-        public DbSet<Domain.Entity.System.SmsAccount> SmsAccounts { get; set; }
-
-        /// <summary>
-        /// 短信模板
-        /// </summary>
-        public DbSet<Domain.Entity.System.SmsTemplet> SmsTemplets { get; set; }
-
-        /// <summary>
-        /// 公告
-        /// </summary>
-        public DbSet<Domain.Entity.System.Notice> Notices { get; set; }
+        public DbSet<Domain.Entity.System.Notice> SystemNotices { get; set; }
 
         /// <summary>
         /// 会员
@@ -187,5 +167,24 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// </summary>
         public DbSet<Domain.Entity.UserCenter.RoleFunction> UserCenterRoleFunctions { get; set; }
 
+        /// <summary>
+        /// Communication 短信账户
+        /// </summary>
+        public DbSet<Domain.Entity.Communication.SmsAccount> CommunicationSmsAccounts { get; set; }
+		
+        /// <summary>
+        /// Communication 短信
+        /// </summary>
+        public DbSet<Domain.Entity.Communication.Sms> CommunicationSmss { get; set; }
+		
+        /// <summary>
+        /// Communication 短信模板
+        /// </summary>
+        public DbSet<Domain.Entity.Communication.SmsTemplet> CommunicationSmsTemplets { get; set; }
+		
+        /// <summary>
+        /// Communication 短信队列
+        /// </summary>
+        public DbSet<Domain.Entity.Communication.SmsQueue> CommunicationSmsQueues { get; set; }
     }
 }

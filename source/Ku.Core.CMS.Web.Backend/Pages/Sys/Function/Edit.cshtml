@@ -1,0 +1,55 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Sys.Function.EditModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：功能 编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-05-21 16:38
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.InputFor(x => x.Dto.ParentId)
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属层级</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show layui-breadcrumb">
+                    <a href="javascript:;">根</a>
+                    @if (Model.Parents != null)
+                    {
+                        foreach (var dto in Model.Parents)
+                        {
+                            <a href="javascript:;">@dto.Name</a>
+                        }
+                    }
+                </label>
+            </div>
+        </div>
+        @Html.InputFor(x => x.Dto.Name)
+        @Html.InputFor(x => x.Dto.AuthCode)
+        @Html.InputFor(x => x.Dto.IsEnable)
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

@@ -1,0 +1,61 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Communication.Sms.TempletEditModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：短信模板 编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-05-22 15:53
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Dto.Communication
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<TempletEditModel>(""))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.InputFor(x => x.Dto.Tag, x => x.Dto.Name)
+        @Html.InputFor(x => x.Dto.Example)
+        @Html.InputFor(x => x.Dto.Templet)
+        @Html.InputFor(x => x.Dto.TempletKey, x => x.Dto.Signature)
+        @Html.InputFor(x => x.Dto.IsEnable)
+        <div class="layui-form-item">
+            <label class="layui-form-label">短信账户</label>
+            <div class="layui-input-block">
+                <select name="Dto.SmsAccountId" lay-verify="required" lay-filter="SmsAccountId">
+                    <option value="">请选择短信账户</option>
+                    @foreach (SmsAccountDto account in Model.Accounts)
+                    {
+                        if (account.Id == Model.Dto.SmsAccountId)
+                        {
+                            <option value="@account.Id" selected="selected">@account.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@account.Id">@account.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

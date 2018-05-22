@@ -1,0 +1,104 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Communication.Sms.AddModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：短信 编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-05-22 15:50
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Dto.Communication
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<AddModel>(""))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Mobile)
+        <div class="layui-form-item">
+            <label class="layui-form-label">短信模板</label>
+            <div class="layui-input-block">
+                <select name="Dto.SmsTempletId" lay-verify="required" lay-filter="SmsTempletId">
+                    <option value="">请选择短信模板</option>
+                    @foreach (SmsTempletDto templet in Model.Templets)
+                    {
+                        <option value="@templet.Id" data-templet="@templet.Templet">@templet.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">模板内容</label>
+            <div class="layui-input-block">
+                <label id="ID_templet" class="layui-form-label-show"></label>
+            </div>
+        </div>
+        <fieldset id="dvConfigWeight" class="layui-elem-field">
+            <legend>参数配置</legend>
+            <div id="ID_params" class="layui-field-box">
+            </div>
+        </fieldset>
+        <div class="layui-form-item">
+            <label class="layui-form-label">短信预览</label>
+            <div class="layui-input-block">
+                <label id="ID_preview" class="layui-form-label-show"></label>
+            </div>
+        </div>
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            form.on('select(SmsTempletId)', function (data) {
+                if (data.value) {
+                    let templet = $(data.elem).find("option:selected").attr("data-templet");
+                    $("#ID_templet").text(templet);
+                    var regex = /\${(.+?)}/g;
+                    var pms = templet.match(regex);
+                    var html = [];
+                    for (var i = 0; i < pms.length; i++) {
+                        var name = pms[i].substring(2, pms[i].length - 1);
+                        html.push('<div class="layui-form-item">');
+                        html.push(`<label class="layui-form-label">${name}</label>`);
+                        html.push('<div class="layui-input-block long">');
+                        html.push(`<input type="text" name="Dto.Data[${name}]" data-key="${name}" class="layui-input" value="">`);
+                        html.push('</div>');
+                        html.push('</div>');
+                    }
+                    $("#ID_params").html(html.join(""));
+                    $("#ID_params input").change(function () {
+                        _preview();
+                    });
+                } else {
+                    $("#ID_templet").text("");
+                }
+                _preview();
+            });
+        });
+
+        function _preview() {
+            var templet = $("#ID_templet").text();
+            let regex = /\${(.+?)}/g;
+            var pms = templet.match(regex);
+            for (var i = 0; i < pms.length; i++) {
+                let name = pms[i].substring(2, pms[i].length - 1);
+                let value = $(`#ID_params input[data-key='${name}']`).val() || "";
+                var regObj = new RegExp("\\" + pms[i], "gm");
+                templet = templet.replace(regObj, value);
+            }
+            $("#ID_preview").text(templet);
+        }
+    </script>
+}

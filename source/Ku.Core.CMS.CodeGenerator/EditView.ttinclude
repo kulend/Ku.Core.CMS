@@ -115,7 +115,11 @@ namespace Ku.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
         /// 取得数据
         /// </summary>
         [Auth("edit")]
+<# if(mode == 3 || mode == 4){#>
         public async Task OnGetAsync(long? id, long? pid)
+<#}else{#>
+        public async Task OnGetAsync(long? id)
+<#}#>
         {
             if (id.HasValue)
             {

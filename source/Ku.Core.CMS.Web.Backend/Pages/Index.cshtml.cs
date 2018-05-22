@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Ku.Core.CMS.Web.Backend.Models;
-using Ku.Core.CMS.Web.Extensions;
+﻿using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.Web.Security;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Ku.Core.CMS.Web.Backend.Pages
 {

@@ -1,0 +1,79 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Communication.Sms.AccountEditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：短信账户 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-22 15:11
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Dto.Communication
+@using Ku.Core.CMS.Domain.Enum.Communication
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<AccountEditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Name)
+            @Html.InputFor(x => x.Dto.IsEnable)
+            @Html.InputFor(x => x.Dto.Remarks)
+            @Html.InputFor(x => x.Dto.Type, new { lay_filter = "Type" })
+            <fieldset id="dvConfigWeight" class="layui-elem-field">
+                <legend>参数配置</legend>
+                <div id="config-content" class="layui-field-box">
+                    @foreach (var item in SmsAccountTypeHelper.GetItemParameters(Model.Dto.Type))
+                    {
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">@item.Name</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="Dto.ParameterConfig[@item.Key]" class="layui-input" value="@((Model.Dto.ParameterConfig != null && Model.Dto.ParameterConfig.ContainsKey(item.Key))? Model.Dto.ParameterConfig[item.Key] : item.Value)">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </fieldset>
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            var smsAccountTypeParameters = JSON.parse('@Html.Raw(SmsAccountTypeHelper.GetItems())');
+
+            _bindForm($("form"), {
+                onBefore: function (arr, $from, options) {
+                    return true;
+                }
+            });
+
+            //监听事件
+            form.on('radio(Type)', function (data) {
+                var key = $(data.elem).attr("key");
+                var pms = smsAccountTypeParameters[key];
+                var html = [];
+                for (var i = 0; i < pms.length; i++) {
+                    html.push('<div class="layui-form-item">');
+                    html.push(`<label class="layui-form-label">${pms[i].Name}</label>`);
+                    html.push('<div class="layui-input-block">');
+                    html.push(`<input type="text" name="Dto.ParameterConfig[${pms[i].Key}]" class="layui-input" value="${pms[i].Value}">`);
+                    html.push('</div>');
+                    html.push('</div>');
+                }
+                $("#config-content").html(html.join(""));
+            });
+        });
+    </script>
+}

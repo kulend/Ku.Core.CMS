@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enum\System\" />
+  </ItemGroup>
+
 </Project>

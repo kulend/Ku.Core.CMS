@@ -1,0 +1,70 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.Sys.Menu.IndexModel
+@{
+	//----------------------------------------------------------------
+	// Copyright (C) 2018 kulend 版权所有
+	//
+	// 文件名：Index.cshtml
+	// 功能描述：菜单 列表页面
+	//
+	// 创建者：kulend@qq.com
+	// 创建时间：2018-05-21 17:04
+	//
+	//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_Layout.cshtml";
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <span class="layui-breadcrumb">
+                <a href="Index">顶级</a>
+                @foreach (var dto in Model.Parents)
+                {
+                <a href="Index?parentId=@dto.Id">@dto.Name</a>
+                }
+            </span>
+		</div>
+        <div class="layui-card-body">
+            <div class="toolbar">
+                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action auth-code="system.menu.edit" text="新增" icon="&#xe608;" action="window:/Sys/Menu/Edit?pid=@ViewData["ParentId"]" after="grid:reload['#list']" />
+                <action auth-code="system.menu.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+            </div>
+            <table id="list"></table>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").vinoGrid({
+                url: 'Index/Data',
+                cols: [[
+                    { field: 'Name', fixed: 'left', title: '名称', width: 100 },
+                    { field: 'AuthCode', title: '权限编码', width: 180 },
+                    { field: 'Url', title: '菜单链接', width: 200 },
+                    { field: 'Icon', title: '图标', width: 100, align: 'center', templet: '<div><i class="fa {{d.Icon}}"></i></div>' },
+                    { field: 'IsShow', title: '是否显示', width: 100, align: 'center', switch: true },
+                    { field: 'HasSubMenu', title: '子菜单', width: 80, align: 'center', switch: true },
+                    { field: 'OrderIndex', title: '排序值', width: 80 },
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "", text: "子菜单", action: `Index?parentId={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "system.menu.edit", text: "编辑", action: `window:/Sys/Menu/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                            { code: "system.menu.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]],
+                onWhere: function () {
+                    return {
+                        ParentId:"@ViewData["ParentId"]"
+                    };
+                }
+            });
+        });
+    </script>
+}

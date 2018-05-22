@@ -3,16 +3,24 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\DataCenter\**" />
     <Compile Remove="Areas\Material\Views\Upload\**" />
+    <Compile Remove="Areas\System\Views\Sms\**" />
     <Compile Remove="Areas\System\Views\User\**" />
     <Compile Remove="Views\Home\**" />
+    <Content Remove="Areas\DataCenter\**" />
     <Content Remove="Areas\Material\Views\Upload\**" />
+    <Content Remove="Areas\System\Views\Sms\**" />
     <Content Remove="Areas\System\Views\User\**" />
     <Content Remove="Views\Home\**" />
+    <EmbeddedResource Remove="Areas\DataCenter\**" />
     <EmbeddedResource Remove="Areas\Material\Views\Upload\**" />
+    <EmbeddedResource Remove="Areas\System\Views\Sms\**" />
     <EmbeddedResource Remove="Areas\System\Views\User\**" />
     <EmbeddedResource Remove="Views\Home\**" />
+    <None Remove="Areas\DataCenter\**" />
     <None Remove="Areas\Material\Views\Upload\**" />
+    <None Remove="Areas\System\Views\Sms\**" />
     <None Remove="Areas\System\Views\User\**" />
     <None Remove="Views\Home\**" />
   </ItemGroup>
@@ -21,6 +29,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Pages\Account\UserProfile.cshtml" />
+    <Content Remove="Pages\Sys\Function\Edit.cshtml" />
+    <Content Remove="Pages\Sys\Function\Index.cshtml" />
+    <Content Remove="Pages\Sys\Menu\Edit.cshtml" />
+    <Content Remove="Pages\Sys\Menu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
@@ -39,8 +51,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\DataCenter\" />
     <Folder Include="wwwroot\lib\layui-admin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\Sys\Function\Edit.cshtml" />
+    <None Include="Pages\Sys\Function\Index.cshtml" />
+    <None Include="Pages\Sys\Menu\Edit.cshtml" />
+    <None Include="Pages\Sys\Menu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />

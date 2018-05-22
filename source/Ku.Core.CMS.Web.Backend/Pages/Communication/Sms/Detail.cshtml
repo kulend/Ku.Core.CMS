@@ -1,0 +1,40 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Communication.Sms.DetailModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：短信队列 详情页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-05-22 15:57
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DetailModel>(""))
+    {
+    <div class="layui-body">
+        @Html.ShowFor(x => x.Dto.Status, x => x.Dto.Sms.Mobile)
+        @Html.ShowFor(x => x.Dto.Sms.Content)
+        @Html.ShowFor(x => x.Dto.CreateTime, x => x.Dto.ExpireTime)
+        @Html.ShowFor(x => x.Dto.SendTime)
+        @Html.ShowFor(x => x.Dto.Response)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

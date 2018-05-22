@@ -27,22 +27,22 @@ namespace Ku.Core.CMS.TaskApp.AutoMapper
             CreateMap<Domain.Dto.System.FunctionDto, Domain.Entity.System.Function>();
             CreateMap<Domain.Entity.System.Menu, Domain.Dto.System.MenuDto>();
             CreateMap<Domain.Dto.System.MenuDto, Domain.Entity.System.Menu>();
-            CreateMap<Domain.Entity.System.Sms, Domain.Dto.System.SmsDto>().ForMember(x => x.Data, opt => {
+            CreateMap<Domain.Entity.Communication.Sms, Domain.Dto.Communication.SmsDto>().ForMember(x => x.Data, opt => {
                 opt.ResolveUsing<JsonDeserializeResolver<IDictionary<string, string>>, string>(x => x.Data);
             });
-            CreateMap<Domain.Dto.System.SmsDto, Domain.Entity.System.Sms>().ForMember(x => x.Data, opt => {
+            CreateMap<Domain.Dto.Communication.SmsDto, Domain.Entity.Communication.Sms>().ForMember(x => x.Data, opt => {
                 opt.ResolveUsing<JsonSerializeResolver, object>(x => x.Data);
             });
-            CreateMap<Domain.Entity.System.SmsQueue, Domain.Dto.System.SmsQueueDto>();
-            CreateMap<Domain.Dto.System.SmsQueueDto, Domain.Entity.System.SmsQueue>();
-            CreateMap<Domain.Entity.System.SmsAccount, Domain.Dto.System.SmsAccountDto>().ForMember(x => x.ParameterConfig, opt => {
+            CreateMap<Domain.Entity.Communication.SmsQueue, Domain.Dto.Communication.SmsQueueDto>();
+            CreateMap<Domain.Dto.Communication.SmsQueueDto, Domain.Entity.Communication.SmsQueue>();
+            CreateMap<Domain.Entity.Communication.SmsAccount, Domain.Dto.Communication.SmsAccountDto>().ForMember(x => x.ParameterConfig, opt => {
                 opt.ResolveUsing<JsonDeserializeResolver<IDictionary<string, string>>, string>(x => x.ParameterConfig);
             });
-            CreateMap<Domain.Dto.System.SmsAccountDto, Domain.Entity.System.SmsAccount>().ForMember(x => x.ParameterConfig, opt => {
+            CreateMap<Domain.Dto.Communication.SmsAccountDto, Domain.Entity.Communication.SmsAccount>().ForMember(x => x.ParameterConfig, opt => {
                 opt.ResolveUsing<JsonSerializeResolver, object>(x => x.ParameterConfig);
             });
-            CreateMap<Domain.Entity.System.SmsTemplet, Domain.Dto.System.SmsTempletDto>();
-            CreateMap<Domain.Dto.System.SmsTempletDto, Domain.Entity.System.SmsTemplet>();
+            CreateMap<Domain.Entity.Communication.SmsTemplet, Domain.Dto.Communication.SmsTempletDto>();
+            CreateMap<Domain.Dto.Communication.SmsTempletDto, Domain.Entity.Communication.SmsTemplet>();
             CreateMap<Domain.Entity.Membership.Member, Domain.Dto.Membership.MemberDto>();
             CreateMap<Domain.Dto.Membership.MemberDto, Domain.Entity.Membership.Member>();
             CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>();

@@ -1,0 +1,108 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Sys.Notice.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：公告 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-21 14:58
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Enum
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>("", new { auto_bind = "false" }))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Title)
+            @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
+            @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
+            <div class="layui-form-item @(Model.Dto.ContentType == EmDefaultContentType.Text ? "" : "layui-hide")">
+                <label class="layui-form-label">详情内容</label>
+                <div id="ID_content_1" class="layui-input-block long">
+                    <textarea class="layui-textarea">@(Model.Dto.ContentType == EmDefaultContentType.Text ? Model.Dto.Content : "")</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item @(Model.Dto.ContentType == EmDefaultContentType.RichText ? "" : "layui-hide")">
+                <label class="layui-form-label">详情内容</label>
+                <div id="ID_content_2" class="layui-input-block">
+                    @Html.Raw(Model.Dto.ContentType == EmDefaultContentType.RichText ? Model.Dto.Content : "")
+                </div>
+            </div>
+            <div class="layui-form-item @(Model.Dto.ContentType == EmDefaultContentType.Picture ? "" : "layui-hide")">
+                <label class="layui-form-label">详情图</label>
+                <div id="ID_content_3" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.StickyNum)
+        </div>
+        <div class="layui-footer">
+            <input type="hidden" id="hdContent" value="@Model.Dto.Content" />
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script src="~/lib/wangEditor/wangEditor.js"></script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+
+            $("#ID_content_3").vinoImagePicker({
+                max_count: 10
+            });
+
+            if ($("input[name='Dto.ContentType']:checked").attr("key") === "Picture") {
+                $("#ID_content_3").vinoImagePicker("loadData", $("#hdContent").val());
+            }
+
+            var E = window.wangEditor;
+            var editor = new E('#ID_content_2');
+            editor.create();
+
+            //监听事件
+            form.on('radio(ContentType)', function (item) {
+                var key = $(item.elem).attr("key");
+                if (key === "Text") {
+                    $("#ID_content_1").closest(".layui-form-item").removeClass("layui-hide");
+                    $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
+                } else if (key === "RichText") {
+                    $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_2").closest(".layui-form-item").removeClass("layui-hide");
+                    $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
+                }
+                else if (key === "Picture") {
+                    $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
+                    $("#ID_content_3").closest(".layui-form-item").removeClass("layui-hide");
+                }
+            });
+
+            _bindForm($("form"), {
+                onBefore: function (arr, $from, options) {
+                    var key = $("input[name='Dto.ContentType']:checked").attr("key");
+                    if (key === "Text") {
+                        arr.push({ name: "Dto.Content", value: $("#ID_content_1 textarea").val() });
+                    } else if (key === "RichText") {
+                        arr.push({ name: "Dto.Content", value: editor.txt.html() });
+                    }
+                    else if (key === "Picture") {
+                        alert($("#ID_content_3").vinoImagePicker("getData"));
+                        arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").vinoImagePicker("getData")) });
+                    }
+                    return true;
+                }
+            });
+        });
+    </script>
+}

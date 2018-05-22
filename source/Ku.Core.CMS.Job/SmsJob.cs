@@ -1,5 +1,4 @@
-﻿using Ku.Core.CMS.Domain.Enum.System;
-using Ku.Core.Communication.SMS;
+﻿using Ku.Core.Communication.SMS;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.TimedTask.Attribute;
 using Microsoft.EntityFrameworkCore;

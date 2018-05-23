@@ -26,7 +26,7 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         [DataType("Hidden")]
         public long ProductId { set; get; }
 
-        public Product Product { set; get; }
+        public virtual Product Product { set; get; }
 
         /// <summary>
         /// 状态

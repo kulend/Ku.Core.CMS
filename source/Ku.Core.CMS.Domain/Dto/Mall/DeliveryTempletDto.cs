@@ -2,7 +2,7 @@
 // Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：DeliveryTempletDto.cs
-// 功能描述：运费模板 数据传输类
+// 功能描述：配送模板 数据传输类
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-05 10:25
@@ -20,7 +20,7 @@ using Ku.Core.CMS.Domain.Enum.Mall;
 namespace Ku.Core.CMS.Domain.Dto.Mall
 {
     /// <summary>
-    /// 运费模板
+    /// 配送模板
     /// </summary>
     public class DeliveryTempletDto : BaseProtectedDto
     {

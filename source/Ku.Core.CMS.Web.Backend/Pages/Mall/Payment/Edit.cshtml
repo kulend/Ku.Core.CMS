@@ -1,0 +1,79 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Mall.Payment.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：支付方式 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-23 10:54
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Enum.Mall
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>("", new { auto_bind = "false" }))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Name)
+            @Html.InputFor(x => x.Dto.Description)
+            @Html.InputFor(x => x.Dto.IsEnable)
+            @Html.InputFor(x => x.Dto.IsMobile)
+            @Html.InputFor(x => x.Dto.PaymentMode, new { lay_filter = "PaymentMode" })
+            <fieldset id="dvConfigWeight" class="layui-elem-field">
+                <legend>参数配置</legend>
+                <div id="config-content" class="layui-field-box">
+                    @foreach (var item in PaymentModeHelper.GetItemParameters(Model.Dto.PaymentMode))
+                    {
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">@item.Name [@(item.Key)]</label>
+                            <div class="layui-input-block long">
+                                <input type="text" name="Dto.PaymentConfig[@item.Key]" class="layui-input" value="@((Model.Dto.PaymentConfig != null && Model.Dto.PaymentConfig.ContainsKey(item.Key))? Model.Dto.PaymentConfig[item.Key] : item.Value)">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </fieldset>
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            var paymentModeParameters = JSON.parse('@Html.Raw(PaymentModeHelper.GetItems())');
+
+            _bindForm($("form"), {
+                onBefore: function (arr, $from, options) {
+                    return true;
+                }
+            });
+
+            //监听事件
+            form.on('radio(PaymentMode)', function (data) {
+                var key = $(data.elem).attr("key");
+                var pms = paymentModeParameters[key];
+                var html = [];
+                for (var i = 0; i < pms.length; i++) {
+                    html.push('<div class="layui-form-item">');
+                    html.push(`<label class="layui-form-label">${pms[i].Name}</label>`);
+                    html.push('<div class="layui-input-block long">');
+                    html.push(`<input type="text" name="Dto.PaymentConfig[${pms[i].Key}]" class="layui-input" value="${pms[i].Value}">`);
+                    html.push('</div>');
+                    html.push('</div>');
+                }
+                $("#config-content").html(html.join(""));
+            });
+        });
+    </script>
+}

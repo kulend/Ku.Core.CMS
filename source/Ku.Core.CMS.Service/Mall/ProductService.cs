@@ -112,7 +112,7 @@ namespace Ku.Core.CMS.Service.Mall
                 using (var dapper = DapperFactory.CreateWithTrans())
                 {
                     await dapper.InsertAsync(model);
-                    await dapper.InsertAsync(skuList);
+                    await dapper.InsertAsync<ProductSku>(skuList);
                     dapper.Commit();
                 }
             }

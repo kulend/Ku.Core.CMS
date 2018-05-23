@@ -1,24 +1,24 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.Mall.Product.EditModel
 @{
     //----------------------------------------------------------------
-    // Copyright (C) 2018 vino 版权所有
+    // Copyright (C) 2018 kulend 版权所有
     //
     // 文件名：Edit.cshtml
-    // 功能描述：商品 新增&编辑页面
+    // 功能描述：商品 编辑页面
     //
     // 创建者：kulend@qq.com
-    // 创建时间：2018-02-24 10:50
+    // 创建时间：2018-05-23 13:57
     //
     //----------------------------------------------------------------
 }
-
 @{
-    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
 }
 @using Ku.Core.CMS.Domain.Dto.Mall
 @using Ku.Core.CMS.Domain.Enum.Mall
-@model ProductDto
 <div class="layui-layout layui-layout-window">
-    @using (Html.BeginForm<ProductDto>("Save", new { auto_bind = "false" }))
+    @using (Html.BeginForm<EditModel>("", new { auto_bind = "false" }))
     {
         <input type="hidden" name="EditID" value="@ViewData["EditID"]" />
         <div class="layui-body">
@@ -30,41 +30,41 @@
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        @Html.InputFor(x => x.Id)
-                        <div class="layui-form-item" >
+                        @Html.InputFor(x => x.Dto.Id)
+                        <div class="layui-form-item">
                             <label class="layui-form-label">商品类目</label>
                             <div class="layui-input-block" id="category">
                             </div>
                         </div>
-                        @Html.InputFor(x => x.Status)
-                        @Html.InputFor(x => x.Name, x => x.Title)
-                        @Html.InputFor(x => x.Intro)
+                        @Html.InputFor(x => x.Dto.Status)
+                        @Html.InputFor(x => x.Dto.Name, x => x.Dto.Title)
+                        @Html.InputFor(x => x.Dto.Intro)
                         <div class="layui-form-item">
                             <label class="layui-form-label">主图</label>
                             <div id="ImageData" class="layui-input-block">
                             </div>
                         </div>
-                        @Html.InputFor(x => x.OrderIndex)
+                        @Html.InputFor(x => x.Dto.OrderIndex)
                     </div>
                     <div class="layui-tab-item">
                         <button type="button" class="layui-btn layui-btn-xs" action="js:doAddSku()"><i class="layui-icon">&#xe608;</i>增加</button>
                         <table id="ID_sku_table"></table>
                     </div>
                     <div class="layui-tab-item">
-                        @Html.InputFor(x => x.ContentType, new { lay_filter = "ContentType" })
-                        <div class="layui-form-item @(Model.ContentType == EmProductContentType.Text ? "" : "layui-hide")">
+                        @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
+                        <div class="layui-form-item @(Model.Dto.ContentType == EmProductContentType.Text ? "" : "layui-hide")">
                             <label class="layui-form-label">详情内容</label>
                             <div id="ID_content_1" class="layui-input-block long">
-                                <textarea class="layui-textarea">@(Model.ContentType == EmProductContentType.Text ? Model.Content : "")</textarea>
+                                <textarea class="layui-textarea">@(Model.Dto.ContentType == EmProductContentType.Text ? Model.Dto.Content : "")</textarea>
                             </div>
                         </div>
-                        <div class="layui-form-item @(Model.ContentType == EmProductContentType.RichText ? "" : "layui-hide")">
+                        <div class="layui-form-item @(Model.Dto.ContentType == EmProductContentType.RichText ? "" : "layui-hide")">
                             <label class="layui-form-label">详情内容</label>
                             <div id="ID_content_2" class="layui-input-block">
-                                @Html.Raw(Model.ContentType == EmProductContentType.RichText ? Model.Content : "")
+                                @Html.Raw(Model.Dto.ContentType == EmProductContentType.RichText ? Model.Dto.Content : "")
                             </div>
                         </div>
-                        <div class="layui-form-item @(Model.ContentType == EmProductContentType.Picture ? "" : "layui-hide")">
+                        <div class="layui-form-item @(Model.Dto.ContentType == EmProductContentType.Picture ? "" : "layui-hide")">
                             <label class="layui-form-label">详情图</label>
                             <div id="ID_content_3" class="layui-input-block">
                             </div>
@@ -87,9 +87,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (Model.Properties != null)
+                                        @if (Model.Dto.Properties != null)
                                         {
-                                            @foreach (var item in Model.Properties)
+                                            @foreach (var item in Model.Dto.Properties)
                                             {
                                                 <tr>
                                                     <td>@item.Name</td>
@@ -105,10 +105,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="layui-footer">
-            <input type="hidden" id="hdContent" value="@Model.Content" />
+            <input type="hidden" id="hdContent" value="@Model.Dto.Content" />
             @Html.ActionsForSubmitAndClose()
         </div>
     }
@@ -127,22 +126,22 @@
             multiSelect({
                 url: '/Mall/Product/Category/Index/Json',     //数据地址
                 elem: "#category",
-                name:"CategoryId",
-                value : "@Model.CategoryId"
+                name:"Dto.CategoryId",
+                value : "@Model.Dto.CategoryId"
             });
 
             $("#ImageData").vinoImagePicker({
-                field_data: "ImageData",
+                field_data: "Dto.ImageData",
                 max_count: 5
             });
 
-            $("#ImageData").vinoImagePicker("loadData", '@Html.Raw(Model.ImageData)');
+            $("#ImageData").vinoImagePicker("loadData", '@Html.Raw(Model.Dto.ImageData)');
 
             $("#ID_content_3").vinoImagePicker({
                 max_count: 10
             });
 
-            if ($("input[name=ContentType]:checked").attr("key") === "Picture")
+            if ($("input[name='Dto.ContentType']:checked").attr("key") === "Picture")
             {
                 $("#ID_content_3").vinoImagePicker("loadData", $("#hdContent").val());
             }
@@ -173,14 +172,14 @@
 
             _bindForm($("form"), {
                 onBefore: function (arr, $from, options) {
-                    var key = $("input[name=ContentType]:checked").attr("key");
+                    var key = $("input[name='Dto.ContentType']:checked").attr("key");
                     if (key === "Text") {
-                        arr.push({ name: "Content", value: $("#ID_content_1 textarea").val() });
+                        arr.push({ name: "Dto.Content", value: $("#ID_content_1 textarea").val() });
                     } else if (key === "RichText") {
-                        arr.push({ name: "Content", value: editor.txt.html() });
+                        arr.push({ name: "Dto.Content", value: editor.txt.html() });
                     }
                     else if (key === "Picture") {
-                        arr.push({ name: "Content", value: JSON.stringify($("#ID_content_3").vinoImagePicker("getData")) });
+                        arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").vinoImagePicker("getData")) });
                     }
                     //商品属性
                     var properties = [];
@@ -188,15 +187,15 @@
                         let name = $(this).find("td:first").text();
                         let value = $(this).find("input[name=input1]").val();
                         properties.push({ Name: name, Value: value });
-                        arr.push({ name: `Properties[${index}][Name]`, value: name });
-                        arr.push({ name: `Properties[${index}][Value]`, value: value });
+                        arr.push({ name: `Dto.Properties[${index}][Name]`, value: name });
+                        arr.push({ name: `Dto.Properties[${index}][Value]`, value: value });
                     });
                     return true;
                 }
             });
 
             $("#ID_sku_table").vinoGrid({
-                url: 'GetSkuList?EditID=@ViewData["EditID"]',
+                url: 'Edit/SkuList?EditID=@ViewData["EditID"]',
                 page: false,
                 checkbox: false,
                 rownumber:false,
@@ -211,8 +210,8 @@
                     {
                         title: '操作', fixed: 'right', width: 120, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "", text: "编辑", action: `window:/Mall/Product/SkuEdit?id={{d.Id}}&EditID=@ViewData["EditID"]` },
-                            { code: "", text: "删除", action: `post:SkuDelete?id={{d.Id}}&EditID=@ViewData["EditID"]`, css:"layui-btn-danger" }
+                            { code: "", text: "编辑", action: `window:/Mall/Product/Sku/Edit?id={{d.Id}}&EditID=@ViewData["EditID"]` },
+                            { code: "", text: "删除", action: `post:Sku/Edit/Delete?id={{d.Id}}&EditID=@ViewData["EditID"]`, css:"layui-btn-danger" }
                         ])
                     }
                 ]]
@@ -228,7 +227,7 @@
                     sel.push(name);
                 }
             });
-            OpenWindow("选择商品属性", `/Mall/Product/AttrSelect?sel=${encodeURI(sel.join(','))}`, null, function (items) {
+            OpenWindow("选择商品属性", `/Mall/Product/Attr/AttrSelector?sel=${encodeURI(sel.join(','))}`, null, function (items) {
                 if (items) {
                     for (var i = 0; i < items.length; i++) {
                         let item = items[i];
@@ -248,7 +247,7 @@
         }
 
         function doAddSku() {
-            OpenWindow("添加商品SKU", `/Mall/Product/SkuEdit?EditID=@ViewData["EditID"]`, null, function () {
+            OpenWindow("添加商品SKU", `/Mall/Product/Sku/Edit?EditID=@ViewData["EditID"]`, null, function () {
                 $("#ID_sku_table").vinoGrid("reload");
             });
         }

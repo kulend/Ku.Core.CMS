@@ -2,7 +2,7 @@
 // Copyright (C) 2018 kulend 版权所有
 //
 // 文件名：IDeliveryTempletService.cs
-// 功能描述：运费模板 业务逻辑接口
+// 功能描述：配送模板 业务逻辑接口
 //
 // 创建者：kulend@qq.com
 // 创建时间：2018-02-05 10:25

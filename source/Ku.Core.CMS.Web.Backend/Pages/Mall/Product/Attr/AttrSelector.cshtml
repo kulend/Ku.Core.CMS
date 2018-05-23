@@ -1,18 +1,7 @@
-﻿@{
-    //----------------------------------------------------------------
-    // Copyright (C) 2018 vino 版权所有
-    //
-    // 文件名：AttrSelect.cshtml
-    // 功能描述：商品属性选择页面
-    //
-    // 创建者：kulend@qq.com
-    // 创建时间：2018-02-04 20:18
-    //
-    //----------------------------------------------------------------
-}
-
+﻿@page
+@model Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Attr.AttrSelectorModel
 @{
-    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
 }
 @section Css
     {
@@ -32,9 +21,7 @@
 <div class="layui-layout layui-layout-window">
     <div class="layui-body">
         <form class="layui-form" action="">
-            <ul id="list">
-
-            </ul>
+            <ul id="list"></ul>
         </form>
     </div>
     <div class="layui-footer">

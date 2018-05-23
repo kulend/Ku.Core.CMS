@@ -1,0 +1,58 @@
+﻿@page
+@model Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku.DetailModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 vino 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：商品SKU 详情页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-02-24 10:50
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Dto.Mall
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DetailModel>(""))
+    {
+    <div class="layui-body">
+        @Html.ShowFor(x => x.Dto.Status)
+        @Html.ShowFor(x => x.Dto.Title)
+        <div class="layui-form-item">
+            <label class="layui-form-label">封面图</label>
+            <div id="CoverImage" class="layui-input-block">
+            </div>
+        </div>
+        @Html.ShowFor(x => x.Dto.Price, x => x.Dto.MarketPrice)
+        @Html.ShowFor(x => x.Dto.Stock, x => x.Dto.Weight)
+        @Html.ShowFor(x => x.Dto.Sales)
+        @Html.ShowFor(x => x.Dto.OrderIndex, x => x.Dto.CreateTime)
+        @Html.ShowFor(x => x.Dto.PointsGainRule)
+        <div id="ID_div_Points" class="@(Model.Dto.PointsGainRule == Ku.Core.CMS.Domain.Enum.Mall.EmPointsGainRule.ProductSku?"":"layui-hide")">
+            @Html.ShowFor(x => x.Dto.GainPoints)
+        </div>
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            $("#CoverImage").vinoImagePicker({
+                max_count: 1,
+                enable: false
+            });
+            $("#CoverImage").vinoImagePicker("loadData", '@Html.Raw(Model.Dto.CoverImage)');
+        });
+    </script>
+}
+

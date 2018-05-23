@@ -108,24 +108,24 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.Content.Column> Columns { get; set; }
 
         /// <summary>
-        /// 配送模板
+        /// Mall 配送模板
         /// </summary>
-        public DbSet<Domain.Entity.Mall.DeliveryTemplet> DeliveryTemplets { get; set; }
+        public DbSet<Domain.Entity.Mall.DeliveryTemplet> MallDeliveryTemplets { get; set; }
 
         /// <summary>
-        /// 支付方式
+        /// Mall 支付方式
         /// </summary>
-        public DbSet<Domain.Entity.Mall.Payment> Payments { get; set; }
+        public DbSet<Domain.Entity.Mall.Payment> MallPayments { get; set; }
 
         /// <summary>
-        /// 商品
+        /// Mall 商品
         /// </summary>
-        public DbSet<Domain.Entity.Mall.Product> Products { get; set; }
+        public DbSet<Domain.Entity.Mall.Product> MallProducts { get; set; }
 
         /// <summary>
-        /// 商品SKU
+        /// Mall 商品SKU
         /// </summary>
-        public DbSet<Domain.Entity.Mall.ProductSku> ProductSkus { get; set; }
+        public DbSet<Domain.Entity.Mall.ProductSku> MallProductSkus { get; set; }
 
         /// <summary>
         /// 商品类目

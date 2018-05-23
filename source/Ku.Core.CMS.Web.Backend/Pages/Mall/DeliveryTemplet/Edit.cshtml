@@ -1,0 +1,351 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Mall.DeliveryTemplet.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Detail.cshtml
+    // 功能描述：配送模板 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-23 10:07
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Dto.Mall
+@using Ku.Core.CMS.Domain.Enum.Mall
+@using Ku.Core.Infrastructure.Extensions;
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.InputFor(x => x.Dto.Name)
+        @Html.InputFor(x => x.Dto.Description)
+        @Html.InputFor(x => x.Dto.IsEnable)
+        @Html.InputFor(x => x.Dto.ChargeMode, new { lay_filter = "ChargeMode" })
+        <fieldset id="dvConfigQuantity" class="layui-elem-field" style="@(Model.Dto.ChargeMode == EmChargeMode.Quantity?"":"display:none;")">
+            <legend>运费配置（按件数）</legend>
+            <div class="layui-field-box">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">基本配置</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">默认运费</label>
+                            <div class="layui-input-inline num">
+                                <input type="text" class="layui-input" id="DefaultFee" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@Model.Dto.QuantityChargeConfigObj.DefaultFee.ToString("0.00")">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">元</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">每件增加运费</label>
+                            <div class="layui-input-inline num">
+                                <input type="text" class="layui-input" id="PreQuantityFee" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@Model.Dto.QuantityChargeConfigObj.PreQuantityFee.ToString("0.00")">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">元</div>
+                            <div class="layui-form-mid layui-word-aux">超过1件后每件增加的运费</div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">地区配置</legend>
+                    <div class="layui-field-box">
+                        <button type="button" class="layui-btn layui-btn-xs" action="js:addNew($this, 1)"><i class="layui-icon">&#xe608;</i>增加</button>
+                        <table class="layui-table">
+                            <colgroup>
+                                <col>
+                                <col width="90">
+                                <col width="120">
+                                <col width="120">
+                                <col width="70">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>地区</th>
+                                    <th>是否配送</th>
+                                    <th>运费</th>
+                                    <th>每件增加运费</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="charge-config-body">
+                                @if (Model.Dto.QuantityChargeConfigObj.AreaConfig != null)
+                                {
+                                    @foreach (var item in Model.Dto.QuantityChargeConfigObj.AreaConfig)
+                                    {
+                                        <tr class="charge-config-item main" deliverable="@(item.Deliverable ? "true" : "false")">
+                                            <td>
+                                                <span class="charge-config-location" data-items="@item.Areas.JsonSerialize()">@item.Areas.SelectJoin(x => x.Name, "，")</span>
+                                                <button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon"></i>选择</button>
+                                            </td>
+                                            <td><input type="checkbox" name="switch" lay-skin="switch" @(item.Deliverable ? "checked" : "") lay-filter="deliverable" lay-text="是|否"></td>
+                                            <td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.DefaultFee.ToString("0.00")"></td>
+                                            <td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.PreQuantityFee.ToString("0.00")"></td>
+                                            <td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this, 1)">删除</button></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+        <fieldset id="dvConfigWeight" class="layui-elem-field" style="@(Model.Dto.ChargeMode == EmChargeMode.Weight?"":"display:none;")">
+            <legend>运费配置（按重量）</legend>
+            <div class="layui-field-box">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">基本配置</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">首重重量</label>
+                                <div class="layui-input-inline num">
+                                    <input type="text" id="FirstWeight" class="layui-input" onkeyup="value=vino.page.fixedFloat(value , 0)" value="@Model.Dto.WeightChargeConfigObj.FirstWeight">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">克</div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">首重费用</label>
+                                <div class="layui-input-inline num">
+                                    <input type="text" id="FirstFee" class="layui-input" onkeyup="value=vino.page.fixedFloat(value , 2)" value="@Model.Dto.WeightChargeConfigObj.FirstFee.ToString("0.00")">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">元</div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">续重重量</label>
+                                <div class="layui-input-inline num">
+                                    <input type="text" id="ExtendWeight" class="layui-input" onkeyup="value=vino.page.fixedFloat(value , 0)" value="@Model.Dto.WeightChargeConfigObj.ExtendWeight">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">克</div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">续重费用</label>
+                                <div class="layui-input-inline num">
+                                    <input type="text" id="ExtendFee" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@Model.Dto.WeightChargeConfigObj.ExtendFee.ToString("0.00")">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">元</div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend class="sub">地区配置</legend>
+                    <div class="layui-field-box">
+                        <button type="button" class="layui-btn layui-btn-xs" action="js:addNew($this, 2)"><i class="layui-icon">&#xe608;</i>增加</button>
+                        <table class="layui-table">
+                            <colgroup>
+                                <col>
+                                <col width="90">
+                                <col width="160">
+                                <col width="160">
+                                <col width="70">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">地区</th>
+                                    <th rowspan="2">是否配送</th>
+                                    <th>首重重量(克)</th>
+                                    <th>首重费用</th>
+                                    <th rowspan="2">操作</th>
+                                </tr>
+                                <tr>
+                                    <th>续重重量(克)</th>
+                                    <th>续重费用</th>
+                                </tr>
+                            </thead>
+                            <tbody class="charge-config-body">
+                                @if (Model.Dto.WeightChargeConfigObj.AreaConfig != null)
+                                {
+                                    @foreach (var item in Model.Dto.WeightChargeConfigObj.AreaConfig)
+                                    {
+                                        <tr class="charge-config-item main" deliverable="@(item.Deliverable ? "true" : "false")">
+                                            <td rowspan="2">
+                                                <span class="charge-config-location" data-items="@item.Areas.JsonSerialize()">@item.Areas.SelectJoin(x => x.Name, "，")</span>
+                                                <button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon"></i>选择</button>
+                                            </td>
+                                            <td rowspan="2"><input type="checkbox" name="switch" lay-skin="switch" @(item.Deliverable ? "checked" : "") lay-filter="deliverable" lay-text="是|否"></td>
+                                            <td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)" value="@item.FirstWeight"></td>
+                                            <td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.FirstFee.ToString("0.00")"></td>
+                                            <td rowspan="2"><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this, 2)">删除</button></td>
+                                        </tr>
+                                        <tr class="charge-config-item">
+                                            <td><input type="text" name="input3" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)" value="@item.ExtendWeight"></td>
+                                            <td><input type="text" name="input4" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.ExtendFee.ToString("0.00")"></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForSubmitAndClose()
+    </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        var form;
+        layui.use(['form', 'element'], function () {
+            form = layui.form;
+
+            _bindForm($("form"), {
+                onBefore: function (arr, $from, options) {
+                    var mode = $("input[name='Dto.ChargeMode']:checked").val();
+                    if (mode == "1") {
+                        var areaConfig = [];
+                        $("#dvConfigQuantity").find("tr.charge-config-item").each(function () {
+                            var areas = $(this).find(".charge-config-location").data("items");
+                            var isChecked = $(this).attr('deliverable') === "true";
+                            var defaultFee = $(this).find("input[name=input1]").val() || 0;
+                            var preQuantityFee = $(this).find("input[name=input2]").val() || 0;
+                            if (areas != null || areas.length > 0) {
+                                areaConfig.push({
+                                    Areas: areas,
+                                    Deliverable: isChecked,
+                                    DefaultFee: parseFloat(defaultFee),
+                                    PreQuantityFee: parseFloat(preQuantityFee),
+                                });
+                            }
+                        });
+                        var data = {
+                            DefaultFee: parseFloat($("#DefaultFee").val() || 0),
+                            PreQuantityFee: parseFloat($("#PreQuantityFee").val() || 0),
+                            AreaConfig: areaConfig
+                        };
+                        arr.push({ name: "Dto.ChargeConfig", value: JSON.stringify(data) });
+                    } else if (mode == "2") {
+                        var areaConfig = [];
+                        $("#dvConfigWeight").find("tr.charge-config-item.main").each(function () {
+                            var areas = $(this).find(".charge-config-location").data("items");
+                            var isChecked = $(this).attr('deliverable') === "true";
+                            var v1 = $(this).find("input[name=input1]").val() || 0;
+                            var v2 = $(this).find("input[name=input2]").val() || 0;
+                            var v3 = $(this).next().find("input[name=input3]").val() || 0;
+                            var v4 = $(this).next().find("input[name=input4]").val() || 0;
+                            if (areas != null || areas.length > 0) {
+                                areaConfig.push({
+                                    Areas: areas,
+                                    Deliverable: isChecked,
+                                    FirstWeight: parseInt(v1),
+                                    FirstFee: parseFloat(v2),
+                                    ExtendWeight: parseInt(v3),
+                                    ExtendFee: parseFloat(v4)
+                                });
+                            }
+                        });
+                        var data = {
+                            FirstWeight: parseInt($("#FirstWeight").val() || 0),
+                            FirstFee: parseFloat($("#FirstFee").val() || 0),
+                            ExtendWeight: parseInt($("#ExtendWeight").val() || 0),
+                            ExtendFee: parseFloat($("#ExtendFee").val() || 0),
+                            AreaConfig: areaConfig
+                        };
+                        arr.push({ name: "Dto.ChargeConfig", value: JSON.stringify(data) });
+                    }
+                    return true;
+                }
+            });
+
+            //监听事件
+            form.on('radio(ChargeMode)', function (data) {
+                if (data.value == "1") {
+                    //按件数
+                    $("#dvConfigQuantity").show();
+                    $("#dvConfigWeight").hide();
+                } else {
+                    //按重量
+                    $("#dvConfigQuantity").hide();
+                    $("#dvConfigWeight").show();
+                }
+            });
+
+            form.on('switch(deliverable)', function (data) {
+                $(this).closest(".charge-config-item").attr("deliverable", this.checked ? 'true' : 'false');
+            });
+        });
+
+        function addNew(thisObj, type) {
+            doSelectProvince(thisObj, type, true);
+        }
+
+        function addRow(thisObj, type, text, list) {
+            var rowHmtl = "";
+            if (type == 1) {
+                rowHmtl = '<tr class="charge-config-item main" deliverable="true">'
+                    + `<td><span class="charge-config-location" data-items='${JSON.stringify(list)}'>${text}</span><button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon">&#xe642;</i>选择</button></td>`
+                    + '<td><input type="checkbox" name="switch" lay-skin="switch" checked lay-filter="deliverable" lay-text="是|否"></td>'
+                    + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
+                    + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
+                    + '<td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>'
+                    + '</tr>';
+            } else {
+                rowHmtl = '<tr class="charge-config-item main" deliverable="true">'
+                    + `<td rowspan="2"><span class="charge-config-location" data-items='${JSON.stringify(list)}'>${text}</span><button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon">&#xe642;</i>选择</button></td>`
+                    + '<td rowspan="2"><input type="checkbox" name="switch" value="true" lay-skin="switch" checked lay-filter="deliverable" lay-text="是|否"></td>'
+                    + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)"></td>'
+                    + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
+                    + '<td rowspan="2"><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this, 2)">删除</button></td>'
+                    + '</tr>';
+                rowHmtl += '<tr class="charge-config-item">'
+                    + '<td><input type="text" name="input3" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)"></td>'
+                    + '<td><input type="text" name="input4" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
+                    + '</tr>';
+            }
+            $(thisObj).closest("fieldset").find(".charge-config-body").append(rowHmtl);
+            form.render("checkbox");
+        }
+
+        function removeRow(thisObj, type) {
+            if (type == 2) {
+                $(thisObj).closest(".charge-config-item").next().remove();
+            }
+            $(thisObj).closest(".charge-config-item").remove();
+        }
+
+        function doSelectProvince(thisObj, type, isAdd) {
+            var sel = [];
+            if (!isAdd) {
+                var items = $(thisObj).closest(".charge-config-item").find(".charge-config-location").data("items");
+                $.each(items, function (i, item) {
+                    sel.push(item.Code);
+                });
+            }
+
+            var dis = [];
+            $(thisObj).closest(".layui-field-box").find(".charge-config-item").each(function () {
+                var thisItems = $(this).find(".charge-config-location").data("items");
+                $.each(thisItems, function (i, item) {
+                    dis.push(item.Code);
+                });
+            });
+
+            OpenWindow("选择省份", `/Sys/Area/ProvinceSelector?sel=${sel.join(',')}&dis=${dis.join(',')}`, null, function (data) {
+                if (data) {
+                    var text = [];
+                    var list = [];
+                    for (var i = 0; i < data.length; i++) {
+                        text.push(data[i].name);
+                        list.push({ Code: data[i].code, Name: data[i].name });
+                    }
+                    if (isAdd) {
+                        addRow(thisObj, type, text, list);
+                    } else {
+                        $(thisObj).closest(".charge-config-item").find(".charge-config-location").data("items", list);
+                        $(thisObj).closest(".charge-config-item").find(".charge-config-location").html(text.join("，"));
+                    }
+                }
+            });
+        }
+    </script>
+    }

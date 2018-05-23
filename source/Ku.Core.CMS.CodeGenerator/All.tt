@@ -15,9 +15,9 @@
 	//var aa = new MemberAddress();
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
-	var name = "SmsQueue";
-	var desc = "短信队列";
-	var area = "Communication";
+	var name = "ProductSku";
+	var desc = "商品Sku";
+	var area = "Mall";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = true;
 	var HasRecycle = true;

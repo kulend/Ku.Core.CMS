@@ -63,9 +63,9 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.Membership.MemberAddress> MemberAddresss { get; set; }
 
         /// <summary>
-        /// 公众号
+        /// WeChat 微信账户
         /// </summary>
-        public DbSet<Domain.Entity.WeChat.WxAccount> WxAccounts { get; set; }
+        public DbSet<Domain.Entity.WeChat.WxAccount> WeChatWxAccounts { get; set; }
 
         /// <summary>
         /// 微信菜单

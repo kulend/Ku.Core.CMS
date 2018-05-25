@@ -1,0 +1,126 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.WeChat.WxMenu.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：微信菜单 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-24 16:27
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+@using Ku.Core.CMS.Domain.Dto.WeChat
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.AccountId)
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属公众号</label>
+                <div class="layui-input-block">
+                    <label class="layui-form-label-show">@Model.Dto.Account.Name</label>
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.Name)
+            @Html.InputFor(x => x.Dto.MenuData)
+            @Html.InputFor(x => x.Dto.IsIndividuation, new { lay_filter = "IsIndividuation" })
+
+            <fieldset id="dvMatchRule" class="layui-elem-field" style="@(Model.Dto.IsIndividuation?"":"display:none;")">
+                <legend>匹配规则</legend>
+                <div class="layui-field-box">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户标签</label>
+                        <div class="layui-input-block">
+                            <select name="Dto.MatchRuleTagId">
+                                <option value="">不做匹配</option>
+                                @foreach (WxUserTagDto tag in Model.UserTags)
+                                {
+                                    if (tag.TagId.ToString().Equals(Model.Dto.MatchRuleTagId))
+                                    {
+                                        <option value="@tag.TagId" selected="selected">@tag.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@tag.TagId">@tag.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="Dto.MatchRuleSex" value="" title="不做匹配" @(string.IsNullOrEmpty(Model.Dto.MatchRuleSex) ? "checked" : "")>
+                            <input type="radio" name="Dto.MatchRuleSex" value="1" title="男" @("1".Equals(Model.Dto.MatchRuleSex) ? "checked" : "")>
+                            <input type="radio" name="Dto.MatchRuleSex" value="2" title="女" @("2".Equals(Model.Dto.MatchRuleSex) ? "checked" : "")>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">客户端</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="Dto.MatchRuleClient" value="" title="不做匹配" @(string.IsNullOrEmpty(Model.Dto.MatchRuleClient) ? "checked" : "")>
+                            <input type="radio" name="Dto.MatchRuleClient" value="1" title="IOS" @("1".Equals(Model.Dto.MatchRuleClient) ? "checked" : "")>
+                            <input type="radio" name="Dto.MatchRuleClient" value="2" title="Android" @("2".Equals(Model.Dto.MatchRuleClient) ? "checked" : "")>
+                            <input type="radio" name="Dto.MatchRuleClient" value="3" title="Others" @("3".Equals(Model.Dto.MatchRuleClient) ? "checked" : "")>
+                        </div>
+                    </div>
+                    @Html.InputFor(x => x.Dto.MatchRuleCountry)
+                    @Html.InputFor(x => x.Dto.MatchRuleProvince)
+                    @Html.InputFor(x => x.Dto.MatchRuleCity)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">语言</label>
+                        <div class="layui-input-block">
+                            <select id="language" name="Dto.MatchRuleLanguage"></select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        var languages = [["zh_CN", "简体中文"], ["zh_TW", "繁体中文TW"], ["zh_HK", "繁体中文HK"]
+            , ["en", "英文"], ["id", "印尼"], ["ms", "马来"], ["es", "西班牙"], ["ko", "韩国"], ["it", "意大利"], ["ja", "日本"], ["pl", "波兰"], ["pt", "葡萄牙"]
+            , ["ru", "俄国"], ["th", "泰文"], ["vi", "越南"], ["ar", "阿拉伯语"], ["hi", "北印度"], ["he", "希伯来"], ["tr", "土耳其"], ["de", "德语"], ["fr", "法语"]];
+
+        layui.use(['form'], function () {
+            var form = layui.form;
+            //监听开关
+            form.on('switch(IsIndividuation)', function (data) {
+                if (this.checked) {
+                    $("#dvMatchRule").show();
+                } else
+                {
+                    $("#dvMatchRule").hide();
+                }
+            });
+
+            var selLanguage = "@(Model.Dto.MatchRuleLanguage??"")";
+            var options = [];
+            options.push(`<option value="">不做匹配</option>`);
+            for (var i = 0; i < languages.length; i++) {
+                var cd = languages[i][0];
+                var nm = languages[i][1];
+                if (cd == selLanguage) {
+                    options.push(`<option value="${cd}" selected="selected">${nm}</option>`);
+                } else {
+                    options.push(`<option value="${cd}">${nm}</option>`);
+                }
+            }
+            $("#language").html(options.join(""));
+            form.render("select");
+        });
+    </script>
+}

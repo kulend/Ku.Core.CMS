@@ -4,36 +4,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Areas\DataCenter\**" />
-    <Compile Remove="Areas\Mall\Views\DeliveryTemplet\**" />
-    <Compile Remove="Areas\Mall\Views\Payment\**" />
-    <Compile Remove="Areas\Mall\Views\Product\**" />
     <Compile Remove="Areas\Material\Views\Upload\**" />
     <Compile Remove="Areas\System\Views\Sms\**" />
     <Compile Remove="Areas\System\Views\User\**" />
+    <Compile Remove="Areas\WeChat\Views\WxMenu\**" />
     <Compile Remove="Views\Home\**" />
     <Content Remove="Areas\DataCenter\**" />
-    <Content Remove="Areas\Mall\Views\DeliveryTemplet\**" />
-    <Content Remove="Areas\Mall\Views\Payment\**" />
-    <Content Remove="Areas\Mall\Views\Product\**" />
     <Content Remove="Areas\Material\Views\Upload\**" />
     <Content Remove="Areas\System\Views\Sms\**" />
     <Content Remove="Areas\System\Views\User\**" />
+    <Content Remove="Areas\WeChat\Views\WxMenu\**" />
     <Content Remove="Views\Home\**" />
     <EmbeddedResource Remove="Areas\DataCenter\**" />
-    <EmbeddedResource Remove="Areas\Mall\Views\DeliveryTemplet\**" />
-    <EmbeddedResource Remove="Areas\Mall\Views\Payment\**" />
-    <EmbeddedResource Remove="Areas\Mall\Views\Product\**" />
     <EmbeddedResource Remove="Areas\Material\Views\Upload\**" />
     <EmbeddedResource Remove="Areas\System\Views\Sms\**" />
     <EmbeddedResource Remove="Areas\System\Views\User\**" />
+    <EmbeddedResource Remove="Areas\WeChat\Views\WxMenu\**" />
     <EmbeddedResource Remove="Views\Home\**" />
     <None Remove="Areas\DataCenter\**" />
-    <None Remove="Areas\Mall\Views\DeliveryTemplet\**" />
-    <None Remove="Areas\Mall\Views\Payment\**" />
-    <None Remove="Areas\Mall\Views\Product\**" />
     <None Remove="Areas\Material\Views\Upload\**" />
     <None Remove="Areas\System\Views\Sms\**" />
     <None Remove="Areas\System\Views\User\**" />
+    <None Remove="Areas\WeChat\Views\WxMenu\**" />
     <None Remove="Views\Home\**" />
   </ItemGroup>
   <ItemGroup>

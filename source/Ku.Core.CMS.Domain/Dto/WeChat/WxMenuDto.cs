@@ -66,37 +66,36 @@ namespace Ku.Core.CMS.Domain.Dto.WeChat
         [Display(Name = "微信菜单ID")]
         public string WxMenuId { set; get; }
 
-        public WxMenuMatchRuleDto MatchRule { set; get; }
-    }
+        #region MatchRule
 
-    public class WxMenuMatchRuleDto
-    {
         [MaxLength(20)]
         [Display(Name = "用户标签ID")]
-        public string TagId { set; get; }
+        public string MatchRuleTagId { set; get; }
 
         [MaxLength(1)]
         [Display(Name = "性别")]
-        public string Sex { set; get; }
+        public string MatchRuleSex { set; get; }
 
         [MaxLength(1)]
         [Display(Name = "客户端")]
-        public string Client { set; get; }
+        public string MatchRuleClient { set; get; }
 
         [MaxLength(40)]
         [Display(Name = "国家")]
-        public string Country { set; get; }
+        public string MatchRuleCountry { set; get; }
 
         [MaxLength(40)]
         [Display(Name = "省份")]
-        public string Province { set; get; }
+        public string MatchRuleProvince { set; get; }
 
         [MaxLength(40)]
         [Display(Name = "城市")]
-        public string City { set; get; }
+        public string MatchRuleCity { set; get; }
 
         [MaxLength(10)]
         [Display(Name = "语言")]
-        public string Language { set; get; }
+        public string MatchRuleLanguage { set; get; }
+
+        #endregion
     }
 }

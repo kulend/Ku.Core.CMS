@@ -73,19 +73,19 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.WeChat.WxMenu> WxMenus { get; set; }
 
         /// <summary>
-        /// 微信用户标签
+        /// WeChat 微信用户标签
         /// </summary>
-        public DbSet<Domain.Entity.WeChat.WxUserTag> WxUserTags { get; set; }
+        public DbSet<Domain.Entity.WeChat.WxUserTag> WeChatWxUserTags { get; set; }
 
         /// <summary>
-        /// 微信用户
+        /// WeChat 微信用户
         /// </summary>
-        public DbSet<Domain.Entity.WeChat.WxUser> WxUsers { get; set; }
+        public DbSet<Domain.Entity.WeChat.WxUser> WeChatWxUsers { get; set; }
 
         /// <summary>
-        /// 微信二维码
+        /// WeChat 微信二维码
         /// </summary>
-        public DbSet<Domain.Entity.WeChat.WxQrcode> WxQrcodes { get; set; }
+        public DbSet<Domain.Entity.WeChat.WxQrcode> WeChatWxQrcodes { get; set; }
 
         /// <summary>
         /// 图片素材

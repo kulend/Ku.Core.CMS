@@ -26,7 +26,7 @@ namespace Ku.Core.CMS.Domain.Dto.WeChat
         [DataType("Hidden")]
         public long AccountId { get; set; }
 
-        public WxAccountDto Account { get; set; }
+        public virtual WxAccountDto Account { get; set; }
 
         [MaxLength(64), Required]
         [Display(Name = "OpenId")]
@@ -45,6 +45,7 @@ namespace Ku.Core.CMS.Domain.Dto.WeChat
 
         [MaxLength(500)]
         [Display(Name = "头像")]
+        [DataType(DataType.ImageUrl)]
         public string HeadImgUrl { set; get; }
 
         [Display(Name = "性别")]

@@ -28,7 +28,7 @@ namespace Ku.Core.CMS.Domain.Dto.WeChat
         [DataType("Hidden")]
         public long AccountId { get; set; }
 
-        public WxAccountDto Account { get; set; }
+        public virtual WxAccountDto Account { get; set; }
 
         /// <summary>
         /// 名称

@@ -27,7 +27,7 @@ namespace Ku.Core.CMS.Domain.Entity.WeChat
         [DataType("Hidden")]
         public long AccountId { get; set; }
 
-        public WxAccount Account { get; set; }
+        public virtual WxAccount Account { get; set; }
 
         [Display(Name = "标签ID")]
         public int TagId { set; get; }

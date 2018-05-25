@@ -1,0 +1,161 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.WeChat.WxQrcode.IndexModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Index.cshtml
+    // 功能描述：微信二维码 列表页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-25 14:53
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_Layout.cshtml";
+}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3 layui-col-lg2">
+            <div class="layui-card">
+                <div class="layui-card-header">公众号</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <table id="ID_table_filters" class="layui-table" lay-skin="row">
+                            <tbody>
+                                @foreach (var account in Model.Accounts)
+                                {
+                                    <tr><td><input type="checkbox" title="@account.Name" name="name_filter" value="@account.Id" lay-skin="primary" lay-filter="filter-item"></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md9  layui-col-lg10">
+            <div class="layui-card">
+                <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+                    <ul class="layui-tab-title">
+                        <li lay-id="list" class="layui-this">微信二维码</li>
+                        <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="toolbar">
+                                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                                <action id="btnAdd" auth-code="wechat.qrcode.edit" text="新增" icon="&#xe608;" action="window:/WeChat/WxQrcode/Edit" after="grid:reload['#list']" />
+                                <action auth-code="wechat.qrcode.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+                            </div>
+                            <table id="list"></table>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="toolbar">
+                                <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                                <action auth-code="wechat.qrcode.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
+                            </div>
+                            <table id="recycles"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+    layui.use(['form','element'], function () {
+        var element = layui.element;
+        var form = layui.form;
+
+        form.on('checkbox(filter-item)', function (data) {
+            var name = data.elem.getAttribute("name");
+            var domArr = document.getElementsByName(name);
+            var checked = false;
+            for (var i = 0; i < domArr.length; i++) {
+                if (domArr[i] !== data.elem) {
+                    if (data.elem.checked) {
+                        domArr[i].checked = false;
+                    } else if (domArr[i].checked) {
+                        checked = true;
+                    }
+                }
+            }
+            data.elem.checked = !checked ? true : data.elem.checked;
+            form.render('checkbox');
+
+            filterChanged(data.value);
+        });
+
+        element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            {
+                //初始化回收站
+                $("#recycles").vinoGrid({
+                    url: 'Index/Data',
+                    cols: [cols.concat([
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "wechat.qrcode.restore", text: "恢复", action: `post:Index/Restore?id={{d.Id}}` }
+                            ])
+                        }
+                    ])],
+                    onWhere: function () {
+                        return {
+                            IsDeleted: true,
+                            AccountId: selFilterValue
+                        };
+                    }
+                });
+            }
+        });
+    });
+
+    var cols = [
+        { field: 'SceneId', title: '场景ID', width: 120 },
+        { field: 'SceneType', title: '场景类型', width: 100, enum: true },
+        { field: 'PeriodType', title: '时效类型', width: 100, enum: true },
+        { field: 'EventKey', title: '事件', width: 120 },
+        { field: 'Purpose', title: '用途', width: 150 },
+        { field: 'ScanCount', title: '扫描次数', width: 90 },
+        { field: 'Ticket', title: 'Ticket', width: 150 },
+        { field: 'Url', title: 'Url', width: 150 },
+    ];
+
+    var selFilterValue;
+    function filterChanged(filterValue) {
+        if (!selFilterValue) {
+            selFilterValue = filterValue;
+            $("#list").vinoGrid({
+                url: 'Index/Data',
+                cols: [cols.concat([
+                    {
+                        title: '操作', fixed: 'right', width: 100, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "wechat.qrcode.edit", text: "编辑", action: `window:/WeChat/WxQrcode/Edit?id={{d.Id}}` },
+                            { code: "wechat.qrcode.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ])],
+                onWhere: function () {
+                    return {
+                        IsDeleted: false,
+                        AccountId: selFilterValue
+                    };
+                }
+            });
+        } else if (selFilterValue != filterValue) {
+            selFilterValue = filterValue;
+            $("#list").vinoGrid("search");
+            if ($("#recycles").hasClass("vino-grid")) {
+                $("#recycles").vinoGrid("search");
+            }
+        }
+
+        $("#btnAdd").attr("action", "window:/WeChat/WxQrcode/Edit?AccountId=" + selFilterValue);
+    }
+    </script>
+}

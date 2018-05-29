@@ -1,38 +1,40 @@
-﻿@{
-//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
-//
-// 文件名：Index.cshtml
-// 功能描述：图片素材 列表页面
-//
-// 创建者：kulend@qq.com
-// 创建时间：2018-02-04 20:18
-//
-//----------------------------------------------------------------
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture.IndexModel
+@{
+	//----------------------------------------------------------------
+	// Copyright (C) 2018 kulend 版权所有
+	//
+	// 文件名：Index.cshtml
+	// 功能描述：图片素材 列表页面
+	//
+	// 创建者：kulend@qq.com
+	// 创建时间：2018-05-28 14:27
+	//
+	//----------------------------------------------------------------
 }
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Pages/_Layout.cshtml";
 }
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
             <ul class="layui-tab-title">
-                <li lay-id="list" class="layui-this">图片素材列表</li>
+                <li lay-id="list" class="layui-this">图片素材</li>
                 <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                     <div class="toolbar">
                         <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
-                        <action auth-code="material.picture.upload" text="本地上传" icon="&#xe67c;" action="window:/Material/Picture/Upload" after="grid:reload['#list']" />
-                        <action auth-code="material.picture.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Delete']" after="grid:reload" />
+                        <action auth-code="materialcenter.picture.upload" text="本地上传" icon="&#xe67c;" action="window:/MaterialCenter/Picture/Upload" after="grid:reload['#list']" />
+                        <action auth-code="materialcenter.picture.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
                     </div>
                     <table id="list"></table>
                 </div>
                 <div class="layui-tab-item">
                     <div class="toolbar">
                         <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
-                        <action auth-code="material.picture.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Restore']" after="grid:reload" />
+                        <action auth-code="materialcenter.picture.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
                     </div>
                     <table id="recycles"></table>
                 </div>
@@ -64,14 +66,15 @@
         ];
 
         $("#list").vinoGrid({
-            url: 'GetList',
-            size:'lg',
+            url: 'Index/Data',
+            size: 'lg',
             cols: [cols.concat([
                 {
                     title: '操作', fixed: 'right', width: 160, align: 'center',
                     toolbar: grid_templet_operate([
-                        { code: "material.picture.edit", text: "编辑", action: `window:/Material/Picture/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
-                        { code: "material.picture.delete", text: "删除", action: `post:Delete?id={{d.Id}}` }
+                        { code: "materialcenter.picture.edit", text: "编辑", action: `window:/MaterialCenter/Picture/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "materialcenter.picture.detail", text: "详情", action: `window:/MaterialCenter/Picture/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                        { code: "materialcenter.picture.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
                     ])
                 }
             ])],
@@ -87,13 +90,14 @@
             { 
                 //初始化回收站
                 $("#recycles").vinoGrid({
-                    url: 'GetList',
-                    size:'lg',
+                    url: 'Index/Data',
+                    size: 'lg',
                     cols: [cols.concat([
                         {
                             title: '操作', fixed: 'right', width: 160, align: 'center',
                             toolbar: grid_templet_operate([
-                                { code: "material.picture.restore", text: "恢复", action: `post:Restore?id={{d.Id}}` }
+                                { code: "materialcenter.picture.detail", text: "详情", action: `window:/MaterialCenter/Picture/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                                { code: "materialcenter.picture.restore", text: "恢复", action: `post:Index/Restore?id={{d.Id}}` }
                             ])
                         }
                     ])],

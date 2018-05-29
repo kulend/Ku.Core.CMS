@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Ku.Core.CMS.Domain.Entity.UserCenter;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Ku.Core.CMS.Domain.Dto.System;
 
-namespace Ku.Core.CMS.Domain.Dto.Material
+namespace Ku.Core.CMS.Domain.Entity.MaterialCenter
 {
-    public class MaterialDto: BaseProtectedDto
+    public class BaseMaterial : BaseProtectedEntity
     {
         /// <summary>
         /// 标题
         /// </summary>
-        [MaxLength(256)]
+        [MaxLength(128)]
         public string Title { set; get; }
 
         /// <summary>
         /// 文件名
         /// </summary>
-        [MaxLength(256)]
+        [MaxLength(128)]
         public string FileName { set; get; }
 
         /// <summary>
@@ -43,11 +39,6 @@ namespace Ku.Core.CMS.Domain.Dto.Material
         /// </summary>
         public long UploadUserId { set; get; }
 
-        /// <summary>
-        /// 上传用户
-        /// </summary>
-        public UserDto UploadUser { set; get; }
-
         [MaxLength(256)]
         public string FilePath { set; get; }
 
@@ -57,18 +48,6 @@ namespace Ku.Core.CMS.Domain.Dto.Material
         /// <summary>
         /// 是否公开
         /// </summary>
-        [DefaultValue(false)]
-        [Display(Name = "是否公开", Prompt = "公开|私密")]
         public bool IsPublic { set; get; } = false;
-
-        /// <summary>
-        /// 分组ID
-        /// </summary>
-        public long? GroupId { set; get; }
-
-        /// <summary>
-        /// 分组
-        /// </summary>
-        public MaterialGroupDto Group { set; get; }
     }
 }

@@ -1,11 +1,18 @@
-﻿@{
-    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+﻿@page
+@model Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture.SelectorModel
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
 }
 @section Css
     {
     <style>
-        .img_pick { overflow: auto; margin-top: 10px; overflow:hidden; }
-        .img_pick .img_item {
+        .img_pick {
+            overflow: auto;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+            .img_pick .img_item {
                 position: relative;
                 margin-right: 15px;
                 margin-bottom: 7px;
@@ -42,7 +49,7 @@
             -webkit-transform: translate(-50%,-50%);
             -o-transform: translate(-50%,-50%);
             -moz-transform: translate(-50%,-50%);
-            height:117px;
+            height: 117px;
         }
 
         .img_pick .img_item .pic {
@@ -62,7 +69,7 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            font-size:12px;
+            font-size: 12px;
         }
 
         .img_pick .img_item_bd.selected .selected_mask {
@@ -98,8 +105,9 @@
         #pager {
             float: right;
         }
+
         .search-bar {
-            margin-left:10px;
+            margin-left: 10px;
         }
     </style>
 }
@@ -110,7 +118,7 @@
                 <a href="javascript:;">全部</a>
             </span>
             <span style="float:right;">
-                <action auth-code="material.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:Material/Picture/Upload" after="doReload()" />
+                <action auth-code="materialcenter.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:MaterialCenter/Picture/Upload" after="doReload()" />
             </span>
         </div>
         <ul id="img-list" class="img_pick"></ul>
@@ -129,7 +137,7 @@
     <li class="img_item">
         <label class="frm_checkbox_label img_item_bd {{value.Id | inArraySelected}}" data-item='{"id":"{{value.Id}}", "thumb":"{{value.ThumbPath}}", "path":"{{value.FilePath}}"}'>
             <div class="pic_box">
-                <img class="pic" src="{{value.ThumbPath||value.FilePath}}"/>
+                <img class="pic" src="{{value.ThumbPath||value.FilePath}}" />
             </div>
             <span class="lbl_content">
                 {{value.Title}}
@@ -148,16 +156,16 @@
     <script>
         var selectedItems = [];
         var selectedItemIds = [];
-        template.defaults.imports.inArraySelected = function (value) { return $.inArray(value, selectedItemIds) >= 0 ? "selected":""; };
+        template.defaults.imports.inArraySelected = function (value) { return $.inArray(value, selectedItemIds) >= 0 ? "selected" : ""; };
         var laypage;
         layui.use(['laypage'], function () {
             laypage = layui.laypage;
             loadData({ curr: 1, limit: 10 });
             showSelTip();
         });
-        
+
         function loadData(pms) {
-            vino.ajax.get("GetSelectList", { page: pms.curr, rows: pms.limit }, function (data) {
+            vino.ajax.post("", { page: pms.curr, rows: pms.limit }, function (data) {
                 $("#img-list").html(template('tp:img-item', { items: data.data }));
                 laypage.render({
                     elem: 'pager'
@@ -200,12 +208,12 @@
             loadData({ curr: 1, limit: 10 });
         }
 
-        function showSelTip() { 
+        function showSelTip() {
             var max = vino.page.querystring.get("max") || 10;
             $("#sel-tip").text(`已选${selectedItemIds.length}个，可选${max}个`);
         }
 
-        function doSelectOk() { 
+        function doSelectOk() {
             closeWindow(selectedItems);
         }
     </script>

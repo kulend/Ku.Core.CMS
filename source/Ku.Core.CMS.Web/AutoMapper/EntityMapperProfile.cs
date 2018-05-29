@@ -52,8 +52,7 @@ namespace Ku.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Entity.WeChat.WxUserTag, Domain.Dto.WeChat.WxUserTagDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxUser, Domain.Dto.WeChat.WxUserDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxQrcode, Domain.Dto.WeChat.WxQrcodeDto>().ReverseMap();
-            CreateMap<Domain.Entity.Material.Picture, Domain.Dto.Material.PictureDto>().ReverseMap();
-            CreateMap<Domain.Entity.Material.MaterialGroup, Domain.Dto.Material.MaterialGroupDto>().ReverseMap();
+            CreateMap<Domain.Entity.MaterialCenter.Picture, Domain.Dto.MaterialCenter.PictureDto>().ReverseMap();
             CreateMap<Domain.Entity.Content.Article, Domain.Dto.Content.ArticleDto>().ReverseMap();
             CreateMap<Domain.Entity.Content.Column, Domain.Dto.Content.ColumnDto>().ReverseMap();
             CreateMap<Domain.Entity.Mall.DeliveryTemplet, Domain.Dto.Mall.DeliveryTempletDto>().ReverseMap();

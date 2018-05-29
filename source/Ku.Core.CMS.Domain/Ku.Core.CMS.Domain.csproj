@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\Material\**" />
+    <Compile Remove="Entity\Material\**" />
+    <EmbeddedResource Remove="Dto\Material\**" />
+    <EmbeddedResource Remove="Entity\Material\**" />
+    <None Remove="Dto\Material\**" />
+    <None Remove="Entity\Material\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
   </ItemGroup>
 

@@ -5,24 +5,26 @@
 // 功能描述：图片素材 业务逻辑接口
 //
 // 创建者：kulend@qq.com
-// 创建时间：2018-02-04 19:13
+// 创建时间：2018-05-28 14:27
 //
 //----------------------------------------------------------------
 
-using System.Collections.Generic;
+using Ku.Core.CMS.Domain.Dto.MaterialCenter;
+using Ku.Core.CMS.Domain.Entity.MaterialCenter;
 using System.Threading.Tasks;
-using Ku.Core.CMS.Domain.Dto.Material;
-using Ku.Core.CMS.Domain.Entity.Material;
 
-namespace Ku.Core.CMS.IService.Material
+namespace Ku.Core.CMS.IService.MaterialCenter
 {
     public partial interface IPictureService : IBaseService<Picture, PictureDto, PictureSearch>
     {
         /// <summary>
-        /// 保存数据
+        /// 新增数据
         /// </summary>
-        Task SaveAsync(PictureDto dto);
-
         Task AddAsync(PictureDto dto);
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        Task UpdateAsync(PictureDto dto);
     }
 }

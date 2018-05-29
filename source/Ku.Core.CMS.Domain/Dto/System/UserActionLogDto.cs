@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Ku.Core.CMS.Domain.Dto.UserCenter;
 using Ku.Core.EventBus;
 
 namespace Ku.Core.CMS.Domain.Dto.System

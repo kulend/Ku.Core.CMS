@@ -88,14 +88,9 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.WeChat.WxQrcode> WeChatWxQrcodes { get; set; }
 
         /// <summary>
-        /// 图片素材
+        /// MaterialCenter 图片素材
         /// </summary>
-        public DbSet<Domain.Entity.Material.Picture> Pictures { get; set; }
-
-        /// <summary>
-        /// 素材分组
-        /// </summary>
-        public DbSet<Domain.Entity.Material.MaterialGroup> MaterialGroups { get; set; }
+        public DbSet<Domain.Entity.MaterialCenter.Picture> MaterialCenterPictures { get; set; }
 
         /// <summary>
         /// 文章

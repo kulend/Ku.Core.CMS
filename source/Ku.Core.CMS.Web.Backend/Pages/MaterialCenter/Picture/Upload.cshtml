@@ -1,8 +1,8 @@
-﻿@{
-    Layout = "~/Views/Shared/_WindowLayout.cshtml";
+﻿@page
+@model Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture.UploadModel
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
 }
-@using Ku.Core.CMS.Domain.Dto.Membership
-@model MemberDto
 <div class="layui-layout layui-layout-window">
     <div class="layui-body">
         <div class="layui-row">
@@ -47,7 +47,8 @@
         </div>
     </div>
     <div class="layui-footer">
-        <span id="sel-tip" style="position:absolute; left:20px;">统一分类：
+        <span id="sel-tip" style="position:absolute; left:20px;">
+            统一分类：
             <select>
                 <option>AAAAAA</option>
                 <option>BBBBBBB</option>
@@ -59,18 +60,18 @@
     </div>
 </div>
 @section Scripts
-{
+    {
     <script>
         var files;
         var ins;
-        layui.use('upload', function () { 
+        layui.use('upload', function () {
             var $ = layui.jquery, upload = layui.upload;
 
             var list = $('#list');
             var btnUpload = $('#btnUpload');
             ins = upload.render({
                 elem: '#areaUplaod'
-                , url: '/Material/Picture/Upload'
+                , url: '/MaterialCenter/Picture/Upload'
                 , accept: 'images'
                 , multiple: true
                 , auto: false
@@ -156,7 +157,7 @@
         });
 
         function doUpload()
-        { 
+        {
             if ($('#list').find('tr[data-status="wait"]').length == 0) {
                 $('#btnUpload').hide();
                 vino.page.msg.tip("上传完成");
@@ -169,3 +170,4 @@
         }
     </script>
 }
+

@@ -57,10 +57,6 @@ namespace Ku.Core.CMS.TaskApp.AutoMapper
             CreateMap<Domain.Dto.WeChat.WxUserDto, Domain.Entity.WeChat.WxUser>();
             CreateMap<Domain.Entity.WeChat.WxQrcode, Domain.Dto.WeChat.WxQrcodeDto>();
             CreateMap<Domain.Dto.WeChat.WxQrcodeDto, Domain.Entity.WeChat.WxQrcode>();
-            CreateMap<Domain.Entity.Material.Picture, Domain.Dto.Material.PictureDto>();
-            CreateMap<Domain.Dto.Material.PictureDto, Domain.Entity.Material.Picture>();
-            CreateMap<Domain.Entity.Material.MaterialGroup, Domain.Dto.Material.MaterialGroupDto>();
-            CreateMap<Domain.Dto.Material.MaterialGroupDto, Domain.Entity.Material.MaterialGroup>();
             CreateMap<Domain.Entity.Content.Article, Domain.Dto.Content.ArticleDto>();
             CreateMap<Domain.Dto.Content.ArticleDto, Domain.Entity.Content.Article>();
             CreateMap<Domain.Entity.Mall.DeliveryTemplet, Domain.Dto.Mall.DeliveryTempletDto>();

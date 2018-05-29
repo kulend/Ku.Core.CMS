@@ -71,10 +71,5 @@ namespace Ku.Core.CMS.Domain.Dto.Membership
 	    /// 操作员ID
 	    /// </summary>
 		public long? OperatorId { get; set; }
-
-        /// <summary>
-        /// 操作员
-        /// </summary>
-        public System.UserDto Operator { set; get; }
     }
 }

@@ -1,0 +1,41 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture.DetailModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：图片素材 详情页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-05-28 14:27
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DetailModel>(""))
+    {
+    <div class="layui-body">
+        @Html.ShowFor(x => x.Dto.Title)
+        @Html.ShowFor(x => x.Dto.FileName)
+        @Html.ShowFor(x => x.Dto.FilePath)
+        @Html.ShowFor(x => x.Dto.FileType, x => x.Dto.FileSize)
+        @Html.ShowFor(x => x.Dto.Md5Code, x => x.Dto.IsCompressed)
+        @Html.ShowFor(x => x.Dto.CreateTime)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

@@ -3,21 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Material\**" />
-    <EmbeddedResource Remove="Material\**" />
-    <None Remove="Material\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Events\BaseEvent.cs" />
-    <Compile Remove="Events\EventPublisher.cs" />
-    <Compile Remove="Events\EventSubscriber.cs" />
-    <Compile Remove="Events\IEventPublisher.cs" />
-    <Compile Remove="Events\IEventSubscriber.cs" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />

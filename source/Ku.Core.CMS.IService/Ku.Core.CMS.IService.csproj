@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Material\**" />
-    <EmbeddedResource Remove="Material\**" />
-    <None Remove="Material\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
     <ProjectReference Include="..\Ku.Core.WeChat\Ku.Core.WeChat.csproj" />
   </ItemGroup>

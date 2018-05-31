@@ -19,7 +19,7 @@ namespace Ku.Core.CMS.Web.Backend
             try
             {
                 //logger.Debug("init main");
-                BuildWebHost(args).Run();
+                CreateWebHostBuilder(args).Build().Run();
             }
             catch (Exception e)
             {
@@ -28,13 +28,11 @@ namespace Ku.Core.CMS.Web.Backend
                 throw;
             }
         }
-
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .UseUrls("http://localhost:5000")
-                .UseNLog() // NLog: setup NLog for Dependency injection
-                .Build();
+                .UseNLog(); // NLog: setup NLog for Dependency injection
     }
 }

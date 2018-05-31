@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ku.Core.CMS.Web.Filters;
 using Ku.Core.Infrastructure.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -23,6 +25,13 @@ namespace Ku.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             //Session
             services.AddSession(Configuration);
 
@@ -54,7 +63,7 @@ namespace Ku.Core.CMS.Web.Application
                     json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                     json.SerializerSettings.Converters.Add(new LongToStringConverter());
                     json.SerializerSettings.Converters.Add(new EnumDisplayConverter());
-                });
+                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             return base.ConfigureServices(services);
         }
@@ -71,9 +80,12 @@ namespace Ku.Core.CMS.Web.Application
             else
             {
                 //app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseSession(Configuration);
 

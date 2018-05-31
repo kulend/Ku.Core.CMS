@@ -35,18 +35,17 @@ namespace Ku.Core.CMS.Web.Application
                 opts.Filters.Add(typeof(VinoActionFilter));
                 opts.Filters.Add(typeof(WebApiResultFilter));
                 opts.Filters.Add(typeof(ApiExceptionFilter));
-            })
-                .AddJsonOptions(json =>
-                {
-                    // 忽略循环引用
-                    json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    //不使用驼峰样式的key
-                    json.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                    //设置时间格式
-                    json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                    json.SerializerSettings.Converters.Add(new LongToStringConverter());
-                    json.SerializerSettings.Converters.Add(new EnumDisplayConverter());
-                });
+            }).AddJsonOptions(json =>
+            {
+                // 忽略循环引用
+                json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                //不使用驼峰样式的key
+                json.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                //设置时间格式
+                json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                json.SerializerSettings.Converters.Add(new LongToStringConverter());
+                json.SerializerSettings.Converters.Add(new EnumDisplayConverter());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //版本控制
             services.AddApiVersioning(option => {
@@ -86,6 +85,8 @@ namespace Ku.Core.CMS.Web.Application
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHttpsRedirection();
 
             app.UseWebApiAuth();
 

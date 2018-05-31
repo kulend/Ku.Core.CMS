@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DotNetCore.CAP" Version="2.2.2" />
     <PackageReference Include="DotNetCore.CAP.MySql" Version="2.2.2" />
     <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

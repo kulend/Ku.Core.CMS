@@ -19,7 +19,13 @@
     @using (Html.BeginForm<DetailModel>(""))
     {
     <div class="layui-body">
+        @Html.ShowFor(x => x.Dto.Account, x => x.Dto.Password)
+        @Html.ShowFor(x => x.Dto.NickName, x => x.Dto.RealName)
+        @Html.ShowFor(x => x.Dto.Mobile, x => x.Dto.Email)
+        @Html.ShowFor(x => x.Dto.Sex, x => x.Dto.IsEnable)
         @Html.ShowFor(x => x.Dto.CreateTime)
+        @Html.ShowFor(x => x.Dto.Remarks)
+        @Html.ShowFor(x => x.Dto.IsAdmin)
     </div>
     <div class="layui-footer">
         @Html.ActionsForClose()

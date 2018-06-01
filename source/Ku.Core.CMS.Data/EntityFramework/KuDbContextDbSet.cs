@@ -161,7 +161,12 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// UserCenter 角色功能关联
         /// </summary>
         public DbSet<Domain.Entity.UserCenter.RoleFunction> UserCenterRoleFunctions { get; set; }
-
+		
+        /// <summary>
+        /// UserCenter 收货地址
+        /// </summary>
+        public DbSet<Domain.Entity.UserCenter.UserAddress> UserCenterUserAddresss { get; set; }
+		
         /// <summary>
         /// Communication 短信账户
         /// </summary>

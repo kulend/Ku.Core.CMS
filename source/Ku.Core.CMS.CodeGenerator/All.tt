@@ -15,13 +15,13 @@
 	//var aa = new MemberAddress();
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
-	var name = "Picture";
-	var desc = "图片素材";
-	var area = "MaterialCenter";
+	var name = "UserAddress";
+	var desc = "收货地址";
+	var area = "UserCenter";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = true;
 	var HasRecycle = true;
-   	var HasDetail = true;
+   	var HasDetail = false;
    	//模式1，普通无回收站
    	//模式2，普通有回收站
    	//模式3，父子级无回收站

@@ -1,0 +1,69 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserAddress.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：收货地址 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-06-01 13:14
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "~/Pages/_WindowFormLayout.cshtml";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            <div class="layui-form-item" id="memberBox">
+            </div>
+            @Html.InputFor(x => x.Dto.Consignee, x => x.Dto.Mobile)
+            <div class="layui-form-item">
+                <label class="layui-form-label">地区</label>
+                <div id="ID_Area" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.Address)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form', 'multiSelectBox', 'areaSelect'], function () {
+            var form = layui.form;
+            var multiSelectBox = layui.multiSelectBox;
+            multiSelectBox({
+                elem: "#memberBox",
+                label: "会员",
+                winUrl: "/Membership/Member/Select",
+                winTitle: "选择会员",
+                name: "MemberID",
+                limit: 99
+            });
+
+            var areaSelect = layui.areaSelect;
+            areaSelect({
+                elem: "#ID_Area",
+                hasStreet: true,
+                provinceField: "Dto.ProvinceCode",
+                cityField: "Dto.CityCode",
+                regionField: "Dto.RegionCode",
+                streetField: "Dto.StreetCode",
+                provinceNameField: "Dto.Province",
+                cityNameField: "Dto.City",
+                regionNameField: "Dto.Region",
+                streetNameField: "Dto.Street",
+                code: 140000
+            });
+        });
+    </script>
+}

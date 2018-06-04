@@ -79,6 +79,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Ui", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Layui.Test", "..\..\开源\Ku.Core.Extensions\Tests\Ku.Core.Extensions.Layui.Test\Ku.Core.Extensions.Layui.Test.csproj", "{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{D3EECF4F-DC0A-4F3C-9B54-BAFEF2A1323F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3EECF4F-DC0A-4F3C-9B54-BAFEF2A1323F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EECF4F-DC0A-4F3C-9B54-BAFEF2A1323F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3EECF4F-DC0A-4F3C-9B54-BAFEF2A1323F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3EECF4F-DC0A-4F3C-9B54-BAFEF2A1323F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -235,6 +241,7 @@ Global
 		{720B0C52-C3C6-4E57-AD2C-E62E00865D08} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{161AB5B3-87D3-4483-9C12-127EBBE36D9A} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
+		{D3EECF4F-DC0A-4F3C-9B54-BAFEF2A1323F} = {5F420258-0110-494B-98DA-94B5B61B2E5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

@@ -75,7 +75,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                     _cache.Add(key, authcodes);
                 }
             }
-            if (authcodes.Contains("vino.develop"))
+            if (authcodes.Contains("ku.develop"))
             {
                 return true;
             }

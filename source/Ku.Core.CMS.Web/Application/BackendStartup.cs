@@ -85,7 +85,7 @@ namespace Ku.Core.CMS.Web.Application
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
 
             app.UseSession(Configuration);
 

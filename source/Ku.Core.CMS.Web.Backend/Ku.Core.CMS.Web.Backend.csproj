@@ -11,6 +11,10 @@
     <Content Remove="Pages\Sys\Function\Index.cshtml" />
     <Content Remove="Pages\Sys\Menu\Edit.cshtml" />
     <Content Remove="Pages\Sys\Menu\Index.cshtml" />
+    <Content Remove="Views\Shared\_FormLayout.cshtml" />
+    <Content Remove="Views\Shared\_Layout.cshtml" />
+    <Content Remove="Views\Shared\_WindowLayout.cshtml" />
+    <Content Remove="Views\Shared\_WindowListLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />

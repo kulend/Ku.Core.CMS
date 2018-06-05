@@ -31,7 +31,7 @@
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                     <div class="toolbar">
-                        <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                        <action title="刷新" action="grid:reload['#list']" />
                         <action auth-code="mall.product.category.edit" text="新增" icon="&#xe608;" action="window:/Mall/Product/Category/Edit?pid=@ViewData["ParentId"]" after="grid:reload['#list']" />
                         <action auth-code="mall.product.category.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
                     </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="layui-tab-item">
                     <div class="toolbar">
-                        <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                        <action title="刷新" action="grid:reload['#recycles']" />
                         <action auth-code="mall.product.category.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
                     </div>
                     <table id="recycles"></table>

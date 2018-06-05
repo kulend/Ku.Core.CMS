@@ -18,7 +18,7 @@
         <div class="layui-card-header">会员列表</div>
         <div class="layui-card-body">
             <div class="toolbar">
-                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action title="刷新" action="grid:reload['#list']" />
                 <action auth-code="membership.member.edit" text="新增" icon="&#xe608;" action="window:/Membership/Member/Edit" after="grid:reload['#list']" />
                 <action auth-code="membership.member.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Delete']" after="grid:reload" />
             </div>

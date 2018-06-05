@@ -165,7 +165,7 @@
         });
 
         function loadData(pms) {
-            vino.ajax.post("", { page: pms.curr, rows: pms.limit }, function (data) {
+            ku.ajax.post("", { page: pms.curr, rows: pms.limit }, function (data) {
                 $("#img-list").html(template('tp:img-item', { items: data.data }));
                 laypage.render({
                     elem: 'pager'
@@ -190,9 +190,9 @@
                             }
                         }
                     } else {
-                        var max = vino.page.querystring.get("max") || 10;
+                        var max = ku.page.querystring.get("max") || 10;
                         if (selectedItemIds.length >= max) {
-                            vino.page.msg.tip(`最多只能选择${max}张照片！`);
+                            ku.page.msg.tip(`最多只能选择${max}张照片！`);
                             return;
                         }
                         $(this).addClass("selected");
@@ -209,7 +209,7 @@
         }
 
         function showSelTip() {
-            var max = vino.page.querystring.get("max") || 10;
+            var max = ku.page.querystring.get("max") || 10;
             $("#sel-tip").text(`已选${selectedItemIds.length}个，可选${max}个`);
         }
 

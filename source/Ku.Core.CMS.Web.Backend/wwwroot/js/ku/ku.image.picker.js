@@ -200,9 +200,9 @@
         bindButton($element);
     }
 
-    $.fn.vinoImagePicker = function (options, param) {
+    $.fn.kuImagePicker = function (options, param) {
         if (typeof options === 'string') {
-            return $.fn.vinoImagePicker.methods[options](this, param);
+            return $.fn.kuImagePicker.methods[options](this, param);
         }
         options = options || {};
         return this.each(function () {
@@ -210,14 +210,14 @@
             if (opts) {
                 opts = $.extend(opts, options);
             } else {
-                opts = $.extend({}, $.fn.vinoImagePicker.defaults, options);
+                opts = $.extend({}, $.fn.kuImagePicker.defaults, options);
                 $.data(this, 'options', opts);
             }
             init(this);
         });
     };
 
-    $.fn.vinoImagePicker.methods = {
+    $.fn.kuImagePicker.methods = {
         clear: function (target) {
             target.each(function () {
                 var $element = $(this);
@@ -292,7 +292,7 @@
         }
     };
 
-    $.fn.vinoImagePicker.defaults = {
+    $.fn.kuImagePicker.defaults = {
         max_count: 1,
         enable: true,
         //onClick: function () {

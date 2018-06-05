@@ -72,7 +72,7 @@ namespace Ku.Core.CMS.Service.Mall
             List<ProductSku> skuList = Mapper.Map<List<ProductSku>>(skus);
             if (skuList == null || skuList.Count == 0)
             {
-                throw new VinoDataNotFoundException("至少添加一项商品SKU！");
+                throw new KuDataNotFoundException("至少添加一项商品SKU！");
             }
             if (model.Id == 0)
             {

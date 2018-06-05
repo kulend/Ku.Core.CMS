@@ -28,17 +28,17 @@ namespace Ku.Core.CMS.Web.Filters
 
             _logger.LogError(new EventId(code), exception, message);
 
-            if (exception is VinoException ex)
+            if (exception is KuException ex)
             {
                 handleVinoException(context, ex);
             }
             else
             {
-                handleVinoException(context, new VinoException("有错误发生！"));
+                handleVinoException(context, new KuException("有错误发生！"));
             }
         }
 
-        private void handleVinoException(ExceptionContext context, VinoException ex)
+        private void handleVinoException(ExceptionContext context, KuException ex)
         {
             context.Result = new JsonResult(new
             {

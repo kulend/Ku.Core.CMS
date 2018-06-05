@@ -40,13 +40,13 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.DataCenter.App
         {
             if (string.IsNullOrEmpty(content))
             {
-                throw new VinoArgNullException("反馈内容不能为空！");
+                throw new KuArgNullException("反馈内容不能为空！");
             }
             //取得应用信息
             var app = await _appService.GetByAppkeyAsync(appkey);
             if (app == null)
             {
-                throw new VinoDataNotFoundException("无法取得应用信息！");
+                throw new KuDataNotFoundException("无法取得应用信息！");
             }
 
             AppFeedbackDto dto = new AppFeedbackDto {

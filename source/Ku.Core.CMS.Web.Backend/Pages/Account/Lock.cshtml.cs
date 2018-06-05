@@ -55,7 +55,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
             var userId = User.GetUserIdOrZero();
             if (!await _userService.PasswordCheckAsync(userId, Password))
             {
-                throw new VinoException("解锁密码不正确！");
+                throw new KuException("解锁密码不正确！");
             }
 
             //缓存中去除页面锁定消息

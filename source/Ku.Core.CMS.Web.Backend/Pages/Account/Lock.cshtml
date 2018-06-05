@@ -35,26 +35,26 @@
 <body class="layui-layout-body">
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/jquery/jquery.cookie.js"></script>
+        <script src="~/lib/js-cookie/src/js.cookie.js"></script>
         <script src="~/lib/layui/layui.all.js"></script>
-        <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
-        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.page.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.from.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/jquery/jquery.cookie.js"></script>
+        <script src="~/lib/js-cookie/src/js.cookie.js"></script>
         <script src="~/lib/layui/layui.all.js"></script>
-        <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
-        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.page.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.from.js" asp-append-version="true"></script>
     </environment>
     <script type="text/javascript">
         layui.use(['form'], function () {
             var form = layui.form;
-            vino.page.pageLock(function () {
+            ku.page.pageLock(function () {
                 if (self == top) {
-                    vino.page.navigateTo("/", true);
+                    ku.page.navigateTo("/", true);
                 } else {
-                    vino.page.navigateTo("@ViewData["ReturnUrl"]", true);
+                    ku.page.navigateTo("@ViewData["ReturnUrl"]", true);
                 }
             });
         });

@@ -2,7 +2,8 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
-    "jquery": "3.3.1"
+    "jquery": "3.3.1",
+    "js-cookie": "v2.2.0"
   },
   "resolutions": {
     "jquery": "3.3.1"

@@ -51,18 +51,18 @@ namespace Ku.Core.CMS.Service.Membership
         {
             if (Points <= 0)
             {
-                throw new VinoArgNullException("积分值必须大于0！");
+                throw new KuArgNullException("积分值必须大于0！");
             }
             if (Points > 9999)
             {
-                throw new VinoArgNullException("调整积分超出范围！");
+                throw new KuArgNullException("调整积分超出范围！");
             }
 
             //取得会员数据
             var member = await dapper.QueryOneAsync<Member>(new { Id = MemberId });
             if (member == null)
             {
-                throw new VinoArgNullException("无法取得会员数据！");
+                throw new KuArgNullException("无法取得会员数据！");
             }
 
             //取得会员积分数据
@@ -142,30 +142,30 @@ namespace Ku.Core.CMS.Service.Membership
         {
             if (Points <= 0)
             {
-                throw new VinoArgNullException("积分值必须大于0！");
+                throw new KuArgNullException("积分值必须大于0！");
             }
             if (Points > 9999)
             {
-                throw new VinoArgNullException("调整积分超出范围！");
+                throw new KuArgNullException("调整积分超出范围！");
             }
             //取得会员数据
             var member = await dapper.QueryOneAsync<Member>(new { Id = MemberId });
             if (member == null)
             {
-                throw new VinoArgNullException("无法取得会员数据！");
+                throw new KuArgNullException("无法取得会员数据！");
             }
 
             //取得会员积分数据
             var memberPoint = await dapper.QueryOneAsync<MemberPoint>(new { MemberId = MemberId, Type = MemberPointType, IsDeleted = false });
             if (memberPoint == null)
             {
-                throw new VinoArgNullException($"会员[{member.Name}]积分不足！");
+                throw new KuArgNullException($"会员[{member.Name}]积分不足！");
             }
             else
             {
                 if (memberPoint.UsablePoints - Points < 0)
                 {
-                    throw new VinoArgNullException($"会员[{member.Name}]积分不足！");
+                    throw new KuArgNullException($"会员[{member.Name}]积分不足！");
                 }
 
                 //积分计算
@@ -205,15 +205,15 @@ namespace Ku.Core.CMS.Service.Membership
         {
             if (MemberId == null || MemberId.Length == 0)
             {
-                throw new VinoArgNullException("请选择会员！");
+                throw new KuArgNullException("请选择会员！");
             }
             if (Points == 0)
             {
-                throw new VinoArgNullException("调整积分不能为0！");
+                throw new KuArgNullException("调整积分不能为0！");
             }
             if (Points < -9999 || Points > 9999)
             {
-                throw new VinoArgNullException("调整积分超出范围！");
+                throw new KuArgNullException("调整积分超出范围！");
             }
 
             using (var dapper = DapperFactory.CreateWithTrans())

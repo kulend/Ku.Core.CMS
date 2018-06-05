@@ -54,7 +54,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                     var count = await dapper.QueryCountAsync<User>(new { Account = model.Account });
                     if (count > 0)
                     {
-                        throw new VinoException("账户名重复！");
+                        throw new KuException("账户名重复！");
                     }
 
                     //检查手机号
@@ -63,13 +63,13 @@ namespace Ku.Core.CMS.Service.UserCenter
                         //格式
                         if (!model.Mobile.IsMobile())
                         {
-                            throw new VinoException("手机号格式不正确！");
+                            throw new KuException("手机号格式不正确！");
                         }
                         //是否重复
                         count = await dapper.QueryCountAsync<User>(new { Mobile = model.Mobile });
                         if (count > 0)
                         {
-                            throw new VinoException("手机号重复！");
+                            throw new KuException("手机号重复！");
                         }
                     }
 
@@ -105,7 +105,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                     var user = await dapper.QueryOneAsync<User>(new { model.Id});
                     if (user == null)
                     {
-                        throw new VinoDataNotFoundException("无法取得用户数据！");
+                        throw new KuDataNotFoundException("无法取得用户数据！");
                     }
                     if (!user.Account.Equals(model.Account))
                     {
@@ -113,7 +113,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                         var count = await dapper.QueryCountAsync<User>(new { Account = model.Account });
                         if (count > 0)
                         {
-                            throw new VinoException("账户名重复！");
+                            throw new KuException("账户名重复！");
                         }
                     }
                     if (!string.IsNullOrEmpty(model.Mobile) && !model.Mobile.Equals(user.Mobile))
@@ -122,13 +122,13 @@ namespace Ku.Core.CMS.Service.UserCenter
                         //格式
                         if (!model.Mobile.IsMobile())
                         {
-                            throw new VinoException("手机号格式不正确！");
+                            throw new KuException("手机号格式不正确！");
                         }
                         //是否重复
                         var count = await dapper.QueryCountAsync<User>(new { Mobile = model.Mobile });
                         if (count > 0)
                         {
-                            throw new VinoException("手机号重复！");
+                            throw new KuException("手机号重复！");
                         }
                     }
                     dynamic item = new ExpandoObject();
@@ -188,25 +188,25 @@ namespace Ku.Core.CMS.Service.UserCenter
         public async Task<UserDto> LoginAsync(string account, string password)
         {
             if (account.IsNullOrEmpty())
-                throw new VinoArgNullException("账户名不能为空！");
+                throw new KuArgNullException("账户名不能为空！");
 
             if (password.IsNullOrEmpty())
-                throw new VinoArgNullException("密码不能为空！");
+                throw new KuArgNullException("密码不能为空！");
 
             using (var _dapper = DapperFactory.Create())
             {
                 var entity = await _dapper.QueryOneAsync<User>(new { Account = account });
                 if (entity == null || entity.IsDeleted)
                 {
-                    throw new VinoException("账户不存在！");
+                    throw new KuException("账户不存在！");
                 }
                 if (!entity.CheckPassword(password))
                 {
-                    throw new VinoException("账户或密码出错！");
+                    throw new KuException("账户或密码出错！");
                 }
                 if (!entity.IsEnable)
                 {
-                    throw new VinoException("该账号已被禁止登陆！");
+                    throw new KuException("该账号已被禁止登陆！");
                 }
 
                 var dto = Mapper.Map<UserDto>(entity);
@@ -227,24 +227,24 @@ namespace Ku.Core.CMS.Service.UserCenter
             if (currentPwd.IsNullOrEmpty())
             {
                 //当前密码不能为空
-                throw new VinoArgNullException("当前密码不能为空！");
+                throw new KuArgNullException("当前密码不能为空！");
             }
             if (newPwd.IsNullOrEmpty())
             {
                 //新密码不能为空
-                throw new VinoArgNullException("新密码不能为空！");
+                throw new KuArgNullException("新密码不能为空！");
             }
             using (var _dapper = DapperFactory.Create())
             {
                 var item = await _dapper.QueryOneAsync<User>(new { Id = userId });
                 if (item == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得用户数据！");
+                    throw new KuDataNotFoundException("无法取得用户数据！");
                 }
 
                 if (!item.CheckPassword(currentPwd))
                 {
-                    throw new VinoArgNullException("当前密码出错！");
+                    throw new KuArgNullException("当前密码出错！");
                 }
 
                 item.Password = newPwd;
@@ -281,18 +281,18 @@ namespace Ku.Core.CMS.Service.UserCenter
         public async Task<bool> PasswordCheckAsync(long id, string password)
         {
             if (password.IsNullOrEmpty())
-                throw new VinoArgNullException("密码不能为空！");
+                throw new KuArgNullException("密码不能为空！");
 
             using (var _dapper = DapperFactory.Create())
             {
                 var entity = await _dapper.QueryOneAsync<User>(new { Id = id });
                 if (entity == null || entity.IsDeleted)
                 {
-                    throw new VinoException("账户不存在！");
+                    throw new KuException("账户不存在！");
                 }
                 if (!entity.IsEnable)
                 {
-                    throw new VinoException("该账号已被禁止登陆！");
+                    throw new KuException("该账号已被禁止登陆！");
                 }
                 return entity.CheckPassword(password);
             }

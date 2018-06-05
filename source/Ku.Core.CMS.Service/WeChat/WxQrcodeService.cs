@@ -74,7 +74,7 @@ namespace Ku.Core.CMS.Service.WeChat
                         var rsp = await _wcQrcodeTool.CreateTemp(token, model.SceneId, model.ExpireSeconds);
                         if (rsp.ErrCode != 0)
                         {
-                            throw new VinoArgNullException(rsp.ToString());
+                            throw new KuArgNullException(rsp.ToString());
                         }
                         model.Url = rsp.Data.Url;
                         model.Ticket = rsp.Data.Ticket;
@@ -85,7 +85,7 @@ namespace Ku.Core.CMS.Service.WeChat
                         var rsp = await _wcQrcodeTool.Create(token, model.SceneId);
                         if (rsp.ErrCode != 0)
                         {
-                            throw new VinoArgNullException(rsp.ToString());
+                            throw new KuArgNullException(rsp.ToString());
                         }
                         model.Url = rsp.Data.Url;
                         model.Ticket = rsp.Data.Ticket;

@@ -83,7 +83,7 @@
     function filterChanged(filterValue) {
         if (!selFilterValue) {
             selFilterValue = filterValue;
-            $("#list").vinoGrid({
+            $("#list").kuGrid({
                 url: 'Index/Data',
                 cols: [cols.concat([
                     {
@@ -102,7 +102,7 @@
             });
         } else if (selFilterValue != filterValue) {
             selFilterValue = filterValue;
-            $("#list").vinoGrid("search");
+            $("#list").kuGrid("search");
         }
 
         $("#btnAdd").attr("action", "window:/WeChat/WxUserTag/Edit?AccountId=" + selFilterValue);

@@ -57,7 +57,7 @@ namespace Ku.Core.CMS.Service.System
                         var pModel = await dapper.QueryOneAsync<Function>(new { Id = model.ParentId.Value });
                         if (pModel == null)
                         {
-                            throw new VinoDataNotFoundException("无法取得父模块数据!");
+                            throw new KuDataNotFoundException("无法取得父模块数据!");
                         }
                         if (!pModel.HasSub)
                         {

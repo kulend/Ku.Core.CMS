@@ -37,7 +37,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.WeChat.WxUser
             Dto = await _service.GetByIdAsync(id);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
         }
 

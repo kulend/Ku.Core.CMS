@@ -51,7 +51,7 @@ namespace Ku.Core.CMS.Service.System
                         var pModel = await dapper.QueryOneAsync<Menu>(new { Id = model.ParentId.Value });
                         if (pModel == null)
                         {
-                            throw new VinoDataNotFoundException("无法取得父级菜单数据!");
+                            throw new KuDataNotFoundException("无法取得父级菜单数据!");
                         }
                         if (!pModel.HasSubMenu)
                         {

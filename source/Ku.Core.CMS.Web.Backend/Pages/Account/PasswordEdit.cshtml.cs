@@ -57,12 +57,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             if (!NewPassword.Equals(ConfirmPassword))
             {
-                throw new VinoArgNullException("两次输入的密码不一致！");
+                throw new KuArgNullException("两次输入的密码不一致！");
             }
             await _userService.ChangePasswordAsync(User.GetUserIdOrZero(), CurrentPassword, NewPassword);
 

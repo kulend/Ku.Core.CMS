@@ -41,12 +41,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.WeChat.WxUserTag
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
                 Dto.Account = await _accountService.GetByIdAsync(Dto.AccountId);
                 if (Dto.Account == null)
                 {
-                    throw new VinoDataNotFoundException("数据出错!");
+                    throw new KuDataNotFoundException("数据出错!");
                 }
                 ViewData["Mode"] = "Edit";
             }
@@ -59,12 +59,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.WeChat.WxUserTag
                     Dto.Account = await _accountService.GetByIdAsync(AccountId.Value);
                     if (Dto.Account == null)
                     {
-                        throw new VinoDataNotFoundException("参数出错!");
+                        throw new KuDataNotFoundException("参数出错!");
                     }
                 }
                 else
                 {
-                    throw new VinoDataNotFoundException("参数出错!");
+                    throw new KuDataNotFoundException("参数出错!");
                 }
                 ViewData["Mode"] = "Add";
             }
@@ -78,7 +78,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.WeChat.WxUserTag
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.SaveAsync(Dto);

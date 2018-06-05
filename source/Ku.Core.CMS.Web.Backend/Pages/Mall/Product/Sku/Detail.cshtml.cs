@@ -40,7 +40,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
             Dto = await _service.GetByIdAsync(id);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
         }
     }

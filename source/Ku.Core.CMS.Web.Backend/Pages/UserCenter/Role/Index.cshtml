@@ -52,7 +52,7 @@
             { field: 'Remarks', title: '备注', width: 350 },
         ];
 
-        $("#list").vinoGrid({
+        $("#list").kuGrid({
             url: 'Index/Data',
             cols: [cols.concat([
                 {
@@ -72,10 +72,10 @@
         });
 
         element.on('tab(tabMian)', function () {
-            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("ku-grid"))
             { 
                 //初始化回收站
-                $("#recycles").vinoGrid({
+                $("#recycles").kuGrid({
                     url: 'Index/Data',
                     cols: [cols.concat([
                         {

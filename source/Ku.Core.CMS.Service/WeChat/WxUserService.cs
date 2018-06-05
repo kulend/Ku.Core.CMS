@@ -87,7 +87,7 @@ namespace Ku.Core.CMS.Service.WeChat
                 var item = await dapper.QueryOneAsync<WxUser>(new { Id = dto.Id });
                 if (item == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得微信用户数据！");
+                    throw new KuDataNotFoundException("无法取得微信用户数据！");
                 }
                 item.Remark = dto.Remark;
 
@@ -97,7 +97,7 @@ namespace Ku.Core.CMS.Service.WeChat
                 var rsp = await wcUserTool.UpdateUserRemark(token, item.OpenId, item.Remark);
                 if (rsp.ErrCode != 0)
                 {
-                    throw new VinoArgNullException(rsp.ToString());
+                    throw new KuArgNullException(rsp.ToString());
                 }
 
                 await dapper.UpdateAsync<WxUser>(new { dto.Remark }, new { dto.Id });
@@ -116,7 +116,7 @@ namespace Ku.Core.CMS.Service.WeChat
             var tagsRsp = await wcUserTool.GetUserTagListAsync(token);
             if (tagsRsp.ErrCode != 0)
             {
-                throw new VinoDataNotFoundException(tagsRsp.ToString());
+                throw new KuDataNotFoundException(tagsRsp.ToString());
             }
             var tags = tagsRsp.Data.Tags;
 
@@ -177,7 +177,7 @@ namespace Ku.Core.CMS.Service.WeChat
                     var rsp = await wcUserTool.GetUserListAsync(token, nextOpenId);
                     if (rsp.ErrCode != 0)
                     {
-                        throw new VinoArgNullException(rsp.ToString());
+                        throw new KuArgNullException(rsp.ToString());
                     }
                     if (rsp.Data.Data.Openid == null
                         || rsp.Data.Data.Openid.Length == 0)

@@ -54,7 +54,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
                 var model = list.SingleOrDefault(x => x.Id == id);
                 if (model == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得数据!");
+                    throw new KuDataNotFoundException("无法取得数据!");
                 }
                 ViewData["Mode"] = "Edit";
             }
@@ -73,7 +73,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
             //临时SKU数据，保存到缓存中
             var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);

@@ -36,17 +36,17 @@
 </div>
 @section Scripts
     {
-    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script src="~/js/ku/ku.image.picker.js"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
 
-            $("#icon").vinoImagePicker({
+            $("#icon").kuImagePicker({
                 field_data: "IconData",
                 max_count: 1
             });
 
-            $("#icon").vinoImagePicker("loadData", '@Html.Raw(Model.Dto.IconData)');
+            $("#icon").kuImagePicker("loadData", '@Html.Raw(Model.Dto.IconData)');
         });
     </script>
 }

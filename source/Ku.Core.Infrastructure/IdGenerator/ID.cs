@@ -85,29 +85,29 @@ namespace Ku.Core.Infrastructure.IdGenerator
             var section = configuration.GetSection("IdWorker");
             if (section == null)
             {
-                throw new VinoException("IdHelper配置出错!");
+                throw new KuException("IdHelper配置出错!");
             }
 
             //从配置文件中获取
             var zoneSetting = section["Zone"];
             if (string.IsNullOrEmpty(zoneSetting))
             {
-                throw new VinoException("IdWorker生成规则中的Zone未进行配置。");
+                throw new KuException("IdWorker生成规则中的Zone未进行配置。");
             }
             var zoneId = int.Parse(zoneSetting);
             if (zoneId > MAXZONEID || zoneId < 0)
             {
-                throw new VinoException($"IdWorker生成规则中的Zone配置应在0~{MAXZONEID}之间。");
+                throw new KuException($"IdWorker生成规则中的Zone配置应在0~{MAXZONEID}之间。");
             }
             var machineSetting = section["Machine"];
             if (string.IsNullOrEmpty(machineSetting))
             {
-                throw new VinoException("IdWorker生成规则中的Machine未进行配置。");
+                throw new KuException("IdWorker生成规则中的Machine未进行配置。");
             }
             var machineId = int.Parse(machineSetting);
             if (machineId > MAXMACHINEID || machineId < 0)
             {
-                throw new VinoException($"IdWorker生成规则中的Machine配置应在0~{MAXMACHINEID}之间。");
+                throw new KuException($"IdWorker生成规则中的Machine配置应在0~{MAXMACHINEID}之间。");
             }
 
             ID._zoneId = zoneId;
@@ -131,7 +131,7 @@ namespace Ku.Core.Infrastructure.IdGenerator
                 var currentTicks = GetNowTicks();
                 if (currentTicks < _lastTicks)
                 {
-                    throw new VinoException("系统时间出现错误");
+                    throw new KuException("系统时间出现错误");
                 }
 
                 if (currentTicks == _lastTicks)

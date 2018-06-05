@@ -1,5 +1,5 @@
-﻿if (!window.vino) {
-    window.vino = {};
+﻿if (!window.ku) {
+    window.ku = {};
 }
 
 /// <summary>ajax 封装, 基于jquery.ajax</summary>
@@ -47,7 +47,7 @@
         }
         return $loading;
     }
-    vino.ajax = {
+    ku.ajax = {
         get: function (url, data, successCallBack, errorCallBack) {
             var ajaxParam = {
                 method: "get",
@@ -63,7 +63,7 @@
                 headers: _getAuthHeader(),
                 data: data,
                 beforeSend: function () {
-                    vino.page.msg.showLoad();
+                    ku.page.msg.showLoad();
                 },
                 success: function (r) {
                     if (_preCheckResponse(r, ajaxParam)) {
@@ -71,16 +71,16 @@
                     }
                 },
                 complete: function () {
-                    vino.page.msg.hideLoad();
+                    ku.page.msg.hideLoad();
                 },
                 error: function (xhr, status, errorThrown) {
                     if (xhr.status == 403) {
-                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
+                        ku.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
                         if (errorCallBack) {
                             errorCallBack(xhr, status, errorThrown);
                         } else {
-                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                            ku.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                         }
                     }
                 }
@@ -106,12 +106,12 @@
                 },
                 error: function (xhr, status, errorThrown) {
                     if (xhr.status == 403) {
-                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
+                        ku.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
                         if (errorCallBack) {
                             errorCallBack(xhr, status, errorThrown);
                         } else {
-                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                            ku.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                         }
                     }
                 }
@@ -145,12 +145,12 @@
                 },
                 error: function (xhr, status, errorThrown) {
                     if (xhr.status == 403) {
-                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
+                        ku.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
                         if (errorCallBack) {
                             errorCallBack(xhr, status, errorThrown);
                         } else {
-                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                            ku.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                         }
                     }
                 }
@@ -184,12 +184,12 @@
                 },
                 error: function (xhr, status, errorThrown) {
                     if (xhr.status == 403) {
-                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
+                        ku.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
                         if (errorCallBack) {
                             errorCallBack(xhr, status, errorThrown);
                         } else {
-                            vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                            ku.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                         }
                     }
                 }

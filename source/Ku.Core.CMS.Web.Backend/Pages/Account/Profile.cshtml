@@ -1,7 +1,7 @@
 ﻿@page
 @{
     //----------------------------------------------------------------
-    // Copyright (C) 2018 vino 版权所有
+    // Copyright (C) 2018 ku 版权所有
     //
     // 文件名：Profile.cshtml
     // 功能描述：用户档案页面
@@ -50,18 +50,18 @@
 </div>
 @section Scripts
     {
-    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script src="~/js/ku/ku.image.picker.js"></script>
     <script>
         layui.use(['element', 'form'], function () {
             var element = layui.element;
             var form = layui.form;
 
-            $("#HeadImage").vinoImagePicker({
+            $("#HeadImage").kuImagePicker({
                 field_path: "Dto.HeadImage",
                 max_count: 1
             });
 
-            $("#HeadImage").vinoImagePicker("loadImage", '@Html.Raw(Model.Dto.HeadImage)');
+            $("#HeadImage").kuImagePicker("loadImage", '@Html.Raw(Model.Dto.HeadImage)');
         });
     </script>
 }

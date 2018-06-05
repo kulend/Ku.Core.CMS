@@ -88,13 +88,13 @@ namespace Ku.Core.CMS.Service.Membership
                         //格式
                         if (!model.Mobile.IsMobile())
                         {
-                            throw new VinoDataNotFoundException("手机号格式不正确！");
+                            throw new KuDataNotFoundException("手机号格式不正确！");
                         }
                         //是否重复
                         var cnt = await dapper.QueryCountAsync<Member>(new { Mobile = model.Mobile });
                         if (cnt > 0)
                         {
-                            throw new VinoDataNotFoundException("手机号重复！");
+                            throw new KuDataNotFoundException("手机号重复！");
                         }
                     }
 

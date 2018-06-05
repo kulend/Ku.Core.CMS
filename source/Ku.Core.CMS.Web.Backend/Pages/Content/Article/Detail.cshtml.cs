@@ -33,7 +33,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Content.Article
             Dto = await _service.GetByIdAsync(id);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
         }
     }

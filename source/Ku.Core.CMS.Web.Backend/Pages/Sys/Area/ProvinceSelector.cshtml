@@ -2,7 +2,7 @@
 @model Ku.Core.CMS.Web.Backend.Pages.Sys.Area.ProvinceSelectorModel
 @{
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 ku 版权所有
 //
 // 文件名：ProvinceSelector.cshtml
 // 功能描述：省份选择器
@@ -43,8 +43,8 @@
         var selectedItemIds = [];
         layui.use(['form'], function () {
             var form = layui.form;
-            var sel = vino.page.querystring.get("sel");
-            var dis = vino.page.querystring.get("dis");
+            var sel = ku.page.querystring.get("sel");
+            var dis = ku.page.querystring.get("dis");
             var sels = sel ? sel.split(',') : [];
             var diss = dis ? dis.split(',') : [];
             $.ajax({
@@ -69,9 +69,9 @@
                 },
                 error: function (xhr, status, errorThrown) {
                     if (xhr.status == 403) {
-                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
+                        ku.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
-                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        ku.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                     }
                 }
             });

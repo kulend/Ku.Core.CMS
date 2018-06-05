@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Ku.Core.Tools.VerificationCode;
+using Ku.Core.CMS.Web.Filters;
 
 namespace Ku.Core.CMS.Web.Admin.Controllers
 {
@@ -21,6 +22,7 @@ namespace Ku.Core.CMS.Web.Admin.Controllers
         /// 图形验证码
         /// </summary>
         /// <returns></returns>
+        [IgnorePageLock]
         public IActionResult ImageCode(string type)
         {
             var ms = _verificationCodeGen.Create(out string code, 4);

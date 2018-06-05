@@ -37,7 +37,7 @@
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
-            var dis =  decodeURI(vino.page.querystring.get("sel"));
+            var dis =  decodeURI(ku.page.querystring.get("sel"));
             var diss = dis ? dis.split(',') : [];
             $.ajax({
                 url: '/data/product_attr_list.json',
@@ -59,9 +59,9 @@
                 },
                 error: function (xhr, status, errorThrown) {
                     if (xhr.status == 403) {
-                        vino.page.msg.alert(`无权操作！`, null, { icon: 5 });
+                        ku.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
-                        vino.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
+                        ku.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });
                     }
                 }
             });

@@ -58,7 +58,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             //图片验证码
@@ -74,13 +74,13 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
                 HttpContext.Session.Remove("ImageValidateCode_login");
                 if (!Input.ImageCode.EqualOrdinalIgnoreCase(code))
                 {
-                    throw new VinoException(1, "验证码出错!");
+                    throw new KuException(1, "验证码出错!");
                 }
             }
             var user = await _userService.LoginAsync(Input.Account, Input.Password);
             if (user == null)
             {
-                throw new VinoException("登陆出错!");
+                throw new KuException("登陆出错!");
             }
             //UserActionLogDto log = new UserActionLogDto();
             //log.Operation = "用户登陆";

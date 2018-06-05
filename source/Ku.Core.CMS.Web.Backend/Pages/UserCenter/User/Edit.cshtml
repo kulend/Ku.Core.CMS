@@ -49,17 +49,17 @@
 </div>
 @section Scripts
     {
-    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script src="~/js/ku/ku.image.picker.js"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
 
-            $("#HeadImage").vinoImagePicker({
+            $("#HeadImage").kuImagePicker({
                 field_path: "Dto.HeadImage",
                 max_count: 1
             });
 
-            $("#HeadImage").vinoImagePicker("loadImage", '@Html.Raw(Model.Dto.HeadImage)');
+            $("#HeadImage").kuImagePicker("loadImage", '@Html.Raw(Model.Dto.HeadImage)');
 
             form.on('switch(IsAdmin)', function (data) {
                 if (data.elem.checked) {

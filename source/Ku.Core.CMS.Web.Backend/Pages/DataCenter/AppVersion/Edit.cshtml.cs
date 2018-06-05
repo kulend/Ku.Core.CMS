@@ -41,14 +41,14 @@ namespace Ku.Core.CMS.Web.Backend.Pages.DataCenter.AppVersion
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
 
                 //取得app信息
                 var appdto = await _appService.GetByIdAsync(Dto.AppId);
                 if (appdto == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得应用数据!");
+                    throw new KuDataNotFoundException("无法取得应用数据!");
                 }
                 Dto.App = appdto;
 
@@ -58,13 +58,13 @@ namespace Ku.Core.CMS.Web.Backend.Pages.DataCenter.AppVersion
             {
                 if (!AppId.HasValue)
                 {
-                    throw new VinoArgNullException("缺少参数AppId！");
+                    throw new KuArgNullException("缺少参数AppId！");
                 }
                 //取得app信息
                 var appdto = await _appService.GetByIdAsync(AppId.Value);
                 if (appdto == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得数据!");
+                    throw new KuDataNotFoundException("无法取得数据!");
                 }
                 Dto = new AppVersionDto();
                 Dto.AppId = appdto.Id;
@@ -82,7 +82,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.DataCenter.AppVersion
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.SaveAsync(Dto);

@@ -41,7 +41,7 @@ namespace Ku.Core.CMS.Service.Communication
 
             if (string.IsNullOrEmpty(model.Mobile))
             {
-                throw new VinoArgNullException("未设置手机号！");
+                throw new KuArgNullException("未设置手机号！");
             }
 
             using (var dapper = DapperFactory.Create())
@@ -49,11 +49,11 @@ namespace Ku.Core.CMS.Service.Communication
                 var templet = await dapper.QueryOneAsync<SmsTemplet>(new { Id = model.SmsTempletId });
                 if (templet == null || templet.IsDeleted)
                 {
-                    throw new VinoDataNotFoundException("无法取得短信模板数据！");
+                    throw new KuDataNotFoundException("无法取得短信模板数据！");
                 }
                 if (!templet.IsEnable)
                 {
-                    throw new VinoDataNotFoundException("短信模板已禁用！");
+                    throw new KuDataNotFoundException("短信模板已禁用！");
                 }
 
                 var content = templet.Templet;

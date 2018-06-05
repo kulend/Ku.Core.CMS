@@ -17,7 +17,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
 
         public void OnPost()
         {
-            throw new VinoAccessDeniedException();
+            throw new KuAccessDeniedException();
         }
     }
 }

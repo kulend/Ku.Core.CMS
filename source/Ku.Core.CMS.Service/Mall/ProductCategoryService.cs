@@ -45,7 +45,7 @@ namespace Ku.Core.CMS.Service.Mall
                         var parent = await dapper.QueryOneAsync<ProductCategory>(new { Id = model.ParentId.Value });
                         if (parent == null)
                         {
-                            throw new VinoDataNotFoundException("无法取得商品类目数据！");
+                            throw new KuDataNotFoundException("无法取得商品类目数据！");
                         }
                         model.Level = parent.Level + 1;
                     }

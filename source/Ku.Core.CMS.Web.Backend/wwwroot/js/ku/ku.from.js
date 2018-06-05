@@ -1,10 +1,10 @@
-﻿if (!window.vino) {
-    window.vino = {};
+﻿if (!window.ku) {
+    window.ku = {};
 }
 
 (function ($) {
     function _handleMessage(reply, options) {
-        vino.page.msg.hideLoad();
+        ku.page.msg.hideLoad();
         if (!reply)
         { return false; }
         var success = reply.code === 0;
@@ -20,7 +20,7 @@
                     return false;
                 }
             }
-            vino.page.msg.tip(reply.message);
+            ku.page.msg.tip(reply.message);
             return false;
         }
     }
@@ -40,12 +40,12 @@
                             return false;
                         }
                     }
-                    vino.page.msg.showLoad();
+                    ku.page.msg.showLoad();
                     return true;
                 },
                 error: function (data) {
-                    vino.page.msg.hideLoad();
-                    vino.page.msg.alert(`有错误发生：(${data.status})${data.statusText}`, null, { icon: 5 });
+                    ku.page.msg.hideLoad();
+                    ku.page.msg.alert(`有错误发生：(${data.status})${data.statusText}`, null, { icon: 5 });
                 },
                 success: function (reply) {
                     _handleMessage(reply, opts);
@@ -53,13 +53,13 @@
             };
             $target.ajaxForm(options);
         }).fail(function () {
-            vino.page.msg.alert(`脚本加载出错,请刷新页面重试！`, null, { icon: 5 });
+            ku.page.msg.alert(`脚本加载出错,请刷新页面重试！`, null, { icon: 5 });
         });
     }
     
-    $.fn.vinoForm = function (options, param) {
+    $.fn.kuForm = function (options, param) {
         if (typeof options == 'string') {
-            return $.fn.vinoForm.methods[options](this, param);
+            return $.fn.kuForm.methods[options](this, param);
         }
         options = options || {};
         return this.each(function () {
@@ -68,14 +68,14 @@
                 opts = $.extend(opts, options);
             } else {
                 opts = $(this).data("opts") || {};
-                opts = $.extend(opts, $.fn.vinoForm.defaults, options);
+                opts = $.extend(opts, $.fn.kuForm.defaults, options);
                 $.data(this, 'options', opts);
             }
             _bind(this);
         });
     };
 
-    $.fn.vinoForm.methods = {
+    $.fn.kuForm.methods = {
         submit: function (target, options) {
             target.each(function () {
                 if (options) {
@@ -87,7 +87,7 @@
         }
     };
 
-    $.fn.vinoForm.defaults = {
+    $.fn.kuForm.defaults = {
         type: 'POST',
         dataType: 'json'
     };

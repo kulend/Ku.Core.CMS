@@ -38,7 +38,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Content.Column
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得数据!");
+                    throw new KuDataNotFoundException("无法取得数据!");
                 }
                 if (Dto.ParentId.HasValue)
                 {
@@ -69,7 +69,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Content.Column
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.SaveAsync(Dto);

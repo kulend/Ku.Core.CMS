@@ -17,7 +17,7 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Content
         [MemberAuth(MemberRole.Default | MemberRole.Teacher)]
         public async Task<JsonResult> Get()
         {
-            throw new VinoArgNullException();
+            throw new KuArgNullException();
         }
 
     }

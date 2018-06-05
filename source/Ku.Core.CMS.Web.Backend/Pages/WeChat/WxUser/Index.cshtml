@@ -85,10 +85,10 @@
         });
 
         element.on('tab(tabMian)', function () {
-            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("ku-grid"))
             {
                 //初始化回收站
-                $("#recycles").vinoGrid({
+                $("#recycles").kuGrid({
                     url: 'Index/Data',
                     cols: [cols.concat([
                         {
@@ -127,7 +127,7 @@
     function filterChanged(filterValue) {
         if (!selFilterValue) {
             selFilterValue = filterValue;
-            $("#list").vinoGrid({
+            $("#list").kuGrid({
                 url: 'Index/Data',
                 cols: [cols.concat([
                     {
@@ -145,9 +145,9 @@
             });
         } else if (selFilterValue != filterValue) {
             selFilterValue = filterValue;
-            $("#list").vinoGrid("search");
-            if ($("#recycles").hasClass("vino-grid")) {
-                $("#recycles").vinoGrid("search");
+            $("#list").kuGrid("search");
+            if ($("#recycles").hasClass("ku-grid")) {
+                $("#recycles").kuGrid("search");
             }
         }
 

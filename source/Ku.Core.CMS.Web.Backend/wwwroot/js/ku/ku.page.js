@@ -1,9 +1,9 @@
-﻿if (!window.vino) {
-    window.vino = {};
+﻿if (!window.ku) {
+    window.ku = {};
 }
 /*通用方法*/
-if (!vino.page) {
-    vino.page = {};
+if (!ku.page) {
+    ku.page = {};
 }
 
 (function () {
@@ -17,7 +17,7 @@ if (!vino.page) {
         return $loading;
     }
 
-    vino.page.msg = {
+    ku.page.msg = {
         tip: function (msg, callback, delay, options) {
             var opts = $.extend({}, options);
             opts.time = delay || 1500;
@@ -64,7 +64,7 @@ if (!vino.page) {
      * @param {} replace 是否去除后退记录
      * @returns {} 
      */
-    vino.page.navigateTo = function (url, replace) {
+    ku.page.navigateTo = function (url, replace) {
         replace = replace || false;
         if (replace) {
             window.location.replace(url);
@@ -73,9 +73,9 @@ if (!vino.page) {
         }
     };
 
-    vino.page.openWindow = function (options) {
+    ku.page.openWindow = function (options) {
         if (self != top) {
-            parent.vino.page.openWindow(options);
+            parent.ku.page.openWindow(options);
         } else
         {
             layui.use('layer', function () {
@@ -85,7 +85,7 @@ if (!vino.page) {
         }
     };
 
-    vino.page.fixedFloat = function (value, num) {
+    ku.page.fixedFloat = function (value, num) {
         if (!value)
         {
             return parseFloat(0).toFixed(num);
@@ -99,18 +99,15 @@ if (!vino.page) {
     };
 
     //锁屏
-    vino.page.pageLock = function (callback) {
+    ku.page.pageLock = function (callback) {
         if (self != top) {
-            parent.vino.page.pageLock(callback);
+            parent.ku.page.pageLock(callback);
         } else {
             layui.use('layer', function () {
                 var layer = layui.layer;
-
                 //锁屏
-
-
-                var username = vino.page.cookie.get("user.name") || "&nbsp;";
-                var userimage = vino.page.cookie.get("user.headimage") || "/images/user_default.png";
+                var username = ku.page.cookie.get("user.name") || "&nbsp;";
+                var userimage = ku.page.cookie.get("user.headimage") || "/images/user_default.png";
                 var formId = "form" + new Date().getTime();
                 var PageLockLayerId = layer.open({
                     title: false,
@@ -130,7 +127,7 @@ if (!vino.page) {
                 $(".admin-header-lock-input").focus();
 
                 // 解锁
-                $("#" + formId).vinoForm({
+                $("#" + formId).kuForm({
                     type: 'DELETE',
                     onSuccess: function (reply, options) {
                         if (callback) {
@@ -190,35 +187,21 @@ if (!vino.page) {
             return r;
         }
     };
-    vino.page.querystring = querystring;
+    ku.page.querystring = querystring;
 })();
 
-/// <summary>cookie helper.基础jquery.cookie</summary>
+//需引用js-cookie.js
 (function () {
     var cookie = {
         get: function (key) {
-            return $.cookie(key);
+            return Cookies.get(key);
         },
-        add: function (key, value, options) {
-            options = options || {};
-            this.remove(key, options);
-            if (options) {
-                if (typeof options.path == "undefined") {
-                    options.path = "/";
-                }
-            }
-            return $.cookie(key, value, options);
+        set: function (key, value, options) {
+            Cookies.set(key, value, options);
         },
         remove: function (key, options) {
-            options = options || {};
-
-            if (options) {
-                if (typeof options.path == "undefined") {
-                    options.path = "/";
-                }
-            }
-            return $.removeCookie(key, options);
+            Cookies.remove(key, options);
         }
     };
-    vino.page.cookie = cookie;
+    ku.page.cookie = cookie;
 })();

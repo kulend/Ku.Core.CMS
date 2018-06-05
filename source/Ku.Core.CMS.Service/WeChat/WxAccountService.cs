@@ -54,7 +54,7 @@ namespace Ku.Core.CMS.Service.WeChat
                         var count = await dapper.QueryCountAsync<WxAccount>(new { AppId = model.AppId });
                         if (count > 0)
                         {
-                            throw new VinoDataNotFoundException("AppId重复！");
+                            throw new KuDataNotFoundException("AppId重复！");
                         }
                     }
 
@@ -99,17 +99,17 @@ namespace Ku.Core.CMS.Service.WeChat
                 var account = await dapper.QueryOneAsync<WxAccount>(new { Id = id });
                 if (account == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得公众号数据！");
+                    throw new KuDataNotFoundException("无法取得公众号数据！");
                 }
                 if (account.AppId.IsNullOrEmpty() || account.AppSecret.IsNullOrEmpty())
                 {
-                    throw new VinoDataNotFoundException("公众号未设置AppId或AppSecret！");
+                    throw new KuDataNotFoundException("公众号未设置AppId或AppSecret！");
                 }
 
                 var token = await wcAccessTokenTool.GetAsync(account.AppId, account.AppSecret);
                 if (token == null || token.Data == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得微信AccessToken，请检查AppId和AppSecret设置是否正确！");
+                    throw new KuDataNotFoundException("无法取得微信AccessToken，请检查AppId和AppSecret设置是否正确！");
                 }
                 return token.Data;
             }

@@ -17,7 +17,7 @@ function createOperateBtn(btn) {
         if (!authCodes) {
             return "";
         }
-        if (authCodes.indexOf('0ec3eaea52dc2a0cbc5008f712a11e25') < 0) {
+        if (authCodes.indexOf('e3afe82efe285675feaee9da7b6b4013') < 0) {
             //检查权限
             var md5Code = hex_md5(authcode);
             if (authCodes.indexOf(md5Code) < 0) {
@@ -33,5 +33,5 @@ function createOperateBtn(btn) {
 }
 
 //function gridReload() {
-//    $(".vino-grid").vinoGrid("reload");
+//    $(".ku-grid").kuGrid("reload");
 //}

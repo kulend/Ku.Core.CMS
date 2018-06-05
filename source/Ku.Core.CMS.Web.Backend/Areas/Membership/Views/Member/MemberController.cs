@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 ku 版权所有
 //
 // 文件名：MemberController.cs
 // 功能描述：会员 后台访问控制类
@@ -61,7 +61,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.Member
                 var model = await _service.GetByIdAsync(id.Value);
                 if (model == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得会员数据!");
+                    throw new KuDataNotFoundException("无法取得会员数据!");
                 }
                 model.Password = "the password has not changed";
                 ViewData["Mode"] = "Edit";
@@ -146,7 +146,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.Member
                 var model = await _memberTypeService.GetByIdAsync(id.Value);
                 if (model == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得会员类型数据!");
+                    throw new KuDataNotFoundException("无法取得会员类型数据!");
                 }
                 ViewData["Mode"] = "Edit";
                 return View(model);

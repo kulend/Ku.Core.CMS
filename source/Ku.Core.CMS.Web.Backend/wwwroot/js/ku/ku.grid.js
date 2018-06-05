@@ -1,12 +1,12 @@
-﻿if (!window.vino) {
-    window.vino = {};
+﻿if (!window.ku) {
+    window.ku = {};
 }
 
 (function ($) {
     var tableInsArr = [];
     function _bind(target) {
         var $target = $(target);
-        $target.addClass("vino-grid");
+        $target.addClass("ku-grid");
         var opts = $target.data("options");
         opts.elem = $target;
         if (opts.checkbox)
@@ -51,9 +51,9 @@
         tableInsArr[id] = tableIns;
     }
     
-    $.fn.vinoGrid = function (options, param) {
+    $.fn.kuGrid = function (options, param) {
         if (typeof options === 'string') {
-            return $.fn.vinoGrid.methods[options](this, param);
+            return $.fn.kuGrid.methods[options](this, param);
         }
         options = options || {};
         return this.each(function () {
@@ -65,14 +65,14 @@
                 if ($(this).attr("data-opts")) {
                     opts = eval("(" + $(this).attr("data-opts") + ")");
                 }
-                opts = $.extend(opts, $.fn.vinoGrid.defaults, options);
+                opts = $.extend(opts, $.fn.kuGrid.defaults, options);
                 $.data(this, 'options', opts);
             }
             _bind(this);
         });
     };
 
-    $.fn.vinoGrid.methods = {
+    $.fn.kuGrid.methods = {
         reload: function (target) {
             target.each(function () {
                 var id = $(this).attr("id");
@@ -102,7 +102,7 @@
         }
     };
 
-    $.fn.vinoGrid.defaults = {
+    $.fn.kuGrid.defaults = {
         method: "post",
         page: true,
         limits: [10, 20, 30, 40, 50],

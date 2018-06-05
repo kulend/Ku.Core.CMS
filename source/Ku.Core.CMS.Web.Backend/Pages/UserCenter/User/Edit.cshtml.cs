@@ -49,7 +49,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.User
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
                 Dto.Password = "********************";
                 //取得用户角色列表
@@ -82,7 +82,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.User
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.SaveAsync(Dto, UserRoles);

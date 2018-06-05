@@ -62,7 +62,7 @@
             { field: 'CreateTime', title: '上传时间', width: 160 }
         ];
 
-        $("#list").vinoGrid({
+        $("#list").kuGrid({
             url: 'Index/Data',
             size: 'lg',
             cols: [cols.concat([
@@ -83,10 +83,10 @@
         });
 
         element.on('tab(tabMian)', function () {
-            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid"))
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("ku-grid"))
             { 
                 //初始化回收站
-                $("#recycles").vinoGrid({
+                $("#recycles").kuGrid({
                     url: 'Index/Data',
                     size: 'lg',
                     cols: [cols.concat([

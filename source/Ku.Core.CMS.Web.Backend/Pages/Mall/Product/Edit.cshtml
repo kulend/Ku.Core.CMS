@@ -114,10 +114,10 @@
 </div>
 @section Scripts
     {
-    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script src="~/js/ku/ku.image.picker.js"></script>
     <script src="~/lib/wangEditor/wangEditor.js"></script>
-    <script src="~/js/vino/vino.grid.js" asp-append-version="true"></script>
-    <script src="~/js/vino/vino.grid.ext.js" asp-append-version="true"></script>
+    <script src="~/js/ku/ku.grid.js" asp-append-version="true"></script>
+    <script src="~/js/ku/ku.grid.ext.js" asp-append-version="true"></script>
     <script>
         layui.use(['form', 'multiSelect'], function () {
             var form = layui.form;
@@ -130,20 +130,20 @@
                 value : "@Model.Dto.CategoryId"
             });
 
-            $("#ImageData").vinoImagePicker({
+            $("#ImageData").kuImagePicker({
                 field_data: "Dto.ImageData",
                 max_count: 5
             });
 
-            $("#ImageData").vinoImagePicker("loadData", '@Html.Raw(Model.Dto.ImageData)');
+            $("#ImageData").kuImagePicker("loadData", '@Html.Raw(Model.Dto.ImageData)');
 
-            $("#ID_content_3").vinoImagePicker({
+            $("#ID_content_3").kuImagePicker({
                 max_count: 10
             });
 
             if ($("input[name='Dto.ContentType']:checked").attr("key") === "Picture")
             {
-                $("#ID_content_3").vinoImagePicker("loadData", $("#hdContent").val());
+                $("#ID_content_3").kuImagePicker("loadData", $("#hdContent").val());
             }
 
             var E = window.wangEditor;
@@ -179,7 +179,7 @@
                         arr.push({ name: "Dto.Content", value: editor.txt.html() });
                     }
                     else if (key === "Picture") {
-                        arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").vinoImagePicker("getData")) });
+                        arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").kuImagePicker("getData")) });
                     }
                     //商品属性
                     var properties = [];
@@ -194,7 +194,7 @@
                 }
             });
 
-            $("#ID_sku_table").vinoGrid({
+            $("#ID_sku_table").kuGrid({
                 url: 'Edit/SkuList?EditID=@ViewData["EditID"]',
                 page: false,
                 checkbox: false,
@@ -248,7 +248,7 @@
 
         function doAddSku() {
             OpenWindow("添加商品SKU", `/Mall/Product/Sku/Edit?EditID=@ViewData["EditID"]`, null, function () {
-                $("#ID_sku_table").vinoGrid("reload");
+                $("#ID_sku_table").kuGrid("reload");
             });
         }
     </script>

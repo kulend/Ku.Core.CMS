@@ -35,12 +35,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Communication.Sms
             Dto = await _service.GetByIdAsync(id);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
             var sms = await _smsService.GetByIdAsync(Dto.SmsId);
             if (sms == null || Dto.IsDeleted)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
             Dto.Sms = sms;
         }

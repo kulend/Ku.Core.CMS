@@ -55,7 +55,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
 
                 //取得所有sku并保存到缓存
@@ -101,7 +101,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);

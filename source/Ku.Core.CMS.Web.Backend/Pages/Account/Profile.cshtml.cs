@@ -33,7 +33,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
             Dto = await _userService.GetByIdAsync(userId);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException("无法取得用户数据！");
+                throw new KuDataNotFoundException("无法取得用户数据！");
             }
             Dto.Password = "******";
 
@@ -47,13 +47,13 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
             ModelState.Remove("Dto.Password");
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             var userId = User.GetUserIdOrZero();
             if (userId != Dto.Id)
             {
-                throw new VinoDataNotFoundException("无法取得用户数据！");
+                throw new KuDataNotFoundException("无法取得用户数据！");
             }
             await _userService.SaveProfileAsync(Dto);
             return Json(true);

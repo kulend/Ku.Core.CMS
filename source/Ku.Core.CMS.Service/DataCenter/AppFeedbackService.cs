@@ -69,7 +69,7 @@ namespace Ku.Core.CMS.Service.DataCenter
                 var item = await dapper.QueryOneAsync<AppFeedback>(new { Id = dto.Id });
                 if (item == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
 
                 dynamic data = new ExpandoObject();

@@ -57,45 +57,45 @@ function _action(that, action, after, data) {
     } else if (act === "post" || act === "get" || act === "ajax-get" || act === "ajax-post" || act === "ajax-delete") {
         var url = action.indexOf(":") > 0 ? action.substring(action.indexOf(":") + 1) : "";
         var confirmMsg = `确定要进行${$(that).attr("title") || "当前"}操作？`;
-        vino.page.msg.confirm(confirmMsg,
+        ku.page.msg.confirm(confirmMsg,
             function () {
                 if ("get" === act || "ajax-get" === act) {
-                    vino.ajax.get(url, data || null, function (reply) {
+                    ku.ajax.get(url, data || null, function (reply) {
                         if (reply.code === 0) {
-                            vino.page.msg.tip("操作成功！",
+                            ku.page.msg.tip("操作成功！",
                                 function () {
                                     if (after) {
                                         _action(that, after, null, reply);
                                     }
                                 });
                         } else {
-                            vino.page.msg.tip(reply.message);
+                            ku.page.msg.tip(reply.message);
                         }
                     });
                 } if ("post" === act || "ajax-post" === act) {
-                    vino.ajax.post(url, data || null, function (reply) {
+                    ku.ajax.post(url, data || null, function (reply) {
                         if (reply.code === 0) {
-                            vino.page.msg.tip("操作成功！",
+                            ku.page.msg.tip("操作成功！",
                                 function () {
                                     if (after) {
                                         _action(that, after, null, reply);
                                     }
                                 });
                         } else {
-                            vino.page.msg.tip(reply.message);
+                            ku.page.msg.tip(reply.message);
                         }
                     });
                 }else {
-                    vino.ajax.delete(url, data || null, function (reply) {
+                    ku.ajax.delete(url, data || null, function (reply) {
                         if (reply.code === 0) {
-                            vino.page.msg.tip("操作成功！",
+                            ku.page.msg.tip("操作成功！",
                                 function () {
                                     if (after) {
                                         _action(that, after, null, reply);
                                     }
                                 });
                         } else {
-                            vino.page.msg.tip(reply.message);
+                            ku.page.msg.tip(reply.message);
                         }
                     });
                 }
@@ -104,17 +104,17 @@ function _action(that, action, after, data) {
         //数据表格处理
         if ("reload" === method) {
             if (pms.length > 0) {
-                $(pms[0]).vinoGrid("reload");
+                $(pms[0]).kuGrid("reload");
             } else {
-                $(".vino-grid").vinoGrid("reload");
+                $(".ku-grid").kuGrid("reload");
             }
         }
     } else if (act === "batch") {
         //批量处理
         var tableId = pms[0];
-        var ids = $(tableId).vinoGrid("getCheckedIds");
+        var ids = $(tableId).kuGrid("getCheckedIds");
         if (!ids || ids.length == 0) {
-            vino.page.msg.tip("请至少选择一项！");
+            ku.page.msg.tip("请至少选择一项！");
             return;
         }
         _action(that, pms[1], after, { id: ids });
@@ -133,7 +133,7 @@ function _action(that, action, after, data) {
         _openTab(tag, opts);
     } else if (action) {
         //直接跳转页面
-        vino.page.navigateTo(action);
+        ku.page.navigateTo(action);
     }
 }
 
@@ -149,7 +149,7 @@ function _openTab(tag, options) {
 function _bindForm($from, options) {
     var options = $.extend({}, {
         onSuccess: function (reply, options) {
-            vino.page.msg.tip('保存成功！', function () {
+            ku.page.msg.tip('保存成功！', function () {
                 if (_isWindow()) {
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
@@ -166,7 +166,7 @@ function _bindForm($from, options) {
         }
     }, options);
 
-    $from.vinoForm(options);
+    $from.kuForm(options);
 }
 
 function _isWindow() {

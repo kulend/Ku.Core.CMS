@@ -102,8 +102,8 @@
 
     //锁屏
     $("a[layadmin-event='lockpage']").on("click", function () {
-        vino.ajax.post("/Account/Lock", null, function () {
-            vino.page.pageLock();
+        ku.ajax.post("/Account/Lock", null, function () {
+            ku.page.pageLock();
         });
     });
 

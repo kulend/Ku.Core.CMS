@@ -59,7 +59,7 @@ namespace Ku.Core.CMS.Service.WeChat
                 var rsp = await wcUserTool.CreateUserTag(token, model.Name);
                 if (rsp.ErrCode != 0)
                 {
-                    throw new VinoDataNotFoundException(rsp.ToString());
+                    throw new KuDataNotFoundException(rsp.ToString());
                 }
 
                 model.TagId = rsp.Data.Tag.Id;
@@ -77,7 +77,7 @@ namespace Ku.Core.CMS.Service.WeChat
                     var item = await dapper.QueryOneAsync<WxUserTag>(new { model.Id });
                     if (item == null)
                     {
-                        throw new VinoDataNotFoundException("无法取得微信用户标签数据！");
+                        throw new KuDataNotFoundException("无法取得微信用户标签数据！");
                     }
                     if (item.Name.Equals(model.Name))
                     {
@@ -90,7 +90,7 @@ namespace Ku.Core.CMS.Service.WeChat
                     var rsp = await wcUserTool.UpdateUserTag(token, item.TagId, model.Name);
                     if (rsp.ErrCode != 0)
                     {
-                        throw new VinoDataNotFoundException(rsp.ToString());
+                        throw new KuDataNotFoundException(rsp.ToString());
                     }
 
                     await dapper.UpdateAsync<WxUserTag>(new { model.Name }, new { model.Id });
@@ -122,7 +122,7 @@ namespace Ku.Core.CMS.Service.WeChat
                     var rsp = await wcUserTool.DeleteUserTag(token, item.TagId);
                     if (rsp.ErrCode != 0)
                     {
-                        throw new VinoDataNotFoundException(rsp.ToString());
+                        throw new KuDataNotFoundException(rsp.ToString());
                     }
                     await dapper.DeleteAsync<WxUserTag>(new { Id = id });
                 }

@@ -1,6 +1,6 @@
 @{
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 ku 版权所有
 //
 // 文件名：Index.cshtml
 // 功能描述：会员积分 列表页面
@@ -78,7 +78,7 @@
         function filterChanged(filterValue) {
             if (!selFilterValue) {
                 selFilterValue = filterValue;
-                $("#list").vinoGrid({
+                $("#list").kuGrid({
                     url: 'GetList',
                     cols: [[
                         { field: 'MemberId', title: '会员昵称', width: 160, templet: '<div>{{d.Member.Name}}</div>'},
@@ -102,7 +102,7 @@
                 });
             } else if (selFilterValue != filterValue) {
                 selFilterValue = filterValue;
-                $("#list").vinoGrid("search");
+                $("#list").kuGrid("search");
             }
 
             $("#btnAdjust").attr("action", "window:/Membership/MemberPoint/Adjust?type=" + selFilterValue);

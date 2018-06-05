@@ -51,18 +51,18 @@
 </div>
 @section Scripts
     {
-    <script src="~/js/vino/vino.image.picker.js"></script>
+    <script src="~/js/ku/ku.image.picker.js"></script>
     <script src="~/lib/wangEditor/wangEditor.js"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
 
-            $("#ID_content_3").vinoImagePicker({
+            $("#ID_content_3").kuImagePicker({
                 max_count: 10
             });
 
             if ($("input[name='Dto.ContentType']:checked").attr("key") === "Picture") {
-                $("#ID_content_3").vinoImagePicker("loadData", $("#hdContent").val());
+                $("#ID_content_3").kuImagePicker("loadData", $("#hdContent").val());
             }
 
             var E = window.wangEditor;
@@ -97,8 +97,8 @@
                         arr.push({ name: "Dto.Content", value: editor.txt.html() });
                     }
                     else if (key === "Picture") {
-                        alert($("#ID_content_3").vinoImagePicker("getData"));
-                        arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").vinoImagePicker("getData")) });
+                        alert($("#ID_content_3").kuImagePicker("getData"));
+                        arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").kuImagePicker("getData")) });
                     }
                     return true;
                 }

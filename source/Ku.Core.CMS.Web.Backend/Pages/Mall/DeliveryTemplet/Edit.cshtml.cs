@@ -39,7 +39,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.DeliveryTemplet
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
                 ViewData["Mode"] = "Edit";
             }
@@ -58,7 +58,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.DeliveryTemplet
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.SaveAsync(Dto);

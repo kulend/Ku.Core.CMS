@@ -22,14 +22,14 @@ namespace Ku.Core.CMS.Web.Filters
             if (!context.HttpContext.Request.Query.ContainsKey("__vcode")
                 || !context.HttpContext.Request.Query.ContainsKey("__vkey"))
             {
-                throw new VinoNeedVerifyCodeException();
+                throw new KuNeedVerifyCodeException();
             }
 
             var code = context.HttpContext.Request.Query["__vcode"].FirstOrDefault();
             var key = context.HttpContext.Request.Query["__vkey"].FirstOrDefault();
             if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(key))
             {
-                throw new VinoVerifyCodeInvalidException("验证码不能为空");
+                throw new KuVerifyCodeInvalidException("验证码不能为空");
             }
 
             //缓存中取得验证码
@@ -39,7 +39,7 @@ namespace Ku.Core.CMS.Web.Filters
             if (!code.Equals(checkCode, StringComparison.OrdinalIgnoreCase))
             {
                 _cacheService.Remove(cacheKey);
-                throw new VinoVerifyCodeInvalidException("验证码不正确");
+                throw new KuVerifyCodeInvalidException("验证码不正确");
             }
             _cacheService.Remove(cacheKey);
 

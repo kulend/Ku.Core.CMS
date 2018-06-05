@@ -1,7 +1,7 @@
 ﻿@page "{handler?}"
 @{
     //----------------------------------------------------------------
-    // Copyright (C) 2018 vino 版权所有
+    // Copyright (C) 2018 ku 版权所有
     //
     // 文件名：Login.cshtml
     // 功能描述：登录页面
@@ -92,17 +92,19 @@
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/js-cookie/src/js.cookie.js"></script>
         <script src="~/lib/layui/layui.all.js"></script>
-        <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
-        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
-        <script src="~/js/vino/vino.ajax.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.page.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.from.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.ajax.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/js-cookie/src/js.cookie.js"></script>
         <script src="~/lib/layui/layui.all.js"></script>
-        <script src="~/js/vino/vino.page.js" asp-append-version="true"></script>
-        <script src="~/js/vino/vino.from.js" asp-append-version="true"></script>
-        <script src="~/js/vino/vino.ajax.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.page.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.from.js" asp-append-version="true"></script>
+        <script src="~/js/ku/ku.ajax.js" asp-append-version="true"></script>
     </environment>
 
     <script type="text/javascript">
@@ -110,11 +112,11 @@
             top.location = self.location;
         }
         $(function () {
-            $("#loginForm").vinoForm({
+            $("#loginForm").kuForm({
                 onSuccess: function (reply, options) {
-                    vino.page.msg.tip('登陆成功！',
+                    ku.page.msg.tip('登陆成功！',
                         function () {
-                            vino.page.navigateTo("/", true);
+                            ku.page.navigateTo("/", true);
                         });
                 },
                 onError: function (reply) {

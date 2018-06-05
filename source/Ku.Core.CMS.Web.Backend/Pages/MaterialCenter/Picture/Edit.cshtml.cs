@@ -37,7 +37,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
             Dto = await _service.GetByIdAsync(id);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
         }
 
@@ -49,7 +49,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.UpdateAsync(Dto);

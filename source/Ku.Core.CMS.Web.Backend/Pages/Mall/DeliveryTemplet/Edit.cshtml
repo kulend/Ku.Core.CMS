@@ -36,14 +36,14 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">默认运费</label>
                             <div class="layui-input-inline num">
-                                <input type="text" class="layui-input" id="DefaultFee" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@Model.Dto.QuantityChargeConfigObj.DefaultFee.ToString("0.00")">
+                                <input type="text" class="layui-input" id="DefaultFee" onkeyup="value=ku.page.fixedFloat(value, 2)" value="@Model.Dto.QuantityChargeConfigObj.DefaultFee.ToString("0.00")">
                             </div>
                             <div class="layui-form-mid layui-word-aux">元</div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">每件增加运费</label>
                             <div class="layui-input-inline num">
-                                <input type="text" class="layui-input" id="PreQuantityFee" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@Model.Dto.QuantityChargeConfigObj.PreQuantityFee.ToString("0.00")">
+                                <input type="text" class="layui-input" id="PreQuantityFee" onkeyup="value=ku.page.fixedFloat(value, 2)" value="@Model.Dto.QuantityChargeConfigObj.PreQuantityFee.ToString("0.00")">
                             </div>
                             <div class="layui-form-mid layui-word-aux">元</div>
                             <div class="layui-form-mid layui-word-aux">超过1件后每件增加的运费</div>
@@ -82,8 +82,8 @@
                                                 <button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon"></i>选择</button>
                                             </td>
                                             <td><input type="checkbox" name="switch" lay-skin="switch" @(item.Deliverable ? "checked" : "") lay-filter="deliverable" lay-text="是|否"></td>
-                                            <td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.DefaultFee.ToString("0.00")"></td>
-                                            <td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.PreQuantityFee.ToString("0.00")"></td>
+                                            <td><input type="text" name="input1" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)" value="@item.DefaultFee.ToString("0.00")"></td>
+                                            <td><input type="text" name="input2" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)" value="@item.PreQuantityFee.ToString("0.00")"></td>
                                             <td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this, 1)">删除</button></td>
                                         </tr>
                                     }
@@ -104,14 +104,14 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">首重重量</label>
                                 <div class="layui-input-inline num">
-                                    <input type="text" id="FirstWeight" class="layui-input" onkeyup="value=vino.page.fixedFloat(value , 0)" value="@Model.Dto.WeightChargeConfigObj.FirstWeight">
+                                    <input type="text" id="FirstWeight" class="layui-input" onkeyup="value=ku.page.fixedFloat(value , 0)" value="@Model.Dto.WeightChargeConfigObj.FirstWeight">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">克</div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">首重费用</label>
                                 <div class="layui-input-inline num">
-                                    <input type="text" id="FirstFee" class="layui-input" onkeyup="value=vino.page.fixedFloat(value , 2)" value="@Model.Dto.WeightChargeConfigObj.FirstFee.ToString("0.00")">
+                                    <input type="text" id="FirstFee" class="layui-input" onkeyup="value=ku.page.fixedFloat(value , 2)" value="@Model.Dto.WeightChargeConfigObj.FirstFee.ToString("0.00")">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">元</div>
                             </div>
@@ -120,14 +120,14 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">续重重量</label>
                                 <div class="layui-input-inline num">
-                                    <input type="text" id="ExtendWeight" class="layui-input" onkeyup="value=vino.page.fixedFloat(value , 0)" value="@Model.Dto.WeightChargeConfigObj.ExtendWeight">
+                                    <input type="text" id="ExtendWeight" class="layui-input" onkeyup="value=ku.page.fixedFloat(value , 0)" value="@Model.Dto.WeightChargeConfigObj.ExtendWeight">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">克</div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">续重费用</label>
                                 <div class="layui-input-inline num">
-                                    <input type="text" id="ExtendFee" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@Model.Dto.WeightChargeConfigObj.ExtendFee.ToString("0.00")">
+                                    <input type="text" id="ExtendFee" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)" value="@Model.Dto.WeightChargeConfigObj.ExtendFee.ToString("0.00")">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">元</div>
                             </div>
@@ -170,13 +170,13 @@
                                                 <button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon"></i>选择</button>
                                             </td>
                                             <td rowspan="2"><input type="checkbox" name="switch" lay-skin="switch" @(item.Deliverable ? "checked" : "") lay-filter="deliverable" lay-text="是|否"></td>
-                                            <td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)" value="@item.FirstWeight"></td>
-                                            <td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.FirstFee.ToString("0.00")"></td>
+                                            <td><input type="text" name="input1" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 0)" value="@item.FirstWeight"></td>
+                                            <td><input type="text" name="input2" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)" value="@item.FirstFee.ToString("0.00")"></td>
                                             <td rowspan="2"><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this, 2)">删除</button></td>
                                         </tr>
                                         <tr class="charge-config-item">
-                                            <td><input type="text" name="input3" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)" value="@item.ExtendWeight"></td>
-                                            <td><input type="text" name="input4" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)" value="@item.ExtendFee.ToString("0.00")"></td>
+                                            <td><input type="text" name="input3" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 0)" value="@item.ExtendWeight"></td>
+                                            <td><input type="text" name="input4" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)" value="@item.ExtendFee.ToString("0.00")"></td>
                                         </tr>
                                     }
                                 }
@@ -285,21 +285,21 @@
                 rowHmtl = '<tr class="charge-config-item main" deliverable="true">'
                     + `<td><span class="charge-config-location" data-items='${JSON.stringify(list)}'>${text}</span><button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon">&#xe642;</i>选择</button></td>`
                     + '<td><input type="checkbox" name="switch" lay-skin="switch" checked lay-filter="deliverable" lay-text="是|否"></td>'
-                    + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
-                    + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
+                    + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)"></td>'
+                    + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)"></td>'
                     + '<td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>'
                     + '</tr>';
             } else {
                 rowHmtl = '<tr class="charge-config-item main" deliverable="true">'
                     + `<td rowspan="2"><span class="charge-config-location" data-items='${JSON.stringify(list)}'>${text}</span><button type="button" class="layui-btn layui-btn-xs" action="js:doSelectProvince($this)"><i class="layui-icon">&#xe642;</i>选择</button></td>`
                     + '<td rowspan="2"><input type="checkbox" name="switch" value="true" lay-skin="switch" checked lay-filter="deliverable" lay-text="是|否"></td>'
-                    + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)"></td>'
-                    + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
+                    + '<td><input type="text" name="input1" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 0)"></td>'
+                    + '<td><input type="text" name="input2" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)"></td>'
                     + '<td rowspan="2"><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this, 2)">删除</button></td>'
                     + '</tr>';
                 rowHmtl += '<tr class="charge-config-item">'
-                    + '<td><input type="text" name="input3" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 0)"></td>'
-                    + '<td><input type="text" name="input4" class="layui-input" onkeyup="value=vino.page.fixedFloat(value, 2)"></td>'
+                    + '<td><input type="text" name="input3" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 0)"></td>'
+                    + '<td><input type="text" name="input4" class="layui-input" onkeyup="value=ku.page.fixedFloat(value, 2)"></td>'
                     + '</tr>';
             }
             $(thisObj).closest("fieldset").find(".charge-config-body").append(rowHmtl);

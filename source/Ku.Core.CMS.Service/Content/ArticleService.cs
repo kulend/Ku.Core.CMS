@@ -65,7 +65,7 @@ namespace Ku.Core.CMS.Service.Content
                     var entity = await dapper.QueryOneAsync<Article>(new { model.Id });
                     if (entity == null)
                     {
-                        throw new VinoDataNotFoundException("无法取得相关数据！");
+                        throw new KuDataNotFoundException("无法取得相关数据！");
                     }
 
                     dynamic item = new ExpandoObject();

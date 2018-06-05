@@ -4,7 +4,7 @@
 @using Ku.Core.Infrastructure.Extensions
 @{
     //----------------------------------------------------------------
-    // Copyright (C) 2018 vino 版权所有
+    // Copyright (C) 2018 ku 版权所有
     //
     // 文件名：Index.cshtml
     // 功能描述：应用反馈 列表页面
@@ -86,9 +86,9 @@
             });
 
             element.on('tab(tabMian)', function () {
-                if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("vino-grid") && selFilterValue) {
+                if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("ku-grid") && selFilterValue) {
                     //初始化回收站
-                    $("#recycles").vinoGrid({
+                    $("#recycles").kuGrid({
                         url: 'Index/Data',
                         cols: [cols.concat([
                             { field: 'ResolveTime', title: '处理时间', width: 170, align: 'center' },
@@ -122,7 +122,7 @@
         function filterChanged(filterValue) {
             if (!selFilterValue) {
                 selFilterValue = filterValue;
-                $("#list").vinoGrid({
+                $("#list").kuGrid({
                     url: 'Index/Data',
                     cols: [cols.concat([
                         {
@@ -141,15 +141,15 @@
                 });
             } else if (selFilterValue != filterValue) {
                 selFilterValue = filterValue;
-                $("#list").vinoGrid("search");
-                if ($("#recycles").hasClass("vino-grid")) { 
-                    $("#recycles").vinoGrid("search");
+                $("#list").kuGrid("search");
+                if ($("#recycles").hasClass("ku-grid")) { 
+                    $("#recycles").kuGrid("search");
                 }
             }
         }
 
         function refreshResolveCount() { 
-            vino.ajax.get("Index/UnsolvedCount", null, function (reply) {
+            ku.ajax.get("Index/UnsolvedCount", null, function (reply) {
                 $("#ID_table_filters .layui-badge").each(function () { 
                     var id = $(this).attr("data-id");
                     var cnt = reply.data[id] || 0;
@@ -164,7 +164,7 @@
         }
 
         function reload() {
-            $(".vino-grid").vinoGrid("reload");
+            $(".ku-grid").kuGrid("reload");
             refreshResolveCount();
         }
     </script>

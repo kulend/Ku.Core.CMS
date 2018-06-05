@@ -47,7 +47,7 @@ namespace Ku.Core.CMS.Service.Communication
                     var count = await dapper.QueryCountAsync<SmsTemplet>(new { Tag = model.Tag });
                     if (count > 0)
                     {
-                        throw new VinoArgNullException("存在相同标记的数据！");
+                        throw new KuArgNullException("存在相同标记的数据！");
                     }
 
                     model.Id = ID.NewID();
@@ -66,7 +66,7 @@ namespace Ku.Core.CMS.Service.Communication
                     var items = await dapper.QueryListAsync<SmsTemplet>(new { Tag = model.Tag, IsDeleted = false });
                     if (items.Any(x => x.Id != model.Id))
                     {
-                        throw new VinoArgNullException("存在相同标记的数据！");
+                        throw new KuArgNullException("存在相同标记的数据！");
                     }
 
                     var item = new

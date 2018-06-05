@@ -41,7 +41,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Sys.Function
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
                 if (Dto.ParentId.HasValue)
                 {
@@ -73,7 +73,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Sys.Function
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.SaveAsync(Dto);

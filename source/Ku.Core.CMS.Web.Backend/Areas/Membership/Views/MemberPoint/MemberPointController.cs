@@ -1,5 +1,5 @@
 //----------------------------------------------------------------
-// Copyright (C) 2018 vino 版权所有
+// Copyright (C) 2018 ku 版权所有
 //
 // 文件名：MemberPointController.cs
 // 功能描述：会员积分 后台访问控制类
@@ -67,7 +67,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
                 var model = await _service.GetByIdAsync(id.Value);
                 if (model == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得数据!");
+                    throw new KuDataNotFoundException("无法取得数据!");
                 }
                 ViewData["Mode"] = "Edit";
                 return View(model);
@@ -129,7 +129,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
                 var model = await _service.GetByIdAsync(id.Value);
                 if (model == null)
                 {
-                    throw new VinoDataNotFoundException("无法取得数据!");
+                    throw new KuDataNotFoundException("无法取得数据!");
                 }
                 dto.Type = model.Type;
                 var member = await _memberService.GetByIdAsync(model.MemberId);
@@ -142,7 +142,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
             {
                 if (!type.HasValue)
                 {
-                    throw new VinoArgNullException("参数出错", "type");
+                    throw new KuArgNullException("参数出错", "type");
                 }
 
                 dto.Type = type.Value;
@@ -189,7 +189,7 @@ namespace Ku.Core.CMS.Web.Backend.Areas.Membership.Views.MemberPoint
             var model = await _recordService.GetByIdAsync(id);
             if (model == null)
             {
-                throw new VinoDataNotFoundException("无法取得数据!");
+                throw new KuDataNotFoundException("无法取得数据!");
             }
             return View(model);
         }

@@ -23,9 +23,9 @@ namespace Ku.Core.WeChat.User
         private const string URL_USERS_DETAIL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN";
         private const string URL_USER_REMARK_UPDATE = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token={0}";
 
-        private ICacheService cacheService;
+        private ICacheProvider cacheService;
 
-        public WcUserTool(ICacheService cache, ILogger<WcUserTool> logger)
+        public WcUserTool(ICacheProvider cache, ILogger<WcUserTool> logger)
         {
             this.cacheService = cache;
             this._logger = logger;

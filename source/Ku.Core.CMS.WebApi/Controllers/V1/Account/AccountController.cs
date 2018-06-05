@@ -24,9 +24,9 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
     {
         private IJwtProvider _jwtProvider;
         private JwtConfig _jwtConfig;
-        private ICacheService _cacheService;
+        private ICacheProvider _cacheService;
 
-        public AccountController(IJwtProvider jwtProvider, ICacheService cacheService, IOptions<JwtConfig> jwtConfig)
+        public AccountController(IJwtProvider jwtProvider, ICacheProvider cacheService, IOptions<JwtConfig> jwtConfig)
         {
             _jwtProvider = jwtProvider;
             _cacheService = cacheService;
@@ -59,20 +59,20 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
             };
 
             //如果当前已登陆，则退出当前登录
-            DoLogout();
+            await DoLogoutAsync();
 
-            _cacheService.Add(string.Format(CacheKeyDefinition.ApiMemberToken, member.Id, tokenVersion), loginMember, TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
+            await _cacheService.SetAsync(string.Format(CacheKeyDefinition.ApiMemberToken, member.Id, tokenVersion), loginMember, TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
 
             return Json(token);
         }
 
         //退出登录
-        private void DoLogout()
+        private async Task DoLogoutAsync()
         {
             if (User != null && !string.IsNullOrEmpty(User.GetTokenIdOrNull()))
             {
-                _cacheService.Add(string.Format(CacheKeyDefinition.ApiExpiredToken, User.GetTokenIdOrNull()),"", TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
-                _cacheService.Remove(string.Format(CacheKeyDefinition.ApiMemberToken, User.GetUserIdOrZero(), User.GetVersion()));
+                await _cacheService.SetAsync(string.Format(CacheKeyDefinition.ApiExpiredToken, User.GetTokenIdOrNull()),"", TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
+                await _cacheService.RemoveAsync(string.Format(CacheKeyDefinition.ApiMemberToken, User.GetUserIdOrZero(), User.GetVersion()));
             }
         }
     }

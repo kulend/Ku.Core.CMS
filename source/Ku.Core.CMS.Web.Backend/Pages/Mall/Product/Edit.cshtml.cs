@@ -25,10 +25,10 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product
     {
         private readonly IProductService _service;
         private readonly IProductSkuService _skuService;
-        private ICacheService _cacheService;
+        private ICacheProvider _cacheService;
         private readonly IProductCategoryService _productCategoryService;
 
-        public EditModel(IProductService service, IProductSkuService skuService, ICacheService cacheService
+        public EditModel(IProductService service, IProductSkuService skuService, ICacheProvider cacheService
             , IProductCategoryService productCategoryService)
         {
             this._service = service;
@@ -71,7 +71,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product
                     sku.ModifyStatus = Domain.Enum.EmEntityModifyStatus.UnChange;
                 }
                 var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
-                _cacheService.Add(cacheKey, skus, new TimeSpan(10, 0, 0));
+                await _cacheService.SetAsync(cacheKey, skus, new TimeSpan(10, 0, 0));
 
                 //取得商品类目数据
                 var dict = new Dictionary<int, long>();

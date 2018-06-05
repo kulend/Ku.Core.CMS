@@ -19,9 +19,9 @@ namespace Ku.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
     {
         private readonly IAppFeedbackService _service;
         private readonly IAppService _appService;
-        protected readonly ICacheService _cache;
+        protected readonly ICacheProvider _cache;
 
-        public IndexModel(IAppFeedbackService service, IAppService appService, ICacheService cache)
+        public IndexModel(IAppFeedbackService service, IAppService appService, ICacheProvider cache)
         {
             this._service = service;
             this._appService = appService;
@@ -42,7 +42,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.DataCenter.AppFeedback
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (var item in apps)
             {
-                var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.Id));
+                var UnsolvedCount = await _cache.GetAsync<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.Id));
                 dict.Add(item.Id.ToString(), UnsolvedCount);
             }
 

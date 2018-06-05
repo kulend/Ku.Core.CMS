@@ -14,9 +14,9 @@ namespace Ku.Core.CMS.Web.Filters
     /// </summary>
     public class PageLockFilter : IActionFilter, IPageFilter
     {
-        private readonly ICacheService _cacheService;
+        private readonly ICacheProvider _cacheService;
 
-        public PageLockFilter(ICacheService cacheService)
+        public PageLockFilter(ICacheProvider cacheService)
         {
             this._cacheService = cacheService;
         }

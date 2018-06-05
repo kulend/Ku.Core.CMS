@@ -39,5 +39,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 </Project>

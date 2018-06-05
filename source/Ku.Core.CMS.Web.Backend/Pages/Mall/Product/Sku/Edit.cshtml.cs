@@ -22,9 +22,9 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
     public class EditModel : BasePage
     {
         private readonly IProductSkuService _service;
-        private ICacheService _cacheService;
+        private ICacheProvider _cacheService;
 
-        public EditModel(IProductSkuService service, ICacheService cacheService)
+        public EditModel(IProductSkuService service, ICacheProvider cacheService)
         {
             this._service = service;
             this._cacheService = cacheService;
@@ -46,7 +46,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
                 //编辑
                 //从缓存获取
                 var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
-                var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+                var list = await _cacheService.GetAsync<List<ProductSkuDto>>(cacheKey);
                 if (list == null)
                 {
                     list = new List<ProductSkuDto>();
@@ -77,7 +77,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
             }
             //临时SKU数据，保存到缓存中
             var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
-            var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+            var list = await _cacheService.GetAsync<List<ProductSkuDto>>(cacheKey);
             if (list == null)
             {
                 list = new List<ProductSkuDto>();
@@ -101,7 +101,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
                 }
                 list[index] = Dto;
             }
-            _cacheService.Add(cacheKey, list, new TimeSpan(10, 0, 0));
+            await _cacheService.SetAsync(cacheKey, list, new TimeSpan(10, 0, 0));
             return JsonData(true);
         }
 
@@ -109,7 +109,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
         public async Task<IActionResult> OnPostDeleteAsync(long id, long EditID)
         {
             var cacheKey = string.Format(CacheKeyDefinition.ProductSkuTemp, EditID);
-            var list = _cacheService.Get<List<ProductSkuDto>>(cacheKey);
+            var list = await _cacheService.GetAsync<List<ProductSkuDto>>(cacheKey);
             if (list == null)
             {
                 list = new List<ProductSkuDto>();
@@ -126,7 +126,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Sku
                     item.ModifyStatus = Domain.Enum.EmEntityModifyStatus.Delete;
                 }
             }
-            _cacheService.Add(cacheKey, list, new TimeSpan(10, 0, 0));
+            await _cacheService.SetAsync(cacheKey, list, new TimeSpan(10, 0, 0));
             return JsonData(true);
         }
     }

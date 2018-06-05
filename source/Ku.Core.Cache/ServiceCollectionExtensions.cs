@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Ku.Core.Cache;
 using Ku.Core.Cache.Redis;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,14 +17,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (type.Equals("redis", StringComparison.CurrentCultureIgnoreCase))
             {
-                var config = new RedisConfig
-                {
-                    ConnectionString = configuration["Cache:Redis:ConnectionString"],
-                    ApplicationKey = configuration["Cache:Redis:ApplicationKey"]
-                };
-                RedisConnectionMultiplexer.Init(config);
-
-                services.AddSingleton(typeof(ICacheService), typeof(RedisCacheService));
+                services.Configure<RedisOptions>(configuration.GetSection("Cache:Redis"));
+                services.TryAddSingleton<IRedisDatabaseProvider, RedisDatabaseProvider>();
+                services.TryAddSingleton<ICacheProvider, RedisCacheProvider>();
             }
             else
             {

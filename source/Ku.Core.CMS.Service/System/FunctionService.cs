@@ -29,11 +29,11 @@ namespace Ku.Core.CMS.Service.System
 {
     public partial class FunctionService : BaseService<Function, FunctionDto, FunctionSearch>, IFunctionService
     {
-        protected readonly ICacheService _cache;
+        protected readonly ICacheProvider _cache;
 
         #region 构造函数
 
-        public FunctionService(ICacheService cache)
+        public FunctionService(ICacheProvider cache)
         {
             this._cache = cache;
         }

@@ -14,9 +14,9 @@ namespace Ku.Core.CMS.Web.Security
 
     public class WebApiAuthAuthorizationHandler : DefaultAttributeAuthorizationHandler<WebApiAuthAuthorizationRequirement, MemberAuthAttribute>
     {
-        private ICacheService _cacheService;
+        private ICacheProvider _cacheService;
 
-        public WebApiAuthAuthorizationHandler(ICacheService cacheService)
+        public WebApiAuthAuthorizationHandler(ICacheProvider cacheService)
         {
             this._cacheService = cacheService;
         }

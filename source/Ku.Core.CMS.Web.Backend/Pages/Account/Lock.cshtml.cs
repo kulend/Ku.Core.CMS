@@ -19,10 +19,10 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
     public class LockModel : BasePage
     {
         private IUserService _userService;
-        private ICacheService _cacheService;
+        private ICacheProvider _cacheService;
         private IJwtProvider _jwtProvider;
 
-        public LockModel(IUserService userService, ICacheService cacheService, IJwtProvider jwtProvider)
+        public LockModel(IUserService userService, ICacheProvider cacheService, IJwtProvider jwtProvider)
         {
             this._userService = userService;
             this._cacheService = cacheService;
@@ -42,7 +42,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
         {
             //缓存中添加页面锁定消息
             var tokenId = User.GetTokenIdOrNull();
-            _cacheService.Add(string.Format(CacheKeyDefinition.PageLock, tokenId), true, TimeSpan.FromMinutes(_jwtProvider.GetJwtConfig().ExpiredMinutes));
+            _cacheService.Set(string.Format(CacheKeyDefinition.PageLock, tokenId), true, TimeSpan.FromMinutes(_jwtProvider.GetJwtConfig().ExpiredMinutes));
             return Json(true);
         }
 

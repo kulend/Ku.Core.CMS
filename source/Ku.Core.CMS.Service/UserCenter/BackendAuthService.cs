@@ -15,11 +15,11 @@ namespace Ku.Core.CMS.Service.UserCenter
 {
     public class BackendAuthService : IBackendAuthService
     {
-        protected readonly ICacheService _cache;
+        protected readonly ICacheProvider _cache;
 
         #region 构造函数
 
-        public BackendAuthService(ICacheService cache)
+        public BackendAuthService(ICacheProvider cache)
         {
             this._cache = cache;
         }
@@ -39,7 +39,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                 return true;
             }
             var key = string.Format(CacheKeyDefinition.UserAuthCode, userId);
-            var authcodes = _cache.Get<List<string>>(key);
+            var authcodes = await _cache.GetAsync<List<string>>(key);
             if (authcodes == null)
             {
                 //取得用户所有权限码
@@ -72,7 +72,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                     }
 
                     //缓存
-                    _cache.Add(key, authcodes);
+                    await _cache.SetAsync(key, authcodes);
                 }
             }
             if (authcodes.Contains("ku.develop"))
@@ -131,7 +131,7 @@ namespace Ku.Core.CMS.Service.UserCenter
         public async Task<List<string>> GetUserAuthCodesAsync(long userId, bool encrypt = false)
         {
             var key = string.Format(encrypt ? CacheKeyDefinition.UserAuthCodeEncrypt : CacheKeyDefinition.UserAuthCode, userId);
-            var authcodes = _cache.Get<List<string>>(key);
+            var authcodes = await _cache.GetAsync<List<string>>(key);
             if (authcodes == null)
             {
                 //取得用户所有权限码
@@ -167,7 +167,7 @@ namespace Ku.Core.CMS.Service.UserCenter
                         authcodes = authcodes.Select(CryptHelper.EncryptMD5).ToList();
                     }
                     //缓存
-                    _cache.Add(key, authcodes);
+                    await _cache.SetAsync(key, authcodes);
                 }
             }
             return authcodes;

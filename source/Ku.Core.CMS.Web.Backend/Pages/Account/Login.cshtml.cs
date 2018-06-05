@@ -26,12 +26,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
         private IUserService _userService;
         private IJwtProvider _jwtProvider;
         private JwtAuthConfig _jwtAuthConfig;
-        private ICacheService _cacheService;
+        private ICacheProvider _cacheService;
         private readonly IEventPublisher _eventPublisher;
 
         public LoginModel(IJwtProvider jwtProvider,
             IOptions<JwtAuthConfig> jwtAuthConfig,
-            ICacheService _cacheService,
+            ICacheProvider _cacheService,
             IUserService _userService,
             IEventPublisher _eventPublisher)
         {
@@ -113,8 +113,8 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
             });
 
             //清除用户权限缓存
-            _cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCode, user.Id));
-            _cacheService.Remove(string.Format(CacheKeyDefinition.UserAuthCodeEncrypt, user.Id));
+            await _cacheService.RemoveAsync(string.Format(CacheKeyDefinition.UserAuthCode, user.Id));
+            await _cacheService.RemoveAsync(string.Format(CacheKeyDefinition.UserAuthCodeEncrypt, user.Id));
 
             //Cookie中保存用户信息
             base.Response.Cookies.Append("user.name", user.NickName);

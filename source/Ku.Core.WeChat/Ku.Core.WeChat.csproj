@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ku.Core.Cache\Ku.Core.Cache.csproj" />
+    <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -26,11 +26,11 @@ namespace Ku.Core.CMS.Service.DataCenter
 {
     public partial class AppFeedbackService : BaseService<AppFeedback, AppFeedbackDto, AppFeedbackSearch>, IAppFeedbackService
     {
-        protected readonly ICacheService _cache;
+        protected readonly ICacheProvider _cache;
 
         #region 构造函数
 
-        public AppFeedbackService(ICacheService cache)
+        public AppFeedbackService(ICacheProvider cache)
         {
             _cache = cache;
         }
@@ -52,9 +52,9 @@ namespace Ku.Core.CMS.Service.DataCenter
                 await dapper.InsertAsync(model);
             }
 
-            var UnsolvedCount = _cache.Get<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId));
+            var UnsolvedCount = await _cache.GetAsync<int>(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId));
             UnsolvedCount++;
-            _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId), UnsolvedCount);
+            await _cache.SetAsync(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, model.AppId), UnsolvedCount);
         }
 
         /// <summary>
@@ -87,12 +87,12 @@ namespace Ku.Core.CMS.Service.DataCenter
                 {
                     UnsolvedCount--;
                     if (UnsolvedCount < 0) UnsolvedCount = 0;
-                    _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
+                    await _cache.SetAsync(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
                 }
                 else if (!dto.Resolved && item.Resolved)
                 {
                     UnsolvedCount++;
-                    _cache.Add(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
+                    await _cache.SetAsync(string.Format(CacheKeyDefinition.DataCenter_AppFeedback_Unsolved, item.AppId), UnsolvedCount);
                 }
             }
         }

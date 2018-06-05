@@ -16,9 +16,9 @@ namespace Ku.Core.WeChat.AccessToken
         private const string CACHE_ACCESSTOKEN = "vino.cache.wechat.accesstoken:{0}";
         private const string URL_GET_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
 
-        private ICacheService cacheService;
+        private ICacheProvider cacheService;
 
-        public WcAccessTokenTool(ICacheService cache, ILogger<WcAccessTokenTool> logger)
+        public WcAccessTokenTool(ICacheProvider cache, ILogger<WcAccessTokenTool> logger)
         {
             this.cacheService = cache;
             this._logger = logger;
@@ -33,7 +33,7 @@ namespace Ku.Core.WeChat.AccessToken
         public async Task<WcReply<WcAccessToken>> GetAsync(string appId, string appSecret)
         {
             //先判断缓存是否有数据
-            var token = cacheService.Get<WcAccessToken>(string.Format(CACHE_ACCESSTOKEN, appId));
+            var token = await cacheService.GetAsync<WcAccessToken>(string.Format(CACHE_ACCESSTOKEN, appId));
 
             //判断是否超时
             if (token != null && token.Time < DateTime.Now)
@@ -75,7 +75,7 @@ namespace Ku.Core.WeChat.AccessToken
             token.Time = DateTime.Now.AddSeconds(token.ExpiresIn - 600); //600秒做缓冲时间
 
             //保存到缓存
-            cacheService.Add(string.Format(CACHE_ACCESSTOKEN, appId), token, new TimeSpan((token.ExpiresIn - 600) * (long)10_000_000));
+            await cacheService.SetAsync(string.Format(CACHE_ACCESSTOKEN, appId), token, new TimeSpan((token.ExpiresIn - 600) * (long)10_000_000));
 
             return new WcReply<WcAccessToken>
             {

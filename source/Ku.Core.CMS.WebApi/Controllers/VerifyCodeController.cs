@@ -13,10 +13,10 @@ namespace Ku.Core.CMS.WebApi.Controllers
     [Route("api/[controller]")]
     public class VerifyCodeController : WebApiController
     {
-        private ICacheService _cacheService;
+        private ICacheProvider _cacheService;
         private readonly IVerificationCodeGen _verificationCodeGen;
 
-        public VerifyCodeController(ICacheService cacheService, 
+        public VerifyCodeController(ICacheProvider cacheService, 
             IVerificationCodeGen verificationCodeGen)
         {
             this._cacheService = cacheService;
@@ -28,7 +28,7 @@ namespace Ku.Core.CMS.WebApi.Controllers
         {
             var ms = _verificationCodeGen.Create(out string code, 4);
             var cacheKey = string.Format(CacheKeyDefinition.VerifyCode, key);
-            _cacheService.Add(cacheKey, code, TimeSpan.FromMinutes(10));
+            _cacheService.Set(cacheKey, code, TimeSpan.FromMinutes(10));
             Response.Body.Dispose();
             return File(ms.ToArray(), @"image/png");
         }

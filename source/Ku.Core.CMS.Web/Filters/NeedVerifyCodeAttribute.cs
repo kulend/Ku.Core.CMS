@@ -33,7 +33,7 @@ namespace Ku.Core.CMS.Web.Filters
             }
 
             //缓存中取得验证码
-            ICacheService _cacheService = context.HttpContext.RequestServices.GetService<ICacheService>();
+            ICacheProvider _cacheService = context.HttpContext.RequestServices.GetService<ICacheProvider>();
             var cacheKey = string.Format(CacheKeyDefinition.VerifyCode, key);
             var checkCode = _cacheService.Get<string>(cacheKey);
             if (!code.Equals(checkCode, StringComparison.OrdinalIgnoreCase))

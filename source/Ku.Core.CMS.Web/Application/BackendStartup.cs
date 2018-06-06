@@ -46,6 +46,11 @@ namespace Ku.Core.CMS.Web.Application
                 opt.ActionTagSize = "layui-btn-sm";
             });
 
+            //DbMigration
+            services.AddDbMigration(options => {
+                options.AddPocoAssemblys("Ku.Core.CMS.Domain");
+            });
+
             services.AddMvc(opts =>
                 {
                     opts.Filters.Add(typeof(VinoActionFilter));

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Ku.Core.CMS.Web.Base;
+using Ku.Core.Extensions.DbMigration;
 
 namespace Ku.Core.CMS.Web.Filters
 {
@@ -13,7 +14,8 @@ namespace Ku.Core.CMS.Web.Filters
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             if (context.Result is JsonResult jsonResult 
-                && !(context.Result is OriginJsonResult))
+                && !(context.Result is OriginJsonResult) 
+                && !(context.Result is DbMigrationJsonResult))
             {
                 var oldValue = jsonResult.Value;
                 jsonResult.Value = new

@@ -37,6 +37,7 @@
     <None Include="Pages\Sys\Menu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.DbMigration\Ku.Core.Extensions.DbMigration.csproj" />
     <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
   </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

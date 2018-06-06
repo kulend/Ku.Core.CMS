@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
+    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.DbMigration\Ku.Core.Extensions.DbMigration.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Layui\Ku.Core.Extensions.Layui.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Ui\Ku.Core.Extensions.Ui.csproj" />
     <ProjectReference Include="..\Ku.Core.Cache\Ku.Core.Cache.csproj" />

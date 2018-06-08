@@ -20,6 +20,11 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// <summary>
         /// 用户操作日志
         /// </summary>
+        public DbSet<Ku.Core.CMS.Domain.Entity.DemoEntity> DemoEntitys { get; set; }
+
+        /// <summary>
+        /// 用户操作日志
+        /// </summary>
         public DbSet<Domain.Entity.System.UserActionLog> UserActionLogs { get; set; }
 
         /// <summary>

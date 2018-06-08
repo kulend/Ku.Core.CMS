@@ -49,6 +49,7 @@ namespace Ku.Core.CMS.Web.Application
             //DbMigration
             services.AddDbMigration(options => {
                 options.AddPocoAssemblys("Ku.Core.CMS.Domain");
+                options.UseMySql("server=121.40.195.153;userid=ku.core.cms;pwd=7cd9b936ddace67f;port=5306;database=ku.core.cms;sslmode=none;");
             });
 
             services.AddMvc(opts =>

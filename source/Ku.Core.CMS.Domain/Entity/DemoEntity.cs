@@ -31,7 +31,7 @@ namespace Ku.Core.CMS.Domain.Entity
 
         public int? IntValue { set; get; }
 
-        public short ShortValue { set; get; }
+        public short? ShortValue { set; get; }
 
         public decimal? DecimalValue { set; get; }
 
@@ -39,7 +39,12 @@ namespace Ku.Core.CMS.Domain.Entity
 
         public bool BoolValue { set; get; }
 
-        public double DoubleValue { set; get; }
+        public double? DoubleValue { set; get; }
+
+        [Key]
+        public long KeyValue2 { set; get; }
+
+
 
     }
 }

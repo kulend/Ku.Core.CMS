@@ -6,7 +6,7 @@
     var multiSelectBox = function (opts) {
         var defaults = {
             winUrl: '',     //数据选择页面地址
-            label: "会员",
+            label: " ",
             filter: "multiSelectBox" + new Date().getTime(),
             required: true,
             winTitle: "选择",

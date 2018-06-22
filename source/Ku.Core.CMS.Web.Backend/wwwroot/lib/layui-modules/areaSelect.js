@@ -16,10 +16,11 @@ layui.define(['form', 'layer'], function (exports) {
             dataType: 'json',          //数据库类型:'json'或'jsonp'
             filter: "areaSelect" + new Date().getTime(),
             hasStreet:true,
-            provinceField: 'province', //省份字段名code
-            cityField: 'city',         //城市字段名code
-            regionField: 'region',     //地区字段名code
-            streetField: 'street',     //街道字段名code
+            provinceField: 'province', //省份字段名
+            cityField: 'city',         //城市字段名
+            regionField: 'region',     //地区字段名
+            streetField: 'street',     //街道字段名
+            codeField: 'areacode',     //Code字段名
             required: true,
             code: 0,                   //地区编码
             province: 0,               //省份,可以为地区编码或者名称
@@ -46,6 +47,7 @@ layui.define(['form', 'layer'], function (exports) {
 
             var html = [];
             html.push('<div class="layui-inline" style="width: 130px;">');
+            html.push(`<input type="hidden" name="${options.codeField}" value="${options.code}" />`);
             if (options.provinceNameField) {
                 html.push(`<input type="hidden" name="${options.provinceNameField}" />`);
             }
@@ -314,6 +316,7 @@ layui.define(['form', 'layer'], function (exports) {
                             options.street = selectData.value || 0;
                         }
                         form.render();
+                        $this.find('input[name="' + options.codeField + '"]').val(options.street || options.region || options.city || options.province);
                         options.onChange(selectData);
                     });
                 }

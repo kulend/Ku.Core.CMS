@@ -26,6 +26,9 @@
     <Content Update="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Pages\Shared\_WindowListLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\lib\layui-admin\" />

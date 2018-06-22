@@ -19,10 +19,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserAddress
     public class EditModel : BasePage
     {
         private readonly IUserAddressService _service;
+        private readonly IUserService _userService;
 
-        public EditModel(IUserAddressService service)
+        public EditModel(IUserAddressService service, IUserService userService)
         {
-            this._service = service;
+            _service = service;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -41,6 +43,8 @@ namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserAddress
                 {
                     throw new KuDataNotFoundException();
                 }
+                //取得用户信息
+                Dto.User = await _userService.GetByIdAsync(Dto.UserId);
                 ViewData["Mode"] = "Edit";
             }
             else

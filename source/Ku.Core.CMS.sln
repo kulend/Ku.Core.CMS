@@ -81,7 +81,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Layui.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.DbMigration", "..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.DbMigration\Ku.Core.Extensions.DbMigration.csproj", "{A751312D-EC48-4578-8179-94F7189D8470}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ku.Core.Extensions.DbMigration.MySql", "..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.DbMigration.MySql\Ku.Core.Extensions.DbMigration.MySql.csproj", "{CB5D1770-7BDC-4FEA-9DB6-7665DCDFB7CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.DbMigration.MySql", "..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.DbMigration.MySql\Ku.Core.Extensions.DbMigration.MySql.csproj", "{CB5D1770-7BDC-4FEA-9DB6-7665DCDFB7CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

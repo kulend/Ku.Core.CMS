@@ -1,0 +1,78 @@
+﻿@page "{handler?}"
+@model SelectorModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Selector.cshtml
+    // 功能描述：用户 选择页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-16 10:45
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowListLayout";
+}
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <div class="toolbar">
+            <action title="刷新" action="grid:reload['#list']" />
+        </div>
+        <table id="list" lay-filter="list"></table>
+    </div>
+    <div class="layui-footer">
+        <span id="sel-tip" style="position:absolute; left:20px;">已选1个，可选10个</span>
+        <span>
+            <button class="layui-btn layui-btn-sm" action="javascript:doSelectOk()">确 定</button>
+            <action text="取 消" css="layui-btn-warm" action="javascript:closeWindow()" />
+        </span>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['table'], function () {
+            var table = layui.table;
+            $("#list").kuGrid({
+                url: 'Selector/Data',
+                cols: [[
+                    { field: 'Account', fixed: 'left', title: '账户', width: 100 },
+                    { field: 'NickName', title: '昵称', width: 120 },
+                    { field: 'RealName', title: '姓名', width: 120 },
+                    { field: 'Mobile', title: '手机', width: 140 },
+                    { field: 'Email', title: '邮箱', width: 250 }
+                ]]
+            });
+
+            table.on('checkbox(list)', function (obj) {
+                showSelTip();
+            });
+
+            showSelTip();
+        });
+
+        function doSelectOk() {
+            var checkStatus = layui.table.checkStatus('list');
+            if (checkStatus.data.length == 0) {
+                ku.page.msg.tip(`请至少选择一条数据！`);
+                return;
+            }
+            var sels = [];
+            for (var i = 0; i < checkStatus.data.length; i++) {
+                sels.push({
+                    id: checkStatus.data[i].Id,
+                    name: checkStatus.data[i].NickName
+                });
+            }
+            closeWindow(sels);
+        }
+
+        function showSelTip() {
+            var checkStatus = layui.table.checkStatus('list');
+            var max = ku.page.querystring.get("max") || 10;
+            $("#sel-tip").text(`已选${checkStatus.data.length}个，可选${max}个`);
+        }
+    </script>
+}

@@ -38,6 +38,12 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
         public string Mobile { get; set; }
 
         /// <summary>
+        /// 地区编码
+        /// </summary>
+        [StringLength(20)]
+        public string AreaCode { get; set; }
+
+        /// <summary>
         /// 省份编码
         /// </summary>
         [StringLength(20)]

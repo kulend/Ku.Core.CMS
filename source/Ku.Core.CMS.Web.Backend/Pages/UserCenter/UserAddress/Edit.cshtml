@@ -20,8 +20,16 @@
     {
         <div class="layui-body">
             @Html.InputFor(x => x.Dto.Id)
-            <div class="layui-form-item" id="memberBox">
-            </div>
+            @if ("Add".Equals(ViewData["Mode"]))
+            {
+                <div class="layui-form-item" id="userBox">
+                </div>
+            }
+            else
+            {
+                @Html.InputFor(x => x.Dto.UserId)
+                @Html.ShowFor(x => x.Dto.User.Account, x => x.Dto.User.NickName)
+            }
             @Html.InputFor(x => x.Dto.Consignee, x => x.Dto.Mobile)
             <div class="layui-form-item">
                 <label class="layui-form-label">地区</label>
@@ -29,6 +37,7 @@
                 </div>
             </div>
             @Html.InputFor(x => x.Dto.Address)
+            @Html.InputFor(x => x.Dto.Default)
         </div>
         <div class="layui-footer">
             @Html.ActionsForSubmitAndClose()
@@ -42,18 +51,19 @@
             var form = layui.form;
             var multiSelectBox = layui.multiSelectBox;
             multiSelectBox({
-                elem: "#memberBox",
-                label: "会员",
-                winUrl: "/Membership/Member/Select",
-                winTitle: "选择会员",
-                name: "MemberID",
-                limit: 99
+                elem: "#userBox",
+                label: "用户",
+                winUrl: "/UserCenter/User/Selector",
+                winTitle: "选择用户",
+                name: "Dto.UserId",
+                limit: 1
             });
 
             var areaSelect = layui.areaSelect;
             areaSelect({
                 elem: "#ID_Area",
                 hasStreet: true,
+                codeField: "Dto.AreaCode",
                 provinceField: "Dto.ProvinceCode",
                 cityField: "Dto.CityCode",
                 regionField: "Dto.RegionCode",
@@ -62,7 +72,7 @@
                 cityNameField: "Dto.City",
                 regionNameField: "Dto.Region",
                 streetNameField: "Dto.Street",
-                code: 140000
+                code: @(Model.Dto.AreaCode??"0")
             });
         });
     </script>

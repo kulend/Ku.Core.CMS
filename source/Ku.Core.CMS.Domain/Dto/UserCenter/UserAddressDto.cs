@@ -25,6 +25,8 @@ namespace Ku.Core.CMS.Domain.Dto.UserCenter
         [DataType("hidden")]
         public long UserId { get; set; }
 
+        public virtual UserDto User { set; get; }
+
         /// <summary>
         /// 联系人
         /// </summary>
@@ -39,6 +41,12 @@ namespace Ku.Core.CMS.Domain.Dto.UserCenter
         [Display(Name = "联系电话")]
         [DataType(DataType.PhoneNumber)]
         public string Mobile { get; set; }
+
+        /// <summary>
+        /// 地区编码
+        /// </summary>
+        [StringLength(20)]
+        public string AreaCode { get; set; }
 
         /// <summary>
         /// 省份编码
@@ -97,6 +105,7 @@ namespace Ku.Core.CMS.Domain.Dto.UserCenter
         /// </summary>
         [StringLength(256)]
         [Display(Name = "详细地址")]
+        [DataType(DataType.MultilineText)]
         public string Address { get; set; }
 
         /// <summary>

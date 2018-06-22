@@ -22,3 +22,7 @@
     background-color: #eee;
 }
 
+.layui-table, .layui-table-view {
+    margin: 0;
+}
+

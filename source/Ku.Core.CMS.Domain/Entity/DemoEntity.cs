@@ -41,10 +41,5 @@ namespace Ku.Core.CMS.Domain.Entity
 
         public double? DoubleValue { set; get; }
 
-        [Key]
-        public long KeyValue2 { set; get; }
-
-
-
     }
 }

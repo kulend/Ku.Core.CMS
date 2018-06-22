@@ -14,6 +14,7 @@ using Ku.Core.CMS.Domain.Dto.UserCenter;
 using Ku.Core.CMS.Domain.Entity.UserCenter;
 using Ku.Core.CMS.IService.UserCenter;
 using Ku.Core.Extensions.Dapper;
+using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Threading.Tasks;
@@ -42,8 +43,21 @@ namespace Ku.Core.CMS.Service.UserCenter
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
+
                 using (var dapper = DapperFactory.Create())
                 {
+                    var user = await dapper.QueryOneAsync<User>(new { Id = model.UserId });
+                    if (user == null)
+                    {
+                        throw new KuDataNotFoundException("无法取得用户信息！");
+                    }
+
+                    if (model.Default)
+                    {
+                        //更新其他地址为非默认地址
+                        await dapper.UpdateAsync<UserAddress>(new { Default = false }, new { UserId = model.UserId, Default = true });
+                    }
+
                     await dapper.InsertAsync(model);
                 }
             }
@@ -52,6 +66,12 @@ namespace Ku.Core.CMS.Service.UserCenter
                 //更新
                 using (var dapper = DapperFactory.Create())
                 {
+                    if (model.Default)
+                    {
+                        //更新其他地址为非默认地址
+                        await dapper.UpdateAsync<UserAddress>(new { Default = false }, new { UserId = model.UserId, Default = true });
+                    }
+
                     var item = new {
                         //这里进行赋值
                         model.Consignee,

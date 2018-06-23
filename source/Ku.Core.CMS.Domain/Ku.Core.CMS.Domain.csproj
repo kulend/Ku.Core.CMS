@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Enum\System\**" />
+    <EmbeddedResource Remove="Enum\System\**" />
+    <None Remove="Enum\System\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.0" />
   </ItemGroup>
 
@@ -12,10 +18,6 @@
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\Ku.Core.EventBus\Ku.Core.EventBus.csproj" />
     <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Enum\System\" />
   </ItemGroup>
 
 </Project>

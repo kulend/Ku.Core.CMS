@@ -1,0 +1,50 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserPoint.AdjustModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Adjust.cshtml
+    // 功能描述：用户积分调整页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-06-23 10:50
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<AdjustModel>(""))
+    {
+        <div class="layui-body">
+            @Html.ShowFor(x => x.Dto.Type)
+            @Html.HiddenFor(x => x.Dto.Type)
+            <div class="layui-form-item" id="userBox">
+            </div>
+            @Html.InputFor(x => x.Dto.Points)
+            @Html.InputFor(x => x.Dto.Remark)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form', 'multiSelectBox'], function () {
+            var form = layui.form;
+            var multiSelectBox = layui.multiSelectBox;
+            multiSelectBox({
+                elem: "#userBox",
+                label: "用户",
+                winUrl: "/UserCenter/User/Selector",
+                winTitle: "选择用户",
+                name: "Dto.UserId",
+                limit: 99
+            });
+        });
+    </script>
+}

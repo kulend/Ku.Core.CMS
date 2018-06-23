@@ -26,6 +26,11 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
         public long UserId { get; set; }
 
         /// <summary>
+        /// 用户
+        /// </summary>
+        public virtual User User { get; set; }
+
+        /// <summary>
         /// 收货人
         /// </summary>
         [Required, StringLength(20)]

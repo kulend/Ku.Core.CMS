@@ -153,7 +153,7 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.UserCenter.User> UserCenterUsers { get; set; }
 
         /// <summary>
-        /// 用户角色关联
+        /// 用户角色
         /// </summary>
         public DbSet<Domain.Entity.UserCenter.Role> UserCenterRoles { get; set; }
 
@@ -171,8 +171,18 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// UserCenter 收货地址
         /// </summary>
         public DbSet<Domain.Entity.UserCenter.UserAddress> UserCenterUserAddresss { get; set; }
+        
+		/// <summary>
+        /// UserCenter 用户积分
+        /// </summary>
+        public DbSet<Domain.Entity.UserCenter.UserPoint> UserCenterUserPoints { get; set; }
 		
         /// <summary>
+        /// UserCenter 用户积分记录
+        /// </summary>
+        public DbSet<Domain.Entity.UserCenter.UserPointRecord> UserCenterUserPointRecords { get; set; }
+        
+		/// <summary>
         /// Communication 短信账户
         /// </summary>
         public DbSet<Domain.Entity.Communication.SmsAccount> CommunicationSmsAccounts { get; set; }

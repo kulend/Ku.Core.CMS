@@ -3,14 +3,16 @@ using System;
 using Ku.Core.CMS.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(KuDbContext))]
-    partial class KuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180623064006_10")]
+    partial class _10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1061,42 +1063,6 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                     b.ToTable("usercenter_user_point");
                 });
 
-            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.UserCenter.UserPointRecord", b =>
-                {
-                    b.Property<long>("Id");
-
-                    b.Property<string>("BusDesc")
-                        .HasMaxLength(500);
-
-                    b.Property<long>("BusId");
-
-                    b.Property<short>("BusType");
-
-                    b.Property<short>("ChangeType");
-
-                    b.Property<DateTime>("CreateTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<long?>("OperatorId");
-
-                    b.Property<int>("Points");
-
-                    b.Property<long>("UserId");
-
-                    b.Property<long>("UserPointId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OperatorId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserPointId");
-
-                    b.ToTable("usercenter_user_point_record");
-                });
-
             modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.UserCenter.UserRole", b =>
                 {
                     b.Property<long>("UserId");
@@ -1499,23 +1465,6 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                     b.HasOne("Ku.Core.CMS.Domain.Entity.UserCenter.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.UserCenter.UserPointRecord", b =>
-                {
-                    b.HasOne("Ku.Core.CMS.Domain.Entity.UserCenter.User", "Operator")
-                        .WithMany()
-                        .HasForeignKey("OperatorId");
-
-                    b.HasOne("Ku.Core.CMS.Domain.Entity.UserCenter.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Ku.Core.CMS.Domain.Entity.UserCenter.UserPoint", "UserPoint")
-                        .WithMany()
-                        .HasForeignKey("UserPointId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

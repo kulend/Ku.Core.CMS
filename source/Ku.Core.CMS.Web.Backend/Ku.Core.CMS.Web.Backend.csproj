@@ -29,6 +29,9 @@
     <Content Update="Pages\Shared\_WindowListLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\UserCenter\UserPoint\Adjust.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\lib\layui-admin\" />

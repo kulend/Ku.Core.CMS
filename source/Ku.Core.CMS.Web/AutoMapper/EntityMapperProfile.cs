@@ -25,7 +25,9 @@ namespace Ku.Core.CMS.Web.AutoMapper
 			CreateMap<Domain.Entity.UserCenter.Role, Domain.Dto.UserCenter.RoleDto>().ReverseMap();
 			CreateMap<Domain.Entity.UserCenter.RoleFunction, Domain.Dto.UserCenter.RoleFunctionDto>().ReverseMap();
 			CreateMap<Domain.Entity.UserCenter.UserAddress, Domain.Dto.UserCenter.UserAddressDto>().ReverseMap();
-            CreateMap<Domain.Entity.System.UserActionLog, Domain.Dto.System.UserActionLogDto>().ReverseMap();
+			CreateMap<Domain.Entity.UserCenter.UserPoint, Domain.Dto.UserCenter.UserPointDto>().ReverseMap();
+			CreateMap<Domain.Entity.UserCenter.UserPointRecord, Domain.Dto.UserCenter.UserPointRecordDto>().ReverseMap();
+			CreateMap<Domain.Entity.System.UserActionLog, Domain.Dto.System.UserActionLogDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Function, Domain.Dto.System.FunctionDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Menu, Domain.Dto.System.MenuDto>().ReverseMap();
             CreateMap<Domain.Entity.Communication.Sms, Domain.Dto.Communication.SmsDto>().ForMember(x => x.Data, opt => {

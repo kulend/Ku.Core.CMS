@@ -15,6 +15,7 @@
 @{
     Layout = "_WindowFormLayout";
 }
+@using Ku.Core.Infrastructure.Extensions
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<AdjustModel>(""))
     {
@@ -43,7 +44,8 @@
                 winUrl: "/UserCenter/User/Selector",
                 winTitle: "选择用户",
                 name: "Dto.UserId",
-                limit: 99
+                limit: 99,
+                data : @Html.Raw(Model.Users.Select(x => new { id = x.Id, name = x.NickName }).JsonSerialize())
             });
         });
     </script>

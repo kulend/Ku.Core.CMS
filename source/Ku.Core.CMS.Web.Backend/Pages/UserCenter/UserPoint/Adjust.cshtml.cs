@@ -10,6 +10,7 @@ using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.CMS.Domain.Enum.UserCenter;
 using System.ComponentModel.DataAnnotations;
 using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.Domain.Dto.UserCenter;
 
 namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserPoint
 {
@@ -20,23 +21,38 @@ namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserPoint
     public class AdjustModel : BasePage
     {
         private readonly IUserPointService _service;
+        private readonly IUserService _userService;
 
-        public AdjustModel(IUserPointService service)
+        public AdjustModel(IUserPointService service, IUserService userService)
         {
-            this._service = service;
+            _service = service;
+            _userService = userService;
         }
 
         [BindProperty]
         public UserPointAdjustDto Dto { set; get; }
 
+        public List<UserDto> Users { set; get; }
+
         /// <summary>
         /// 取得数据
         /// </summary>
         [Auth("edit")]
-        public async Task OnGetAsync(EmUserPointType? type)
+        public async Task OnGetAsync(EmUserPointType? type, long? uid)
         {
             Dto = new UserPointAdjustDto();
             Dto.Type = type ?? EmUserPointType.Mall;
+
+            Users = new List<UserDto>();
+            if (uid.HasValue)
+            {
+                var user = await _userService.GetByIdAsync(uid.Value);
+                if (user != null)
+                {
+                    user.Password = null;
+                    Users.Add(user);
+                }
+            }
         }
 
         /// <summary>

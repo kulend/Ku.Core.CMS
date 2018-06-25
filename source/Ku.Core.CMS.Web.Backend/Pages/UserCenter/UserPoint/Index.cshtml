@@ -88,8 +88,8 @@
                         {
                             title: '操作', fixed: 'right', width: 165, align: 'center',
                             templet: grid_templet_operate([
-                                { code: "membership.member.point.adjust", text: "调整", action: `window:/Membership/MemberPoint/Adjust?id={{d.Id}}` },
-                                { code: "membership.member.point.record.view", text: "记录", action: `window:/Membership/MemberPoint/RecordList?id={{d.Id}}`, css: "layui-btn-primary" }
+                                { code: "usercenter.user.point.adjust", text: "调整", action: `window:/UserCenter/UserPoint/Adjust?uid={{d.UserId}}&type={{d.Type.Value}}` },
+                                { code: "usercenter.user.point.record.view", text: "记录", action: `window:/UserCenter/UserPoint/Record?upid={{d.Id}}`, css: "layui-btn-primary" }
                             ])
                         }
                     ]],

@@ -88,6 +88,11 @@
             $this.find(".multi-box-container").empty();
             updateTip();
         });
+
+        //处理初始化数据
+        if (options.data && options.data.length > 0) {
+            loadItems(options.data);
+        }
     };
 
     exports('multiSelectBox', multiSelectBox);

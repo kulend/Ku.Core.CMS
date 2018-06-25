@@ -3,16 +3,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Areas\Membership\Views\MemberPoint\**" />
-    <Compile Remove="Areas\Membership\Views\Member\**" />
-    <Content Remove="Areas\Membership\Views\MemberPoint\**" />
-    <Content Remove="Areas\Membership\Views\Member\**" />
-    <EmbeddedResource Remove="Areas\Membership\Views\MemberPoint\**" />
-    <EmbeddedResource Remove="Areas\Membership\Views\Member\**" />
-    <None Remove="Areas\Membership\Views\MemberPoint\**" />
-    <None Remove="Areas\Membership\Views\Member\**" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Pages\Account\UserProfile.cshtml.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -21,10 +11,6 @@
     <Content Remove="Pages\Sys\Function\Index.cshtml" />
     <Content Remove="Pages\Sys\Menu\Edit.cshtml" />
     <Content Remove="Pages\Sys\Menu\Index.cshtml" />
-    <Content Remove="Views\Shared\_FormLayout.cshtml" />
-    <Content Remove="Views\Shared\_Layout.cshtml" />
-    <Content Remove="Views\Shared\_WindowLayout.cshtml" />
-    <Content Remove="Views\Shared\_WindowListLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -37,6 +23,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Pages\Shared\_WindowListLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\UserCenter\UserPoint\Record.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\UserCenter\UserPoint\Adjust.cshtml">

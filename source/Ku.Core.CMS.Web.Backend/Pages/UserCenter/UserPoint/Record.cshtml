@@ -1,0 +1,51 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserPoint.RecordModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Record.cshtml
+    // 功能描述：用户积分记录页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-06-23 10:50
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowListLayout";
+}
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <div class="toolbar">
+            <action title="刷新" action="grid:reload['#list']" />
+        </div>
+        <table id="list"></table>
+    </div>
+    <div class="layui-footer">
+        <action text="关 闭" css="layui-btn-warm" action="javascript:closeWindow()" />
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['table'], function () {
+            var table = layui.table;
+            $("#list").kuGrid({
+                url: 'Record/Data',
+                cols: [[
+                    { field: 'ChangeType', title: '变动类型', width: 100, enum: true },
+                    { field: 'Points', title: '积分', width: 80, align: 'center'},
+                    { field: 'BusType', title: '业务类型', width: 120, enum: true },
+                    { field: 'BusDesc', title: '业务说明', width: 250 },
+                    { field: 'CreateTime', title: '变动时间', width: 170, align: 'center' }
+                ]],
+                onWhere: function () {
+                    return {
+                        UserPointId: ku.page.querystring.get("upid")
+                    };
+                }
+            });
+        });
+    </script>
+}

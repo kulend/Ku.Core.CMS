@@ -7,7 +7,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Ku.Core.Cache;
 using Ku.Core.CMS.Domain;
-using Ku.Core.CMS.Domain.Dto.Membership;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Configs;
 using Ku.Core.CMS.Web.Extensions;
@@ -15,6 +14,7 @@ using Ku.Core.CMS.Web.Filters;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.Tokens.Jwt;
+using Ku.Core.CMS.Domain.Dto.UserCenter;
 
 namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
 {
@@ -39,29 +39,29 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
         public async Task<JsonResult> Login(string mobile, string password)
         {
             //验证
-            var member = new MemberDto { Id = 1, Name = "测试" };
+            var user = new UserDto { Id = 1, NickName = "测试" };
             //生成Token
             var tokenVersion = DateTime.Now.Ticks.ToString();
 
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Version, tokenVersion)
-                ,new Claim(ClaimTypes.NameIdentifier, member.Id.ToString())
-                ,new Claim(ClaimTypes.Name, member.Name)
+                ,new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                ,new Claim(ClaimTypes.Name, user.NickName)
                 ,new Claim(ClaimTypes.Role, ((int)MemberRole.Default).ToString())
             };
 
             var token = _jwtProvider.CreateToken(claims);
 
             var loginMember = new LoginMember {
-                Id = member.Id,
-                Name = member.Name
+                Id = user.Id,
+                Name = user.NickName
             };
 
             //如果当前已登陆，则退出当前登录
             await DoLogoutAsync();
 
-            await _cacheService.SetAsync(string.Format(CacheKeyDefinition.ApiMemberToken, member.Id, tokenVersion), loginMember, TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
+            await _cacheService.SetAsync(string.Format(CacheKeyDefinition.ApiMemberToken, user.Id, tokenVersion), loginMember, TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
 
             return Json(token);
         }

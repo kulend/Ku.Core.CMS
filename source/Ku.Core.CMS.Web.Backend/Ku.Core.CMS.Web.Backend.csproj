@@ -3,6 +3,16 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\Membership\Views\MemberPoint\**" />
+    <Compile Remove="Areas\Membership\Views\Member\**" />
+    <Content Remove="Areas\Membership\Views\MemberPoint\**" />
+    <Content Remove="Areas\Membership\Views\Member\**" />
+    <EmbeddedResource Remove="Areas\Membership\Views\MemberPoint\**" />
+    <EmbeddedResource Remove="Areas\Membership\Views\Member\**" />
+    <None Remove="Areas\Membership\Views\MemberPoint\**" />
+    <None Remove="Areas\Membership\Views\Member\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Pages\Account\UserProfile.cshtml.cs" />
   </ItemGroup>
   <ItemGroup>

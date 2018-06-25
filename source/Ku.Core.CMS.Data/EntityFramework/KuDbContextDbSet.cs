@@ -43,31 +43,6 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.System.Notice> SystemNotices { get; set; }
 
         /// <summary>
-        /// 会员
-        /// </summary>
-        public DbSet<Domain.Entity.Membership.Member> Members { get; set; }
-
-        /// <summary>
-        /// 会员类型
-        /// </summary>
-        public DbSet<Domain.Entity.Membership.MemberType> MemberTypes { get; set; }
-
-        /// <summary>
-        /// 会员积分
-        /// </summary>
-        public DbSet<Domain.Entity.Membership.MemberPoint> MemberPoints { get; set; }
-
-        /// <summary>
-        /// 会员积分记录
-        /// </summary>
-        public DbSet<Domain.Entity.Membership.MemberPointRecord> MemberPointRecords { get; set; }
-
-        /// <summary>
-        /// 会员地址
-        /// </summary>
-        public DbSet<Domain.Entity.Membership.MemberAddress> MemberAddresss { get; set; }
-
-        /// <summary>
         /// WeChat 微信账户
         /// </summary>
         public DbSet<Domain.Entity.WeChat.WxAccount> WeChatWxAccounts { get; set; }

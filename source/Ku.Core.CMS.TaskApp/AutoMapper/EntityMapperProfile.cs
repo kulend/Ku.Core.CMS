@@ -43,10 +43,6 @@ namespace Ku.Core.CMS.TaskApp.AutoMapper
             });
             CreateMap<Domain.Entity.Communication.SmsTemplet, Domain.Dto.Communication.SmsTempletDto>();
             CreateMap<Domain.Dto.Communication.SmsTempletDto, Domain.Entity.Communication.SmsTemplet>();
-            CreateMap<Domain.Entity.Membership.Member, Domain.Dto.Membership.MemberDto>();
-            CreateMap<Domain.Dto.Membership.MemberDto, Domain.Entity.Membership.Member>();
-            CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>();
-            CreateMap<Domain.Dto.Membership.MemberTypeDto, Domain.Entity.Membership.MemberType>();
             CreateMap<Domain.Entity.WeChat.WxAccount, Domain.Dto.WeChat.WxAccountDto>();
             CreateMap<Domain.Dto.WeChat.WxAccountDto, Domain.Entity.WeChat.WxAccount>();
             CreateMap<Domain.Entity.WeChat.WxMenu, Domain.Dto.WeChat.WxMenuDto>();

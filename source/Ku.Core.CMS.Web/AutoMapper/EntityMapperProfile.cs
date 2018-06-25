@@ -45,11 +45,6 @@ namespace Ku.Core.CMS.Web.AutoMapper
             });
             CreateMap<Domain.Entity.Communication.SmsTemplet, Domain.Dto.Communication.SmsTempletDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Notice, Domain.Dto.System.NoticeDto>().ReverseMap();
-            CreateMap<Domain.Entity.Membership.Member, Domain.Dto.Membership.MemberDto>().ReverseMap();
-            CreateMap<Domain.Entity.Membership.MemberType, Domain.Dto.Membership.MemberTypeDto>().ReverseMap();
-            CreateMap<Domain.Entity.Membership.MemberPoint, Domain.Dto.Membership.MemberPointDto>().ReverseMap();
-            CreateMap<Domain.Entity.Membership.MemberPointRecord, Domain.Dto.Membership.MemberPointRecordDto>().ReverseMap();
-            CreateMap<Domain.Entity.Membership.MemberAddress, Domain.Dto.Membership.MemberAddressDto>().ReverseMap();
 			CreateMap<Domain.Entity.WeChat.WxAccount, Domain.Dto.WeChat.WxAccountDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxMenu, Domain.Dto.WeChat.WxMenuDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxUserTag, Domain.Dto.WeChat.WxUserTagDto>().ReverseMap();

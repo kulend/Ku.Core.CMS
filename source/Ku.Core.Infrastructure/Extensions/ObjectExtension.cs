@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ku.Core.Infrastructure.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -14,7 +15,7 @@ namespace Ku.Core.Infrastructure.Extensions
             {
                 return "";
             }
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new LongToStringConverter(), new EnumDisplayConverter());
         }
 
         public static T Copy<T>(this T obj)

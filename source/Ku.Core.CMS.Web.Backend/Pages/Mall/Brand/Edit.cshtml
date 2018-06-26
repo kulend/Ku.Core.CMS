@@ -1,0 +1,63 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Mall.Brand.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：品牌 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-06-26 11:09
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.InputFor(x => x.Dto.Name, x => x.Dto.IsEnable)
+        <div class="layui-form-item">
+            <label class="layui-form-label">LOGO</label>
+            <div id="logo" class="layui-input-block">
+            </div>
+        </div>
+        @Html.InputFor(x => x.Dto.Intro)
+        <div class="layui-form-item">
+            <label class="layui-form-label">关联类目</label>
+            <div class="layui-input-block" id="category">
+            </div>
+        </div>
+    </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/ku/ku.image.picker.js"></script>
+    <script>
+        layui.use(['form', 'multiSelect'], function () {
+            var form = layui.form;
+            var multiSelect = layui.multiSelect;
+
+            $("#logo").kuImagePicker({
+                field_path: "Dto.Logo",
+                max_count: 1
+            });
+            $("#logo").kuImagePicker("loadImage", '@Html.Raw(Model.Dto.Logo)');
+
+            multiSelect({
+                url: '/Mall/Product/Category/Index/Json',     //数据地址
+                elem: "#category",
+                name:"Dto.CategoryId",
+                value : ""
+            });
+        });
+    </script>
+}

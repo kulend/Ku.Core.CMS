@@ -58,7 +58,7 @@
     }
     
     $.fn.kuForm = function (options, param) {
-        if (typeof options == 'string') {
+        if (typeof options === 'string') {
             return $.fn.kuForm.methods[options](this, param);
         }
         options = options || {};

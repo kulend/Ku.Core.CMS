@@ -401,7 +401,7 @@ $.fn.ajaxFormUnbind = function() {
  * It is this array that is passed to pre-submit callback functions provided to the
  * ajaxSubmit() and ajaxForm() methods.
  */
-$.fn.formToArray = function(semantic) {
+$.fn.formToArray = function (semantic) {
     var a = [];
     if (this.length == 0) return a;
 
@@ -527,6 +527,12 @@ $.fn.fieldValue = function(successful) {
 $.fieldValue = function(el, successful) {
     var n = el.name, t = el.type, tag = el.tagName.toLowerCase();
     if (typeof successful == 'undefined') successful = true;
+
+    //¥¶¿Ìlayui-swhich
+    var layuiswhich = el.getAttribute("lay-skin");
+    if (successful && layuiswhich && layuiswhich === "switch" && !el.checked) {
+        return "false";
+    }
 
     if (successful && (!n || el.disabled || t == 'reset' || t == 'button' ||
         (t == 'checkbox' || t == 'radio') && !el.checked ||

@@ -15,7 +15,7 @@
         if (!options.url) {
             return;
         }
-        var $this = $(opts.elem);
+        var $this = (opts.elem instanceof jQuery) ? opts.elem : $(opts.elem);
         if (!$this.length) {
             return;
         }

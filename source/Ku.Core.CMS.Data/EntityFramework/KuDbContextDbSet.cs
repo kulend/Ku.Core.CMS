@@ -106,7 +106,22 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// 商品类目
         /// </summary>
         public DbSet<Domain.Entity.Mall.ProductCategory> ProductCategorys { get; set; }
-
+		
+        /// <summary>
+        /// Mall 品牌
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.Brand> MallBrands { get; set; }
+		
+        /// <summary>
+        /// Mall 品牌类目关联
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.BrandCategoryRef> MallBrandCategoryRefs { get; set; }
+		
+        /// <summary>
+        /// Mall 计量单位
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.ProductUnit> MallProductUnits { get; set; }
+		
         /// <summary>
         /// DataCenter 应用
         /// </summary>

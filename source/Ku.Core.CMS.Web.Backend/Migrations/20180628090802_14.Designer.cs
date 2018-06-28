@@ -3,14 +3,16 @@ using System;
 using Ku.Core.CMS.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(KuDbContext))]
-    partial class KuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180628090802_14")]
+    partial class _14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -570,7 +572,7 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                     b.ToTable("mall_product_sku");
                 });
 
-            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.Mall.ProductUnit", b =>
+            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.Mall.Unit", b =>
                 {
                     b.Property<long>("Id");
 
@@ -584,7 +586,7 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("mall_product_unit");
+                    b.ToTable("mall_unit");
                 });
 
             modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.MaterialCenter.Picture", b =>

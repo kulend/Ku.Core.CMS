@@ -21,6 +21,8 @@ namespace Ku.Core.CMS.Data.EntityFramework
             //菜单
             modelBuilder.Entity<Domain.Entity.System.Menu>().HasMany(m => m.SubMenus).WithOne(m => m.Parent);
 
+            modelBuilder.Entity<Domain.Entity.Mall.BrandCategoryRef>().HasKey(t => new { t.BrandId, t.ProductCategoryId });
+
             base.OnModelCreating(modelBuilder);
 
             //定时任务相关

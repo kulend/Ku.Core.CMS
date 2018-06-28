@@ -29,9 +29,6 @@
 	//
 	//----------------------------------------------------------------
 }
-@{
-    Layout = "~/Pages/_Layout.cshtml";
-}
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-header">
@@ -45,7 +42,7 @@
 		</div>
         <div class="layui-card-body">
             <div class="toolbar">
-                <action icon="&#x1002;" title="刷新" action="grid:reload['#list']" />
+                <action title="刷新" action="grid:reload['#list']" />
                 <action auth-code="<#=lowArea#>.<#=lowName#>.edit" text="新增" icon="&#xe608;" action="window:/<#=area#>/<#=name#>/Edit" after="grid:reload['#list']" />
                 <action auth-code="<#=lowArea#>.<#=lowName#>.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
             </div>
@@ -57,7 +54,7 @@
 {
     <script>
         $(function () {
-            $("#list").vinoGrid({
+            $("#list").kuGrid({
                 url: 'Index/Data',
                 cols: [[
                     { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},

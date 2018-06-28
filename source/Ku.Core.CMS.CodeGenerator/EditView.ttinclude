@@ -30,7 +30,7 @@
 //----------------------------------------------------------------
 }
 @{
-    Layout = "~/Pages/_WindowFormLayout.cshtml";
+    Layout = "_WindowFormLayout";
 }
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<EditModel>(""))
@@ -126,7 +126,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
                 Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
-                    throw new VinoDataNotFoundException();
+                    throw new KuDataNotFoundException();
                 }
 <# if(mode == 3 || mode == 4){#>
                 if (Dto.ParentId.HasValue)
@@ -162,7 +162,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
         {
             if (!ModelState.IsValid)
             {
-                throw new VinoArgNullException();
+                throw new KuArgNullException();
             }
 
             await _service.SaveAsync(Dto);

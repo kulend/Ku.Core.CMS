@@ -14,6 +14,7 @@ using Ku.Core.CMS.Web.Filters;
 using Ku.Core.Infrastructure.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -98,6 +99,12 @@ namespace Ku.Core.CMS.Web.Application
 
             //身份认证
             app.UseBackendAuth(Configuration);
+
+            //Nginx反向代理
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseMvc(routes =>
             {

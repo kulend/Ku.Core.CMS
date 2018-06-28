@@ -29,7 +29,28 @@
         @Html.InputFor(x => x.Dto.Intro)
         <div class="layui-form-item">
             <label class="layui-form-label">关联类目</label>
-            <div class="layui-input-block" id="category">
+            <div class="layui-input-block">
+                <table class="layui-table">
+                    <colgroup><col ><col width="70"></colgroup>
+                    <tbody>
+                        @foreach (var cat in Model.Dto.Categorys)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="category" data-id="@cat.Id"></div>
+                                </td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary" action="js:remove($this)"><i class="layui-icon layui-icon-close"></i></button>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2">
+                                <button id="btn-add-category" type="button" class="layui-btn layui-btn-sm layui-btn-primary"><i class="layui-icon">&#xe608;</i>添加</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -42,9 +63,10 @@
     {
     <script src="~/js/ku/ku.image.picker.js"></script>
     <script>
+        var multiSelect;
         layui.use(['form', 'multiSelect'], function () {
             var form = layui.form;
-            var multiSelect = layui.multiSelect;
+            multiSelect = layui.multiSelect;
 
             $("#logo").kuImagePicker({
                 field_path: "Dto.Logo",
@@ -52,12 +74,39 @@
             });
             $("#logo").kuImagePicker("loadImage", '@Html.Raw(Model.Dto.Logo)');
 
-            multiSelect({
-                url: '/Mall/Product/Category/Index/Json',     //数据地址
-                elem: "#category",
-                name:"Dto.CategoryId",
-                value : ""
+            $("div.category").each(function () { 
+                var id = $(this).attr("data-id");
+                multiSelect({
+                    url: '/Mall/Product/Category/Index/Json',
+                    elem: $(this),
+                    name: "CategoryIds",
+                    value: id || ""
+                });
             });
+
+            $("#btn-add-category").on("click", function(){
+                addItem();
+            });
+
+            if ($("div.category").length == 0) { 
+                addItem();
+            }
         });
+
+        function addItem() { 
+            let key = "category_" + new Date().getTime();
+            $("#btn-add-category").closest("tr").before(`<tr><td><div class="category" id="${key}"></div></td><td><button type="button" class="layui-btn layui-btn-xs layui-btn-primary" action="js:remove($this)"><i class="layui-icon layui-icon-close"></i></button></td></tr>`);
+            multiSelect({
+                url: '/Mall/Product/Category/Index/Json',
+                elem: "#" + key,
+                name: "CategoryIds",
+                value: ""
+            });
+        }
+
+        function remove(that)
+        {
+            $(that).closest("tr").remove();
+        }
     </script>
 }

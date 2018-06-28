@@ -65,7 +65,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
 #if !DEBUG
             if(Input.ImageCode.IsNullOrEmpty())
             {
-                throw new VinoException("请输入验证码!");
+                throw new KuException("请输入验证码!");
             }
 #endif
             if (!Input.ImageCode.IsNullOrEmpty())

@@ -10,23 +10,23 @@ using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.Exceptions;
 
-namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Brand
+namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Product.Unit
 {
     /// <summary>
-    /// 品牌 编辑页面
+    /// 计量单位 编辑页面
     /// </summary>
-    [Auth("mall.brand")]
+    [Auth("mall.productunit")]
     public class EditModel : BasePage
     {
-        private readonly IBrandService _service;
+        private readonly IProductUnitService _service;
 
-        public EditModel(IBrandService service)
+        public EditModel(IProductUnitService service)
         {
             this._service = service;
         }
 
         [BindProperty]
-        public BrandDto Dto { set; get; }
+        public ProductUnitDto Dto { set; get; }
 
         /// <summary>
         /// 取得数据
@@ -36,7 +36,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Brand
         {
             if (id.HasValue)
             {
-                Dto = await _service.GetByIdWithRefAsync(id.Value);
+                Dto = await _service.GetByIdAsync(id.Value);
                 if (Dto == null)
                 {
                     throw new KuDataNotFoundException();
@@ -45,8 +45,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Brand
             }
             else
             {
-                Dto = new BrandDto();
-                Dto.Categorys = new List<ProductCategoryDto>();
+                Dto = new ProductUnitDto();
                 ViewData["Mode"] = "Add";
             }
         }
@@ -55,14 +54,14 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Brand
         /// 保存
         /// </summary>
         [Auth("edit")]
-        public async Task<IActionResult> OnPostAsync(long[] CategoryIds)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 throw new KuArgNullException();
             }
 
-            await _service.SaveAsync(Dto, CategoryIds);
+            await _service.SaveAsync(Dto);
             return Json(true);
         }
     }

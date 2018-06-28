@@ -68,6 +68,9 @@ namespace Ku.Core.CMS.Web.AutoMapper
             });
             CreateMap<Domain.Entity.Mall.ProductSku, Domain.Dto.Mall.ProductSkuDto>().ReverseMap();
 			CreateMap<Domain.Entity.Mall.ProductCategory, Domain.Dto.Mall.ProductCategoryDto>().ReverseMap();
+			CreateMap<Domain.Entity.Mall.Brand, Domain.Dto.Mall.BrandDto>().ReverseMap();
+			CreateMap<Domain.Entity.Mall.BrandCategoryRef, Domain.Dto.Mall.BrandCategoryRefDto>().ReverseMap();
+            CreateMap<Domain.Entity.Mall.ProductUnit, Domain.Dto.Mall.ProductUnitDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.App, Domain.Dto.DataCenter.AppDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppVersion, Domain.Dto.DataCenter.AppVersionDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppFeedback, Domain.Dto.DataCenter.AppFeedbackDto>().ReverseMap();

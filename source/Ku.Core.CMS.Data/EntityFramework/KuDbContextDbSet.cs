@@ -123,6 +123,11 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.Mall.ProductUnit> MallProductUnits { get; set; }
 		
         /// <summary>
+        /// Mall 订单
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.Order> MallOrders { get; set; }
+		
+        /// <summary>
         /// DataCenter 应用
         /// </summary>
         public DbSet<Domain.Entity.DataCenter.App> DataCenterApps { get; set; }

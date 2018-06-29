@@ -3,16 +3,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Pages\Account\UserProfile.cshtml.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Pages\Account\UserProfile.cshtml" />
-    <Content Remove="Pages\Sys\Function\Edit.cshtml" />
-    <Content Remove="Pages\Sys\Function\Index.cshtml" />
-    <Content Remove="Pages\Sys\Menu\Edit.cshtml" />
-    <Content Remove="Pages\Sys\Menu\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
     <PackageReference Include="NLog" Version="4.5.6" />
@@ -22,24 +12,6 @@
     <Content Update="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="Pages\Shared\_WindowListLayout.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Pages\UserCenter\UserPoint\Record.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Pages\UserCenter\UserPoint\Adjust.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\layui-admin\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Pages\Sys\Function\Edit.cshtml" />
-    <None Include="Pages\Sys\Function\Index.cshtml" />
-    <None Include="Pages\Sys\Menu\Edit.cshtml" />
-    <None Include="Pages\Sys\Menu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.DbMigration\Ku.Core.Extensions.DbMigration.csproj" />

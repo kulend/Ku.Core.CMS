@@ -15,8 +15,8 @@
 	//var aa = new MemberAddress();
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
-	var name = "ProductUnit";
-	var desc = "计量单位";
+	var name = "Order";
+	var desc = "订单";
 	var area = "Mall";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = true;

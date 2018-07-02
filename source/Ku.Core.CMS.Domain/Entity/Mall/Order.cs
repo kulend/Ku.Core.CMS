@@ -114,6 +114,11 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         /// </summary>
         public decimal RefundAmount { set; get; }
 
+        /// <summary>
+        /// 退款时间
+        /// </summary>
+        public DateTime? RefundTime { set; get; }
+
         #endregion
     }
 

@@ -22,9 +22,19 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
     [Table("mall_order")]
     public class Order : BaseProtectedEntity
     {
-
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public EmOrderStatus Status { set; get; }
+    
+        /// <summary>
+        /// 用户ID
+        /// </summary>
         public long? UserId { set; get; }
 
+        /// <summary>
+        /// 用户信息
+        /// </summary>
         public virtual UserCenter.User User { set; get; }
 
         #region Amount
@@ -102,7 +112,7 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         /// </summary>
         public DateTime? ReceivedTime { set; get; }
 
-        #region 退款
+        #region 退款信息
 
         /// <summary>
         /// 退款状态
@@ -120,6 +130,12 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         public DateTime? RefundTime { set; get; }
 
         #endregion
+
+        /// <summary>
+        /// 用户备注
+        /// </summary>
+        [StringLength(256)]
+        public string UserRemark { set; get; }
     }
 
     /// <summary>

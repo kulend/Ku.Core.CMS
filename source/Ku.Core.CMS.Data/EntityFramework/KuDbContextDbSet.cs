@@ -125,7 +125,12 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// <summary>
         /// Mall 订单
         /// </summary>
-        public DbSet<Domain.Entity.Mall.Order> MallOrders { get; set; }
+        public DbSet<Domain.Entity.Mall.Order> MallOrders { get; set; 
+		
+        /// <summary>
+        /// Mall 订单商品
+        /// </summary>
+        public DbSet<Domain.Entity.Mall.OrderProduct> MallOrderProducts { get; set; }
 		
         /// <summary>
         /// DataCenter 应用

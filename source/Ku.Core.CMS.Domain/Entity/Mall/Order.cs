@@ -136,6 +136,12 @@ namespace Ku.Core.CMS.Domain.Entity.Mall
         /// </summary>
         [StringLength(256)]
         public string UserRemark { set; get; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [StringLength(256)]
+        public string Remark { set; get; }
     }
 
     /// <summary>

@@ -16,11 +16,11 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Order
     /// 订单 编辑页面
     /// </summary>
     [Auth("mall.order")]
-    public class EditModel : BasePage
+    public class AddModel : BasePage
     {
         private readonly IOrderService _service;
 
-        public EditModel(IOrderService service)
+        public AddModel(IOrderService service)
         {
             this._service = service;
         }
@@ -31,7 +31,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Order
         /// <summary>
         /// 取得数据
         /// </summary>
-        [Auth("edit")]
+        [Auth("add")]
         public async Task OnGetAsync(long? id)
         {
             if (id.HasValue)
@@ -53,7 +53,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Mall.Order
         /// <summary>
         /// 保存
         /// </summary>
-        [Auth("edit")]
+        [Auth("add")]
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

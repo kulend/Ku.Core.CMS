@@ -53,6 +53,7 @@ namespace Ku.Core.CMS.Web.AutoMapper
             CreateMap<Domain.Entity.MaterialCenter.Picture, Domain.Dto.MaterialCenter.PictureDto>().ReverseMap();
             CreateMap<Domain.Entity.Content.Article, Domain.Dto.Content.ArticleDto>().ReverseMap();
             CreateMap<Domain.Entity.Content.Column, Domain.Dto.Content.ColumnDto>().ReverseMap();
+			CreateMap<Domain.Entity.Content.MaskWord, Domain.Dto.Content.MaskWordDto>().ReverseMap();
             CreateMap<Domain.Entity.Mall.DeliveryTemplet, Domain.Dto.Mall.DeliveryTempletDto>().ReverseMap();
             CreateMap<Domain.Entity.Mall.Payment, Domain.Dto.Mall.PaymentDto>().ForMember(x=>x.PaymentConfig, opt=>{
                 opt.ResolveUsing<JsonDeserializeResolver<IDictionary<string, string>>, string>(x => x.PaymentConfig);

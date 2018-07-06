@@ -9,6 +9,8 @@
 //
 //----------------------------------------------------------------
 
+using Ku.Core.CMS.Domain.Enum.Mall;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +21,125 @@ namespace Ku.Core.CMS.Domain.Dto.Mall
     /// </summary>
     public class OrderDto : BaseProtectedDto
     {
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public EmOrderStatus Status { set; get; }
 
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public long? UserId { set; get; }
+
+        /// <summary>
+        /// 用户信息
+        /// </summary>
+        public virtual UserCenter.UserDto User { set; get; }
+
+        #region Amount
+
+        /// <summary>
+        /// 商品金额
+        /// </summary>
+        public decimal ProductAmount { set; get; }
+
+        /// <summary>
+        /// 支付金额
+        /// </summary>
+        public decimal PayAmount { set; get; }
+
+        /// <summary>
+        /// 优惠金额
+        /// </summary>
+        public decimal DiscountAmount { set; get; }
+
+        /// <summary>
+        /// 运费金额
+        /// </summary>
+        public decimal FreightAmount { set; get; }
+
+        #endregion
+
+        #region 配送信息
+
+        /// <summary>
+        /// 收货人
+        /// </summary>
+        [StringLength(20)]
+        public string Consignee { get; set; }
+
+        /// <summary>
+        /// 联系电话
+        /// </summary>
+        [StringLength(20)]
+        public string Mobile { get; set; }
+
+        /// <summary>
+        /// 地区编码
+        /// </summary>
+        [StringLength(20)]
+        public string AreaCode { get; set; }
+
+        /// <summary>
+        /// 配送地址
+        /// </summary>
+        public string DeliveryAddress { set; get; }
+
+        /// <summary>
+        /// 配送时间
+        /// </summary>
+        public DateTime? DeliveryTime { set; get; }
+
+        #endregion
+
+        #region 支付信息
+
+        /// <summary>
+        /// 是否已支付
+        /// </summary>
+        public bool IsPaid { set; get; }
+
+        /// <summary>
+        /// 支付时间
+        /// </summary>
+        public DateTime? PayTime { set; get; }
+
+        #endregion
+
+        /// <summary>
+        /// 确认收货时间
+        /// </summary>
+        public DateTime? ReceivedTime { set; get; }
+
+        #region 退款信息
+
+        /// <summary>
+        /// 退款状态
+        /// </summary>
+        public EmOrderRefundStatus RefundStatus { set; get; }
+
+        /// <summary>
+        /// 退款金额
+        /// </summary>
+        public decimal RefundAmount { set; get; }
+
+        /// <summary>
+        /// 退款时间
+        /// </summary>
+        public DateTime? RefundTime { set; get; }
+
+        #endregion
+
+        /// <summary>
+        /// 用户备注
+        /// </summary>
+        [StringLength(256)]
+        public string UserRemark { set; get; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [StringLength(256)]
+        public string Remark { set; get; }
     }
 }

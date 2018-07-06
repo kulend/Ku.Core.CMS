@@ -1,0 +1,63 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Content.MaskWord.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：屏蔽关键词 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-07-03 14:22
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+@section Css
+    {
+    <link rel="stylesheet" href="~/lib/layui-modules/formSelects/formSelects-v4.css" asp-append-version="true" />
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Level)
+            @Html.InputFor(x => x.Dto.Word)
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-block">
+                    <select name="city" xm-select="select9" xm-select-search="" xm-select-create="">
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <option value="@tag">@tag</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form', 'formSelects'], function () {
+            var form = layui.form;
+            var formSelects = layui.formSelects;
+            formSelects.render('select9', {
+                create: function (id, name) {
+                    console.log(id);    //多选id
+                    console.log(name);  //创建的标签名称
+
+                    return name;  //返回该标签对应的val
+                }
+            });
+        });
+    </script>
+}

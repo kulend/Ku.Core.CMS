@@ -73,15 +73,20 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.MaterialCenter.Picture> MaterialCenterPictures { get; set; }
 
         /// <summary>
-        /// 文章
+        /// Content 文章
         /// </summary>
         public DbSet<Domain.Entity.Content.Article> ContentArticles { get; set; }
 
         /// <summary>
-        /// 栏目
+        /// Content 栏目
         /// </summary>
         public DbSet<Domain.Entity.Content.Column> Columns { get; set; }
-
+		
+        /// <summary>
+        /// Content 屏蔽关键词
+        /// </summary>
+        public DbSet<Domain.Entity.Content.MaskWord> ContentMaskWords { get; set; }
+		
         /// <summary>
         /// Mall 配送模板
         /// </summary>
@@ -125,7 +130,7 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// <summary>
         /// Mall 订单
         /// </summary>
-        public DbSet<Domain.Entity.Mall.Order> MallOrders { get; set; 
+        public DbSet<Domain.Entity.Mall.Order> MallOrders { get; set; }
 		
         /// <summary>
         /// Mall 订单商品

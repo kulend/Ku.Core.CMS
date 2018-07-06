@@ -23,7 +23,7 @@
                 <div class="layui-tab-item layui-show">
                     <div class="toolbar">
                         <action title="刷新" action="grid:reload['#list']" />
-                        <action auth-code="mall.order.edit" text="新增" icon="&#xe608;" action="window:/Mall/Order/Edit" after="grid:reload['#list']" />
+                        <action auth-code="mall.order.edit" text="新增" icon="&#xe608;" action="window:/Mall/Order/Add" after="grid:reload['#list']" />
                         <action auth-code="mall.order.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
                     </div>
                     <table id="list"></table>

@@ -1,5 +1,7 @@
 ﻿layui.config({
     base: '/lib/layui-modules/'
+}).extend({
+    formSelects: 'formSelects/formSelects-v4'
 });
 
 layui.use(['element', 'form', 'layer', 'laydate'], function () {

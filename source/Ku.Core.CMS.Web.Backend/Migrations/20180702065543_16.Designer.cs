@@ -3,14 +3,16 @@ using System;
 using Ku.Core.CMS.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(KuDbContext))]
-    partial class KuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180702065543_16")]
+    partial class _16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,28 +205,6 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("content_column");
-                });
-
-            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.Content.MaskWord", b =>
-                {
-                    b.Property<long>("Id");
-
-                    b.Property<DateTime>("CreateTime");
-
-                    b.Property<short>("Level");
-
-                    b.Property<int>("MatchCount");
-
-                    b.Property<string>("Tag")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Word")
-                        .IsRequired()
-                        .HasMaxLength(64);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("content_maskword");
                 });
 
             modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.DataCenter.App", b =>

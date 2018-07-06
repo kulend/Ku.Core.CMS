@@ -46,7 +46,7 @@
 {
     <script>
         $(function () {
-            $("#list").vinoGrid({
+            $("#list").kuGrid({
                 url: 'Index/Data',
                 cols: [[
                     { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},

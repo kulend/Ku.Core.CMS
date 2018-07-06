@@ -19,6 +19,38 @@ namespace Ku.Core.CMS.Domain.Dto.Mall
     /// </summary>
     public class OrderProductDto : BaseProtectedDto
     {
+        public long OrderId { set; get; }
+
+        public virtual OrderDto Order { set; get; }
+
+        public long ProductId { set; get; }
+
+        public virtual ProductDto Product { set; get; }
+
+        public long ProductSkuId { set; get; }
+
+        public virtual ProductSkuDto ProductSku { set; get; }
+
+        /// <summary>
+        /// 商品单价
+        /// </summary>
+        public decimal ProductPrice { set; get; }
+
+        /// <summary>
+        /// 商品数量
+        /// </summary>
+        public int Qty { set; get; }
+
+        /// <summary>
+        /// 商品总额
+        /// </summary>
+        public decimal Amount { set; get; }
+
+        /// <summary>
+        /// 备注信息
+        /// </summary>
+        [StringLength(256)]
+        public string Remark { set; get; }
 
     }
 }

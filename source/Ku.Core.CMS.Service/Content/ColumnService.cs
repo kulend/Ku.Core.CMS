@@ -49,7 +49,8 @@ namespace Ku.Core.CMS.Service.Content
                     {
                         model.Name,
                         model.Title,
-                        model.OrderIndex
+                        model.OrderIndex,
+                        model.Tag
                     };
                     await dapper.UpdateAsync<Column>(item, new { model.Id });
                 }

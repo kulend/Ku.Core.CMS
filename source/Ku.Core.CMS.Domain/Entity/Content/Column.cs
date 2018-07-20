@@ -42,6 +42,11 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         /// </summary>
         public int OrderIndex { set; get; }
 
+        /// <summary>
+        /// 标记
+        /// </summary>
+        [StringLength(64)]
+        public string Tag { set; get; }
     }
 
     /// <summary>

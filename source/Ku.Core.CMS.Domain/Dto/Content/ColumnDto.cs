@@ -44,5 +44,12 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         /// </summary>
         [Display(Name = "排序值")]
         public int OrderIndex { set; get; }
+
+        /// <summary>
+        /// 标记
+        /// </summary>
+        [StringLength(64)]
+        [Display(Name = "标记")]
+        public string Tag { set; get; }
     }
 }

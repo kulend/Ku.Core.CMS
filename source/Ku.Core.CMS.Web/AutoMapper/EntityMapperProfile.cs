@@ -12,6 +12,7 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using AutoMapper.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -77,7 +78,12 @@ namespace Ku.Core.CMS.Web.AutoMapper
 			CreateMap<Domain.Entity.DataCenter.App, Domain.Dto.DataCenter.AppDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppVersion, Domain.Dto.DataCenter.AppVersionDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppFeedback, Domain.Dto.DataCenter.AppFeedbackDto>().ReverseMap();
-		}
+
+            //静态调用初始化
+            var cfg = new MapperConfigurationExpression();
+            cfg.AddProfile(this);
+            Mapper.Initialize(cfg);
+        }
 
         private class JsonSerializeResolver : IMemberValueResolver<object, object, object, string>
         {

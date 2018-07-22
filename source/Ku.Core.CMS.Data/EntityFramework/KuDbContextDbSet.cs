@@ -41,7 +41,12 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// System 公告
         /// </summary>
         public DbSet<Domain.Entity.System.Notice> SystemNotices { get; set; }
-
+		
+        /// <summary>
+        /// System 定时任务
+        /// </summary>
+        public DbSet<Domain.Entity.System.TimedTask> SystemTimedTasks { get; set; }
+		
         /// <summary>
         /// WeChat 微信账户
         /// </summary>

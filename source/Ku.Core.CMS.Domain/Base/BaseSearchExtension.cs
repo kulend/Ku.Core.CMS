@@ -190,6 +190,18 @@ namespace Ku.Core.CMS.Domain
                     sql = $"{tableAlias}{dialect.QuoteFiled(name)} NOT LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
                     pms.TryAdd(name, value);
                     break;
+                case SearchConditionOperation.Sql:
+                    var sq = attr?.Sql;
+                    if (string.IsNullOrEmpty(sq))
+                    {
+                        break;
+                    }
+                    sql = sq.Replace("@value", "@" + name);
+                    if (sql.Contains("@" + name))
+                    {
+                        pms.TryAdd(name, value);
+                    }
+                    break;
                 default:
                     break;
             }

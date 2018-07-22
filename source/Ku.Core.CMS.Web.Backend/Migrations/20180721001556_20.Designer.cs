@@ -3,14 +3,16 @@ using System;
 using Ku.Core.CMS.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(KuDbContext))]
-    partial class KuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180721001556_20")]
+    partial class _20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,8 +145,6 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                     b.Property<string>("Author")
                         .HasMaxLength(32);
 
-                    b.Property<long>("ColumnId");
-
                     b.Property<string>("Content");
 
                     b.Property<short>("ContentType");
@@ -180,8 +180,6 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColumnId");
-
                     b.ToTable("content_article");
                 });
 
@@ -210,6 +208,19 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("content_column");
+                });
+
+            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.Content.ColumnArticleRef", b =>
+                {
+                    b.Property<long>("ColumnId");
+
+                    b.Property<long>("ArticleId");
+
+                    b.HasKey("ColumnId", "ArticleId");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("content_column_article_ref");
                 });
 
             modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.Content.MaskWord", b =>
@@ -1391,8 +1402,13 @@ namespace Ku.Core.CMS.Web.Backend.Migrations
                         .HasForeignKey("SmsAccountId");
                 });
 
-            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.Content.Article", b =>
+            modelBuilder.Entity("Ku.Core.CMS.Domain.Entity.Content.ColumnArticleRef", b =>
                 {
+                    b.HasOne("Ku.Core.CMS.Domain.Entity.Content.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Ku.Core.CMS.Domain.Entity.Content.Column", "Column")
                         .WithMany()
                         .HasForeignKey("ColumnId")

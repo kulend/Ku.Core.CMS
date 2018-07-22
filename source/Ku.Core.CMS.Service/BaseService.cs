@@ -61,6 +61,19 @@ namespace Ku.Core.CMS.Service
         }
 
         /// <summary>
+        /// 根据条件取得数据一条数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public virtual async Task<TDto> GetOneAsync(TSearch where, dynamic sort = null)
+        {
+            using (var dapper = DapperFactory.Create())
+            {
+                return Mapper.Map<TDto>(await dapper.QueryOneAsync<TEntity>(where.ParseToDapperSql(dapper.Dialect), sort as object));
+            }
+        }
+
+        /// <summary>
         /// 删除数据
         /// </summary>
         /// <param name="id">主键</param>

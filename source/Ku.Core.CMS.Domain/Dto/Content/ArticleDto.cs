@@ -24,6 +24,17 @@ namespace Ku.Core.CMS.Domain.Dto.Content
     public class ArticleDto : BaseProtectedDto
     {
         /// <summary>
+        /// 栏目Id
+        /// </summary>
+        [DataType("hidden")]
+        public long ColumnId { set; get; }
+
+        /// <summary>
+        /// 栏目
+        /// </summary>
+        public virtual ColumnDto Column { set; get; }
+
+        /// <summary>
         /// 标题
         /// </summary>
         [Required, MaxLength(256)]

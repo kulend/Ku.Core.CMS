@@ -19,10 +19,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Content.Article
     public class EditModel : BasePage
     {
         private readonly IArticleService _service;
+        private readonly IColumnService _service2;
 
-        public EditModel(IArticleService service)
+        public EditModel(IArticleService service, IColumnService service2)
         {
-            this._service = service;
+            _service = service;
+            _service2 = service2;
         }
 
         [BindProperty]
@@ -32,7 +34,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Content.Article
         /// 取得数据
         /// </summary>
         [Auth("edit")]
-        public async Task OnGetAsync(long? id, long? pid)
+        public async Task OnGetAsync(long? id, long? ColumnId)
         {
             if (id.HasValue)
             {
@@ -41,11 +43,29 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Content.Article
                 {
                     throw new KuDataNotFoundException();
                 }
+                Dto.Column = await _service2.GetByIdAsync(Dto.ColumnId);
+                if (Dto.Column == null)
+                {
+                    throw new KuDataNotFoundException("数据出错!");
+                }
                 ViewData["Mode"] = "Edit";
             }
             else
             {
                 Dto = new ArticleDto();
+                if (ColumnId.HasValue)
+                {
+                    Dto.ColumnId = ColumnId.Value;
+                    Dto.Column = await _service2.GetByIdAsync(ColumnId.Value);
+                    if (Dto.Column == null)
+                    {
+                        throw new KuDataNotFoundException("参数出错!");
+                    }
+                }
+                else
+                {
+                    throw new KuDataNotFoundException("参数出错!");
+                }
                 ViewData["Mode"] = "Add";
             }
         }

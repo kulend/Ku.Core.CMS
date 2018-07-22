@@ -15,18 +15,18 @@
 	//var aa = new MemberAddress();
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
-	var name = "MaskWord";
-	var desc = "屏蔽关键词";
-	var area = "Content";
+	var name = "TimedTask";
+	var desc = "定时任务";
+	var area = "System";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
-	var logicDel = false;
-	var HasRecycle = false;
-   	var HasDetail = false;
+	var logicDel = true;
+	var HasRecycle = true;
+   	var HasDetail = true;
    	//模式1，普通无回收站
    	//模式2，普通有回收站
    	//模式3，父子级无回收站
    	//模式4，父子级有回收站
-	var mode = 1;
+	var mode = 2;
 
 	var table = name.ToLower();
 	name = name.Replace("_", "");

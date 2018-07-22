@@ -8,13 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ku.Core.CMS.Data.Common;
 using Ku.Core.CMS.TaskApp.Application;
-using Ku.Core.CMS.TaskApp.AutoMapper;
 using Ku.Core.Infrastructure.Extensions;
 using AutoMapper;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using Ku.Core.CMS.IService.System;
 using Ku.Core.CMS.Data.EntityFramework;
+using Ku.Core.CMS.Domain;
+using System.Reflection;
 
 namespace Ku.Core.CMS.TaskApp
 {
@@ -27,23 +28,25 @@ namespace Ku.Core.CMS.TaskApp
 
             Console.WriteLine("Hello World!");
 
-            var Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+#if DEBUG
+            configurationBuilder.AddJsonFile("appsettings.Development.json");
+#endif
+            var Configuration = configurationBuilder.Build();
 
             IServiceCollection services = new ServiceCollection();
             services.AddLogging();
 
             //AutoMapper
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(EntityMapperProfile).GetTypeInfo().Assembly);
             //Tools
             services.AddTools();
             //IdGenerator
             services.AddIdGenerator(Configuration);
 
             string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContext<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")));
-
-            //string connection = Configuration.GetConnectionString("Default");
-            //services.AddDbContext<VinoDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Vino.Core.CMS.TaskApp")), ServiceLifetime.Transient);
+            //services.AddDbContext<KuDbContext>(options => options.UseMySql(connection));
+            services.AddDapper(options => options.UseMySql(connection));
 
             //缓存
             services.AddCache(Configuration);
@@ -63,7 +66,7 @@ namespace Ku.Core.CMS.TaskApp
             var container = builder.Build();
             var serviceProvider = new AutofacServiceProvider(container);
 
-            serviceProvider.UseTimedTask();
+            //serviceProvider.UseTimedTask();
 
             while (true)
             {

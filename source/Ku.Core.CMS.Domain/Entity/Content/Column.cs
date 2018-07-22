@@ -59,5 +59,7 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         /// </summary>
         [SearchCondition(ignoreWhenNull: false)]
         public long? ParentId { get; set; }
+
+        public string Tag { set; get; }
     }
 }

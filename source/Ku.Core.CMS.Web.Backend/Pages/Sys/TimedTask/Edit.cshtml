@@ -1,0 +1,36 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.System.TimedTask.EditModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Edit.cshtml
+// 功能描述：定时任务 编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-07-22 08:15
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

@@ -23,6 +23,9 @@ namespace Ku.Core.CMS.Domain
         /// </summary>
         public bool IgnoreWhenNull { set; get; } = true;
 
+
+        public string Sql { set; get; }
+
         public SearchConditionAttribute(string propertyName, SearchConditionOperation operation)
         {
             this.PropertyName = propertyName;
@@ -51,5 +54,6 @@ namespace Ku.Core.CMS.Domain
         NotEqual,
         Contains,
         NotContains,
+        Sql
     }
 }

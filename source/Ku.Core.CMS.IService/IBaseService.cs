@@ -36,6 +36,12 @@ namespace Ku.Core.CMS.IService
         Task<TDto> GetByIdAsync(long id);
 
         /// <summary>
+        /// 根据条件取得一条数据
+        /// </summary>
+        /// <returns></returns>
+        Task<TDto> GetOneAsync(TSearch where, dynamic sort = null);
+
+        /// <summary>
         /// 删除数据
         /// </summary>
         /// <param name="id">主键</param>

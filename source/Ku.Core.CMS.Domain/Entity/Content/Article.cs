@@ -25,6 +25,16 @@ namespace Ku.Core.CMS.Domain.Entity.Content
     public class Article : BaseProtectedEntity
     {
         /// <summary>
+        /// 栏目Id
+        /// </summary>
+        public long ColumnId { set; get; }
+
+        /// <summary>
+        /// 栏目
+        /// </summary>
+        public virtual Column Column { set; get; }
+
+        /// <summary>
         /// 标题
         /// </summary>
         [Required, MaxLength(256)]
@@ -109,6 +119,6 @@ namespace Ku.Core.CMS.Domain.Entity.Content
     /// </summary>
     public class ArticleSearch : BaseProtectedSearch<Article>
     {
-
+        public long? ColumnId { set; get; }
     }
 }

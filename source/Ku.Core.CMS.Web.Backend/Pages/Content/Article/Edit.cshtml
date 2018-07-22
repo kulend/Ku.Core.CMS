@@ -19,36 +19,43 @@
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<EditModel>(""))
     {
-        <div class="layui-body">
-            @Html.InputFor(x => x.Dto.Id)
-            @Html.InputFor(x => x.Dto.Title, x => x.Dto.SubTitle)
-            @Html.InputFor(x => x.Dto.Author, x => x.Dto.Provenance)
-            <div class="layui-form-item">
-                <label class="layui-form-label">封面</label>
-                <div id="coverList" class="layui-input-block">
-                </div>
-            </div>
-            @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
-            @Html.InputFor(x => x.Dto.Keyword, x => x.Dto.OrderIndex)
-            @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
-            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Text ? "" : "layui-hide")">
-                <label class="layui-form-label">详情内容</label>
-                <div id="ID_content_1" class="layui-input-block long">
-                    <textarea class="layui-textarea">@(Model.Dto.ContentType == EmArticleContentType.Text ? Model.Dto.Content : "")</textarea>
-                </div>
-            </div>
-            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.RichText ? "" : "layui-hide")">
-                <label class="layui-form-label">详情内容</label>
-                <div id="ID_content_2" class="layui-input-block">
-                    @Html.Raw(Model.Dto.ContentType == EmArticleContentType.RichText ? Model.Dto.Content : "")
-                </div>
-            </div>
-            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Picture ? "" : "layui-hide")">
-                <label class="layui-form-label">详情图</label>
-                <div id="ID_content_3" class="layui-input-block">
-                </div>
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.InputFor(x => x.Dto.ColumnId)
+        <div class="layui-form-item">
+            <label class="layui-form-label">栏目</label>
+            <div class="layui-input-block">
+                <label class="layui-form-label-show">@Model.Dto.Column.Name</label>
             </div>
         </div>
+        @Html.InputFor(x => x.Dto.Title, x => x.Dto.SubTitle)
+        @Html.InputFor(x => x.Dto.Author, x => x.Dto.Provenance)
+        <div class="layui-form-item">
+            <label class="layui-form-label">封面</label>
+            <div id="coverList" class="layui-input-block">
+            </div>
+        </div>
+        @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
+        @Html.InputFor(x => x.Dto.Keyword, x => x.Dto.OrderIndex)
+        @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
+        <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Text ? "" : "layui-hide")">
+            <label class="layui-form-label">详情内容</label>
+            <div id="ID_content_1" class="layui-input-block long">
+                <textarea class="layui-textarea">@(Model.Dto.ContentType == EmArticleContentType.Text ? Model.Dto.Content : "")</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.RichText ? "" : "layui-hide")">
+            <label class="layui-form-label">详情内容</label>
+            <div id="ID_content_2" class="layui-input-block">
+                @Html.Raw(Model.Dto.ContentType == EmArticleContentType.RichText ? Model.Dto.Content : "")
+            </div>
+        </div>
+        <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Picture ? "" : "layui-hide")">
+            <label class="layui-form-label">详情图</label>
+            <div id="ID_content_3" class="layui-input-block">
+            </div>
+        </div>
+    </div>
         <div class="layui-footer">
             <input type="hidden" id="hdContent" value="@Model.Dto.Content" />
             @Html.ActionsForSubmitAndClose()

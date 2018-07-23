@@ -6,9 +6,9 @@ using Quartz;
 
 namespace Ku.Core.CMS.Job
 {
-    public class TestJob : IJob
+    public class TestJob : BaseJob
     {
-        public async Task Execute(IJobExecutionContext context)
+        public override async Task Run(IJobExecutionContext context)
         {
             await Console.Out.WriteLineAsync("Greetings from HelloJob!");
         }

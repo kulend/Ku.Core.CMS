@@ -19,17 +19,19 @@ namespace Ku.Core.CMS.TaskApp
         private static StdSchedulerFactory _factory;
         private static IScheduler _scheduler;
 
-        private List<Assembly> assemblies;
+        private static List<Assembly> assemblies;
 
         public TaskManager(ITimedTaskService service)
         {
             _service = service;
         }
 
+        /// <summary>
+        /// 初始化并启动
+        /// </summary>
         public void Startup()
         {
             Task.Run(async () => {
-                // Grab the Scheduler instance from the Factory
                 NameValueCollection props = new NameValueCollection
                 {
                     { "quartz.serializer.type", "binary" }
@@ -65,6 +67,7 @@ namespace Ku.Core.CMS.TaskApp
                     // 定义一个 Job
                     IJobDetail job = JobBuilder.Create(type)
                         .WithIdentity(task.Name, task.Group)
+                        .UsingJobData("TaskId", task.Id)
                         .Build();
 
                     // 定义一个触发器

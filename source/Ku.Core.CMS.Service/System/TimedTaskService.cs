@@ -42,6 +42,7 @@ namespace Ku.Core.CMS.Service.System
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
+                model.Status = Domain.Enum.System.EmTimedTaskStatus.Disable;
                 using (var dapper = DapperFactory.Create())
                 {
                     await dapper.InsertAsync(model);
@@ -53,7 +54,14 @@ namespace Ku.Core.CMS.Service.System
                 using (var dapper = DapperFactory.Create())
                 {
                     var item = new {
-                        //TODO:这里进行赋值
+                        //这里进行赋值
+                        model.Group,
+                        model.Name,
+                        model.AssemblyName,
+                        model.TypeName,
+                        model.Cron,
+                        model.ValidStartTime,
+                        model.ValidEndTime
                     };
                     await dapper.UpdateAsync<TimedTask>(item, new { model.Id });
                 }

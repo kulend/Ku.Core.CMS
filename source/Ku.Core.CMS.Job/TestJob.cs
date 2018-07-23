@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Ku.Core.CMS.IService.System;
-using Ku.Core.TimedTask.Attribute;
+using Quartz;
 
 namespace Ku.Core.CMS.Job
 {
-    public class TestJob: VinoJob
+    public class TestJob : IJob
     {
-        //[Invoke(Interval = 5000)]
-        [SingleTask]
-        public void Run()
+        public async Task Execute(IJobExecutionContext context)
         {
+            await Console.Out.WriteLineAsync("Greetings from HelloJob!");
         }
     }
 }

@@ -55,6 +55,7 @@ namespace Ku.Core.CMS.TaskApp
             services.AddEventBus<KuDbContext>(Configuration);
 
             //services.AddTimedTask().AddEntityFrameworkTimedTask<KuDbContext>();
+            services.AddSingleton<TaskManager>();
 
             var builder = new ContainerBuilder();
             builder.RegisterModule(new AppModule());
@@ -66,7 +67,11 @@ namespace Ku.Core.CMS.TaskApp
             var container = builder.Build();
             var serviceProvider = new AutofacServiceProvider(container);
 
+            //Dapper
+            serviceProvider.UseDapper();
+
             //serviceProvider.UseTimedTask();
+            serviceProvider.GetService<TaskManager>().Startup();
 
             while (true)
             {

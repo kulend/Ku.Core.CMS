@@ -1,5 +1,5 @@
 @page "{handler?}"
-@model Ku.Core.CMS.Web.Backend.Pages.System.TimedTask.IndexModel
+@model Ku.Core.CMS.Web.Backend.Pages.Sys.TimedTask.IndexModel
 @{
 	//----------------------------------------------------------------
 	// Copyright (C) 2018 kulend 版权所有
@@ -23,14 +23,14 @@
                 <div class="layui-tab-item layui-show">
                     <div class="toolbar">
                         <action title="刷新" action="grid:reload['#list']" />
-                        <action auth-code="system.timedtask.edit" text="新增" icon="&#xe608;" action="window:/System/TimedTask/Edit" after="grid:reload['#list']" />
+                        <action auth-code="system.timedtask.edit" text="新增" icon="&#xe608;" action="window:/Sys/TimedTask/Edit" after="grid:reload['#list']" />
                         <action auth-code="system.timedtask.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
                     </div>
                     <table id="list"></table>
                 </div>
                 <div class="layui-tab-item">
                     <div class="toolbar">
-                        <action icon="&#x1002;" title="刷新" action="grid:reload['#recycles']" />
+                        <action title="刷新" action="grid:reload['#recycles']" />
                         <action auth-code="system.timedtask.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
                     </div>
                     <table id="recycles"></table>
@@ -46,7 +46,12 @@
         var element = layui.element;
 
         var cols = [
-            { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
+            { field: 'Status', title: '状态', width: 100, enum: true },
+            { field: 'Group', title: '分组', width: 150 },
+            { field: 'Name', title: '名称', width: 170 },
+            { field: 'Cron', title: 'Cron', width: 130 },
+            { field: 'ValidStartTime', title: '有效开始时间', width: 170, align: 'center' },
+            { field: 'ValidEndTime', title: '有效结束时间', width: 170, align: 'center' }
         ];
 
         $("#list").kuGrid({
@@ -55,8 +60,8 @@
                 {
                     title: '操作', fixed: 'right', width: 160, align: 'center',
                     toolbar: grid_templet_operate([
-                        { code: "system.timedtask.edit", text: "编辑", action: `window:/System/TimedTask/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
-                        { code: "system.timedtask.detail", text: "详情", action: `window:/System/TimedTask/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                        { code: "system.timedtask.edit", text: "编辑", action: `window:/Sys/TimedTask/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "system.timedtask.detail", text: "详情", action: `window:/Sys/TimedTask/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
                         { code: "system.timedtask.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
                     ])
                 }
@@ -78,7 +83,7 @@
                         {
                             title: '操作', fixed: 'right', width: 160, align: 'center',
                             toolbar: grid_templet_operate([
-                                { code: "system.timedtask.detail", text: "详情", action: `window:/System/TimedTask/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                                { code: "system.timedtask.detail", text: "详情", action: `window:/Sys/TimedTask/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
                                 { code: "system.timedtask.restore", text: "恢复", action: `post:Index/Restore?id={{d.Id}}` }
                             ])
                         }

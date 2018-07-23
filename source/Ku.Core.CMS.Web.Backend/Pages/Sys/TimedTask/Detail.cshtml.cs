@@ -10,7 +10,7 @@ using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.Exceptions;
 
-namespace Ku.Core.CMS.Web.Backend.Pages.System.TimedTask
+namespace Ku.Core.CMS.Web.Backend.Pages.Sys.TimedTask
 {
     /// <summary>
     /// 定时任务 详情页面
@@ -33,7 +33,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.System.TimedTask
             Dto = await _service.GetByIdAsync(id);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
         }
     }

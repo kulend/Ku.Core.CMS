@@ -7,7 +7,7 @@ using Ku.Core.CMS.IService.System;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Security;
 
-namespace Ku.Core.CMS.Web.Backend.Pages.System.TimedTask
+namespace Ku.Core.CMS.Web.Backend.Pages.Sys.TimedTask
 {
     /// <summary>
     /// 定时任务 列表页面

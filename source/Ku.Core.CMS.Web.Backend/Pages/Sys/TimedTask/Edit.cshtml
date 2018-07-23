@@ -1,16 +1,16 @@
 @page
-@model Ku.Core.CMS.Web.Backend.Pages.System.TimedTask.EditModel
+@model Ku.Core.CMS.Web.Backend.Pages.Sys.TimedTask.EditModel
 @{
-//----------------------------------------------------------------
-// Copyright (C) 2018 kulend 版权所有
-//
-// 文件名：Edit.cshtml
-// 功能描述：定时任务 编辑页面
-//
-// 创建者：kulend@qq.com
-// 创建时间：2018-07-22 08:15
-//
-//----------------------------------------------------------------
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：定时任务 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-07-22 08:15
+    //
+    //----------------------------------------------------------------
 }
 @{
     Layout = "_WindowFormLayout";
@@ -18,16 +18,20 @@
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<EditModel>(""))
     {
-        <div class="layui-body">
-            @Html.InputFor(x => x.Dto.Id)
-        </div>
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.InputFor(x => x.Dto.Group, x => x.Dto.Name)
+        @Html.InputFor(x => x.Dto.AssemblyName, x => x.Dto.TypeName)
+        @Html.InputFor(x => x.Dto.Cron)
+        @Html.InputFor(x => x.Dto.ValidStartTime, x => x.Dto.ValidEndTime)
+    </div>
         <div class="layui-footer">
             @Html.ActionsForSubmitAndClose()
         </div>
     }
 </div>
 @section Scripts
-{
+    {
     <script>
         layui.use(['form'], function () {
             var form = layui.form;

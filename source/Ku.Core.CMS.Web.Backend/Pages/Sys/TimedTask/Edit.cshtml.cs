@@ -10,7 +10,7 @@ using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.Exceptions;
 
-namespace Ku.Core.CMS.Web.Backend.Pages.System.TimedTask
+namespace Ku.Core.CMS.Web.Backend.Pages.Sys.TimedTask
 {
     /// <summary>
     /// 定时任务 编辑页面
@@ -46,6 +46,8 @@ namespace Ku.Core.CMS.Web.Backend.Pages.System.TimedTask
             else
             {
                 Dto = new TimedTaskDto();
+                Dto.ValidStartTime = DateTime.Now;
+                Dto.ValidEndTime = DateTime.MaxValue;
                 ViewData["Mode"] = "Add";
             }
         }

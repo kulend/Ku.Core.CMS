@@ -3,14 +3,16 @@ using System;
 using Ku.Core.CMS.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ku.Core.CMS.Web.Backend.Migrations
 {
     [DbContext(typeof(KuDbContext))]
-    partial class KuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180723114358_23")]
+    partial class _23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

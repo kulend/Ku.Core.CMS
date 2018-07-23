@@ -33,6 +33,7 @@ namespace Ku.Core.CMS.Web.Backend
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .UseUrls("http://localhost:5000")
+                .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .UseNLog(); // NLog: setup NLog for Dependency injection
     }
 }

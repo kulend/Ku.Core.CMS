@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Ku.Core.CMS.Domain.Enum.System;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +19,7 @@ namespace Ku.Core.CMS.Domain.Entity.System
     /// <summary>
     /// 定时任务
     /// </summary>
-    [Table("system_timedtask")]
+    [Table("system_timed_task")]
     public class TimedTask : BaseProtectedEntity
     {
         /// <summary>
@@ -36,11 +37,12 @@ namespace Ku.Core.CMS.Domain.Entity.System
         /// <summary>
         /// 状态
         /// </summary>
-        public short Status { set; get; }
+        public EmTimedTaskStatus Status { set; get; }
 
         /// <summary>
         /// Cron表达式
         /// </summary>
+        [Required, MaxLength(32)]
         public string Cron { get; set; }
 
         [Required, MaxLength(128)]

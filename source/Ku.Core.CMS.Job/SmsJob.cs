@@ -1,8 +1,4 @@
-﻿using Ku.Core.Communication.SMS;
-using Ku.Core.Infrastructure.Extensions;
-using Ku.Core.TimedTask.Attribute;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+﻿using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Job
 {
-    public class SmsJob : VinoJob
+    public class SmsJob : IJob
     {
-        [Invoke(Interval = 15000)]
-        [SingleTask]
+        public async Task Execute(IJobExecutionContext context)
+        {
+            await Console.Out.WriteLineAsync("开始处理短信事务...");
+        }
+
+        //[Invoke(Interval = 15000)]
+        //[SingleTask]
         public async Task Run()
         {
             Debug.WriteLine(DateTime.Now + " 开始处理短信事务...");

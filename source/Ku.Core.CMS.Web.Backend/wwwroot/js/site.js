@@ -8,6 +8,7 @@ layui.use(['element', 'form', 'layer', 'laydate'], function () {
     var $ = layui.jquery
         , layer = layui.layer
         , element = layui.element
+        , laydate = layui.laydate
         , form = layui.form;
 
     //layui-action

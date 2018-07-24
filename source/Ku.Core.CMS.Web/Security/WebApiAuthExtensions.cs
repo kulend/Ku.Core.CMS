@@ -39,20 +39,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 // 时间偏差
                 ClockSkew = TimeSpan.Zero
             };
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("auth", policy =>
-            //    {
-            //        policy.Requirements.Add(new ValidJtiRequirement());
-            //        policy.Requirements.Add(new BackendAuthAuthorizationRequirement());
-            //    });
-            //});
-
+ 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("auth", policy =>
                 {
-                    //policy.Requirements.Add(new ValidJtiRequirement());
                     policy.Requirements.Add(new WebApiAuthAuthorizationRequirement());
                 });
             });
@@ -65,7 +56,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.TokenValidationParameters = tokenValidationParameters;
             });
 
-            //services.AddScoped<IAuthorizationHandler, ValidJtiHandler>();
             services.AddScoped<IAuthorizationHandler, WebApiAuthAuthorizationHandler>();
             return services;
         }

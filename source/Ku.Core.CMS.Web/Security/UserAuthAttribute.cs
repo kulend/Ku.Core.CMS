@@ -6,28 +6,28 @@ using System.Text;
 
 namespace Ku.Core.CMS.Web.Security
 {
-    public class MemberAuthAttribute : AuthorizeAttribute
+    public class UserAuthAttribute : AuthorizeAttribute
     {
         /// <summary>
-        /// 会员角色
+        /// 用户角色
         /// </summary>
-        public MemberRole Role { get; set; }
+        public UserRole Role { get; set; }
 
-        public MemberAuthAttribute() : this(MemberRole.Default)
+        public UserAuthAttribute() : this(UserRole.Default)
         {
         }
 
-        public MemberAuthAttribute(MemberRole Role) : base("auth")
+        public UserAuthAttribute(UserRole Role) : base("auth")
         {
             this.Role = Role;
         }
     }
 
     [System.Flags]
-    public enum MemberRole
+    public enum UserRole
     {
         Default = 1,
-        Teacher = 2,
+        Admin = 2,
         Other = 4
     }
 }

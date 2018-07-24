@@ -220,6 +220,43 @@ namespace Ku.Core.CMS.Service.UserCenter
         }
 
         /// <summary>
+        /// 登陆
+        /// </summary>
+        public async Task<UserDto> MobileLoginAsync(string mobile, string password)
+        {
+            if (mobile.IsNullOrEmpty())
+                throw new KuArgNullException("手机号不能为空！");
+
+            if (password.IsNullOrEmpty())
+                throw new KuArgNullException("密码不能为空！");
+
+            using (var _dapper = DapperFactory.Create())
+            {
+                var entity = await _dapper.QueryOneAsync<User>(new { Mobile = mobile });
+                if (entity == null || entity.IsDeleted)
+                {
+                    throw new KuException("账户不存在！");
+                }
+                if (!entity.CheckPassword(password))
+                {
+                    throw new KuException("手机号或密码出错！");
+                }
+                if (!entity.IsEnable)
+                {
+                    throw new KuException("该账号已被禁止登陆！");
+                }
+
+                var dto = Mapper.Map<UserDto>(entity);
+                dto.Password = "";
+
+                //发送消息
+                //await _eventPublisher.PublishAsync(new UserLoginEvent { UserId = entity.Id });
+
+                return dto;
+            }
+        }
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         public async Task ChangePasswordAsync(long userId, string currentPwd, string newPwd)

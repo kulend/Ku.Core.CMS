@@ -12,7 +12,7 @@ namespace Ku.Core.CMS.Web.Security
     {
     }
 
-    public class WebApiAuthAuthorizationHandler : DefaultAttributeAuthorizationHandler<WebApiAuthAuthorizationRequirement, MemberAuthAttribute>
+    public class WebApiAuthAuthorizationHandler : DefaultAttributeAuthorizationHandler<WebApiAuthAuthorizationRequirement, UserAuthAttribute>
     {
         private ICacheProvider _cacheService;
 
@@ -21,17 +21,17 @@ namespace Ku.Core.CMS.Web.Security
             this._cacheService = cacheService;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, WebApiAuthAuthorizationRequirement requirement, List<MemberAuthAttribute> attributes, List<MemberAuthAttribute> controllAttributes)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, WebApiAuthAuthorizationRequirement requirement, List<UserAuthAttribute> attributes, List<UserAuthAttribute> superAttributes)
         {
             // 检查缓存会员数据是否存在
-            var member = _cacheService.Get<LoginMember>(string.Format(CacheKeyDefinition.ApiMemberToken, context.User.GetUserIdOrZero(), context.User.GetVersion()));
-            if (member == null)
+            var user = await _cacheService.GetAsync<LoginMember>(string.Format(CacheKeyDefinition.ApiUserToken, context.User.GetUserIdOrZero(), context.User.GetVersion()));
+            if (user == null)
             {
                 context.Fail();
                 return;
             }
 
-            var attr1 = controllAttributes.FirstOrDefault();
+            var attr1 = superAttributes.FirstOrDefault();
             if (!CheckPermissionAsync(context, attr1))
             {
                 context.Fail();
@@ -46,7 +46,7 @@ namespace Ku.Core.CMS.Web.Security
             context.Succeed(requirement);
         }
 
-        private bool CheckPermissionAsync(AuthorizationHandlerContext context, MemberAuthAttribute attribute)
+        private bool CheckPermissionAsync(AuthorizationHandlerContext context, UserAuthAttribute attribute)
         {
             if (attribute == null)
             {
@@ -56,7 +56,7 @@ namespace Ku.Core.CMS.Web.Security
             {
                 return false;
             }
-            var role = context.User.GetMemberRole();
+            var role = context.User.GetUserRole();
             if (!role.HasValue) return false;
             return (attribute.Role & role.Value) != 0;
         }

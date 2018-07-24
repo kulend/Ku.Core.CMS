@@ -15,9 +15,13 @@ using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.Tokens.Jwt;
 using Ku.Core.CMS.Domain.Dto.UserCenter;
+using Ku.Core.CMS.IService.UserCenter;
 
 namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
 {
+    /// <summary>
+    /// 账户相关接口
+    /// </summary>
     [ApiVersion("1.0")]
     [Route("api/[controller]")]
     public class AccountController : WebApiController
@@ -25,21 +29,33 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
         private IJwtProvider _jwtProvider;
         private JwtConfig _jwtConfig;
         private ICacheProvider _cacheService;
+        private readonly IUserService _service;
 
-        public AccountController(IJwtProvider jwtProvider, ICacheProvider cacheService, IOptions<JwtConfig> jwtConfig)
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public AccountController(IJwtProvider jwtProvider, ICacheProvider cacheService, IOptions<JwtConfig> jwtConfig, IUserService service)
         {
             _jwtProvider = jwtProvider;
             _cacheService = cacheService;
-            this._jwtConfig = jwtConfig.Value;
+            _service = service;
+            _jwtConfig = jwtConfig.Value;
         }
 
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="mobile">手机号</param>
+        /// <param name="password">密码</param>
+        /// <returns></returns>
         [HttpGet("login")]
         [HttpPost("login")]
         [NeedVerifyCode]
         public async Task<JsonResult> Login(string mobile, string password)
         {
-            //验证
-            var user = new UserDto { Id = 1, NickName = "测试" };
+            //取得用户信息
+            var user = await _service.MobileLoginAsync(mobile, password);
+
             //生成Token
             var tokenVersion = DateTime.Now.Ticks.ToString();
 
@@ -48,7 +64,7 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
                 new Claim(ClaimTypes.Version, tokenVersion)
                 ,new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 ,new Claim(ClaimTypes.Name, user.NickName)
-                ,new Claim(ClaimTypes.Role, ((int)MemberRole.Default).ToString())
+                ,new Claim(ClaimTypes.Role, ((int)UserRole.Default).ToString())
             };
 
             var token = _jwtProvider.CreateToken(claims);
@@ -61,7 +77,7 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
             //如果当前已登陆，则退出当前登录
             await DoLogoutAsync();
 
-            await _cacheService.SetAsync(string.Format(CacheKeyDefinition.ApiMemberToken, user.Id, tokenVersion), loginMember, TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
+            await _cacheService.SetAsync(string.Format(CacheKeyDefinition.ApiUserToken, user.Id, tokenVersion), loginMember, TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
 
             return Json(token);
         }
@@ -72,7 +88,7 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
             if (User != null && !string.IsNullOrEmpty(User.GetTokenIdOrNull()))
             {
                 await _cacheService.SetAsync(string.Format(CacheKeyDefinition.ApiExpiredToken, User.GetTokenIdOrNull()),"", TimeSpan.FromMinutes(_jwtConfig.ExpiredMinutes));
-                await _cacheService.RemoveAsync(string.Format(CacheKeyDefinition.ApiMemberToken, User.GetUserIdOrZero(), User.GetVersion()));
+                await _cacheService.RemoveAsync(string.Format(CacheKeyDefinition.ApiUserToken, User.GetUserIdOrZero(), User.GetVersion()));
             }
         }
     }

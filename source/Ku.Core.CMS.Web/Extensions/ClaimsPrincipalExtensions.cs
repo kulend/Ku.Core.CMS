@@ -49,14 +49,14 @@ namespace Ku.Core.CMS.Web.Extensions
         /// <summary>
         /// 获取会员身份Identity
         /// </summary>
-        public static MemberRole? GetMemberRole(this ClaimsPrincipal self)
+        public static UserRole? GetUserRole(this ClaimsPrincipal self)
         {
             var value = self.FindFirst(ClaimTypes.Role)?.Value;
             if (string.IsNullOrEmpty(value))
             {
                 return null;
             }
-            return (MemberRole)int.Parse(value);
+            return (UserRole)int.Parse(value);
         }
 
         public static string GetVersion(this ClaimsPrincipal self)

@@ -27,6 +27,8 @@ namespace Ku.Core.CMS.IService.UserCenter
 
         Task<UserDto> LoginAsync(string account, string password);
 
+        Task<UserDto> MobileLoginAsync(string mobile, string password);
+
         /// <summary>
         /// 修改密码
         /// </summary>

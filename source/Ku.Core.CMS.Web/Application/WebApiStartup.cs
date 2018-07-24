@@ -60,7 +60,7 @@ namespace Ku.Core.CMS.Web.Application
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "Vino.Core.CMS 接口文档",
+                    Title = "Ku.Core.CMS 接口文档",
                     Description = "RESTful API for Vino.Core.CMS",
                     TermsOfService = "None",
                     Contact = new Contact { Name = "Kulend", Email = "kulend@qq.com", Url = "" }
@@ -68,7 +68,7 @@ namespace Ku.Core.CMS.Web.Application
 
                 //Set the comments path for the swagger json and ui.
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "Vino.Core.CMS.WebApi.xml");
+                var xmlPath = Path.Combine(basePath, "Ku.Core.CMS.WebApi.xml");
                 c.IncludeXmlComments(xmlPath);
 
                 //  c.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数

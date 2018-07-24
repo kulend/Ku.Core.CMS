@@ -34,7 +34,7 @@ namespace Ku.Core.CMS.Job
                 //更新状态
                 await service.UpdateTaskStatusAsync(taskId, new
                 {
-                    Status = EmTimedTaskStatus.Finish,
+                    Status = EmTimedTaskStatus.Enable,
                     EndRunTime = DateTime.Now
                 });
 

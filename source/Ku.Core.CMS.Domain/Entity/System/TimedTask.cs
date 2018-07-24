@@ -75,6 +75,11 @@ namespace Ku.Core.CMS.Domain.Entity.System
         /// 有效结束时间
         /// </summary>
         public DateTime ValidEndTime { set; get; }
+
+        /// <summary>
+        /// 运行次数
+        /// </summary>
+        public int RunTimes { set; get; }
     }
 
     /// <summary>

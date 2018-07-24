@@ -21,5 +21,15 @@ namespace Ku.Core.CMS.IService.System
         /// 保存数据
         /// </summary>
         Task SaveAsync(TimedTaskDto dto);
+
+        /// <summary>
+        /// 更新任务状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        Task UpdateTaskStatusAsync(long id, dynamic data);
+
+        Task IncreaseRunTimesAsync(long id);
     }
 }

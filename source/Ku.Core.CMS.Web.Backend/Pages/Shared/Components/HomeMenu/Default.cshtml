@@ -1,22 +1,22 @@
 ﻿@model List<Ku.Core.CMS.Domain.Dto.System.MenuDto>
-@foreach (var menu in Model)
+@foreach (var menu in Model.Where(x=>x.HasAuth))
 {
 <li class="layui-nav-item">
-    @if (menu.SubMenus.Any())
+    @if (menu.SubMenus.Where(x => x.HasAuth).Any())
     {
         <a href="javascript:;" data-tag="@menu.Tag"  lay-tips="@menu.Name" lay-direction="2">
             <i class="fa @menu.Icon"></i>
             <cite>@menu.Name</cite>
         </a>
         <dl class="layui-nav-child">
-            @foreach (var sub in menu.SubMenus.OrderBy(x => x.OrderIndex))
+            @foreach (var sub in menu.SubMenus.Where(x => x.HasAuth).OrderBy(x => x.OrderIndex))
             {
-                if (sub.SubMenus.Any())
+                if (sub.SubMenus.Where(x => x.HasAuth).Any())
                 {
                     <dd class="layui-nav-item">
                         <a href="javascript:;" data-tag="@sub.Tag" lay-tips="@sub.Name" lay-direction="3">@sub.Name</a>
                         <dl class="layui-nav-child">
-                            @foreach (var ssub in sub.SubMenus.OrderBy(x => x.OrderIndex))
+                            @foreach (var ssub in sub.SubMenus.Where(x => x.HasAuth).OrderBy(x => x.OrderIndex))
                             {
                             <dd class="layui-nav-item">
                                 <a href="javascript:;" data-tag="@ssub.Tag" data-url="@ssub.Url" data-id="@ssub.Id">@ssub.Name</a>

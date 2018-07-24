@@ -26,7 +26,7 @@ namespace Ku.Core.CMS.TaskApp
             // 支持中文编码
             Console.OutputEncoding = Encoding.UTF8;
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("定时任务处理程序启动!");
 
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
 #if DEBUG
@@ -54,7 +54,6 @@ namespace Ku.Core.CMS.TaskApp
             //事件消息发送订阅
             services.AddEventBus<KuDbContext>(Configuration);
 
-            //services.AddTimedTask().AddEntityFrameworkTimedTask<KuDbContext>();
             services.AddSingleton<TaskManager>();
 
             var builder = new ContainerBuilder();
@@ -70,7 +69,6 @@ namespace Ku.Core.CMS.TaskApp
             //Dapper
             serviceProvider.UseDapper();
 
-            //serviceProvider.UseTimedTask();
             serviceProvider.GetService<TaskManager>().Startup();
 
             while (true)

@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Ku.Core.CMS.Data.EntityFramework;
+using Ku.Core.CMS.Domain;
+using System.Reflection;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -30,7 +32,7 @@ namespace Ku.Core.CMS.Web.Application
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //AutoMapper
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(EntityMapperProfile).GetTypeInfo().Assembly);
             //Tools
             services.AddTools();
             //IdGenerator

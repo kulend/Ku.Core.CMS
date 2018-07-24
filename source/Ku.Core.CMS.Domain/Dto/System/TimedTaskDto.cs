@@ -101,5 +101,11 @@ namespace Ku.Core.CMS.Domain.Dto.System
         [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm:ss")]
         [DataType(DataType.DateTime)]
         public DateTime ValidEndTime { set; get; }
+
+        /// <summary>
+        /// 运行次数
+        /// </summary>
+        [Display(Name = "运行次数")]
+        public int RunTimes { set; get; }
     }
 }

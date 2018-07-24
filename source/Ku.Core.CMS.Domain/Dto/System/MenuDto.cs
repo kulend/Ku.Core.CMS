@@ -84,5 +84,6 @@ namespace Ku.Core.CMS.Domain.Dto.System
 
         public ICollection<MenuDto> SubMenus { set; get; }
 
+        public bool HasAuth { set; get; }
     }
 }

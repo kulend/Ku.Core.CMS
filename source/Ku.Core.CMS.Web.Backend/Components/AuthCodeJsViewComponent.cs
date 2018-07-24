@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Ku.Core.CMS.Web.Extensions;
-using Ku.Core.CMS.IService.System;
 using Ku.Core.CMS.IService.UserCenter;
 
 namespace Ku.Core.CMS.Web.Backend.Components

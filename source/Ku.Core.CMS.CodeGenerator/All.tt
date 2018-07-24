@@ -16,7 +16,7 @@
     //Type type = typeof(MemberAddress);
 	//var name1 = type.Name;
 	var name = "TimedTask";
-	var desc = "定时任务";
+	var desc = "用户留言";
 	var area = "System";
 	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
 	var logicDel = true;

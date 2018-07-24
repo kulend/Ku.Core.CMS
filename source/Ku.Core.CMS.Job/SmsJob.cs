@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Job
 {
-    public class SmsJob : IJob
+    [DisallowConcurrentExecution]
+    public class SmsJob : BaseJob
     {
-        public async Task Execute(IJobExecutionContext context)
+        public override async Task Run(IJobExecutionContext context)
         {
+            await Task.Delay(TimeSpan.FromSeconds(30));
+
             await Console.Out.WriteLineAsync("开始处理短信事务...");
         }
 
@@ -76,5 +79,7 @@ namespace Ku.Core.CMS.Job
             //}
             Debug.WriteLine(DateTime.Now + " 结束处理短信事务...");
         }
+
+
     }
 }

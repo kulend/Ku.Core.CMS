@@ -67,5 +67,21 @@ namespace Ku.Core.CMS.Service.System
                 }
             }
         }
+
+        public async Task UpdateTaskStatusAsync(long id, dynamic data)
+        {
+            using (var dapper = DapperFactory.Create())
+            {
+                await dapper.UpdateAsync<TimedTask>(data, new { Id = id });
+            }
+        }
+
+        public async Task IncreaseRunTimesAsync(long id)
+        {
+            using (var dapper = DapperFactory.Create())
+            {
+                await dapper.ExecuteAsync($"UPDATE {dapper.Dialect.FormatTableName<TimedTask>()} SET {nameof(TimedTask.RunTimes)}={nameof(TimedTask.RunTimes)}+1 WHERE Id=@Id", new { Id = id });
+            }
+        }
     }
 }

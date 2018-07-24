@@ -15,15 +15,17 @@ namespace Ku.Core.CMS.TaskApp
     public class TaskManager
     {
         private readonly ITimedTaskService _service;
+        private readonly IServiceProvider _provider;
 
         private static StdSchedulerFactory _factory;
         private static IScheduler _scheduler;
 
         private static List<Assembly> assemblies;
 
-        public TaskManager(ITimedTaskService service)
+        public TaskManager(ITimedTaskService service, IServiceProvider provider)
         {
             _service = service;
+            _provider = provider;
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace Ku.Core.CMS.TaskApp
                 };
                 _factory = new StdSchedulerFactory(props);
                 _scheduler = await _factory.GetScheduler();
-
+                _scheduler.Context.Add("IServiceProvider", _provider);
                 await _scheduler.Start();
 
                 //读取数据库中所有定时任务
@@ -47,12 +49,25 @@ namespace Ku.Core.CMS.TaskApp
                 //加载程序集
                 assemblies = tasks.Select(x => x.AssemblyName).Distinct().Select(name => AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(name))).ToList();
 
-                foreach (var task in tasks)
+                foreach (var task in tasks.Where(x=>x.Status != Domain.Enum.System.EmTimedTaskStatus.Disable && x.Status != Domain.Enum.System.EmTimedTaskStatus.Expired))
                 {
+                    //处理过期任务
+                    if (task.ValidEndTime < DateTime.Now)
+                    {
+                        await _service.UpdateTaskStatusAsync(task.Id, new {
+                            Status = Domain.Enum.System.EmTimedTaskStatus.Expired
+                        });
+                        continue;
+                    }
+
                     var assembly = assemblies.FirstOrDefault(x => x.FullName.Split(',')[0].Equals(task.AssemblyName));
                     if (assembly == null)
                     {
                         //未正确加载程序集
+                        await _service.UpdateTaskStatusAsync(task.Id, new
+                        {
+                            Status = Domain.Enum.System.EmTimedTaskStatus.Abnormal
+                        });
                         continue;
                     }
 
@@ -60,9 +75,12 @@ namespace Ku.Core.CMS.TaskApp
                     if (type == null)
                     {
                         //未正确加载类型
+                        await _service.UpdateTaskStatusAsync(task.Id, new
+                        {
+                            Status = Domain.Enum.System.EmTimedTaskStatus.Abnormal
+                        });
                         continue;
                     }
-
 
                     // 定义一个 Job
                     IJobDetail job = JobBuilder.Create(type)

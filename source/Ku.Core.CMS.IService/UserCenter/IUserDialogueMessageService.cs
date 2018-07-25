@@ -17,9 +17,5 @@ namespace Ku.Core.CMS.IService.UserCenter
 {
     public partial interface IUserDialogueMessageService : IBaseService<UserDialogueMessage, UserDialogueMessageDto, UserDialogueMessageSearch>
     {
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        Task SaveAsync(UserDialogueMessageDto dto);
     }
 }

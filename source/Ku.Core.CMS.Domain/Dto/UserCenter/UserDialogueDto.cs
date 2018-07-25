@@ -44,6 +44,7 @@ namespace Ku.Core.CMS.Domain.Dto.UserCenter
         /// <summary>
         /// 是否禁言
         /// </summary>
+        [Display(Name = "用户禁言", Prompt = "是|否")]
         public bool IsForbidden { set; get; } = false;
 
         /// <summary>

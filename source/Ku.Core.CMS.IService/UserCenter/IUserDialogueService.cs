@@ -21,5 +21,7 @@ namespace Ku.Core.CMS.IService.UserCenter
         /// 新增
         /// </summary>
         Task AddAsync(long userId, string message);
+
+        Task AdminReplyAsync(long dialogueId, string content, long adminUserId);
     }
 }

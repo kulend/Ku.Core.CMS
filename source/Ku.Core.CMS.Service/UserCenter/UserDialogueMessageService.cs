@@ -10,12 +10,14 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.UserCenter;
 using Ku.Core.CMS.Domain.Entity.UserCenter;
 using Ku.Core.CMS.IService.UserCenter;
 using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Service.UserCenter
@@ -31,32 +33,25 @@ namespace Ku.Core.CMS.Service.UserCenter
         #endregion
 
         /// <summary>
-        /// 保存数据
+        /// 分页查询数据
         /// </summary>
-        public async Task SaveAsync(UserDialogueMessageDto dto)
+        /// <param name="page">页码</param>
+        /// <param name="size">条数</param>
+        /// <param name="where">查询条件</param>
+        /// <param name="sort">排序</param>
+        /// <returns>count：条数；items：分页数据</returns>
+        public override async Task<(int count, List<UserDialogueMessageDto> items)> GetListAsync(int page, int size, UserDialogueMessageSearch where, dynamic sort)
         {
-            UserDialogueMessage model = Mapper.Map<UserDialogueMessage>(dto);
-            if (model.Id == 0)
+            using (var dapper = DapperFactory.Create())
             {
-                //新增
-                model.Id = ID.NewID();
-                model.CreateTime = DateTime.Now;
-                model.IsDeleted = false;
-                using (var dapper = DapperFactory.Create())
-                {
-                    await dapper.InsertAsync(model);
-                }
-            }
-            else
-            {
-                //更新
-                using (var dapper = DapperFactory.Create())
-                {
-                    var item = new {
-                        //TODO:这里进行赋值
-                    };
-                    await dapper.UpdateAsync<UserDialogueMessage>(item, new { model.Id });
-                }
+                var data = await dapper.QueryPageAsync<UserDialogueMessage, User, UserDialogueMessage>(page, size, "t1.*,t2.Id,t2.NickName",
+                    $"{dapper.Dialect.FormatTableName<UserDialogueMessage>()} t1 INNER JOIN {dapper.Dialect.FormatTableName<User>()} t2 ON t1.UserId=t2.Id",
+                    where.ParseToDapperSql(dapper.Dialect, "t1"), sort as object, (t1, t2) =>
+                    {
+                        t1.User = t2;
+                        return t1;
+                    }, splitOn: "Id");
+                return (data.count, Mapper.Map<List<UserDialogueMessageDto>>(data.items));
             }
         }
     }

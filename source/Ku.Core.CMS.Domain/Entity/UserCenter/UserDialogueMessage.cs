@@ -57,6 +57,9 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
     /// </summary>
     public class UserDialogueMessageSearch : BaseProtectedSearch<UserDialogueMessage>
     {
-
+        /// <summary>
+        /// 对话ID
+        /// </summary>
+        public long? DialogueId { get; set; }
     }
 }

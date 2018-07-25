@@ -117,5 +117,37 @@ namespace Ku.Core.CMS.Service.UserCenter
                 dapper.Commit();
             }
         }
+
+        /// <summary>
+        /// 回复
+        /// </summary>
+        public async Task AdminReplyAsync(long dialogueId, string content, long adminUserId)
+        {
+            using (var dapper = DapperFactory.CreateWithTrans())
+            {
+                //取得对话记录
+                var dialogue = await dapper.QueryOneAsync<UserDialogue>(new { Id = dialogueId, IsDeleted = false });
+                if (dialogue == null)
+                {
+                    //已禁言
+                    throw new KuException("无法取得对话信息!");
+                }
+
+                //新增对话消息
+                var model = new UserDialogueMessage
+                {
+                    Id = ID.NewID(),
+                    DialogueId = dialogue.Id,
+                    UserId = adminUserId,
+                    CreateTime = DateTime.Now,
+                    IsDeleted = false,
+                    Message = content,
+                    IsAdmin = true,
+                };
+                await dapper.InsertAsync<UserDialogueMessage>(model);
+
+                dapper.Commit();
+            }
+        }
     }
 }

@@ -14,9 +14,7 @@
 using AutoMapper;
 using AutoMapper.Configuration;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Ku.Core.CMS.Domain
 {
@@ -24,12 +22,15 @@ namespace Ku.Core.CMS.Domain
     {
         public EntityMapperProfile()
         {
+            //UserCenter
             CreateMap<Domain.Entity.UserCenter.User, Domain.Dto.UserCenter.UserDto>().ReverseMap();
             CreateMap<Domain.Entity.UserCenter.Role, Domain.Dto.UserCenter.RoleDto>().ReverseMap();
             CreateMap<Domain.Entity.UserCenter.RoleFunction, Domain.Dto.UserCenter.RoleFunctionDto>().ReverseMap();
             CreateMap<Domain.Entity.UserCenter.UserAddress, Domain.Dto.UserCenter.UserAddressDto>().ReverseMap();
             CreateMap<Domain.Entity.UserCenter.UserPoint, Domain.Dto.UserCenter.UserPointDto>().ReverseMap();
             CreateMap<Domain.Entity.UserCenter.UserPointRecord, Domain.Dto.UserCenter.UserPointRecordDto>().ReverseMap();
+			CreateMap<Domain.Entity.UserCenter.UserDialogue, Domain.Dto.UserCenter.UserDialogueDto>().ReverseMap();
+            CreateMap<Domain.Entity.UserCenter.UserDialogueMessage, Domain.Dto.UserCenter.UserDialogueMessageDto>().ReverseMap();
             CreateMap<Domain.Entity.System.UserActionLog, Domain.Dto.System.UserActionLogDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Function, Domain.Dto.System.FunctionDto>().ReverseMap();
             CreateMap<Domain.Entity.System.Menu, Domain.Dto.System.MenuDto>().ReverseMap();

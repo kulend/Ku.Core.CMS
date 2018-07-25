@@ -45,7 +45,7 @@ namespace Ku.Core.CMS.Service.UserCenter
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryPageAsync<UserAddress, User, UserAddress>(page, size, "t1.*,t2.*",
+                var data = await dapper.QueryPageAsync<UserAddress, User, UserAddress>(page, size, "t1.*,t2.Id,t2.NickName",
                     "usercenter_user_address t1 INNER JOIN usercenter_user t2 ON t1.UserId=t2.Id",
                     where.ParseToDapperSql(dapper.Dialect, "t1"), sort as object, (t1, t2) =>
                     {

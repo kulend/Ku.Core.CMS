@@ -12,13 +12,9 @@
 <#@ import namespace="System.Reflection" #>
 <#@ include file="manager.ttinclude"#>
 <#
-	//var aa = new MemberAddress();
-    //Type type = typeof(MemberAddress);
-	//var name1 = type.Name;
-	var name = "TimedTask";
-	var desc = "用户留言";
-	var area = "System";
-	//var area = type.Namespace.Replace("Ku.Core.CMS.Domain.Entity.","");
+	var name = "UserDialogue";
+	var desc = "用户对话";
+	var area = "UserCenter";
 	var logicDel = true;
 	var HasRecycle = true;
    	var HasDetail = true;

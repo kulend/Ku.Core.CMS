@@ -114,7 +114,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.<#=area#>.<#=name#>
             Dto = await _service.GetByIdAsync(id);
             if (Dto == null)
             {
-                throw new VinoDataNotFoundException();
+                throw new KuDataNotFoundException();
             }
 <# if(mode == 3 || mode == 4){#>
             if (Dto.ParentId.HasValue)

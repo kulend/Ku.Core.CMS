@@ -50,7 +50,6 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.Account
         /// <returns></returns>
         [HttpGet("login")]
         [HttpPost("login")]
-        [NeedVerifyCode]
         public async Task<JsonResult> Login(string mobile, string password)
         {
             //取得用户信息

@@ -11,7 +11,7 @@
 <#@ import namespace="System.Collections.Generic" #> 
 <#@ import namespace="System.Reflection" #> 
 <#
-	var pathOfProfile = RootPath + "/Ku.Core.CMS.Web/AutoMapper";
+	var pathOfProfile = RootPath + "/Ku.Core.CMS.Domain";
     if(!Directory.Exists(pathOfProfile))
     {
         Directory.CreateDirectory(pathOfProfile);
@@ -34,15 +34,17 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using AutoMapper.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Ku.Core.CMS.Web.AutoMapper
+namespace Ku.Core.CMS.Domain
 {
-    public class EntityMapperProfile: Profile
+    public class EntityMapperProfile : Profile
     {
         public EntityMapperProfile()
         {
+            //<#=area#>
             CreateMap<Domain.Entity.<#=area#>.<#=name#>, Domain.Dto.<#=area#>.<#=name#>Dto>().ReverseMap();
 		}
 
@@ -62,7 +64,7 @@ namespace Ku.Core.CMS.Web.AutoMapper
         {
             public T Resolve(object source, object destination, string sourceMember, T destMember, ResolutionContext context)
             {
-                if (context.Items.ContainsKey("JsonDeserializeIgnore") 
+                if (context.Items.ContainsKey("JsonDeserializeIgnore")
                     && (bool)context.Items["JsonDeserializeIgnore"])
                 {
                     return default(T);

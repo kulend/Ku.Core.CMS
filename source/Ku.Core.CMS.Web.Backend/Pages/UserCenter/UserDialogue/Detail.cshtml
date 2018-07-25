@@ -1,0 +1,124 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserDialogue.DetailModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：用户对话 详情页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-07-25 10:23
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+@section Css
+{
+    <style>
+        .layim-chat-main {height:380px;padding:15px 15px 5px;overflow-x:hidden;overflow-y:auto;}
+        .layim-chat-main ul li {position:relative;font-size:0;margin-bottom:10px;padding-left:0px;min-height:68px;}
+        .layim-chat-main ul .layim-chat-mine {text-align:right;padding-left:0;padding-right:0px;}
+        .layim-chat-mine .layim-chat-user {left:auto;right:3px;}
+        .layim-chat-user {position:absolute;left:3px;}
+        .layim-chat-text {position:relative;line-height:22px;margin-top:25px;padding:8px 15px;background-color:#e2e2e2;border-radius:3px;color:#333;word-break:break-all;max-width:462px\9;}
+        .layim-chat-text,.layim-chat-user {display:inline-block;vertical-align:top;font-size:14px;}
+        .layim-chat-mine .layim-chat-text {margin-left:0;text-align:left;background-color:#5FB878;color:#fff;}
+        .layim-chat-user cite {position:absolute;left:0px;top:-2px;width:500px;line-height:24px;font-size:12px;white-space:nowrap;color:#999;text-align:left;font-style:normal;}
+        .layim-chat-mine .layim-chat-user cite {left:auto;right:0px;text-align:right;}
+        .layim-chat-user cite i {padding-left:15px;font-style:normal;}
+        .layim-chat-mine .layim-chat-user cite i {padding-left:0;padding-right:15px;}
+        
+    </style>
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DetailModel>(""))
+    {
+    <div class="layui-body" style="background-color: #f2f2f2;">
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md5 layui-col-sm5">
+                    <div class="layui-card">
+                        <div class="layui-card-header">最近20条记录</div>
+                        <div class="layui-card-body">
+                            <div class="layim-chat-main">
+                                <ul>
+                                    <li class="layim-chat-mine">
+                                        <div class="layim-chat-user">
+                                            <cite><i>2018-07-25 17:20:00</i>纸飞机</cite>
+                                        </div>
+                                        <div class="layim-chat-text">asdasdfasf</div>
+                                    </li>
+                                    <li>
+                                        <div class="layim-chat-user">
+                                            <cite>小闲<i>2018-07-25 17:20:01</i></cite>
+                                        </div>
+                                        <div class="layim-chat-text">您好，我现在有事不在，一会再和您联系。</div>
+                                    </li>
+                                    <li class="layim-chat-mine">
+                                        <div class="layim-chat-user">
+                                            <cite><i>2018-07-25 17:20:00</i>纸飞机</cite>
+                                        </div>
+                                        <div class="layim-chat-text">asdasdfasf</div>
+                                    </li>
+                                    <li>
+                                        <div class="layim-chat-user">
+                                            <cite>小闲<i>2018-07-25 17:20:01</i></cite>
+                                        </div>
+                                        <div class="layim-chat-text">您好，我现在有事不在，一会再和您联系。</div>
+                                    </li>
+                                    <li class="layim-chat-mine">
+                                        <div class="layim-chat-user">
+                                            <cite><i>2018-07-25 17:20:00</i>纸飞机</cite>
+                                        </div>
+                                        <div class="layim-chat-text">asdasdfasf</div>
+                                    </li>
+                                    <li>
+                                        <div class="layim-chat-user">
+                                            <cite>小闲<i>2018-07-25 17:20:01</i></cite>
+                                        </div>
+                                        <div class="layim-chat-text">您好，我现在有事不在，一会再和您联系。</div>
+                                    </li>
+                                    <li class="layim-chat-mine">
+                                        <div class="layim-chat-user">
+                                            <cite><i>2018-07-25 17:20:00</i>纸飞机</cite>
+                                        </div>
+                                        <div class="layim-chat-text">asdasdfasf</div>
+                                    </li>
+                                    <li>
+                                        <div class="layim-chat-user">
+                                            <cite>小闲<i>2018-07-25 17:20:01</i></cite>
+                                        </div>
+                                        <div class="layim-chat-text">您好，我现在有事不在，一会再和您联系。</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md7 layui-col-sm7">
+                    <div class="layui-card">
+                        <div class="layui-card-header">最近20条记录</div>
+                        <div class="layui-card-body">
+                            AAAAAAAAA
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

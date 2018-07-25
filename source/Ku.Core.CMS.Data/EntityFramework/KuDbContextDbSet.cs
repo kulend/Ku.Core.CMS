@@ -191,7 +191,17 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// UserCenter 用户积分记录
         /// </summary>
         public DbSet<Domain.Entity.UserCenter.UserPointRecord> UserCenterUserPointRecords { get; set; }
-        
+		
+        /// <summary>
+        /// UserCenter 用户对话
+        /// </summary>
+        public DbSet<Domain.Entity.UserCenter.UserDialogue> UserCenterUserDialogues { get; set; }
+		
+		/// <summary>
+        /// UserCenter 用户对话消息
+        /// </summary>
+        public DbSet<Domain.Entity.UserCenter.UserDialogueMessage> UserCenterUserDialogueMessages { get; set; }
+		
 		/// <summary>
         /// Communication 短信账户
         /// </summary>

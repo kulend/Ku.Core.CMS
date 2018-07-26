@@ -71,6 +71,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Ui", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Layui.Test", "..\..\开源\Ku.Core.Extensions\Tests\Ku.Core.Extensions.Layui.Test\Ku.Core.Extensions.Layui.Test.csproj", "{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnc.Api.Restriction", "..\..\开源\Dnc.Api.Restriction\src\Dnc.Api.Restriction\Dnc.Api.Restriction.csproj", "{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -177,6 +179,10 @@ Global
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +213,7 @@ Global
 		{720B0C52-C3C6-4E57-AD2C-E62E00865D08} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{161AB5B3-87D3-4483-9C12-127EBBE36D9A} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
+		{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

@@ -23,5 +23,12 @@ namespace Ku.Core.CMS.IService.UserCenter
         Task AddAsync(long userId, string message);
 
         Task AdminReplyAsync(long dialogueId, string content, long adminUserId);
+
+        Task AdminForbiddenAsync(long dialogueId, bool status);
+
+        /// <summary>
+        /// 处理完成
+        /// </summary>
+        Task AdminSolveAsync(long dialogueId, long adminUserId);
     }
 }

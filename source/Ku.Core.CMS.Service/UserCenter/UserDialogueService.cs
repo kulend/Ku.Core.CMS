@@ -129,7 +129,6 @@ namespace Ku.Core.CMS.Service.UserCenter
                 var dialogue = await dapper.QueryOneAsync<UserDialogue>(new { Id = dialogueId, IsDeleted = false });
                 if (dialogue == null)
                 {
-                    //已禁言
                     throw new KuException("无法取得对话信息!");
                 }
 
@@ -147,6 +146,42 @@ namespace Ku.Core.CMS.Service.UserCenter
                 await dapper.InsertAsync<UserDialogueMessage>(model);
 
                 dapper.Commit();
+            }
+        }
+
+        /// <summary>
+        /// 禁言/解除禁言
+        /// </summary>
+        public async Task AdminForbiddenAsync(long dialogueId, bool status)
+        {
+            using (var dapper = DapperFactory.Create())
+            {
+                //取得对话记录
+                var dialogue = await dapper.QueryOneAsync<UserDialogue>(new { Id = dialogueId, IsDeleted = false });
+                if (dialogue == null)
+                {
+                    throw new KuException("无法取得对话信息!");
+                }
+
+                await dapper.UpdateAsync<UserDialogue>(new { IsForbidden = status }, new { dialogue.Id });
+            }
+        }
+
+        /// <summary>
+        /// 处理完成
+        /// </summary>
+        public async Task AdminSolveAsync(long dialogueId, long adminUserId)
+        {
+            using (var dapper = DapperFactory.Create())
+            {
+                //取得对话记录
+                var dialogue = await dapper.QueryOneAsync<UserDialogue>(new { Id = dialogueId, IsDeleted = false });
+                if (dialogue == null)
+                {
+                    throw new KuException("无法取得对话信息!");
+                }
+
+                await dapper.UpdateAsync<UserDialogue>(new { IsSolved = true, SolveTime = DateTime.Now, SolveUserId = adminUserId }, new { dialogue.Id });
             }
         }
     }

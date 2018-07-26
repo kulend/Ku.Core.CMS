@@ -18,89 +18,18 @@
 @section Css
     {
     <style>
-        .layim-chat-main {
-            height: 380px;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-            .layim-chat-main ul li {
-                position: relative;
-                font-size: 0;
-                margin-bottom: 10px;
-                padding-left: 0px;
-                min-height: 68px;
-            }
-
-            .layim-chat-main ul .layim-chat-mine {
-                text-align: right;
-                padding-left: 0;
-                padding-right: 0px;
-            }
-
-        .layim-chat-mine .layim-chat-user {
-            left: auto;
-            right: 3px;
-        }
-
-        .layim-chat-user {
-            position: absolute;
-            left: 3px;
-        }
-
-        .layim-chat-text {
-            position: relative;
-            line-height: 22px;
-            margin-top: 25px;
-            padding: 8px 15px;
-            background-color: #e2e2e2;
-            border-radius: 3px;
-            color: #333;
-            word-break: break-all;
-            max-width: 462px\9;
-        }
-
-        .layim-chat-text, .layim-chat-user {
-            display: inline-block;
-            vertical-align: top;
-            font-size: 14px;
-        }
-
-        .layim-chat-mine .layim-chat-text {
-            margin-left: 0;
-            text-align: left;
-            background-color: #5FB878;
-            color: #fff;
-        }
-
-        .layim-chat-user cite {
-            position: absolute;
-            left: 0px;
-            top: -2px;
-            width: 500px;
-            line-height: 24px;
-            font-size: 12px;
-            white-space: nowrap;
-            color: #999;
-            text-align: left;
-            font-style: normal;
-        }
-
-        .layim-chat-mine .layim-chat-user cite {
-            left: auto;
-            right: 0px;
-            text-align: right;
-        }
-
-        .layim-chat-user cite i {
-            padding-left: 15px;
-            font-style: normal;
-        }
-
-        .layim-chat-mine .layim-chat-user cite i {
-            padding-left: 0;
-            padding-right: 15px;
-        }
+        .layim-chat-main {height:380px;overflow-x:hidden;overflow-y:auto;}
+        .layim-chat-main ul li {position:relative;font-size:0;margin-bottom:10px;padding-left:0px;min-height:68px;}
+        .layim-chat-main ul .layim-chat-mine {text-align:right;padding-left:0;padding-right:0px;}
+        .layim-chat-mine .layim-chat-user {left:auto;right:3px;}
+        .layim-chat-user {position:absolute;left:3px;}
+        .layim-chat-text {position:relative;line-height:22px;margin-top:25px;padding:8px 15px;background-color:#e2e2e2;border-radius:3px;color:#333;word-break:break-all;max-width:462px\9;}
+        .layim-chat-text,.layim-chat-user {display:inline-block;vertical-align:top;font-size:14px;}
+        .layim-chat-mine .layim-chat-text {margin-left:0;text-align:left;background-color:#5FB878;color:#fff;}
+        .layim-chat-user cite {position:absolute;left:0px;top:-2px;width:500px;line-height:24px;font-size:12px;white-space:nowrap;color:#999;text-align:left;font-style:normal;}
+        .layim-chat-mine .layim-chat-user cite {left:auto;right:0px;text-align:right;}
+        .layim-chat-user cite i {padding-left:15px;font-style:normal;}
+        .layim-chat-mine .layim-chat-user cite i {padding-left:0;padding-right:15px;}
     </style>
 }
 <div class="layui-layout layui-layout-window">
@@ -132,7 +61,7 @@
                                         <action auth-code="" text="立即回复" css="layui-btn-default" type="button" action="js:doReply()" />
                                     </div>
                                 </div>
-                                @Html.InputFor(x => x.Dto.IsForbidden)
+                                @Html.InputFor(x => x.Dto.IsForbidden, new { lay_filter = "IsForbidden" })
                             </div>
                         </div>
                     </div>
@@ -141,6 +70,10 @@
         </div>
         <div class="layui-footer">
             @Html.ActionsForClose()
+            @if (!Model.Dto.IsSolved)
+            {
+                <action type="button" auth-code="" text="已解决" css="layui-btn-default" action="js:doSolve()" />
+            }
         </div>
     }
 </div>
@@ -172,6 +105,16 @@
         laytpl = layui.laytpl;
 
         loadMessage();
+
+        form.on('switch(IsForbidden)', function (data) {
+            ku.ajax.post("Detail/Forbidden", { id: "@Model.Dto.Id", status: data.elem.checked }, function (d) {
+                if (data.elem.checked) {
+                    ku.page.msg.tip("禁言成功！");
+                } else { 
+                    ku.page.msg.tip("解除禁言成功！");
+                }
+            });
+        });
     });
 
     function loadMessage() { 
@@ -183,16 +126,24 @@
         });
     }
 
-        function doReply() {
-            var message = $("#content").val();
-            if (!message) {
-                ku.page.msg.tip("请输入回复内容！");
-                return;
-            }
-            ku.ajax.post("Detail/Reply", { id: "@Model.Dto.Id", content: message }, function (d) {
-                $("#content").val("");
-                loadMessage();
-            });
+    function doReply() {
+        var message = $("#content").val();
+        if (!message) {
+            ku.page.msg.tip("请输入回复内容！");
+            return;
         }
+        ku.ajax.post("Detail/Reply", { id: "@Model.Dto.Id", content: message }, function (d) {
+            $("#content").val("");
+            loadMessage();
+        });
+    }
+
+    function doSolve() {
+        ku.ajax.post("Detail/Solve", { id: "@Model.Dto.Id" }, function (d) {
+            ku.page.msg.tip("操作成功！", function () { 
+                closeWindow(true);
+            });
+        });
+    }
 </script>
 }

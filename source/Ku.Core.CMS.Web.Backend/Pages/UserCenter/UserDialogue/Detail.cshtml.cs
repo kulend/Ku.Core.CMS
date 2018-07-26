@@ -16,7 +16,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserDialogue
     /// <summary>
     /// 用户对话 详情页面
     /// </summary>
-    [Auth("usercenter.user_dialogue")]
+    [Auth("usercenter.user.dialogue")]
     [IgnoreAntiforgeryToken(Order = 1001)]
     public class DetailModel : BasePage
     {
@@ -52,6 +52,20 @@ namespace Ku.Core.CMS.Web.Backend.Pages.UserCenter.UserDialogue
         public async Task<IActionResult> OnPostReplyAsync(long id, string content)
         {
             await _service.AdminReplyAsync(id, content, User.GetUserIdOrZero());
+            return Json(true);
+        }
+
+        [Auth("forbidden")]
+        public async Task<IActionResult> OnPostForbiddenAsync(long id, bool status)
+        {
+            await _service.AdminForbiddenAsync(id, status);
+            return Json(true);
+        }
+
+        [Auth("solve")]
+        public async Task<IActionResult> OnPostSolveAsync(long id)
+        {
+            await _service.AdminSolveAsync(id, User.GetUserIdOrZero());
             return Json(true);
         }
     }

@@ -15,6 +15,9 @@ using System.IO;
 using System.Text;
 using Ku.Core.CMS.Web.Filters;
 using Ku.Core.Infrastructure.Json;
+using Dnc.Api.Restriction;
+using Ku.Core.CMS.Web.Extensions;
+using Dnc.Api.Restriction.Redis;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -30,8 +33,15 @@ namespace Ku.Core.CMS.Web.Application
             services.AddJwtToken(Configuration);
             services.AddWebApiAuth(Configuration, Environment);
 
+            //ApiRestriction
+            services.AddApiRestriction(options => {
+                options.RedisConnectionString = "121.40.195.153:7480,password=ku123456,connectTimeout=5000,allowAdmin=false,defaultDatabase=0";
+                options.OnUserIdentity = httpContext => httpContext.User.GetUserIdOrZero().ToString();
+            });
+
             services.AddMvc(opts =>
             {
+                opts.Filters.Add(typeof(ApiRestrictionActionFilter));
                 opts.Filters.Add(typeof(VinoActionFilter));
                 opts.Filters.Add(typeof(WebApiResultFilter));
                 opts.Filters.Add(typeof(ApiExceptionFilter));

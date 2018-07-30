@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dnc.Api.Restriction;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,6 @@ namespace Ku.Core.CMS.WebApi.Controllers
     {
         // GET api/values
         [HttpGet]
-        [Authorize]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -20,6 +20,7 @@ namespace Ku.Core.CMS.WebApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [ApiRestriction]
         public string Get(int id)
         {
             return "value";

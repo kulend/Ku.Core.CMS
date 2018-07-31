@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Dnc.Api.Restriction;
+using Dnc.Api.Throttle;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +20,7 @@ namespace Ku.Core.CMS.WebApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        [ApiRestriction]
+        [ApiThrottle]
         public string Get(int id)
         {
             return "value";

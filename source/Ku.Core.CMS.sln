@@ -71,7 +71,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Ui", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Layui.Test", "..\..\开源\Ku.Core.Extensions\Tests\Ku.Core.Extensions.Layui.Test\Ku.Core.Extensions.Layui.Test.csproj", "{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnc.Api.Restriction", "..\..\开源\Dnc.Api.Restriction\src\Dnc.Api.Restriction\Dnc.Api.Restriction.csproj", "{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnc.Api.Throttle", "..\..\开源\Dnc.Api.Restriction\src\Dnc.Api.Restriction\Dnc.Api.Throttle.csproj", "{29CD4C58-EAD1-4CB0-A3FA-2DAABB1B8697}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Dnc.Api.Restriction\src\Dnc.Api.Restriction\Dnc.Api.Restriction.csproj" />
+    <ProjectReference Include="..\..\..\开源\Dnc.Api.Restriction\src\Dnc.Api.Restriction\Dnc.Api.Throttle.csproj" />
     <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
   </ItemGroup>
 

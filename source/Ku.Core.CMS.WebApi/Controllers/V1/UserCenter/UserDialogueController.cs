@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Dnc.Api.Throttle;
 using Ku.Core.CMS.IService.UserCenter;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.Web.Security;
@@ -32,6 +33,7 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.UserCenter
         /// </summary>
         /// <param name="message">内容</param>
         [HttpPost]
+        [ApiThrottle(Limit =1, Duration = 30, BasisCondition = BasisCondition.UserIdentity)]
         public async Task<IActionResult> PostAsync([StringLength(500, ErrorMessage = "aaa", MinimumLength = 10), Required]string message)
         {
             if (!ModelState.IsValid)

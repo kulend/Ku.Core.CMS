@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Ku.Core.CMS.Web.Extensions;
+using Dnc.Api.Throttle;
 
 namespace Ku.Core.CMS.Web.Filters
 {
@@ -14,6 +15,20 @@ namespace Ku.Core.CMS.Web.Filters
         {
             if (context.Result is FileContentResult file)
             {
+                await next();
+                return;
+            }
+
+            if (context.Result is ApiThrottleResult)
+            {
+                var rst = new JsonResult(new
+                {
+                    code = 906,
+                    message = "访问过于频繁，请稍后重试"
+
+                });
+                context.Result = rst;
+
                 await next();
                 return;
             }

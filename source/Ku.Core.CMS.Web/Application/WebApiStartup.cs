@@ -15,9 +15,9 @@ using System.IO;
 using System.Text;
 using Ku.Core.CMS.Web.Filters;
 using Ku.Core.Infrastructure.Json;
-using Dnc.Api.Restriction;
+using Dnc.Api.Throttle;
 using Ku.Core.CMS.Web.Extensions;
-using Dnc.Api.Restriction.Redis;
+using Dnc.Api.Throttle.Redis;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -34,14 +34,14 @@ namespace Ku.Core.CMS.Web.Application
             services.AddWebApiAuth(Configuration, Environment);
 
             //ApiRestriction
-            services.AddApiRestriction(options => {
+            services.AddApiThrottle(options => {
                 options.RedisConnectionString = "121.40.195.153:7480,password=ku123456,connectTimeout=5000,allowAdmin=false,defaultDatabase=0";
                 options.OnUserIdentity = httpContext => httpContext.User.GetUserIdOrZero().ToString();
             });
 
             services.AddMvc(opts =>
             {
-                opts.Filters.Add(typeof(ApiRestrictionActionFilter));
+                opts.Filters.Add(typeof(ApiThrottleActionFilter));
                 opts.Filters.Add(typeof(VinoActionFilter));
                 opts.Filters.Add(typeof(WebApiResultFilter));
                 opts.Filters.Add(typeof(ApiExceptionFilter));

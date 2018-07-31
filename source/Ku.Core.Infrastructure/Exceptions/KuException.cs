@@ -83,6 +83,14 @@
         }
     }
 
+    public class KuApiOverloadException : KuException
+    {
+        public KuApiOverloadException()
+            : base(906, "访问过于频繁，请稍后重试！")
+        {
+        }
+    }
+
     public class KuNeedVerifyCodeException : KuException
     {
         public KuNeedVerifyCodeException()

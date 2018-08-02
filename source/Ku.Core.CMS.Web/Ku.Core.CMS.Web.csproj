@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Dnc.Api.Restriction\src\Dnc.Api.Restriction\Dnc.Api.Throttle.csproj" />
+    <ProjectReference Include="..\..\..\开源\Dnc.Api.Throttle\src\Dnc.Api.Throttle\Dnc.Api.Throttle.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Layui\Ku.Core.Extensions.Layui.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Ui\Ku.Core.Extensions.Ui.csproj" />

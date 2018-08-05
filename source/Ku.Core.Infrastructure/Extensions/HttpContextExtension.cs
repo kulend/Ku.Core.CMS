@@ -2,6 +2,7 @@
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Ku.Core.Infrastructure.Extensions
@@ -14,7 +15,12 @@ namespace Ku.Core.Infrastructure.Extensions
             {
                 return string.Empty;
             }
-            return context.Connection.RemoteIpAddress.ToString();
+            var ip = context.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = context.Connection.RemoteIpAddress.ToString();
+            }
+            return ip;
         }
 
         public static string RequestPath(this HttpContext context)

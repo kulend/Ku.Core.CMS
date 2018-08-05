@@ -33,10 +33,37 @@ namespace Ku.Core.CMS.Web.Application
             services.AddJwtToken(Configuration);
             services.AddWebApiAuth(Configuration, Environment);
 
-            //ApiRestriction
+            //Api限流
             services.AddApiThrottle(options => {
-                options.RedisConnectionString = "121.40.195.153:7480,password=ku123456,connectTimeout=5000,allowAdmin=false,defaultDatabase=0";
+                options.UseRedisCacheAndStorage(redisOption => {
+                    redisOption.ConnectionString = "121.40.195.153:7480,password=ku123456,connectTimeout=5000,allowAdmin=false,defaultDatabase=0";
+                });
                 options.OnUserIdentity = httpContext => httpContext.User.GetUserIdOrZero().ToString();
+                options.onIntercepted = (context, valve, where) =>
+                {
+                    if (where == IntercepteWhere.Middleware)
+                    {
+                        return new JsonResult(new { code = 906, message = "访问过于频繁，请稍后重试！" });
+                    }
+                    else
+                    {
+                        return new ApiThrottleResult { Content = "访问过于频繁，请稍后重试！" };
+                    }
+                };
+                options.Global.AddValves(new BlackListValve
+                {
+                    Policy = Policy.Ip
+                }, new BlackListValve
+                {
+                    Policy = Policy.Header,
+                    PolicyKey = "p"
+                }, new RateValve
+                {
+                    Policy = Policy.Ip,
+                    Limit = 1,
+                    Duration = 30,
+                    WhenNull = WhenNull.Pass
+                });
             });
 
             services.AddMvc(opts =>
@@ -71,7 +98,7 @@ namespace Ku.Core.CMS.Web.Application
                 {
                     Version = "v1",
                     Title = "Ku.Core.CMS 接口文档",
-                    Description = "RESTful API for Vino.Core.CMS",
+                    Description = "RESTful API for ku.Core.CMS",
                     TermsOfService = "None",
                     Contact = new Contact { Name = "Kulend", Email = "kulend@qq.com", Url = "" }
                 });
@@ -108,6 +135,9 @@ namespace Ku.Core.CMS.Web.Application
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            //Api限流
+            app.UseApiThrottle();
 
             app.UseMvc();
         }

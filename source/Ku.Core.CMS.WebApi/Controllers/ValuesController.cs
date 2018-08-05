@@ -20,7 +20,6 @@ namespace Ku.Core.CMS.WebApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        [ApiThrottle]
         public string Get(int id)
         {
             return "value";

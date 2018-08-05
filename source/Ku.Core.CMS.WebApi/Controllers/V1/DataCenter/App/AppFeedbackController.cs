@@ -8,6 +8,7 @@ using Ku.Core.CMS.Domain.Dto.DataCenter;
 using Ku.Core.CMS.IService.DataCenter;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.Infrastructure.Exceptions;
+using Dnc.Api.Throttle;
 
 namespace Ku.Core.CMS.WebApi.Controllers.V1.DataCenter.App
 {
@@ -36,6 +37,7 @@ namespace Ku.Core.CMS.WebApi.Controllers.V1.DataCenter.App
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [RateValve(Limit = 1,Duration = 60, Policy = Policy.Ip)]
         public async Task<JsonResult> Post(string appkey, string content)
         {
             if (string.IsNullOrEmpty(content))

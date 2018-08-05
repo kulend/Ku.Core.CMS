@@ -36,8 +36,8 @@ namespace Ku.Core.CMS.WebApi.Controllers
         [HttpPost("3")]
         public async Task<IActionResult> Post1()
         {
-            await _service.AddBlackListAsync(Policy.Ip, TimeSpan.FromSeconds(60), HttpContext.IpAddress());
-            var data = await _service.GetBlackListAsync(Policy.Ip);
+            await _service.AddRosterAsync(RosterType.BlackList,Common.GlobalApiKey, Policy.Ip, null, TimeSpan.FromSeconds(60), HttpContext.IpAddress());
+            var data = await _service.GetRosterListAsync(RosterType.BlackList, Common.GlobalApiKey, Policy.Ip, null);
             return Json(data);
         }
     }

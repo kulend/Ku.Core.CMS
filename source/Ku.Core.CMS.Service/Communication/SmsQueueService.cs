@@ -14,7 +14,7 @@ using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.Communication;
 using Ku.Core.CMS.Domain.Entity.Communication;
 using Ku.Core.CMS.IService.Communication;
-using Ku.Core.Extensions.Dapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Collections.Generic;

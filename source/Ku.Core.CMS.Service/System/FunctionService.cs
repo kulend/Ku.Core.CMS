@@ -15,7 +15,7 @@ using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.System;
 using Ku.Core.CMS.Domain.Entity.System;
 using Ku.Core.CMS.IService.System;
-using Ku.Core.Extensions.Dapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.Helper;

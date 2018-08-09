@@ -6,11 +6,11 @@
   
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Dnc.Extensions.Dapper" Version="1.0.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\Ku.Core.Cache\Ku.Core.Cache.csproj" />
     <ProjectReference Include="..\Ku.Core.CMS.Data\Ku.Core.CMS.Data.csproj" />
     <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />

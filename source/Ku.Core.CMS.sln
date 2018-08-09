@@ -59,15 +59,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.WebApi", "Ku.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Communication", "Ku.Core.Communication\Ku.Core.Communication.csproj", "{5AF55AE7-924B-46E0-A71C-C05A5A653146}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Dapper", "..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj", "{E7487AB4-C2CC-4781-8FAA-277E85EEFE6F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Layui", "..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Layui\Ku.Core.Extensions.Layui.csproj", "{720B0C52-C3C6-4E57-AD2C-E62E00865D08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Ui", "..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Ui\Ku.Core.Extensions.Ui.csproj", "{161AB5B3-87D3-4483-9C12-127EBBE36D9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.Extensions.Layui.Test", "..\..\开源\Ku.Core.Extensions\Tests\Ku.Core.Extensions.Layui.Test\Ku.Core.Extensions.Layui.Test.csproj", "{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnc.Api.Throttle", "..\..\开源\Dnc.Api.Throttle\src\Dnc.Api.Throttle\Dnc.Api.Throttle.csproj", "{DE92F498-5E78-49D1-87D4-4C0999CD36CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,10 +147,6 @@ Global
 		{5AF55AE7-924B-46E0-A71C-C05A5A653146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AF55AE7-924B-46E0-A71C-C05A5A653146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AF55AE7-924B-46E0-A71C-C05A5A653146}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7487AB4-C2CC-4781-8FAA-277E85EEFE6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7487AB4-C2CC-4781-8FAA-277E85EEFE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7487AB4-C2CC-4781-8FAA-277E85EEFE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7487AB4-C2CC-4781-8FAA-277E85EEFE6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{720B0C52-C3C6-4E57-AD2C-E62E00865D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{720B0C52-C3C6-4E57-AD2C-E62E00865D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{720B0C52-C3C6-4E57-AD2C-E62E00865D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -167,10 +159,6 @@ Global
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE92F498-5E78-49D1-87D4-4C0999CD36CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE92F498-5E78-49D1-87D4-4C0999CD36CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE92F498-5E78-49D1-87D4-4C0999CD36CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE92F498-5E78-49D1-87D4-4C0999CD36CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -195,11 +183,9 @@ Global
 		{758526A6-BC28-4883-A392-3A22DE484F16} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
 		{4DB286CD-6FD4-4AE7-86B1-BAA046109256} = {9D86126B-0723-4E1C-B95A-DCD1E079D624}
 		{5AF55AE7-924B-46E0-A71C-C05A5A653146} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
-		{E7487AB4-C2CC-4781-8FAA-277E85EEFE6F} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{720B0C52-C3C6-4E57-AD2C-E62E00865D08} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{161AB5B3-87D3-4483-9C12-127EBBE36D9A} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 		{1F7485DA-16EE-4CC2-BE18-E51A868CACB3} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
-		{DE92F498-5E78-49D1-87D4-4C0999CD36CE} = {3FFD240A-9650-4B56-ADEA-A094642369E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

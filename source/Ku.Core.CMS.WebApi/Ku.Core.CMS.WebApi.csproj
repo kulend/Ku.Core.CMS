@@ -16,17 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dnc.Api.Throttle" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="NLog" Version="4.5.7" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.4" />
+    <PackageReference Include="NLog" Version="4.5.8" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Dnc.Api.Throttle\src\Dnc.Api.Throttle\Dnc.Api.Throttle.csproj" />
     <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
   </ItemGroup>
 

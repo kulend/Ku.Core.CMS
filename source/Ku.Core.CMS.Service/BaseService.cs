@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Ku.Core.CMS.Domain;
-using Ku.Core.Extensions.Dapper;
+using Dnc.Extensions.Dapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

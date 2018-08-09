@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Dnc.Api.Throttle" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
@@ -21,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Dnc.Api.Throttle\src\Dnc.Api.Throttle\Dnc.Api.Throttle.csproj" />
-    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Layui\Ku.Core.Extensions.Layui.csproj" />
     <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Ui\Ku.Core.Extensions.Ui.csproj" />
     <ProjectReference Include="..\Ku.Core.Cache\Ku.Core.Cache.csproj" />

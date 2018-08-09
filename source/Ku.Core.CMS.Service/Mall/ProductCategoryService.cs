@@ -13,7 +13,7 @@ using AutoMapper;
 using Ku.Core.CMS.Domain.Dto.Mall;
 using Ku.Core.CMS.Domain.Entity.Mall;
 using Ku.Core.CMS.IService.Mall;
-using Ku.Core.Extensions.Dapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;

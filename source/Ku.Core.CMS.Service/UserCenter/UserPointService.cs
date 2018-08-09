@@ -10,12 +10,12 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.UserCenter;
 using Ku.Core.CMS.Domain.Entity.UserCenter;
 using Ku.Core.CMS.Domain.Enum.UserCenter;
 using Ku.Core.CMS.IService.UserCenter;
-using Ku.Core.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;

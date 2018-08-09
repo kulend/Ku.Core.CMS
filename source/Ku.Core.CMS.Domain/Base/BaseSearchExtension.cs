@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Ku.Core.Extensions.Dapper;
-using Ku.Core.Extensions.Dapper.SqlDialect;
+using Dnc.Extensions.Dapper;
+using Dnc.Extensions.Dapper.SqlDialect;
 using Ku.Core.Infrastructure.Extensions;
 
 namespace Ku.Core.CMS.Domain

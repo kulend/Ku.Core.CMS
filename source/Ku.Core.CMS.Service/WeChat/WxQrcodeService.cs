@@ -14,7 +14,7 @@ using Ku.Core.CMS.Domain.Dto.WeChat;
 using Ku.Core.CMS.Domain.Entity.WeChat;
 using Ku.Core.CMS.Domain.Enum.WeChat;
 using Ku.Core.CMS.IService.WeChat;
-using Ku.Core.Extensions.Dapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.IdGenerator;
 using Ku.Core.WeChat.Qrcode;

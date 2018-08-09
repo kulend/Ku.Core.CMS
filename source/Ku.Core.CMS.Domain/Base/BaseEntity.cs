@@ -1,4 +1,4 @@
-﻿using Ku.Core.Extensions.Dapper.Attributes;
+﻿using Dnc.Extensions.Dapper.Attributes;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

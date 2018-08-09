@@ -2,7 +2,7 @@
 using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Entity.UserCenter;
 using Ku.Core.CMS.IService.UserCenter;
-using Ku.Core.Extensions.Dapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.Helper;
 using System;

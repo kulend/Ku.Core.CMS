@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Ku.Core.Extensions\Ku.Core.Extensions.Dapper\Ku.Core.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\Ku.Core.CMS.Domain\Ku.Core.CMS.Domain.csproj" />
     <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
   </ItemGroup>

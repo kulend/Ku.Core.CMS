@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Ku.Core.CMS.IService.System;
-using Ku.Core.CMS.Web.Extensions;
-using Ku.Core.Extensions.Ui;
-using Ku.Core.Infrastructure.Extensions;
+﻿using Dnc.Extensions.Ui.Layui;
 using Ku.Core.CMS.IService.UserCenter;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Web.Controls
 {

@@ -26,6 +26,10 @@ namespace Ku.Core.CMS.Domain
 
         public string Sql { set; get; }
 
+        public SearchConditionAttribute()
+        {
+        }
+
         public SearchConditionAttribute(string propertyName, SearchConditionOperation operation)
         {
             this.PropertyName = propertyName;

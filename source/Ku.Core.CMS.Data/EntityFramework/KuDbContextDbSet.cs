@@ -93,6 +93,21 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.Content.MaskWord> ContentMaskWords { get; set; }
 		
         /// <summary>
+        /// Content 广告
+        /// </summary>
+        public DbSet<Domain.Entity.Content.Advertisement> ContentAdvertisements { get; set; }
+		
+        /// <summary>
+        /// Content 广告牌
+        /// </summary>
+        public DbSet<Domain.Entity.Content.AdvertisementBoard> ContentAdvertisementBoards { get; set; }
+		
+        /// <summary>
+        /// Content 广告牌广告关联
+        /// </summary>
+        public DbSet<Domain.Entity.Content.AdvertisementBoardRef> ContentAdvertisementBoardRefs { get; set; }
+		
+        /// <summary>
         /// Mall 配送模板
         /// </summary>
         public DbSet<Domain.Entity.Mall.DeliveryTemplet> MallDeliveryTemplets { get; set; }
@@ -158,7 +173,7 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.DataCenter.AppFeedback> AppFeedbacks { get; set; }
 
         /// <summary>
-        /// 用户角色关联
+        /// 用户
         /// </summary>
         public DbSet<Domain.Entity.UserCenter.User> UserCenterUsers { get; set; }
 

@@ -1,0 +1,66 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Content.Advertisement.EditModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Edit.cshtml
+// 功能描述：广告 编辑页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-08-10 21:27
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+
+@using Ku.Core.CMS.Domain.Dto.Content
+
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Name, x => x.Dto.Provenance)
+            @Html.InputFor(x => x.Dto.Title)
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片</label>
+                <div id="imageList" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.FlashUrl)
+            @Html.InputFor(x => x.Dto.Link)
+            @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.OrderIndex)
+            <div class="layui-form-item">
+                <label class="layui-form-label">广告位</label>
+                <div class="layui-input-block">
+                    @foreach (AdvertisementBoardDto board in Model.Boards)
+                    {
+                        <input type="checkbox" name="BindBoards" value="@board.Id" title="@board.Name" lay-skin="primary" @(board.IsEnable ? "" : "disabled") @(Model.BindBoards.Any(x => x == board.Id) ? "checked" : "") />
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/ku/ku.image.picker.js"></script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+
+            $("#imageList").kuImagePicker({
+                field_data: "Dto.ImageData",
+                max_count: 1
+            });
+
+            $("#imageList").kuImagePicker("loadData", '@Html.Raw(Model.Dto.ImageData)');
+        });
+    </script>
+}

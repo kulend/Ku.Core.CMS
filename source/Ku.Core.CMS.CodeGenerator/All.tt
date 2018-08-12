@@ -12,17 +12,17 @@
 <#@ import namespace="System.Reflection" #>
 <#@ include file="manager.ttinclude"#>
 <#
-	var name = "UserDialogue";
-	var desc = "用户对话";
-	var area = "UserCenter";
-	var logicDel = true;
-	var HasRecycle = true;
-   	var HasDetail = true;
+	var name = "AdvertisementBoardRef";
+	var desc = "广告牌广告关联";
+	var area = "Content";
+	var logicDel = false;
+	var HasRecycle = false;
+   	var HasDetail = false;
    	//模式1，普通无回收站
    	//模式2，普通有回收站
    	//模式3，父子级无回收站
    	//模式4，父子级有回收站
-	var mode = 2;
+	var mode = 1;
 
 	var table = name.ToLower();
 	name = name.Replace("_", "");

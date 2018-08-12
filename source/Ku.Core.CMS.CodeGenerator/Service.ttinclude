@@ -75,7 +75,7 @@ using AutoMapper;
 using Ku.Core.CMS.Domain.Dto.<#=area#>;
 using Ku.Core.CMS.Domain.Entity.<#=area#>;
 using Ku.Core.CMS.IService.<#=area#>;
-using Ku.Core.Extensions.Dapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Threading.Tasks;

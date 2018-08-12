@@ -22,6 +22,8 @@ namespace Ku.Core.CMS.Data.EntityFramework
 
             modelBuilder.Entity<Domain.Entity.Mall.BrandCategoryRef>().HasKey(t => new { t.BrandId, t.ProductCategoryId });
 
+            modelBuilder.Entity<Domain.Entity.Content.AdvertisementBoardRef>().HasKey(t => new { t.AdvertisementId, t.AdvertisementBoardId });
+
             base.OnModelCreating(modelBuilder);
         }
 

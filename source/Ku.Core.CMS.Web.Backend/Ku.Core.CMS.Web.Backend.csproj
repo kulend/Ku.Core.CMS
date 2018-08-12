@@ -9,6 +9,7 @@
     <Content Remove="Pages\UserCenter\UserDialogue\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Dnc.Extensions.Ui.Layui" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="NLog" Version="4.5.8" />

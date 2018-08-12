@@ -1,0 +1,155 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.Content.Advertisement.IndexModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Index.cshtml
+    // 功能描述：广告 列表页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-08-10 21:27
+    //
+    //----------------------------------------------------------------
+}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3 layui-col-lg2">
+            <div class="layui-card">
+                <div class="layui-card-header">广告位</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <table id="ID_table_filters" class="layui-table" lay-skin="row">
+                            <tbody>
+                                <tr><td><input type="checkbox" title="全部" name="name_filter" valu="" lay-skin="primary" lay-filter="filter-item"></td></tr>
+                                @foreach (var col in Model.Boards)
+                                {
+                                    <tr><td><input type="checkbox" title="@col.Name" name="name_filter" value="@col.Id" lay-skin="primary" lay-filter="filter-item"></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md9  layui-col-lg10">
+            <div class="layui-card">
+                <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+                    <ul class="layui-tab-title">
+                        <li lay-id="list" class="layui-this">广告列表</li>
+                        <li lay-id="recycles"><i class="layui-icon">&#xe640;</i> 回收站</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="toolbar">
+                                <action title="刷新" action="grid:reload['#list']" />
+                                <action id="btnAdd" auth-code="content.advertisement.edit" text="新增" icon="&#xe608;" action="window:/Content/Advertisement/Edit" after="grid:reload['#list']" />
+                                <action auth-code="content.advertisement.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+                            </div>
+                            <table id="list"></table>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="toolbar">
+                                <action title="刷新" action="grid:reload['#recycles']" />
+                                <action auth-code="content.advertisement.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
+                            </div>
+                            <table id="recycles"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+    layui.use(['form','element'], function () {
+        var element = layui.element;
+        var form = layui.form;
+
+        form.on('checkbox(filter-item)', function (data) {
+            var name = data.elem.getAttribute("name");
+            var domArr = document.getElementsByName(name);
+            var checked = false;
+            for (var i = 0; i < domArr.length; i++) {
+                if (domArr[i] !== data.elem) {
+                    if (data.elem.checked) {
+                        domArr[i].checked = false;
+                    } else if (domArr[i].checked) {
+                        checked = true;
+                    }
+                }
+            }
+            data.elem.checked = !checked ? true : data.elem.checked;
+            form.render('checkbox');
+
+            filterChanged(data.value);
+        });
+
+        element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "recycles" && !$("#recycles").hasClass("ku-grid"))
+            {
+                //初始化回收站
+                $("#recycles").kuGrid({
+                    url: 'Index/Data',
+                    cols: [cols.concat([
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "content.advertisement.restore", text: "恢复", action: `post:Index/Restore?id={{d.Id}}` }
+                            ])
+                        }
+                    ])],
+                    onWhere: function () {
+                        return {
+                            IsDeleted: true,
+                            AdvertisementBoardId: selFilterValue
+                        };
+                    }
+                });
+            }
+        });
+    });
+
+    var cols = [
+        { field: 'Name', title: '名称', width: 220 },
+        { field: 'Provenance', title: '来源', width: 140 },
+        { field: 'IsPublished', title: '是否发布', width: 100, align: 'center', switch: true },
+        { field: 'OrderIndex', title: '排序', width: 80, align: 'center' },
+        { field: 'Clicks', title: '点击量', width: 80, align: 'center' },
+        { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
+    ];
+
+    var selFilterValue;
+    function filterChanged(filterValue) {
+        if (!selFilterValue) {
+            selFilterValue = filterValue;
+            $("#list").kuGrid({
+                url: 'Index/Data',
+                cols: [cols.concat([
+                    {
+                        title: '操作', fixed: 'right', width: 100, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "content.advertisement.edit", text: "编辑", action: `window:/Content/Advertisement/Edit?id={{d.Id}}`, after: "grid:reload['#list']" },
+                            { code: "content.advertisement.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ])],
+                onWhere: function () {
+                    return {
+                        IsDeleted: false,
+                        AdvertisementBoardId: selFilterValue
+                    };
+                }
+            });
+        } else if (selFilterValue != filterValue) {
+            selFilterValue = filterValue;
+            $("#list").kuGrid("search");
+            if ($("#recycles").hasClass("ku-grid")) {
+                $("#recycles").kuGrid("search");
+            }
+        }
+    }
+    </script>
+}

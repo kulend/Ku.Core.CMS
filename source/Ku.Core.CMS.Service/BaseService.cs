@@ -3,6 +3,7 @@ using Ku.Core.CMS.Domain;
 using Dnc.Extensions.Dapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service
 {
@@ -25,7 +26,8 @@ namespace Ku.Core.CMS.Service
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryListAsync<TEntity>(where.ParseToDapperSql(dapper.Dialect), sort as object);
+                var builder = new QueryBuilder().Select<TEntity>().From<TEntity>().Where(where).Sort(sort as object);
+                var data = await dapper.QueryListAsync<TEntity>(builder);
                 return Mapper.Map<List<TDto>>(data);
             }
         }
@@ -34,15 +36,16 @@ namespace Ku.Core.CMS.Service
         /// 分页查询数据
         /// </summary>
         /// <param name="page">页码</param>
-        /// <param name="size">条数</param>
+        /// <param name="rows">条数</param>
         /// <param name="where">查询条件</param>
         /// <param name="sort">排序</param>
         /// <returns>count：条数；items：分页数据</returns>
-        public virtual async Task<(int count, List<TDto> items)> GetListAsync(int page, int size, TSearch where, dynamic sort)
+        public virtual async Task<(int count, List<TDto> items)> GetListAsync(int page, int rows, TSearch where, dynamic sort)
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryPageAsync<TEntity>(page, size, where.ParseToDapperSql(dapper.Dialect), sort as object);
+                var builder = new QueryBuilder().Select<TEntity>().From<TEntity>().Where(where).Sort(sort as object).Limit(page, rows);
+                var data = await dapper.QueryPageAsync<TEntity>(builder);
                 return (data.count, Mapper.Map<List<TDto>>(data.items));
             }
         }
@@ -56,20 +59,21 @@ namespace Ku.Core.CMS.Service
         {
             using (var dapper = DapperFactory.Create())
             {
-                return Mapper.Map<TDto>(await dapper.QueryOneAsync<TEntity>(new { Id = id }));
+                var builder = new QueryBuilder().Select<TEntity>().From<TEntity>().Where<TEntity>(new { Id = id });
+                return Mapper.Map<TDto>(await dapper.QueryOneAsync<TEntity>(builder));
             }
         }
 
         /// <summary>
         /// 根据条件取得数据一条数据
         /// </summary>
-        /// <param name="id">主键</param>
         /// <returns></returns>
         public virtual async Task<TDto> GetOneAsync(TSearch where, dynamic sort = null)
         {
             using (var dapper = DapperFactory.Create())
             {
-                return Mapper.Map<TDto>(await dapper.QueryOneAsync<TEntity>(where.ParseToDapperSql(dapper.Dialect), sort as object));
+                var builder = new QueryBuilder().Select<TEntity>().From<TEntity>().Where(where).Sort(sort as object);
+                return Mapper.Map<TDto>(await dapper.QueryOneAsync<TEntity>(builder));
             }
         }
 

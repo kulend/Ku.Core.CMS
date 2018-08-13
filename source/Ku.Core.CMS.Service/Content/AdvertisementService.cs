@@ -46,9 +46,8 @@ namespace Ku.Core.CMS.Service.Content
         {
             using (var dapper = DapperFactory.Create())
             {
-                //var builder = new QueryBuilder();
-                //builder.Select<Advertisement>().From<Advertisement>().Where(search);
-                var data = await dapper.QueryPageAsync<Advertisement>(page, size, search.ParseToDapperSql(dapper.Dialect), sort as object);
+                var builder = new QueryBuilder().Select<Advertisement>().From<Advertisement>("m").Where(search).Sort(sort as object).Limit(page,size);
+                var data = await dapper.QueryPageAsync<Advertisement>(builder);
                 return (data.count, Mapper.Map<List<AdvertisementDto>>(data.items));
             }
         }

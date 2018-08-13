@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Dnc.Extensions.Dapper.Attributes;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -84,7 +85,7 @@ namespace Ku.Core.CMS.Domain.Entity.Content
     /// </summary>
     public class AdvertisementSearch : BaseProtectedSearch<Advertisement>
     {
-        [SearchCondition(Operation = SearchConditionOperation.Sql, Sql = "EXISTS (SELECT * FROM content_advertisement_board_ref t2 WHERE t2.AdvertisementId=content_advertisement.Id AND t2.AdvertisementBoardId=@value)")]
+        [Condition(WhenNull = WhenNull.Ignore, Operation = ConditionOperation.Custom, CustomSql = "EXISTS (SELECT * FROM content_advertisement_board_ref ref WHERE ref.AdvertisementId=m.Id AND ref.AdvertisementBoardId=@value)")]
         public long? AdvertisementBoardId { set; get; }
     }
 }

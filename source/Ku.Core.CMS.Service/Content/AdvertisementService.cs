@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using Ku.Core.CMS.Domain;
+using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service.Content
 {
@@ -41,11 +42,13 @@ namespace Ku.Core.CMS.Service.Content
         /// <param name="where">查询条件</param>
         /// <param name="sort">排序</param>
         /// <returns>count：条数；items：分页数据</returns>
-        public override async Task<(int count, List<AdvertisementDto> items)> GetListAsync(int page, int size, AdvertisementSearch where, dynamic sort)
+        public override async Task<(int count, List<AdvertisementDto> items)> GetListAsync(int page, int size, AdvertisementSearch search, dynamic sort)
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryPageAsync<Advertisement>(page, size, where.ParseToDapperSql(dapper.Dialect), sort as object);
+                //var builder = new QueryBuilder();
+                //builder.Select<Advertisement>().From<Advertisement>().Where(search);
+                var data = await dapper.QueryPageAsync<Advertisement>(page, size, search.ParseToDapperSql(dapper.Dialect), sort as object);
                 return (data.count, Mapper.Map<List<AdvertisementDto>>(data.items));
             }
         }

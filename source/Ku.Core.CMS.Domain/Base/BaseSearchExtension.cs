@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Dnc.Extensions.Dapper;
 using Dnc.Extensions.Dapper.SqlDialect;
 using Ku.Core.Infrastructure.Extensions;
 
@@ -103,7 +102,7 @@ namespace Ku.Core.CMS.Domain
             return exp;
         }
 
-        public static DapperSql ParseToDapperSql<T>(this BaseSearch<T> search, ISqlDialect dialect, string tableAlias = null)
+        public static Dnc.Extensions.Dapper.DapperSql ParseToDapperSql<T>(this BaseSearch<T> search, ISqlDialect dialect, string tableAlias = null)
         {
             if (search == null)
             {
@@ -126,7 +125,7 @@ namespace Ku.Core.CMS.Domain
 
             var allSql = string.Join(" AND ", sqls.ToArray());
 
-            return new DapperSql(allSql, allParameters);
+            return new Dnc.Extensions.Dapper.DapperSql(allSql, allParameters);
         }
 
         private static (string sql, Dictionary<string, object> parameters) ParseProperty<T>(BaseSearch<T> search, PropertyInfo p, ISqlDialect dialect, string tableAlias)
@@ -163,31 +162,31 @@ namespace Ku.Core.CMS.Domain
                 case SearchConditionOperation.Equal:
                     if (value == null)
                     {
-                        sql = tableAlias + dialect.QuoteFiled(name) + " IS NULL";
+                        sql = tableAlias + dialect.QuoteField(name) + " IS NULL";
                     }
                     else
                     {
-                        sql = tableAlias + dialect.QuoteFiled(name) + "=@" + name;
+                        sql = tableAlias + dialect.QuoteField(name) + "=@" + name;
                         pms.TryAdd(name, value);
                     }
                     break;
                 case SearchConditionOperation.NotEqual:
                     if (value == null)
                     {
-                        sql = tableAlias + dialect.QuoteFiled(name) + " IS NOT NULL";
+                        sql = tableAlias + dialect.QuoteField(name) + " IS NOT NULL";
                     }
                     else
                     {
-                        sql = tableAlias + dialect.QuoteFiled(name) + "<>@" + name;
+                        sql = tableAlias + dialect.QuoteField(name) + "<>@" + name;
                         pms.TryAdd(name, value);
                     }
                     break;
                 case SearchConditionOperation.Contains:
-                    sql = $"{tableAlias}{dialect.QuoteFiled(name)} LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
+                    sql = $"{tableAlias}{dialect.QuoteField(name)} LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
                     pms.TryAdd(name, value);
                     break;
                 case SearchConditionOperation.NotContains:
-                    sql = $"{tableAlias}{dialect.QuoteFiled(name)} NOT LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
+                    sql = $"{tableAlias}{dialect.QuoteField(name)} NOT LIKE {dialect.Concat}('{"%"}', @{name}, '{"%"}')";
                     pms.TryAdd(name, value);
                     break;
                 case SearchConditionOperation.Sql:
@@ -208,5 +207,6 @@ namespace Ku.Core.CMS.Domain
 
             return (sql, pms);
         }
+
     }
 }

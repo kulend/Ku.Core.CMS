@@ -58,7 +58,7 @@
                 {
                     title: '操作', fixed: 'right', width: 180, align: 'center',
                     toolbar: grid_templet_operate([
-                        { code: "usercenter.role.function", text: "权限分配", action: `window:/UserCenter/Role/RoleFunction?RoleId={{d.Id}}`, css: "layui-btn-primary" },
+                        { code: "usercenter.role.function", text: "权限分配", action: `window:/UserCenter/Role/Function?RoleId={{d.Id}}`, css: "layui-btn-primary" },
                         { code: "usercenter.role.edit", text: "编辑", action: `window:/UserCenter/Role/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
                         { code: "usercenter.role.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
                     ])

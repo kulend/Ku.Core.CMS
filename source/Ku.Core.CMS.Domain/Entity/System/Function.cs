@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Dnc.Extensions.Dapper.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -67,6 +68,7 @@ namespace Ku.Core.CMS.Domain.Entity.System
         /// <summary>
         /// 父功能
         /// </summary>
+        [Condition(WhenNull = WhenNull.IsNull)]
         public long? ParentId { get; set; }
     }
 }

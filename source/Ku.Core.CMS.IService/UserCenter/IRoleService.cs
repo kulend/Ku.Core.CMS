@@ -21,5 +21,10 @@ namespace Ku.Core.CMS.IService.UserCenter
         /// 保存数据
         /// </summary>
         Task SaveAsync(RoleDto dto);
+
+        /// <summary>
+        /// 保存权限
+        /// </summary>
+        Task SaveRoleAuthAsync(long RoleId, long FunctionId, bool hasAuth);
     }
 }

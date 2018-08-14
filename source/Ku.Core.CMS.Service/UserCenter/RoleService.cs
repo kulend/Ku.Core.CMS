@@ -59,5 +59,31 @@ namespace Ku.Core.CMS.Service.UserCenter
                 }
             }
         }
+
+        /// <summary>
+        /// 保存权限
+        /// </summary>
+        public async Task SaveRoleAuthAsync(long RoleId, long FunctionId, bool hasAuth)
+        {
+            using (var dapper = DapperFactory.Create())
+            {
+                var model = await dapper.QueryOneAsync<RoleFunction>(where: new { RoleId, FunctionId });
+                if (hasAuth)
+                {
+                    if (model == null)
+                    {
+                        model = new RoleFunction();
+                        model.RoleId = RoleId;
+                        model.FunctionId = FunctionId;
+                        await dapper.InsertAsync<RoleFunction>(model);
+                    }
+                }
+                else if (model != null)
+                {
+                    await dapper.DeleteAsync<RoleFunction>(where: new { RoleId, FunctionId });
+                }
+
+            }
+        }
     }
 }

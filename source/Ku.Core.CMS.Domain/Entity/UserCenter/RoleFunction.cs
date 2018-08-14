@@ -32,6 +32,8 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
     /// </summary>
     public class RoleFunctionSearch : BaseSearch<RoleFunction>
     {
+        public long? RoleId { set; get; }
 
+        public long? FunctionId { set; get; }
     }
 }

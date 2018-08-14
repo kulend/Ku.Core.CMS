@@ -22,6 +22,9 @@
     <Content Update="Pages\Content\Article\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\UserCenter\Role\Function.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />

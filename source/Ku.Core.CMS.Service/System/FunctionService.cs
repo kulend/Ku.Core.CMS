@@ -126,7 +126,7 @@ namespace Ku.Core.CMS.Service.System
         {
             using (var dapper = DapperFactory.Create())
             {
-                var list = await dapper.QueryListAsync<Function>(new { ParentId = parentId }, new { CreateTime = "asc" });
+                var list = await dapper.QueryListAsync<Function>(new { ParentId = parentId }, "CreateTime asc");
                 return Mapper.Map<List<FunctionDto>>(list);
             }
         }

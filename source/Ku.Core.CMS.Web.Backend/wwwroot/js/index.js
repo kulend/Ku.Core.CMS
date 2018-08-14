@@ -3,6 +3,7 @@
     var layer = layui.layer;
 
     //打开首页
+    var homeTabId = 'profile';
     openTab('profile', { id: 'profile', title: '基本资料', url:'/Account/Profile' });
 
     // 菜单点击
@@ -78,26 +79,32 @@
             //关闭当前页面
             let li = $("#LAY_app_tabsheader").children("li.layui-this");
             let id = li.attr("lay-id");
-            element.tabDelete('F_index_tab', id);
-            li.remove();
+            if (homeTabId != id) {
+                element.tabDelete('F_index_tab', id);
+                li.remove();
+            }
         }
         else if (event == "closeOtherTabs") {
             //关闭其他页面
             $("#LAY_app_tabsheader").children("li.layui-this").siblings().not("[lay-id='home']").each(function () {
                 let id = $(this).attr("lay-id");
-                element.tabDelete('F_index_tab', id);
-                $(this).remove();
+                if (homeTabId != id) {
+                    element.tabDelete('F_index_tab', id);
+                    $(this).remove();
+                }
             });
         }
         else if (event == "closeAllTabs") {
             //关闭全部页面
             $("#LAY_app_tabsheader").children("li").siblings().not("[lay-id='home']").each(function () {
                 let id = $(this).attr("lay-id");
-                element.tabDelete('F_index_tab', id);
-                $(this).remove();
+                if (homeTabId != id) {
+                    element.tabDelete('F_index_tab', id);
+                    $(this).remove();
+                }
             });
         }
-        $(this).parent().removeClass("layui-show");
+        $(this).parent().parent().removeClass("layui-show");
     });
 
     //锁屏

@@ -19,6 +19,8 @@ namespace Ku.Core.CMS.Domain.Dto.UserCenter
     /// </summary>
     public class RoleFunctionDto : BaseDto
     {
+        public long RoleId { set; get; }
 
+        public long FunctionId { set; get; }
     }
 }

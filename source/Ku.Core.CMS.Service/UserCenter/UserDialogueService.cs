@@ -21,6 +21,7 @@ using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service.UserCenter
 {
@@ -46,13 +47,16 @@ namespace Ku.Core.CMS.Service.UserCenter
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryPageAsync<UserDialogue, User, UserDialogue>(page, size, "t1.*,t2.Id,t2.NickName",
-                    $"{dapper.Dialect.FormatTableName<UserDialogue>()} t1 INNER JOIN {dapper.Dialect.FormatTableName<User>()} t2 ON t1.UserId=t2.Id",
-                    where.ParseToDapperSql(dapper.Dialect, "t1"), sort as object, (t1, t2) =>
-                    {
-                        t1.User = t2;
-                        return t1;
-                    }, splitOn: "Id");
+                var builder = new QueryBuilder().Select<UserDialogue>().Concat<User>()
+                    .From<UserDialogue>()
+                    .InnerJoin<User>().On(new ConditionBuilder().Equal<UserDialogue, User>(m => m.UserId, t => t.Id))
+                    .Where(where).Sort(sort as object).Limit(page, size);
+
+                var data = await dapper.QueryPageAsync<UserDialogue, User, UserDialogue>(builder, (t1, t2) =>
+                {
+                    t1.User = t2;
+                    return t1;
+                }, splitOn: "Id");
                 return (data.count, Mapper.Map<List<UserDialogueDto>>(data.items));
             }
         }

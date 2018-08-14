@@ -71,7 +71,7 @@ namespace Ku.Core.CMS.Service.Content
                     //广告位处理
                     var refs = boards?.Select(x => new AdvertisementBoardRef { AdvertisementId = model.Id, AdvertisementBoardId = x });
 
-                    await dapper.InsertAsync<AdvertisementBoardRef>(refs);
+                    await dapper.InsertAsync<AdvertisementBoardRef>(refs.ToArray());
 
                     dapper.Commit();
                 }
@@ -98,7 +98,7 @@ namespace Ku.Core.CMS.Service.Content
                     await dapper.DeleteAsync<AdvertisementBoardRef>(new { AdvertisementId = model.Id });
 
                     var refs = boards?.Select(x => new AdvertisementBoardRef { AdvertisementId = model.Id, AdvertisementBoardId = x });
-                    await dapper.InsertAsync<AdvertisementBoardRef>(refs);
+                    await dapper.InsertAsync<AdvertisementBoardRef>(refs.ToArray());
 
                     dapper.Commit();
                 }
@@ -112,9 +112,12 @@ namespace Ku.Core.CMS.Service.Content
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryListAsync<AdvertisementBoard>("t1.*", "content_advertisement_board t1",
-                    where: new DapperSql("EXISTS (SELECT * FROM content_advertisement_board_ref t2 WHERE t2.AdvertisementBoardId=t1.Id AND t2.AdvertisementId=@AdvertisementId)", new { AdvertisementId = id }),
-                    order: null);
+                var builder = new QueryBuilder().Select<AdvertisementBoard>().From<AdvertisementBoard>().Where(new AdvertisementBoardSearch { AdvertisementId = id });
+                var data = await dapper.QueryListAsync<AdvertisementBoard>(builder);
+
+                //var data = await dapper.QueryListAsync<AdvertisementBoard>("t1.*", "content_advertisement_board t1",
+                //    where: new DapperSql("EXISTS (SELECT * FROM content_advertisement_board_ref t2 WHERE t2.AdvertisementBoardId=t1.Id AND t2.AdvertisementId=@AdvertisementId)", new { AdvertisementId = id }),
+                //    order: null);
                 return Mapper.Map<IEnumerable<AdvertisementBoardDto>>(data);
             }
         }

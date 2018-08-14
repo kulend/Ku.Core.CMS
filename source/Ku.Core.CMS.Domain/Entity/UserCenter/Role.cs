@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Dnc.Extensions.Dapper.Attributes;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -51,6 +52,7 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
     /// </summary>
     public class RoleSearch : BaseProtectedSearch<Role>
     {
-
+        [Condition(Operation = ConditionOperation.Custom, CustomSql = "EXISTS (SELECT * FROM usercenter_user_role ref WHERE ref.RoleId=m.Id AND ref.UserId=@value)")]
+        public long? UserId { set; get; }
     }
 }

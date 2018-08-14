@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service.UserCenter
 {
@@ -175,9 +176,12 @@ namespace Ku.Core.CMS.Service.UserCenter
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryListAsync<Role>("t1.*", "usercenter_role t1",
-                    where: new DapperSql("EXISTS (SELECT * FROM usercenter_user_role t2 WHERE t2.RoleId=t1.Id AND t2.UserId=@UserId)", new { UserId = userId }),
-                    order: null);
+                var builder = new QueryBuilder().Select<Role>().From<Role>().Where(new RoleSearch { UserId = userId });
+                var data = await dapper.QueryListAsync<Role>(builder);
+
+                //var data = await dapper.QueryListAsync<Role>("t1.*", "usercenter_role t1",
+                //    where: new DapperSql("EXISTS (SELECT * FROM usercenter_user_role t2 WHERE t2.RoleId=t1.Id AND t2.UserId=@UserId)", new { UserId = userId }),
+                //    order: null);
                 return Mapper.Map<List<RoleDto>>(data.ToList());
             }
         }

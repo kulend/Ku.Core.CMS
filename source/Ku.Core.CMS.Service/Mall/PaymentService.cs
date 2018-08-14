@@ -19,6 +19,7 @@ using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service.Mall
 {
@@ -36,7 +37,8 @@ namespace Ku.Core.CMS.Service.Mall
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryPageAsync<Payment>(page, size, where.ParseToDapperSql(dapper.Dialect), sort as object);
+                var builder = new QueryBuilder().Select<Payment>().From<Payment>().Where(where).Sort(sort as object).Limit(page, size);
+                var data = await dapper.QueryPageAsync<Payment>(builder);
                 return (data.count, Mapper.Map<List<PaymentDto>>(data.items, opt => {
                     opt.Items.Add("JsonDeserializeIgnore", true);
                 }));

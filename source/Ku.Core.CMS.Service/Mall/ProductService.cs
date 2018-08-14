@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service.Mall
 {
@@ -37,7 +38,8 @@ namespace Ku.Core.CMS.Service.Mall
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryListAsync<Product>(where.ParseToDapperSql(dapper.Dialect), sort as object);
+                var builder = new QueryBuilder().Select<Product>().From<Product>().Where(where).Sort(sort as object);
+                var data = await dapper.QueryListAsync<Product>(builder);
                 return Mapper.Map<List<ProductDto>>(data, opt => {
                     opt.Items.Add("JsonDeserializeIgnore", true);
                 });
@@ -56,7 +58,8 @@ namespace Ku.Core.CMS.Service.Mall
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryPageAsync<Product>(page, size, where.ParseToDapperSql(dapper.Dialect), sort as object);
+                var builder = new QueryBuilder().Select<Product>().From<Product>().Where(where).Sort(sort as object).Limit(page, size);
+                var data = await dapper.QueryPageAsync<Product>(builder);
                 return (data.count, Mapper.Map<List<ProductDto>>(data.items, opt => {
                     opt.Items.Add("JsonDeserializeIgnore", true);
                 }));

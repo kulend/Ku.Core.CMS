@@ -11,6 +11,7 @@
 
 using AutoMapper;
 using Dnc.Extensions.Dapper;
+using Dnc.Extensions.Dapper.Builders;
 using Ku.Core.CMS.Domain;
 using Ku.Core.CMS.Domain.Dto.UserCenter;
 using Ku.Core.CMS.Domain.Entity.UserCenter;
@@ -38,13 +39,16 @@ namespace Ku.Core.CMS.Service.UserCenter
         {
             using (var dapper = DapperFactory.Create())
             {
-                var data = await dapper.QueryPageAsync<UserPoint, User, UserPoint>(page, size, "t1.*,t2.*",
-                    "usercenter_user_point t1 INNER JOIN usercenter_user t2 ON t1.UserId=t2.Id",
-                    where.ParseToDapperSql(dapper.Dialect, "t1"), sort as object, (t1, t2) =>
-                    {
-                        t1.User = t2;
-                        return t1;
-                    }, splitOn: "Id");
+                var builder = new QueryBuilder().Select<UserPoint>().Concat<User>()
+                    .From<UserPoint>()
+                    .InnerJoin<User>().On(new ConditionBuilder().Equal<UserPoint, User>(m => m.UserId, t => t.Id))
+                    .Where(where).Sort(sort as object).Limit(page, size);
+
+                var data = await dapper.QueryPageAsync<UserPoint, User, UserPoint>(builder, (t1, t2) =>
+                {
+                    t1.User = t2;
+                    return t1;
+                }, splitOn: "Id");
                 return (data.count, Mapper.Map<List<UserPointDto>>(data.items));
             }
         }

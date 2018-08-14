@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service.Mall
 {
@@ -41,9 +42,13 @@ namespace Ku.Core.CMS.Service.Mall
         {
             using (var dapper = DapperFactory.Create())
             {
-                var categorys = await dapper.QueryListAsync<ProductCategory>("t1.*", "mall_product_category t1",
-                    where: new DapperSql("EXISTS (SELECT * FROM mall_brand_category_ref t2 WHERE t2.ProductCategoryId=t1.Id AND t2.BrandId=@BrandId)", new { BrandId = id }),
-                    order: null);
+                var builder = new QueryBuilder().Select<ProductCategory>().From<ProductCategory>()
+                    .Where(new ConditionBuilder().Append("EXISTS (SELECT * FROM mall_brand_category_ref ref WHERE ref.ProductCategoryId=m.Id AND ref.BrandId=@BrandId)", new KeyValuePair<string, object>("BrandId", id)));
+                var categorys = await dapper.QueryListAsync<ProductCategory>(builder);
+
+                //var categorys = await dapper.QueryListAsync<ProductCategory>("t1.*", "mall_product_category t1",
+                //    where: new DapperSql("EXISTS (SELECT * FROM mall_brand_category_ref t2 WHERE t2.ProductCategoryId=t1.Id AND t2.BrandId=@BrandId)", new { BrandId = id }),
+                //    order: null);
                 var dto = Mapper.Map<BrandDto>(await dapper.QueryOneAsync<Brand>(new { Id = id }));
                 dto.Categorys = Mapper.Map<IEnumerable<ProductCategoryDto>>(categorys);
                 return dto;

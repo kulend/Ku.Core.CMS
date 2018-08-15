@@ -43,7 +43,21 @@ namespace Ku.Core.CMS.Web.Application
                 o.Cookie.Name = Configuration["JwtAuth:CookieName"];
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(opts =>
+            {
+                opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
+                opts.Filters.Add(typeof(ExceptionFilter));
+            }).AddJsonOptions(json =>
+            {
+                // 忽略循环引用
+                json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                //不使用驼峰样式的key
+                json.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                //设置时间格式
+                json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                json.SerializerSettings.Converters.Add(new LongToStringConverter());
+                json.SerializerSettings.Converters.Add(new EnumDisplayConverter());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             return base.ConfigureServices(services);
         }
@@ -58,6 +72,8 @@ namespace Ku.Core.CMS.Web.Application
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseAuthentication();
 

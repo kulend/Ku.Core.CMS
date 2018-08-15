@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>柴达木枸杞网</title>
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
-
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css" asp-append-version="true" />
     <environment include="Development">
         <link rel="stylesheet" href="~/css/css.css" type="text/css">
         <link rel="stylesheet" href="~/css/main.css" type="text/css">
     </environment>
-    <environment exclude="Development">
+    <environment exclude="Staging,Production">
         <link rel="stylesheet" href="~/css/css.css" type="text/css">
         <link rel="stylesheet" href="~/css/main.css" type="text/css">
     </environment>
@@ -65,7 +65,8 @@
     @RenderBody()
 
     <script src="~/lib/jquery/dist/jquery.js"></script>
-
+    <script src="~/lib/layui/layui.all.js" asp-append-version="true"></script>
+    <script src="~/js/ku/ku.page.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,231 @@
+@charset "utf-8";
+/*css reset*/
+body {margin:0; padding:0; font: 12px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif ; width:100%;}
+input, button, select {outline:0 none;border:0 none;padding:0;margin:0;}
+/*input:focus, input:active{border:0;outline:0 none;}*/
+textarea{resize:none;display:inline;}
+ul,p,h1,h2,h3,h4,h5,form,dl,dt,dd {margin:0;padding:0; }
+img {border:0;vertical-align:top;}
+ul,li{list-style:none;}
+
+/*a default*/
+a:link {text-decoration:none; color:#666;}
+a:visited {text-decoration:none; color:#666;}
+a:hover {text-decoration:none; color:#c00;}
+a:active {text-decoration:none; color:#666;}
+
+/*a default*/
+.b a:link {text-decoration:none; color:#c00;}
+.b a:visited {text-decoration:none; color:#c00;}
+.b a:hover {text-decoration:none; color:#f60;}
+.b a:active {text-decoration:none; color:#c00;}
+
+/*a default*/
+.c a:link {text-decoration:none; color:#333;}
+.c a:visited {text-decoration:none; color:#333;}
+.c a:hover {text-decoration:none; color:#c00;}
+.c a:active {text-decoration:none; color:#333;}
+
+
+/*font css*/
+.fs12{font-size:12px;}
+.fs14{font-size:14px;}
+.fs16{font-size:16px;}
+.fs18{font-size:18px;}
+.fs20{font-size:20px;}
+.fs22{font-size:22px;}
+.fs24{font-size:24px;}
+.fs26{font-size:26px;}
+.fs30{font-size:30px;}
+.fs40{font-size:40px;}
+.fs60{font-size:60px;}
+.fwn{font-weight:normal;}
+.fwb{font-weight:bold;}
+.fsn{font-style:normal;}
+.ffa{ font-family:Arial;}
+.ffm{font-family:\5FAE\8F6F\96C5\9ED1;}/*Microsoft YaHei*/
+.ffs{font-family:\9ED1\4F53;}/*SimHei*/
+.ffv{font-family:verdana;}
+.fb {font-weight:bold}
+.ti2{ text-indent:2em;}
+.tdu{text-decoration:underline;}
+.tdn{text-decoration:none;}
+.tdl{text-decoration:line-through;}
+
+/*font color*/
+.fc_000{color:#000;}
+.fc_333{color:#333;}
+.fc_666{color:#666;}
+.fc_999{color:#999;}
+.fc_f00{color:#f00;}/*red*/
+.fc_fff{color:#fff;}
+.fc_ccc{color:#ccc;}
+.fc_bbb{color:#bbb;}
+.fc_cof{color:#630;}
+.fc_r{color:#c00;}
+
+/*line height*/
+.lh16{line-height:16px;}
+.lh18{line-height:18px;}
+.lh20{line-height:20px;}
+.lh22{line-height:22px;}
+.lh24 {line-height:24px;}
+.lh25 {line-height:25px;}
+.lh28 {line-height:28px;}
+.lh30 {line-height:30px;}
+.lh32 {line-height:32px;}
+.lh35 {line-height:35px;}
+.lh40{line-height:40px;}
+
+/*text-align*/
+.tr {text-align:right;}
+.tc {text-align:center;}
+.tl {text-align:left;}
+.vat{vertical-align:top;}
+.vam{vertical-align:middle;}
+
+
+/*margin*/
+.m10{margin:10px;}
+.m15{margin:15px;}
+.mt3{margin-top:3px;}
+.mt5{margin-top:5px;}
+.mt10{margin-top:10px;}
+.mt12{margin-top:12px;}
+.mt20{margin-top:20px;}
+.mb3{margin-bottom:3px;}
+.mb5{margin-bottom:5px;}
+.mb8{margin-bottom:8px;}
+.mb10{margin-bottom:10px;}
+.mb12{margin-bottom:12px;}
+.mb20{margin-bottom:20px;}
+.ml5{margin-left:5px;}
+.ml10{margin-left:10px;}
+.ml12{margin-left:12px;}
+.ml20{ margin-left:20px;}
+.ml30{ margin-left:30px;}
+.mr5{margin-right:5px;}
+.mr10{margin-right:10px;}
+.mr20{margin-right:20px;}
+.ml-1{margin-left:-1px;}
+.mt-1{margin-top:-1px;}
+
+/*padding*/
+.p5{padding:5px;}
+.p10{padding:10px;}
+.p20{padding:20px;}
+.pt0{padding-top:0;}
+.pt3{padding-top:3px;}
+.pt5{padding-top:5px;}
+.pt10{padding-top:10px;}
+.pt15{padding-top:15px;}
+.pb0{padding-bottom:0;}
+.pb5{padding-bottom:5px;}
+.pb10{padding-bottom:10px;}
+.pb15{padding-bottom:15px;}
+.pl3{padding-left:3px;}
+.pl5{padding-left:5px;}
+.pl10{padding-left:10px;}
+.pl12{padding-left:12px;}
+.pl15{padding-left:15px;}
+.pl20{padding-left:20px;}
+.pr5{padding-right:5px;}
+.pr10{padding-right:10px;}
+
+/*background color*/
+.bg_f{background-color:#fff;}
+.bg_0{background-color:#000;}
+.bg_f9{background-color:#f9f9f9;}
+.bg_ccc{background-color:#ccc;}
+.bg_ddd{background-color:#ddd;}
+.bg_eee{background-color:#eee;}
+.bg_666{background-color:#666;}
+.bg_999{background-color:#999}
+.bg_f7{background-color:#f7f7f7;}
+
+/*border style*/
+.bor{border:1px solid;}
+.bor_dashed{border:1px dashed;}
+.bor_t_solid{border-top:1px solid;}
+.bor_t_dashed{border-top:1px dashed;}
+.bor_t_dotted{border-top:1px dotted;}
+.bor_b_solid{border-bottom:1px solid;}
+.bor_b_dashed{border-bottom:1px dashed;}
+.bor_b_dotted{border-bottom:1px dotted;}
+.bor_r_solid{border-right:solid 1px;}
+.bor_l_solid{border-left:solid 1px;}
+.bor_l_dotted{border-left:dotted 1px;}
+.bor_r_dotted{border-right:dotted 1px;}
+.bor_f1{border-color:#f1f1f1;}
+.bor_ccc{border-color:#ccc;}
+.bor_ddd{border-color:#ddd;}
+.bor_f00{border-color:#f00;}
+.bor_fb{border-color:#fbfbfb;}
+.bor_eee{border-color:#eee;}
+.bor_ef{border-color:#efefef;}
+.bor_f2{border-color:#f2f2f2;}
+.bor_RTR {border-top-right-radius:5px;}
+.bor_RBR {border-bottom-right-radius:5px;}
+.bor_RTL {border-top-left-radius:5px;}
+.bor_RBL {border-bottom-left-radius:5px;}
+
+
+/*width css*/
+.w40{width:40px;}
+.w60{width:60px;}
+.w80{width:80px;}
+.w100{width:100px;}
+.w120{width:120px;}
+.w150{width:150px;}
+.w200{width:200px;}
+.w300{width:300px;}
+.w350{width:350px;}
+.w400{width:400px;}
+.w500{width:500px;}
+.w650{width:650px;}
+.w750{width:750px;}
+
+/*height css*/
+.h5{height:5px;}
+.h10{height:10px;}
+.h15{height:15px;}
+.h18{height:18px;}
+.h20{height:20px;}
+.h22{height:22px;}
+.h24{height:24px;}
+.h25{height:25px;}
+.h28{height:28px;}
+.h30{height:30px;}
+.h32{height:32px;}
+.h35{height:35px;}
+.h40{height:40px;}
+.h50{height:50px;}
+
+/*position*/
+.fl{float:left;}
+.fr{float:right;}
+.cb{clear:both;}
+.cl{clear:left;}
+.cr{clear:right;}
+.pr{position:relative;}
+.pa{position:absolute;}
+.px{position:fixed}
+.zoom{zoom:1;}
+.hidden{visibility:hidden;}
+.dis{display:block;}
+.disi{display:inline-block;}
+.disn{display:none;}
+.ov{overflow:hidden;}
+.mauto{margin:0 auto;}
+.cur{cursor:pointer;}
+.clearfix:before,.clearfix:after {content:".";display:block;height:0;visibility:hidden;}
+.clearfix:after {clear:both;}
+.clearfix {zoom: 1;} /* IE < 8 */
+.jg { color:#CCC; padding:0px 8px;}
+
+.ipt35 { }
+.but30s { height:30px; padding:0px 10px; line-height:30px; font-size:14px; color:#FFF; border-radius:5px; text-align:center; background-color:#f81c1c}
+.but35s { height:35px; padding:0px 10px; line-height:35px; font-size:14px; color:#FFF; border-radius:5px; text-align:center; background-color:#f81c1c}
+.but30 { height:30px; width:100px; line-height:30px; font-size:14px; color:#FFF; border-radius:5px; text-align:center; background-color:#f81c1c}
+.but35 { height:35px; width:120px; line-height:35px; font-size:14px; color:#FFF; border-radius:5px; text-align:center; background-color:#f81c1c}
+.but40 { height:40px; width:120px; line-height:40px; font-size:14px; color:#FFF; border-radius:5px; text-align:center; background-color:#f81c1c}

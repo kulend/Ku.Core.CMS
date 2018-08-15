@@ -29,6 +29,10 @@ namespace Ku.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //Dapper
+            string connection = Configuration.GetConnectionString("Mysql");
+            services.AddDapper(options => options.UseMySql(connection));
+
             //JWT
             services.AddJwtToken(Configuration);
             services.AddWebApiAuth(Configuration, Environment);

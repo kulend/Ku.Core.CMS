@@ -3,71 +3,68 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Ku.Core.CMS.Frontend.PcSite</title>
+    <title>柴达木枸杞网</title>
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/css.css" type="text/css">
+        <link rel="stylesheet" href="~/css/main.css" type="text/css">
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/css.css" type="text/css">
+        <link rel="stylesheet" href="~/css/main.css" type="text/css">
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-page="/Index" class="navbar-brand">Ku.Core.CMS.Frontend.PcSite</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/About">About</a></li>
-                    <li><a asp-page="/Contact">Contact</a></li>
-                </ul>
-            </div>
+    <!--顶部信息栏-->
+    <div class="topInfoBar">
+        <div>
+            <a class="fwb" href="#">手机站点</a> <span class="jg">|</span> <span class="fc_666">欢迎进入柴达木枸杞网！</span>
+            <span class="fr"><a href="/">首页</a> <span class="jg">|</span> <a href="#" class="weibo">关注我们</a> <span class="jg">|</span> <a href="#" class="weixin">微信公众号</a> <span class="jg">|</span> <span class="b"><a href="/Account/Login" class="fwb">平台登陆</a></span> <span class="jg">|</span> <span class="b"><a href="#" class="fwb">平台注册</a></span> <span class="jg">|</span> <a href="#">柴达木枸杞协会</a></span>
         </div>
-    </nav>
-
-    <partial name="_CookieConsentPartial" />
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - Ku.Core.CMS.Frontend.PcSite</p>
-        </footer>
     </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    <!--顶部logo菜单-->
+    <div class="topBar">
+        <div class="topBox pr">
+            <!--logo-->
+            <a href="/" class="logo"></a>
+
+            <!--搜索框-->
+            <div class="pa searchBarTit fc_666"><a class="fc_r" onClick="searchType(1)" id="mu_1">资讯</a> <span class="jg">|</span> <a id="mu_2" onClick="searchType(2)">采购</a> <span class="jg">|</span> <a id="mu_3" onClick="searchType(3)">供应</a> <span class="jg">|</span> <a id="mu_4" onClick="searchType(4)">企业</a> <span class="jg">|</span> <a id="mu_5" onClick="searchType(5)">行情</a></div>
+            <div class="pa searchBarInput"><input type="text" id="keyWords" class="offO fl ffm fc_666" /><button class="fl ffm cur" />搜 索</button></div>
+
+            <div class="pa button"><button class="ffm">快速发布求购</button><button class="ffm ml5">快速发布求购</button></div>
+
+            <!--二维码-->
+            <div class="pa tr code"><img width="80" src="~/images/2code.jpg" /></div>
+        </div>
+
+        <!--主菜单-->
+        <div class="mainMenu">
+            <a href="#" class="on">首页</a>
+            <a href="#">市场行情</a>
+            <a href="#">电商平台</a>
+            <a href="#">供求信息</a>
+            <a href="#">行业资讯</a>
+            <a href="#">指数发布</a>
+            <a href="#">农机化肥</a>
+            <a href="#">企业展示</a>
+            <a href="#">专家库</a>
+            <a href="#">技术推广</a>
+            <br class="cl" />
+        </div>
+    </div>
+
+    <!--广告-->
+    <a href="#" class="pr ad_htl"><img src="~/images/ads.jpg" /><i></i></a>
+
+    <!--菜单-->
+    <partial name="_MainMenuPartial" />
+
+    @RenderBody()
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

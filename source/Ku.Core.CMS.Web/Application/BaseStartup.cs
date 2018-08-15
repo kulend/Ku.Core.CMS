@@ -37,20 +37,12 @@ namespace Ku.Core.CMS.Web.Application
             services.AddTools();
             //IdGenerator
             services.AddIdGenerator(Configuration);
-            //DBContext
-            string connection = Configuration.GetConnectionString("MysqlDatabase");
-            services.AddDbContextPool<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend")));
-            //services.AddDbContext<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend")));
-            services.AddDapper(options => options.UseMySql(connection));
 
             //缓存
             services.AddCache(Configuration);
 
             //事件消息发送订阅
             services.AddEventBus<KuDbContext>(Configuration);
-
-            //微信
-            services.AddWeChat();
 
             //Autofac依赖注入
             var builder = new ContainerBuilder();

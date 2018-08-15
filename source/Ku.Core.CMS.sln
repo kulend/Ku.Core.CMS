@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnc.Extensions.Dapper", "..
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9.前端", "9.前端", "{AB5EB155-F66D-45F9-84FE-BB966627A672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ku.Core.CMS.Frontend.PcSite", "Ku.Core.CMS.Frontend.PcSite\Ku.Core.CMS.Frontend.PcSite.csproj", "{F47F9D13-B645-498D-89D4-560124CAE7F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Frontend.PcSite", "Ku.Core.CMS.Frontend.PcSite\Ku.Core.CMS.Frontend.PcSite.csproj", "{F47F9D13-B645-498D-89D4-560124CAE7F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

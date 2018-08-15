@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ku.Core.CMS.Data.EntityFramework;
+using Ku.Core.CMS.Web.Filters;
+using Ku.Core.Infrastructure.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Ku.Core.CMS.Web.Filters;
-using Ku.Core.Infrastructure.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Rewrite;
+using System;
 
 namespace Ku.Core.CMS.Web.Application
 {
@@ -27,6 +23,14 @@ namespace Ku.Core.CMS.Web.Application
 
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //Dapper
+            string connection = Configuration.GetConnectionString("Mysql");
+            services.AddDapper(options => options.UseMySql(connection));
+            services.AddDbContextPool<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend")));
+
+            //微信
+            services.AddWeChat();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

@@ -5,4 +5,21 @@
 }
 
 <h2>Login</h2>
+<form>
+
+</form>
+@section Scripts
+    {
+    <script src="~/js/ku/ku.from.js"></script>
+    <script>
+        $(document).ready(function () {
+            var options = $.extend({}, {
+                onSuccess: function (reply, options) {
+                }
+            }, options);
+
+            $from.kuForm(options);
+        });
+    </script>
+}
 

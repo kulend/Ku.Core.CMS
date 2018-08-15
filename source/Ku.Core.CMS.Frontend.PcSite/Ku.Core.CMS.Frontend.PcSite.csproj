@@ -9,4 +9,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Shared\_FormBindPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

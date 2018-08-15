@@ -1,0 +1,35 @@
+body{margin: 0px; padding:0px; height:100%; font-family:\5FAE\8F6F\96C5\9ED1;}
+
+.topInfoBar {height:34px; border-bottom:1px solid #CCC; background-color:#FFF}
+.topInfoBar div {width:1170px; display:block; margin:0px auto; line-height:34px; background:url(../images/icon_phone.png) no-repeat 0px 8px; padding-left:20px;}
+.topInfoBar .weixin {background:url(../images/icon_wx.png) no-repeat 0px 1px; padding-left:20px}
+.topInfoBar .weibo {background:url(../images/icon_wb.png) no-repeat 0px 1px; padding-left:20px}
+
+.topBar {background-color:#f6f6f6}
+.topBar .topBox {height:110px; width:1190px; margin:0px auto;}
+.topBar .topBox .searchBarTit {left:280px; font-size:14px; top:18px; width:350px;}
+.topBar .topBox .searchBarTit a { cursor:pointer; font-weight:bold}
+.topBar .topBox .searchBarInput {left:280px; top:45px; width:550px; height:45px;}
+.topBar .topBox .searchBarInput input {width:400px; height:40px; padding-left:10px; line-height:80px;}
+.topBar .topBox .searchBarInput button {height:44px; width:120px; line-height:44px; background-color:#c00; color:#FFF; font-size:16px}
+.topBar .topBox .searchBarInput .offO {border-top:2px solid #e6e6e6; border-left:2px solid #e6e6e6; border-bottom:2px solid #e6e6e6;}
+.topBar .topBox .searchBarInput .onO {border-top:2px solid #c00; border-left:2px solid #c00; border-bottom:2px solid #c00;}
+.topBar .logo {background:url(../images/logo.png); height:105px; width:250px; display:block;}
+.topBar .topBox .button {left:832px; top:45px;}
+.topBar .topBox .button button {border-radius:5px; width:120px; height:44px; border:1px solid #CCC; background-color:#fff}
+.topBar .topBox .code {height:80px; border-left:1px solid #CCC; width:95px; right:0px; top:15px;}
+.topBar .mainMenu {height:40px; background-color:#c00; width:1185px; padding-left:5px; padding-top:5px; border-radius:5px 5px 0px 0px; margin:0px auto;}
+.topBar .mainMenu a:hover { color:#fff;background-color:#FFF; border-radius:3px 3px 0px 0px; color:#333;}
+.topBar .mainMenu .on {background-color:#FFF; border-radius:3px 3px 0px 0px; color:#333;}
+.topBar .mainMenu a {width:113px; height:40px; display:block; text-align:center; line-height:40px; font-size:16px; float:left; color:#FFF; margin-right:5px; font-weight:bold;}
+
+.moreMenu {width:1190px; margin:10px auto 0px auto; padding-bottom:10px;}
+.moreMenu .menuBox {width:298px; float:left; height:70px; border-bottom:2px solid #C00;}
+.moreMenu .menuBox .tits {width:80px; height:48px; border-radius:5px; background-color:#e6e6e6; text-align:center; line-height:15px; padding-top:12px;}
+.moreMenu .menuBox .titsEn {transform:scale(0.8,0.8); display:block;}
+.moreMenu .menuBox .tits p {width:20px; height:3px; background-color:#C00; margin:2px auto 0px auto;}
+.moreMenu .menuList { margin-left:10px; width:200px;}
+.moreMenu .menuList a { display:block; text-align:center; width:100px; float:left; line-height:30px; font-size:16px} 
+
+i {position:absolute; left:3px; bottom:3px; width:26px; height:13px; margin-top:10px; background-image:url(../images/icon_tg.gif);}
+.ad_htl {width:1190px; margin:10px auto; display:block;}

@@ -1,0 +1,67 @@
+﻿@page "{handler?}"
+@model Ku.Core.CMS.Frontend.PcSite.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "柴达木枸杞网 - 用户注册";
+}
+
+<h2>Register</h2>
+@using (Html.BeginForm(FormMethod.Post, new { id = "registerForm", @class = "layui-form" }))
+{
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="mobile" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="code" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"><button id="ID_Button_SendCode" type="button" class="layui-btn layui-btn-xs">发送验证码</button></div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>注 册</button>
+        </div>
+    </div>
+}
+@section Scripts
+    {
+    <script src="~/js/ku/ku.from.js" asp-append-version="true"></script>
+    <script src="~/js/ku/ku.form.verify.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            var options = $.extend({}, {
+                onSuccess: function (reply, options) {
+                    if (reply.code === 0) {
+                        ku.page.msg.tip("注册成功！", function () {
+                            location.replace("/");
+                        });
+                    } else {
+                        ku.page.msg.alert(reply.message, null, { icon: 5 });
+                    }
+                }
+            }, options);
+
+            $("#registerForm").kuForm(options);
+
+            $("#ID_Button_SendCode").on("click", function () {
+                var mobile = $("#registerForm input[name='mobile']").val();
+                if (!mobile) {
+                    ku.page.msg.tip("请输入手机号！");
+                    return;
+                }
+
+                ku.ajax.post("Register/SendCode", { Mobile: mobile }, function (reply) {
+                    if (reply.code === 0) {
+                        ku.page.msg.tip("验证码发送成功！");
+                    } else {
+                        ku.page.msg.alert(reply.message, null, { icon: 5 });
+                    }
+                });
+            });
+        });
+    </script>
+}
+

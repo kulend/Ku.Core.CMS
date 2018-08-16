@@ -11,6 +11,7 @@
 
 using Ku.Core.CMS.Domain.Dto.Communication;
 using Ku.Core.CMS.Domain.Entity.Communication;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.IService.Communication
@@ -22,5 +23,7 @@ namespace Ku.Core.CMS.IService.Communication
         /// </summary>
         /// <returns></returns>
         Task AddAsync(SmsDto dto);
+
+        Task AddAsync(string mobile, string templetTag, dynamic data);
     }
 }

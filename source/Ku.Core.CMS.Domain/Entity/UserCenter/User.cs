@@ -142,5 +142,7 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
     public class UserSearch : BaseProtectedSearch<User>
     {
         public bool? IsAdmin { set; get; }
+
+        public string Mobile { set; get; }
     }
 }

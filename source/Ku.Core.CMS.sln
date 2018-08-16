@@ -63,6 +63,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9.前端", "9.前端", "{AB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ku.Core.CMS.Frontend.PcSite", "Ku.Core.CMS.Frontend.PcSite\Ku.Core.CMS.Frontend.PcSite.csproj", "{F47F9D13-B645-498D-89D4-560124CAE7F5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnc.Api.Throttle", "..\..\开源\Dnc.Api.Throttle\src\Dnc.Api.Throttle\Dnc.Api.Throttle.csproj", "{EC8E6031-30A3-4B9F-8EB1-596B3003CC68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{F47F9D13-B645-498D-89D4-560124CAE7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F47F9D13-B645-498D-89D4-560124CAE7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F47F9D13-B645-498D-89D4-560124CAE7F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC8E6031-30A3-4B9F-8EB1-596B3003CC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8E6031-30A3-4B9F-8EB1-596B3003CC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8E6031-30A3-4B9F-8EB1-596B3003CC68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8E6031-30A3-4B9F-8EB1-596B3003CC68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,6 +185,7 @@ Global
 		{5AF55AE7-924B-46E0-A71C-C05A5A653146} = {92B8B0CA-E355-4FC9-8F1A-C056112CB388}
 		{5C7E2C34-2496-4E83-96C8-1EA51C678CFA} = {38AE7166-6167-4D42-A479-647797CD1A83}
 		{F47F9D13-B645-498D-89D4-560124CAE7F5} = {AB5EB155-F66D-45F9-84FE-BB966627A672}
+		{EC8E6031-30A3-4B9F-8EB1-596B3003CC68} = {38AE7166-6167-4D42-A479-647797CD1A83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB556CB4-2C5F-4B1A-B5B1-F8B62E39742A}

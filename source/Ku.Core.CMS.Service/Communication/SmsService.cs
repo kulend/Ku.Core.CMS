@@ -19,6 +19,8 @@ using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Ku.Core.CMS.Service.Communication
 {
@@ -81,6 +83,61 @@ namespace Ku.Core.CMS.Service.Communication
                 using (var trans = dapper.BeginTrans())
                 {
                     await dapper.InsertAsync(model);
+                    await dapper.InsertAsync(queue);
+                    trans.Commit();
+                }
+            }
+        }
+
+        public async Task AddAsync(string mobile, string templetTag, dynamic data)
+        {
+            if (string.IsNullOrEmpty(mobile))
+            {
+                throw new KuArgNullException("未设置手机号！");
+            }
+            if (string.IsNullOrEmpty(templetTag))
+            {
+                throw new KuArgNullException("未设置短信模板！");
+            }
+            Sms sms = new Sms
+            {
+                Id = ID.NewID(),
+                CreateTime = DateTime.Now,
+                IsDeleted = false,
+                Data = JsonConvert.SerializeObject(data),
+            };
+            using (var dapper = DapperFactory.Create())
+            {
+                var templet = await dapper.QueryOneAsync<SmsTemplet>(new { Tag = templetTag, IsDeleted = false, IsEnable = true });
+                if (templet == null)
+                {
+                    throw new KuDataNotFoundException("无法取得短信模板数据！");
+                }
+                var content = templet.Templet;
+                if (data != null)
+                {
+                    foreach (var item in JsonConvert.DeserializeObject<Dictionary<string, string>>(sms.Data))
+                    {
+                        content = content.Replace("${" + item.Key + "}", item.Value);
+                    }
+                }
+                sms.SmsTempletId = templet.Id;
+                sms.Content = content + $"【{templet.Signature}】";
+
+                //创建队列
+                var queue = new SmsQueue
+                {
+                    Id = ID.NewID(),
+                    CreateTime = DateTime.Now,
+                    IsDeleted = false,
+                    Status = EmSmsQueueStatus.WaitSend,
+                    SmsId = sms.Id,
+                    ExpireTime = templet.ExpireMinute == 0 ? DateTime.Now.AddDays(1) : DateTime.Now.AddMinutes(templet.ExpireMinute)
+                };
+
+                using (var trans = dapper.BeginTrans())
+                {
+                    await dapper.InsertAsync(sms);
                     await dapper.InsertAsync(queue);
                     trans.Commit();
                 }

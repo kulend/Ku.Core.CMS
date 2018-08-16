@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using Autofac;
+﻿using Autofac;
 using Ku.Core.CMS.Data.EntityFramework;
-using Ku.Core.CMS.IService.System;
-using Ku.Core.CMS.Service.System;
 using Ku.Core.CMS.Service.UserCenter;
 using Ku.Core.Infrastructure.DependencyResolver;
 using Ku.Core.Tokens.Jwt;
+using System;
+using System.Reflection;
 
 namespace Ku.Core.CMS.TaskApp.Application
 {

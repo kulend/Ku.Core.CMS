@@ -24,7 +24,7 @@ namespace Ku.Core.CMS.TaskApp
         static void Main(string[] args)
         {
             // 支持中文编码
-            Console.OutputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.Unicode;
 
             Console.WriteLine("定时任务处理程序启动!");
 
@@ -44,8 +44,7 @@ namespace Ku.Core.CMS.TaskApp
             //IdGenerator
             services.AddIdGenerator(Configuration);
 
-            string connection = Configuration.GetConnectionString("MysqlDatabase");
-            //services.AddDbContext<KuDbContext>(options => options.UseMySql(connection));
+            string connection = Configuration.GetConnectionString("Mysql");
             services.AddDapper(options => options.UseMySql(connection));
 
             //缓存

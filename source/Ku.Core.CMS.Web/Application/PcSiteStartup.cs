@@ -1,6 +1,8 @@
 ﻿using Dnc.Api.Throttle;
+using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.Web.Filters;
+using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Json;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +34,25 @@ namespace Ku.Core.CMS.Web.Application
             string connection = Configuration.GetConnectionString("Mysql");
             services.AddDapper(options => options.UseMySql(connection));
 
+            //Api限流
+            services.AddApiThrottle(options => {
+                options.UseRedisCacheAndStorage(redisOption => {
+                    redisOption.ConnectionString = "121.40.195.153:7480,password=ku123456,connectTimeout=5000,allowAdmin=false,defaultDatabase=0";
+                });
+                //options.OnUserIdentity = httpContext => httpContext.User.GetUserIdOrZero().ToString();
+                options.onIntercepted = (context, valve, where) =>
+                {
+                    if (where == IntercepteWhere.Middleware)
+                    {
+                        return new JsonResult(new { code = 906, message = "访问过于频繁，请稍后重试！" });
+                    }
+                    else
+                    {
+                        return new OriginJsonResult(new { code = 906, message = "访问过于频繁，请稍后重试！" });
+                    }
+                };
+            });
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -45,6 +66,7 @@ namespace Ku.Core.CMS.Web.Application
 
             services.AddMvc(opts =>
             {
+                opts.Filters.Add(typeof(ApiThrottleActionFilter));
                 opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
                 opts.Filters.Add(typeof(ExceptionFilter));
             }).AddJsonOptions(json =>

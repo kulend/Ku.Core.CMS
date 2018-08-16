@@ -1,7 +1,7 @@
 ﻿@page
 @model Ku.Core.CMS.Frontend.PcSite.Pages.Account.LoginModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "柴达木枸杞网 - 用户登陆";
 }
 
 <h2>Login</h2>
@@ -34,7 +34,7 @@
         $(document).ready(function () {
             var options = $.extend({}, {
                 onSuccess: function (reply, options) {
-                    if (reply.code == 0) { 
+                    if (reply.code === 0) { 
                         ku.page.msg.tip("登陆成功！", function () { 
                             location.replace("/");
                         });

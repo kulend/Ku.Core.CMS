@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>柴达木枸杞网</title>
+    <title>@ViewData["Title"]</title>
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/layui/css/layui.css" asp-append-version="true" />
     <environment include="Development">
@@ -20,7 +20,7 @@
     <div class="topInfoBar">
         <div>
             <a class="fwb" href="#">手机站点</a> <span class="jg">|</span> <span class="fc_666">欢迎进入柴达木枸杞网！</span>
-            <span class="fr"><a href="/">首页</a> <span class="jg">|</span> <a href="#" class="weibo">关注我们</a> <span class="jg">|</span> <a href="#" class="weixin">微信公众号</a> <span class="jg">|</span> <span class="b"><a href="/Account/Login" class="fwb">平台登陆</a></span> <span class="jg">|</span> <span class="b"><a href="#" class="fwb">平台注册</a></span> <span class="jg">|</span> <a href="#">柴达木枸杞协会</a></span>
+            <span class="fr"><a href="/">首页</a> <span class="jg">|</span> <a href="#" class="weibo">关注我们</a> <span class="jg">|</span> <a href="#" class="weixin">微信公众号</a> <span class="jg">|</span> <span class="b"><a href="/Account/Login" class="fwb">平台登陆</a></span> <span class="jg">|</span> <span class="b"><a href="/Account/Register" class="fwb">平台注册</a></span> <span class="jg">|</span> <a href="#">柴达木枸杞协会</a></span>
         </div>
     </div>
 
@@ -67,6 +67,7 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/layui/layui.all.js" asp-append-version="true"></script>
     <script src="~/js/ku/ku.page.js" asp-append-version="true"></script>
+    <script src="~/js/ku/ku.ajax.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

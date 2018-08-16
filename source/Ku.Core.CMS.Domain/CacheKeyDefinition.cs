@@ -24,5 +24,15 @@ namespace Ku.Core.CMS.Domain
         #endregion
 
         public static readonly string DataCenter_AppFeedback_Unsolved = "dc.app.feedback.unsolved:{0}";
+
+        /// <summary>
+        /// 短信验证码
+        /// </summary>
+        public const string SmsVerifyCode = "sms.verify.code:{0}:{1}";
+
+        /// <summary>
+        /// 短信验证码(注册)
+        /// </summary>
+        public const string SmsVerifyCode_Register = "sms.verify.code:register:{0}";
     }
 }

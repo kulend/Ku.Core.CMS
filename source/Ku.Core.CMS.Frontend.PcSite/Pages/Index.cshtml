@@ -1,14 +1,23 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "柴达木枸杞网";
 }
 
 <div style="width:1190px; margin:0px auto; height:400px;">
 
     <div class="fl" style="width:400px; height:400px;">
-        <div style="width:400px; height:250px;"><img src="images/player.jpg" /></div>
-
+        <!--滚蛋新闻-->
+        <div id="ID_scroll_news" class="layui-carousel" style="width:400px; height:250px;">
+            <div carousel-item>
+                <div>条目1</div>
+                <div>条目2</div>
+                <div>条目3</div>
+                <div>条目4</div>
+                <div>条目5</div>
+            </div>
+        </div>
+        <!--广告-->
         <div class="pr" style="width:400px; height:140px; background-color:#03F; margin-top:10px;"><a href="#"><img src="images/ads3.jpg" /></a><i></i></div>
     </div>
 
@@ -91,3 +100,20 @@
 </div>
 
 <a href="#" class="pr ad_htl"><img src="images/ads2.jpg" /><i></i></a>
+
+@section Scripts
+    {
+    <script>
+        layui.use(['carousel'], function () {
+            //轮播
+            var carousel = layui.carousel;
+            carousel.render({
+                elem: '#ID_scroll_news'
+                , width: '100%'
+                , height: '250px'
+                , arrow: 'none'
+                //,anim: 'updown' //切换动画方式
+            });
+        });
+    </script>
+}

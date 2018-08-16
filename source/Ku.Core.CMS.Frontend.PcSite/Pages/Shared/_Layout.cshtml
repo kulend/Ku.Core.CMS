@@ -19,8 +19,19 @@
     <!--顶部信息栏-->
     <div class="topInfoBar">
         <div>
-            <a class="fwb" href="#">手机站点</a> <span class="jg">|</span> <span class="fc_666">欢迎进入柴达木枸杞网！</span>
-            <span class="fr"><a href="/">首页</a> <span class="jg">|</span> <a href="#" class="weibo">关注我们</a> <span class="jg">|</span> <a href="#" class="weixin">微信公众号</a> <span class="jg">|</span> <span class="b"><a href="/Account/Login" class="fwb">平台登陆</a></span> <span class="jg">|</span> <span class="b"><a href="/Account/Register" class="fwb">平台注册</a></span> <span class="jg">|</span> <a href="#">柴达木枸杞协会</a></span>
+            <a class="fwb" come-soon href="javascript:;">手机站点</a> <span class="jg">|</span> <span class="fc_666">欢迎进入柴达木枸杞网！</span>
+            <span class="fr">
+                <a href="/">首页</a>
+                <span class="jg">|</span>
+                <a href="javascript:;" class="weibo">关注我们</a> <span class="jg">|</span>
+                <a href="javascript:;" class="weixin action-show-wxqrcode">微信公众号</a> <span class="jg">|</span>
+                <span class="b"><a href="/Account/Login" class="fwb">平台登陆</a></span>
+                <span class="jg">|</span> <span class="b">
+                    <a href="/Account/Register" class="fwb">平台注册</a>
+                </span>
+                <span class="jg">|</span>
+                <a come-soon href="javascript:;">柴达木枸杞协会</a>
+            </span>
         </div>
     </div>
 
@@ -68,6 +79,12 @@
     <script src="~/lib/layui/layui.all.js" asp-append-version="true"></script>
     <script src="~/js/ku/ku.page.js" asp-append-version="true"></script>
     <script src="~/js/ku/ku.ajax.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,16 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    $("[come-soon]").on("click", function () {
+        ku.page.msg.tip("页面完善中，请稍后!");
+    });
 
-// Write your Javascript code.
+    $(".action-show-wxqrcode").on("click", function () {
+        layer.open({
+            title: '扫码关注',
+            type: 1,
+            content: '<div><img src="/images/2code.jpg" /></div>',
+            closeBtn: 1,
+            shade: 0.8,
+            shadeClose :true
+        });
+    });
+});

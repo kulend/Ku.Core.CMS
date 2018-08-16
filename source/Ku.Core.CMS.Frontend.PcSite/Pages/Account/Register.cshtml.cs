@@ -9,6 +9,7 @@ using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Ku.Core.CMS.Frontend.PcSite.Pages.Account
@@ -32,8 +33,9 @@ namespace Ku.Core.CMS.Frontend.PcSite.Pages.Account
 
         }
 
-        [RateValve(Limit = 1, Duration = 60, Policy = Policy.Ip)]
-        public async Task<IActionResult> OnPostSendCodeAsync(string mobile)
+        [RateValve(Limit = 5, Duration = 60, Policy = Policy.Ip)]
+        [RateValve(Limit = 1, Duration = 60, Policy = Policy.Form, PolicyKey = "mobile")]
+        public async Task<IActionResult> OnPostSendCodeAsync([Required]string mobile)
         {
             //取得用户信息
             var user = await _service.GetOneAsync(new UserSearch { Mobile = mobile });

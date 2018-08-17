@@ -120,5 +120,7 @@ namespace Ku.Core.CMS.Domain.Entity.Content
     public class ArticleSearch : BaseProtectedSearch<Article>
     {
         public long? ColumnId { set; get; }
+
+        public bool? IsPublished { set; get; }
     }
 }

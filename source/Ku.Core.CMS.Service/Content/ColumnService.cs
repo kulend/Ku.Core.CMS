@@ -18,11 +18,25 @@ using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ku.Core.Cache;
+using Ku.Core.CMS.Domain;
+using System.Linq;
 
 namespace Ku.Core.CMS.Service.Content
 {
     public partial class ColumnService : BaseService<Column, ColumnDto, ColumnSearch>, IColumnService
     {
+        private readonly ICacheProvider _cache;
+
+        #region 构造函数
+
+        public ColumnService(ICacheProvider cache)
+        {
+            _cache = cache;
+        }
+
+        #endregion
+
         /// <summary>
         /// 保存数据
         /// </summary>
@@ -55,6 +69,9 @@ namespace Ku.Core.CMS.Service.Content
                     await dapper.UpdateAsync<Column>(item, new { model.Id });
                 }
             }
+
+            //清除缓存
+            await _cache.RemoveAsync(CacheKeyDefinition.ContentColumnList);
         }
 
         #region 其他方法
@@ -79,6 +96,43 @@ namespace Ku.Core.CMS.Service.Content
 
                 await GetWhithParentAsync(parentId);
                 return Mapper.Map<List<ColumnDto>>(list);
+            }
+        }
+
+        /// <summary>
+        /// 从缓存获取栏目列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ColumnDto>> GetListFromCacheAsync()
+        {
+            if (await _cache.ExistsAsync(CacheKeyDefinition.ContentColumnList))
+            {
+                return await _cache.GetAsync<List<ColumnDto>>(CacheKeyDefinition.ContentColumnList);
+            }
+
+            using (var dapper = DapperFactory.Create())
+            {
+                var list = (await dapper.QueryListAsync<Column>(where: null, order: null)).ToList();
+                foreach (var item in list)
+                {
+                    item.Subs = new List<Column>();
+                }
+                foreach (var item in list)
+                {
+                    if (item.ParentId.HasValue)
+                    {
+                        var p = list.FirstOrDefault(x => x.Id == item.ParentId.Value);
+                        if (p != null)
+                        {
+                            p.Subs.Add(item);
+                        }
+                    }
+                }
+
+                var data = Mapper.Map<List<ColumnDto>>(list);
+                await _cache.SetAsync(CacheKeyDefinition.ContentColumnList, data);
+
+                return data;
             }
         }
 

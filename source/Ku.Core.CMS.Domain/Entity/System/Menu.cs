@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Dnc.Extensions.Dapper.Attributes;
 using Ku.Core.Infrastructure.Attributes;
 
 namespace Ku.Core.CMS.Domain.Entity.System
@@ -86,7 +87,7 @@ namespace Ku.Core.CMS.Domain.Entity.System
     /// </summary>
     public class MenuSearch : BaseSearch<Menu>
     {
-        [SearchCondition(false)]
+        [Condition(WhenNull = WhenNull.IsNull)]
         public long? ParentId { set; get; }
 
     }

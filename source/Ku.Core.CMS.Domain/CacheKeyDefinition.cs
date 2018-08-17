@@ -34,5 +34,10 @@ namespace Ku.Core.CMS.Domain
         /// 短信验证码(注册)
         /// </summary>
         public const string SmsVerifyCode_Register = "sms.verify.code:register:{0}";
+
+        /// <summary>
+        /// 栏目数据缓存
+        /// </summary>
+        public const string ContentColumnList = "content.column.list";
     }
 }

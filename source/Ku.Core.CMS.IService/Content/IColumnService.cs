@@ -24,5 +24,11 @@ namespace Ku.Core.CMS.IService.Content
         Task SaveAsync(ColumnDto dto);
 
         Task<List<ColumnDto>> GetParentsAsync(long parentId);
+
+        /// <summary>
+        /// 从缓存获取栏目列表
+        /// </summary>
+        /// <returns></returns>
+        Task<List<ColumnDto>> GetListFromCacheAsync();
     }
 }

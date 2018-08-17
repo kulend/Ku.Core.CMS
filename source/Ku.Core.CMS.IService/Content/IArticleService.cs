@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dnc.Extensions.Dapper.Builders;
 using Ku.Core.CMS.Domain.Dto.Content;
 using Ku.Core.CMS.Domain.Entity.Content;
 
@@ -22,5 +23,10 @@ namespace Ku.Core.CMS.IService.Content
         /// 保存数据
         /// </summary>
         Task SaveAsync(ArticleDto dto);
+
+        /// <summary>
+        /// 分页查询数据
+        /// </summary>
+        Task<(int count, List<ArticleDto> items)> GetListAsync(QueryBuilder builder);
     }
 }

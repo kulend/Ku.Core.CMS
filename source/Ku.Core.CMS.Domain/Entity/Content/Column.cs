@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -47,6 +48,8 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         /// </summary>
         [StringLength(64)]
         public string Tag { set; get; }
+
+        public virtual IList<Column> Subs { set; get; }
     }
 
     /// <summary>

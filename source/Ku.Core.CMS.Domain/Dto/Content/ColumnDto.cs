@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -51,5 +52,7 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         [StringLength(64)]
         [Display(Name = "标记")]
         public string Tag { set; get; }
+
+        public virtual IList<ColumnDto> Subs { set; get; }
     }
 }

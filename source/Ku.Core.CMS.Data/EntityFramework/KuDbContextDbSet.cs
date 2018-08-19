@@ -76,6 +76,16 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// MaterialCenter 图片素材
         /// </summary>
         public DbSet<Domain.Entity.MaterialCenter.Picture> MaterialCenterPictures { get; set; }
+		
+        /// <summary>
+        /// MaterialCenter 用户素材分组
+        /// </summary>
+        public DbSet<Domain.Entity.MaterialCenter.UserMaterialGroup> MaterialCenterUserMaterialGroups { get; set; }
+
+        /// <summary>
+        /// MaterialCenter 用户素材分组关联
+        /// </summary>
+        public DbSet<Domain.Entity.MaterialCenter.UserMaterialGroupRef> UserMaterialGroupRefs { get; set; }
 
         /// <summary>
         /// Content 文章

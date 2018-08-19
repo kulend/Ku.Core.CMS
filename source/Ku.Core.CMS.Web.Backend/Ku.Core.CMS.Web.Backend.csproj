@@ -22,6 +22,9 @@
     <Content Update="Pages\Content\Article\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\MaterialCenter\Config\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\UserCenter\Role\Function.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -1,4 +1,5 @@
-﻿using Ku.Core.CMS.Domain.Entity.Content;
+﻿using Dnc.Extensions.Dapper.Builders;
+using Ku.Core.CMS.Domain.Entity.Content;
 using Ku.Core.CMS.IService.Content;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -38,9 +39,10 @@ namespace Ku.Core.CMS.Frontend.PcSite.Pages.News
                     }
                 }
             }
+            GetColumnId(id);
 
             //取得文章列表
-            var data = await _articleService.GetListAsync(1, 20, new ArticleSearch { IsPublished = true, IsDeleted = false, ColumnId = id }, null);
+            var data = await _articleService.GetListAsync(1, 20,new ArticleSearch { IsPublished = true, IsDeleted = false, ColumnIds = columnIds.ToArray() }, "PublishedTime desc, CreateTime desc");
         }
     }
 }

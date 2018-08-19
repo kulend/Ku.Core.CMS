@@ -21,13 +21,15 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
     [IgnoreAntiforgeryToken(Order = 1001)]
     public class UploadModel : BasePage
     {
-        private IHostingEnvironment _env;
-        private IPictureService _service;
+        private readonly IHostingEnvironment _env;
+        private readonly IPictureService _service;
+        private readonly IMaterialCenterConfigService _configService;
 
-        public UploadModel(IHostingEnvironment env, IPictureService service)
+        public UploadModel(IHostingEnvironment env, IPictureService service, IMaterialCenterConfigService configService)
         {
             _env = env;
             _service = service;
+            _configService = configService;
         }
 
         public void OnGet()
@@ -39,8 +41,13 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
         public async Task<IActionResult> OnPostAsync(ICollection<IFormFile> file)
         {
             string yyyymm = DateTime.Now.ToyyyyMM();
-            string oppositePath = $"/upload/pictures/{User.GetUserIdOrZero()}/{yyyymm}/";
-            var folder = _env.WebRootPath + oppositePath;
+            var config = await _configService.GetAsync();
+            string oppositePath = $"pictures/{User.GetUserIdOrZero()}/{yyyymm}/";
+            var folder = _env.WebRootPath + "/upload/" + oppositePath;
+            if (config != null && !string.IsNullOrEmpty(config.PictureSavePath))
+            {
+                folder = Path.Combine(config.PictureSavePath, oppositePath);
+            }
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
@@ -66,7 +73,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
                 model.FileSize = item.Length;
                 model.FileType = suffix;
                 model.UploadUserId = User.GetUserIdOrZero();
-                await this._service.AddAsync(model);
+                await _service.AddAsync(model);
             }
             return Json(true);
         }

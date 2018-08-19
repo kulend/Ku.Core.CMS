@@ -6,6 +6,7 @@ using Ku.Core.CMS.Domain.Entity.MaterialCenter;
 using Ku.Core.CMS.IService.MaterialCenter;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Extensions;
 
 namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
 {
@@ -17,10 +18,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
     public class IndexModel : BasePage
     {
         private readonly IPictureService _service;
+        private readonly IMaterialCenterConfigService _configService;
 
-        public IndexModel(IPictureService service)
+        public IndexModel(IPictureService service, IMaterialCenterConfigService configService)
         {
-            this._service = service;
+            _service = service;
+            _configService = configService;
         }
 
         [Auth("view")]
@@ -34,7 +37,17 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
         [Auth("view")]
         public async Task<IActionResult> OnPostDataAsync(int page, int rows, PictureSearch where)
         {
+            var config = await _configService.GetAsync();
+
             var data = await _service.GetListAsync(page, rows, where, null);
+            if (config.PictureUrl.IsNotNullOrEmpty())
+            {
+                foreach (var item in data.items)
+                {
+                    item.Url = config.PictureUrl.Contact(item.FilePath);
+                }
+            }
+
             return PagerData(data.items, page, rows, data.count);
         }
 

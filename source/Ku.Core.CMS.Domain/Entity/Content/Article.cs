@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Dnc.Extensions.Dapper.Attributes;
 using Ku.Core.CMS.Domain.Enum.Content;
 
 namespace Ku.Core.CMS.Domain.Entity.Content
@@ -122,5 +123,8 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         public long? ColumnId { set; get; }
 
         public bool? IsPublished { set; get; }
+
+        [Condition(Name = "ColumnId", Operation = ConditionOperation.In, WhenNull = WhenNull.Ignore)]
+        public long[] ColumnIds { set; get; }
     }
 }

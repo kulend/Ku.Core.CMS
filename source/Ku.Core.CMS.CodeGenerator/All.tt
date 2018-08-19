@@ -12,9 +12,9 @@
 <#@ import namespace="System.Reflection" #>
 <#@ include file="manager.ttinclude"#>
 <#
-	var name = "AdvertisementBoardRef";
-	var desc = "广告牌广告关联";
-	var area = "Content";
+	var name = "UserMaterialGroup";
+	var desc = "用户素材分组";
+	var area = "MaterialCenter";
 	var logicDel = false;
 	var HasRecycle = false;
    	var HasDetail = false;

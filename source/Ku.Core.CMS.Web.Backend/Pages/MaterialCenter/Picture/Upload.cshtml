@@ -20,13 +20,11 @@
                     <div class="layui-upload-list">
                         <table id="table" class="layui-table">
                             <colgroup>
-                                <col align="center" width="60" />
+                                <col align="center" width="20%" />
                                 <col />
-                                <col width="40" />
-                                <col width="40" />
-                                <col width="100" />
-                                <col width="100" />
-                                <col width="120" />
+                                <col width="10%" />
+                                <col width="10%" />
+                                <col width="20%" />
                             </colgroup>
                             <thead>
                                 <tr>
@@ -34,8 +32,6 @@
                                     <th>文件名</th>
                                     <th>大小</th>
                                     <th>状态</th>
-                                    <th>分类</th>
-                                    <th>标签</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -48,7 +44,7 @@
     </div>
     <div class="layui-footer">
         <span id="sel-tip" style="position:absolute; left:20px;">
-            统一分类：
+            分组：
             <select>
                 <option>AAAAAA</option>
                 <option>BBBBBBB</option>
@@ -86,26 +82,22 @@
                             , '<td><p style="width:120px; overflow:hidden;">' + file.name + '</p></td>'
                             , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
                             , '<td class="item-status">待传</td>'
-                            , '<td><select name="type"></select></td>'
-                            , '<td><input type="text" style="width:80px" /></td>'
                             , '<td>'
                             , '<a class="layui-btn layui-btn-xs item-upload">上传</a>'
                             , '<a class="layui-btn layui-btn-xs layui-btn-danger item-delete">移除</a>'
                             , '</td>'
                             , '</tr>'].join(''));
 
-                        tr.find('select[name="type"]').html("<option>AAAAAA</option><option>BBBB</option><option>CCCCC</option><option>GGGGG</option>");
-
                         //单个上传
                         tr.find('.item-upload').on('click', function () {
                             var status = tr.data("status");
-                            if (status == "wait" || status == "error")
+                            if (status === "wait" || status === "error")
                             {
                                 tr.attr("data-status", "upload");
                                 $(this).hide();
                                 tr.find(".item-delete").hide();
                                 tr.find("td.item-status").html('<i class="layui-icon">&#xe63d;</i>');
-                                if (list.find('tr[data-status="wait"]').length == 0) {
+                                if (list.find('tr[data-status="wait"]').length === 0) {
                                     btnUpload.hide();
                                 }
                                 obj.upload(index, file);
@@ -116,7 +108,7 @@
                         tr.find('.item-delete').on('click', function () {
                             delete files[index]; //删除对应的文件
                             tr.remove();
-                            if (list.find('tr[data-status="wait"]').length == 0) {
+                            if (list.find('tr[data-status="wait"]').length === 0) {
                                 btnUpload.hide();
                             }
                         });
@@ -125,7 +117,7 @@
                     });
                 }
                 , done: function (res, index, upload) {
-                    if (res.code == 0) { //上传成功
+                    if (res.code === 0) { //上传成功
                         var tr = list.find('tr#upload-' + index);
                         tr.attr("data-status", "success");
                         tr.find("td.item-status").html('<i class="layui-icon" style="color: #5FB878;">&#xe605;</i>');
@@ -158,7 +150,7 @@
 
         function doUpload()
         {
-            if ($('#list').find('tr[data-status="wait"]').length == 0) {
+            if ($('#list').find('tr[data-status="wait"]').length === 0) {
                 $('#btnUpload').hide();
                 ku.page.msg.tip("上传完成");
                 return;

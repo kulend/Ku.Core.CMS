@@ -10,18 +10,16 @@
 //----------------------------------------------------------------
 
 using AutoMapper;
+using Dnc.Extensions.Dapper;
 using Ku.Core.CMS.Domain.Dto.Content;
 using Ku.Core.CMS.Domain.Entity.Content;
 using Ku.Core.CMS.IService.Content;
-using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Dynamic;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Dnc.Extensions.Dapper.Builders;
 
 namespace Ku.Core.CMS.Service.Content
 {
@@ -87,18 +85,6 @@ namespace Ku.Core.CMS.Service.Content
                     }
                     await dapper.UpdateAsync<Article>(item, new { model.Id });
                 }
-            }
-        }
-
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        public async Task<(int count, List<ArticleDto> items)> GetListAsync(QueryBuilder builder)
-        {
-            using (var dapper = DapperFactory.Create())
-            {
-                var data = await dapper.QueryPageAsync<Article>(builder);
-                return (data.count, Mapper.Map<List<ArticleDto>>(data.items));
             }
         }
     }

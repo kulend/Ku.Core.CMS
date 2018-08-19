@@ -60,5 +60,7 @@ namespace Ku.Core.CMS.Domain.Dto.MaterialCenter
         [DefaultValue(false)]
         [Display(Name = "是否公开", Prompt = "公开|私密")]
         public bool IsPublic { set; get; } = false;
+
+        public string Url { set; get; }
     }
 }

@@ -39,5 +39,10 @@ namespace Ku.Core.CMS.Domain
         /// 栏目数据缓存
         /// </summary>
         public const string ContentColumnList = "content.column.list";
+
+        /// <summary>
+        /// 配置缓存
+        /// </summary>
+        public const string Config = "config:{0}";
     }
 }

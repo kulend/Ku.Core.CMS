@@ -24,9 +24,5 @@ namespace Ku.Core.CMS.IService.Content
         /// </summary>
         Task SaveAsync(ArticleDto dto);
 
-        /// <summary>
-        /// 分页查询数据
-        /// </summary>
-        Task<(int count, List<ArticleDto> items)> GetListAsync(QueryBuilder builder);
     }
 }

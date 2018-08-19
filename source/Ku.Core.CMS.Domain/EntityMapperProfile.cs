@@ -59,6 +59,8 @@ namespace Ku.Core.CMS.Domain
             CreateMap<Domain.Entity.WeChat.WxUserTag, Domain.Dto.WeChat.WxUserTagDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxUser, Domain.Dto.WeChat.WxUserDto>().ReverseMap();
             CreateMap<Domain.Entity.WeChat.WxQrcode, Domain.Dto.WeChat.WxQrcodeDto>().ReverseMap();
+            //MaterialCenter
+            CreateMap<Domain.Entity.MaterialCenter.UserMaterialGroup, Domain.Dto.MaterialCenter.UserMaterialGroupDto>().ReverseMap();
             CreateMap<Domain.Entity.MaterialCenter.Picture, Domain.Dto.MaterialCenter.PictureDto>().ReverseMap();
             //Content
             CreateMap<Domain.Entity.Content.Advertisement, Domain.Dto.Content.AdvertisementDto>().ReverseMap();

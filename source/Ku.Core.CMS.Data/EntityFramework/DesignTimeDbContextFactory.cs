@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Ku.Core.CMS.Data.EntityFramework
@@ -12,14 +13,16 @@ namespace Ku.Core.CMS.Data.EntityFramework
 
         public KuDbContext CreateDbContext(string[] args)
         {
-            //IConfigurationRoot configuration = new ConfigurationBuilder()
-            //    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            //    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            //    .AddJsonFile("appsettings.Development.json", optional: true)
-            //    .Build();
+            Directory.SetCurrentDirectory("..");//设置当前路径为当前解决方案的路径
+            string appSettingBasePath = Directory.GetCurrentDirectory() + "/Ku.Core.CMS.Web.Backend";//appsettings.json所在的项目名称
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(appSettingBasePath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.Development.json")
+                .Build();
 
             var builder = new DbContextOptionsBuilder<KuDbContext>();
-            builder.UseMySql("server=121.40.195.153;userid=ku.core.cms;pwd=7cd9b936ddace67f;port=5306;database=ku.core.cms;sslmode=none;", b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend"));
+            builder.UseMySql(configBuilder.GetConnectionString("MysqlAdmin"), b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend"));
             return new KuDbContext(builder.Options);
         }
 

@@ -3,6 +3,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20180820030613_28.cs" />
+    <Compile Remove="Migrations\20180820030613_28.Designer.cs" />
     <Compile Remove="Pages\UserCenter\UserDialogue\Edit.cshtml.cs" />
   </ItemGroup>
   <ItemGroup>

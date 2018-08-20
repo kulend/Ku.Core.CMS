@@ -55,6 +55,12 @@ if (!ku.page) {
                 var layer = layui.layer;
                 layer.alert(content, options, yes);
             });
+        },
+        prompt: function (title, callback) {
+            layui.use("layer", function () {
+                var layer = layui.layer;
+                layer.prompt({ title: title, formType: 1 }, callback);
+            });
         }
     };
 
@@ -74,7 +80,7 @@ if (!ku.page) {
     };
 
     ku.page.openWindow = function (options) {
-        if (self != top) {
+        if (self !== top) {
             parent.ku.page.openWindow(options);
         } else
         {

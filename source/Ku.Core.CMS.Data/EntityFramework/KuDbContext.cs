@@ -24,6 +24,8 @@ namespace Ku.Core.CMS.Data.EntityFramework
 
             modelBuilder.Entity<Domain.Entity.Content.AdvertisementBoardRef>().HasKey(t => new { t.AdvertisementId, t.AdvertisementBoardId });
 
+            modelBuilder.Entity<Domain.Entity.MaterialCenter.UserMaterialGroupRef>().HasKey(t => new { t.GroupId, t.MaterialId });
+
             base.OnModelCreating(modelBuilder);
         }
 

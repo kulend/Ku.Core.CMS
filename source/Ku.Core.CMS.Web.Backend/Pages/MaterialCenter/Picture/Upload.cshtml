@@ -3,6 +3,8 @@
 @{
     Layout = "_WindowFormLayout";
 }
+@using Ku.Core.CMS.Domain.Dto.MaterialCenter
+
 <div class="layui-layout layui-layout-window">
     <div class="layui-body">
         <div class="layui-row">
@@ -45,14 +47,20 @@
     <div class="layui-footer">
         <span id="sel-tip" style="position:absolute; left:20px;">
             分组：
-            <select>
-                <option>AAAAAA</option>
-                <option>BBBBBBB</option>
-            </select>
+            @if (Model.Groups.Any())
+            {
+                <select>
+                    @foreach (UserMaterialGroupDto group in Model.Groups)
+                    {
+                        <option value="@group.Id">@group.Name</option>
+                    }
+                </select>
+            }
+            <action text="新建分组" size="sm" action="javascript:AddGroup()" />
         </span>
         <a class="layui-hide" id="btnBind">上传</a>
         <a class="layui-btn layui-btn-sm" id="btnUpload" style="display:none;">开始上传</a>
-        <action text="关 闭" size="sm" theme="warm" action="javascript:closeWindow(true)" />
+        <action text="关 闭" size="sm" action="javascript:closeWindow(true)" />
     </div>
 </div>
 @section Scripts
@@ -159,6 +167,13 @@
             var tr = $('#list').find('tr[data-status="wait"]').first();
             tr.attr("data-continue", "true");
             tr.find(".item-upload").trigger("click");
+        }
+
+        function AddGroup() {
+            ku.page.msg.prompt('请输入分组名称', function (name, index) {
+
+                layui.layer.close(index);
+            });
         }
     </script>
 }

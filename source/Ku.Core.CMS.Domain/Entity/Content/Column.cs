@@ -49,6 +49,7 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         [StringLength(64)]
         public string Tag { set; get; }
 
+        [NotMapped]
         public virtual IList<Column> Subs { set; get; }
     }
 

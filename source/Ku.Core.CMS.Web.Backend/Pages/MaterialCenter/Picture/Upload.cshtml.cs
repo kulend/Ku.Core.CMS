@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Ku.Core.CMS.Domain.Dto.MaterialCenter;
+using Ku.Core.CMS.Domain.Entity.MaterialCenter;
 using Ku.Core.CMS.IService.MaterialCenter;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Extensions;
@@ -24,17 +25,22 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
         private readonly IHostingEnvironment _env;
         private readonly IPictureService _service;
         private readonly IMaterialCenterConfigService _configService;
+        private readonly IUserMaterialGroupService _groupService;
 
-        public UploadModel(IHostingEnvironment env, IPictureService service, IMaterialCenterConfigService configService)
+        public UploadModel(IHostingEnvironment env, IPictureService service, IMaterialCenterConfigService configService, IUserMaterialGroupService groupService)
         {
             _env = env;
             _service = service;
             _configService = configService;
+            _groupService = groupService;
         }
 
-        public void OnGet()
-        {
+        public List<UserMaterialGroupDto> Groups { set; get; }
 
+        public async Task OnGetAsync()
+        {
+            //取得用户素材分组
+            Groups = await _groupService.GetListAsync(new UserMaterialGroupSearch { UserId = User.GetUserIdOrZero(), Type = Domain.Enum.MaterialCenter.EmUserMaterialGroupType.Picture }, null);
         }
 
         [Auth("upload")]

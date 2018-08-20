@@ -37,6 +37,8 @@ namespace Ku.Core.CMS.Domain.Entity.MaterialCenter
     /// </summary>
     public class UserMaterialGroupSearch : BaseSearch<UserMaterialGroup>
     {
+        public long? UserId { set; get; }
 
+        public EmUserMaterialGroupType? Type { set; get; }
     }
 }

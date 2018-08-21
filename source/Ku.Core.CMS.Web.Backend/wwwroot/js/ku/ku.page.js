@@ -56,10 +56,10 @@ if (!ku.page) {
                 layer.alert(content, options, yes);
             });
         },
-        prompt: function (title, callback) {
+        prompt: function (options, callback) {
             layui.use("layer", function () {
                 var layer = layui.layer;
-                layer.prompt({ title: title, formType: 1 }, callback);
+                layer.prompt(options, callback);
             });
         }
     };

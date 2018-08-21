@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,6 +82,14 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
                 model.UploadUserId = User.GetUserIdOrZero();
                 await _service.AddAsync(model);
             }
+            return Json(true);
+        }
+
+        [Auth("addgroup")]
+        public async Task<IActionResult> OnPostSaveGroupAsync([Required, MaxLength(16)]string name)
+        {
+            var dto = new UserMaterialGroupDto { Name = name, Type = Domain.Enum.MaterialCenter.EmUserMaterialGroupType.Picture, UserId = User.GetUserIdOrZero() };
+            await _groupService.SaveAsync(dto);
             return Json(true);
         }
     }

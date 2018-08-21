@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{handler?}"
 @model Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture.UploadModel
 @{
     Layout = "_WindowFormLayout";
@@ -170,9 +170,13 @@
         }
 
         function AddGroup() {
-            ku.page.msg.prompt('请输入分组名称', function (name, index) {
-
-                layui.layer.close(index);
+            ku.page.msg.prompt({ formType: 0, maxlength: 20, title: '新建分组'}, function (name, index) {
+                ku.ajax.post("Upload/SaveGroup", { Name: name}, function (reply) {
+                    if (reply.code === 0) {
+                        layui.layer.close(index);
+                    }
+                });
+                
             });
         }
     </script>

@@ -43,7 +43,7 @@
                             <div class="toolbar">
                                 <action title="刷新" action="grid:reload['#list']" />
                                 <action  id="btnAdd" auth-code="content.article.edit" text="新增" icon="&#xe608;" action="window:/Content/Article/Edit" after="grid:reload['#list']" />
-                                <action auth-code="content.article.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+                                <action auth-code="content.article.delete" text="批量删除" icon="&#xe640;" action="post:Index/Delete" after="grid:reload" />
                             </div>
                             <table id="list"></table>
                         </div>
@@ -146,7 +146,7 @@
                     };
                 }
             });
-        } else if (selFilterValue != filterValue) {
+        } else if (selFilterValue !== filterValue) {
             selFilterValue = filterValue;
             $("#list").kuGrid("search");
             if ($("#recycles").hasClass("ku-grid")) {

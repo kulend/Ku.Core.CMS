@@ -59,14 +59,14 @@
             <tbody>
                 @foreach (UserMaterialGroupDto group in Model.Groups)
                 {
-                    <tr>
+                    <tr data-id="@group.Id">
                         <td>
                             <input type="checkbox" title="@group.Name" name="name_filter" value="@group.Id" lay-skin="primary" lay-filter="filter-item">
                         </td>
                         <td>
                             <div class="layui-btn-group">
                                 <action auth-code="" text="" Css="layui-btn-xs" icon="&#xe642;" action="window:/MaterialCenter/UserMaterialGroup/Edit?id=@group.Id" after="" />
-                                <action auth-code="" text="" Css="layui-btn-xs" icon="&#xe640;" action="post:/MaterialCenter/UserMaterialGroup/Index/Delete?id=@group.Id" after="" />
+                                <action auth-code="" text="" Css="layui-btn-xs" icon="&#xe640;" action="post:/MaterialCenter/UserMaterialGroup/Index/Delete?id=@group.Id" after="js:removeRow('@group.Id');" />
                             </div>
                         </td>
                     </tr>
@@ -193,25 +193,38 @@
         }
 
         function selectGroup() {
-            layer.open({
-                type: 1,
-                shade: false,
-                title: '选择分组', //不显示标题
-                content: $('#group_selecter'),
-                success: function (layero, index) {
-                    $("#group_selecter").find("li").off("click").on("click", function () {
-                        layui.layer.close(index);
-                        $("#group_selecter").hide();
-                    });
-                },
-                cancel: function () {
-                    $("#group_selecter").hide();
-                },
-                btn: ['新建分组', '确认选择'],
-                yes: function (index, layero) {
-                    AddGroup();
-                }
+            OpenWindow("选择素材分组", `/MaterialCenter/UserMaterialGroup/Selector`, null, function (items) {
+                //if (items) {
+                //    for (var i = 0; i < items.length; i++) {
+                //        let item = items[i];
+                //        var rowHmtl = '<tr>'
+                //            + `<td>${item.name}</td>`
+                //            + '<td><input type="text" name="input1" class="layui-input"></td>'
+                //            + '<td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>'
+                //            + '</tr>';
+                //        $("#ID_attrs_table tbody").append(rowHmtl);
+                //    }
+                //}
             });
+            //layer.open({
+            //    type: 1,
+            //    shade: false,
+            //    title: '选择分组', //不显示标题
+            //    content: $('#group_selecter'),
+            //    success: function (layero, index) {
+            //        $("#group_selecter").find("li").off("click").on("click", function () {
+            //            layui.layer.close(index);
+            //            $("#group_selecter").hide();
+            //        });
+            //    },
+            //    cancel: function () {
+            //        $("#group_selecter").hide();
+            //    },
+            //    btn: ['新建分组', '确认选择'],
+            //    yes: function (index, layero) {
+            //        AddGroup();
+            //    }
+            //});
         }
     </script>
 }

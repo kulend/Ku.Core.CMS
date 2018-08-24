@@ -68,7 +68,7 @@
                 complete: function () {
                 },
                 error: function (xhr, status, errorThrown) {
-                    if (xhr.status == 403) {
+                    if (xhr.status === 403) {
                         ku.page.msg.alert(`无权操作！`, null, { icon: 5 });
                     } else {
                         ku.page.msg.alert(`调用出错：{${xhr.status}}${status}`, null, { icon: 5 });

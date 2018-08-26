@@ -1,6 +1,9 @@
 using Ku.Core.CMS.Domain.Entity.MaterialCenter;
+using Ku.Core.CMS.Domain.Enum.MaterialCenter;
 using Ku.Core.CMS.IService.MaterialCenter;
 using Ku.Core.CMS.Web.Base;
+using Ku.Core.CMS.Web.Extensions;
+using Ku.Core.CMS.Web.Security;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,18 +19,36 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.UserMaterialGroup
             _service = service;
         }
 
-        public void OnGet()
+        public EmUserMaterialGroupType Type { set; get; }
+
+        public void OnGet(EmUserMaterialGroupType type = EmUserMaterialGroupType.Picture)
         {
+            Type = type;
         }
 
         /// <summary>
         /// 取得列表数据
         /// </summary>
         //[Auth("view")]
-        public async Task<IActionResult> OnPostDataAsync(int page, int rows, UserMaterialGroupSearch where)
+        public async Task<IActionResult> OnPostDataAsync(UserMaterialGroupSearch where)
         {
-            var data = await _service.GetListAsync(page, rows, where, null);
-            return PagerData(data.items, page, rows, data.count);
+            if (where == null)
+            {
+                where = new UserMaterialGroupSearch();
+            }
+            where.UserId = User.GetUserIdOrZero();
+            var data = await _service.GetListAsync(1, 999, where, null);
+            return PagerData(data.items, 1, 999, data.count);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        [Auth("delete")]
+        public async Task<IActionResult> OnPostDeleteAsync(params long[] id)
+        {
+            await _service.DeleteAsync(id);
+            return JsonData(true);
         }
     }
 }

@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Dnc.Extensions.Dapper.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -34,6 +35,8 @@ namespace Ku.Core.CMS.Domain.Entity.MaterialCenter
     /// </summary>
     public class PictureSearch : BaseProtectedSearch<Picture>
     {
-
+        [Condition(WhenNull = WhenNull.Ignore, Operation = ConditionOperation.Custom, 
+            CustomSql = "EXISTS (SELECT * FROM materialcenter_user_material_group_ref ref WHERE ref.MaterialId=m.Id AND ref.GroupId=@value)")]
+        public long? GroupId { set; get; }
     }
 }

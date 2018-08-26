@@ -149,7 +149,7 @@
             {
                 max = maxcount - currentcount;
             }
-            OpenWindow("选择图片", `MaterialCenter/Picture/Selector?max=${max}`, { area: ['700px', '500px'], maxmin: false }, function (files) {
+            OpenWindow("选择图片", `MaterialCenter/Picture/Selector?max=${max}`, { area: ['837px', '468px'], maxmin: false }, function (files) {
                 console.log(files);
                 if (!files.length) return;
                 if (notAdd) {

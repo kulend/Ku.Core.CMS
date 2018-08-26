@@ -20,7 +20,7 @@ namespace Ku.Core.CMS.IService.MaterialCenter
         /// <summary>
         /// 新增数据
         /// </summary>
-        Task AddAsync(PictureDto dto);
+        Task AddAsync(PictureDto dto, long[] groups);
 
         /// <summary>
         /// 更新

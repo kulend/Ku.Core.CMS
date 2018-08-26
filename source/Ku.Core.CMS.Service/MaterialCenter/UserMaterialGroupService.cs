@@ -59,5 +59,21 @@ namespace Ku.Core.CMS.Service.MaterialCenter
                 }
             }
         }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public override async Task DeleteAsync(params long[] id)
+        {
+            using (var _dapper = DapperFactory.CreateWithTrans())
+            {
+                //删除分组素材关联
+                await _dapper.DeleteAsync<UserMaterialGroupRef>(new DapperSql("GroupId IN @Ids", new { Ids = id }));
+                await _dapper.DeleteAsync<UserMaterialGroup>(new DapperSql("Id IN @Ids", new { Ids = id }));
+                _dapper.Commit();
+            }
+        }
     }
 }

@@ -3,15 +3,10 @@
 @{
     Layout = "_WindowFormLayout";
 }
+@using Ku.Core.Infrastructure.Extensions
 @section Css
     {
     <style>
-        .img_pick {
-            overflow: auto;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
             .img_pick .img_item {
                 position: relative;
                 margin-right: 15px;
@@ -101,28 +96,87 @@
             display: inline-block;
             background-position: 50% 50%;
         }
-
-        #pager {
-            float: right;
-        }
-
         .search-bar {
-            margin-left: 10px;
+            padding-left:15px;
+            padding-right:15px;
+        }
+        .search-bar button{
+            margin-top:10px;
+        }
+        .inner_menu_item {
+            position: relative;
+            line-height: 32px;
+        }
+        .inner_menu_item.selected {
+            background-color:#f4f5f9;
+        }
+        .img_pick_panel .inner_menu_link {
+            padding-left: 1.5em;
+            text-align: left;
+        }
+        .inner_menu_link {
+            display: block;
+            color: #222;
+            padding-left: 1em;
+            text-decoration: none;
+        }
+        .img_pick_panel .inner_menu_link strong {
+            max-width: 86px;
+        }
+        .inner_menu_link strong {
+            display: inline-block;
+            margin-top: -2px;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+            max-width: 80px;
+            font-weight: 400;
+            font-style: normal;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        .group_list .num {
+            display: inline-block;
+            padding-left: 3px;
+            font-style: normal;
+            color: #8d8d8d;
         }
     </style>
 }
 <div class="layui-layout layui-layout-window">
-    <div class="layui-body" style="overflow:hidden;">
-        <div class="layui-row search-bar">
-            <span class="layui-breadcrumb" lay-separator="|">
-                <a href="javascript:;">全部</a>
-            </span>
-            <span style="float:right;">
-                <action auth-code="materialcenter.picture.upload" text="本地上传" size="sm" theme="normal" icon="&#xe67c;" action="window:MaterialCenter/Picture/Upload" after="doReload()" />
-            </span>
+    <div class="layui-body" style="overflow:auto; padding:0;">
+        <div class="inner_side" style="width: 18%; float:left;">
+            <div class="group_list">
+                <div class="inner_menu_box">
+                    <dl class="inner_menu">
+                        <dd class="inner_menu_item selected" data-groupid="">
+                            <a href="javascript:;" class="inner_menu_link" title="全部图片">
+                                <strong>全部图片</strong>@*<em class="num">(<span>14</span>)</em>*@
+                            </a>
+                        </dd>
+                        @foreach (var group in Model.Groups)
+                        {
+                            <dd class="inner_menu_item" data-groupid="@group.Id">
+                                <a href="javascript:;" class="inner_menu_link" title="@group.Name">
+                                    <strong>@group.Name.Substr(0, 10, "..")</strong>@*<em class="num">(<span>0</span>)</em>*@
+                                </a>
+                            </dd>
+                        }
+                    </dl>
+                </div>
+            </div>
         </div>
-        <ul id="img-list" class="img_pick"></ul>
-        <div id="pager"></div>
+        <div style="width: 82%; float:left;">
+            <div class="search-bar">
+                <action auth-code="materialcenter.picture.upload" text="本地上传" css="layui-btn-sm layui-btn-normal" icon="&#xe67c;" action="window:MaterialCenter/Picture/Upload" after="doReload()" />
+                <div id="pager" style="float:right;"></div>
+            </div>
+            <div style="padding-left:15px; margin-top: 20px;">
+                <ul id="img-list" class="img_pick"></ul>
+            </div>
+        </div>
     </div>
     <div class="layui-footer">
         <span id="sel-tip" style="position:absolute; left:20px;">已选1个，可选10个</span>
@@ -162,10 +216,18 @@
             laypage = layui.laypage;
             loadData({ curr: 1, limit: 10 });
             showSelTip();
+
+            $(".inner_menu .inner_menu_item").on("click", function () {
+                if (!$(this).hasClass("selected")) {
+                    $(this).addClass("selected").siblings().removeClass("selected");
+                    doReload();
+                }
+            });
         });
 
         function loadData(pms) {
-            ku.ajax.post("", { page: pms.curr, rows: pms.limit }, function (data) {
+            let groupId = $(".inner_menu .inner_menu_item.selected").attr("data-groupid");
+            ku.ajax.post("", { page: pms.curr, rows: pms.limit, where: { GroupId: groupId} }, function (data) {
                 $("#img-list").html(template('tp:img-item', { items: data.data }));
                 laypage.render({
                     elem: 'pager'
@@ -184,7 +246,7 @@
                     if ($(this).hasClass("selected")) {
                         $(this).removeClass("selected");
                         for (var i = 0; i < selectedItemIds.length; i++) {
-                            if (selectedItemIds[i] == item.id) {
+                            if (selectedItemIds[i] === item.id) {
                                 selectedItemIds.splice(i, 1);
                                 selectedItems.splice(i, 1);
                             }

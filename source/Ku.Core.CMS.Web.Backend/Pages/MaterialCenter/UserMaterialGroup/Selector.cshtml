@@ -19,6 +19,7 @@
     <div class="layui-body">
         <div class="toolbar">
             <action title="刷新" action="grid:reload['#list']" />
+            <action auth-code="materialcenter.usermaterialgroup.edit" text="新增" icon="&#xe608;" action="window:/MaterialCenter/UserMaterialGroup/Edit?type=@Model.Type" after="grid:reload['#list']" />
         </div>
         <table id="list" lay-filter="list"></table>
     </div>
@@ -37,13 +38,22 @@
             var table = layui.table;
             $("#list").kuGrid({
                 url: 'Selector/Data',
+                page: false,
                 cols: [[
-                    { field: 'Account', fixed: 'left', title: '账户', width: 100 },
-                    { field: 'NickName', title: '昵称', width: 120 },
-                    { field: 'RealName', title: '姓名', width: 120 },
-                    { field: 'Mobile', title: '手机', width: 140 },
-                    { field: 'Email', title: '邮箱', width: 250 }
-                ]]
+                    { field: 'Name', title: '分组名称', width: '70%' },
+                    {
+                        title: '操作', fixed: 'right', width: '20%' , align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "materialcenter.usermaterialgroup.edit", text: "编辑", action: `window:/MaterialCenter/UserMaterialGroup/Edit?id={{d.Id}}`, after: "grid:reload['#list']" },
+                            { code: "materialcenter.usermaterialgroup.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]],
+                onWhere: function () {
+                    return {
+                        Type: '@Model.Type'
+                    };
+                }
             });
 
             table.on('checkbox(list)', function (obj) {
@@ -55,15 +65,15 @@
 
         function doSelectOk() {
             var checkStatus = layui.table.checkStatus('list');
-            if (checkStatus.data.length === 0) {
-                ku.page.msg.tip(`请至少选择一条数据！`);
-                return;
-            }
+            //if (checkStatus.data.length === 0) {
+            //    ku.page.msg.tip(`请至少选择一条数据！`);
+            //    return;
+            //}
             var sels = [];
             for (var i = 0; i < checkStatus.data.length; i++) {
                 sels.push({
                     id: checkStatus.data[i].Id,
-                    name: checkStatus.data[i].NickName
+                    name: checkStatus.data[i].Name
                 });
             }
             closeWindow(sels);
@@ -71,7 +81,7 @@
 
         function showSelTip() {
             var checkStatus = layui.table.checkStatus('list');
-            var max = ku.page.querystring.get("max") || 10;
+            var max = ku.page.querystring.get("max") || 999;
             $("#sel-tip").text(`已选${checkStatus.data.length}个，可选${max}个`);
         }
     </script>

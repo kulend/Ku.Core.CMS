@@ -9,6 +9,7 @@ using Ku.Core.CMS.IService.MaterialCenter;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.Exceptions;
+using Ku.Core.CMS.Domain.Enum.MaterialCenter;
 
 namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.UserMaterialGroup
 {
@@ -32,7 +33,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.UserMaterialGroup
         /// 取得数据
         /// </summary>
         [Auth("edit")]
-        public async Task OnGetAsync(long? id)
+        public async Task OnGetAsync(long? id, EmUserMaterialGroupType type = EmUserMaterialGroupType.Picture)
         {
             if (id.HasValue)
             {
@@ -46,6 +47,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.UserMaterialGroup
             else
             {
                 Dto = new UserMaterialGroupDto();
+                Dto.Type = type;
                 ViewData["Mode"] = "Add";
             }
         }

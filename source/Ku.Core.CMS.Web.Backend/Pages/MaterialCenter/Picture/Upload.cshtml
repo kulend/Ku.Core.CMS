@@ -3,7 +3,7 @@
 @{
     Layout = "_WindowFormLayout";
 }
-@using Ku.Core.CMS.Domain.Dto.MaterialCenter
+@using Ku.Core.CMS.Domain.Enum.MaterialCenter
 
 <div class="layui-layout layui-layout-window">
     <div class="layui-body">
@@ -45,37 +45,13 @@
     </div>
     <div class="layui-footer">
         <span id="sel-tip" style="position:absolute; left:20px;">
-            <action text="选择分组" size="sm" action="javascript:selectGroup()" /> ：默认分组
+            <action text="选择分组" size="sm" action="javascript:selectGroup()" /> ：<span id="groups_tip" style="max-width:200px;">未选择分组</span>
         </span>
         <a class="layui-hide" id="btnBind">上传</a>
         <a class="layui-btn layui-btn-sm" id="btnUpload" style="display:none;">开始上传</a>
         <action text="关 闭" size="sm" action="javascript:closeWindow(true)" />
     </div>
 </div>
-
-<div id="group_selecter" style="display:none;">
-    <form class="layui-form">
-        <table id="ID_table_filters" class="layui-table" lay-skin="line">
-            <tbody>
-                @foreach (UserMaterialGroupDto group in Model.Groups)
-                {
-                    <tr data-id="@group.Id">
-                        <td>
-                            <input type="checkbox" title="@group.Name" name="name_filter" value="@group.Id" lay-skin="primary" lay-filter="filter-item">
-                        </td>
-                        <td>
-                            <div class="layui-btn-group">
-                                <action auth-code="" text="" Css="layui-btn-xs" icon="&#xe642;" action="window:/MaterialCenter/UserMaterialGroup/Edit?id=@group.Id" after="" />
-                                <action auth-code="" text="" Css="layui-btn-xs" icon="&#xe640;" action="post:/MaterialCenter/UserMaterialGroup/Index/Delete?id=@group.Id" after="js:removeRow('@group.Id');" />
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </form>
-</div>
-
 @section Scripts
     {
     <script>
@@ -93,6 +69,11 @@
                 , multiple: true
                 , auto: false
                 , bindAction: '#btnBind'
+                , data: {
+                    groups: function () {
+                        return $("#groups_tip").attr("data-ids");
+                    }
+                }
                 , choose: function (obj) {
                     files = obj.pushFile(); //将每次选择的文件追加到文件队列
                     btnUpload.show();
@@ -176,55 +157,28 @@
                 ku.page.msg.tip("上传完成");
                 return;
             }
-            ins.config.data = { type: 1 };
+            //ins.config.data = { type: 1 };
             var tr = $('#list').find('tr[data-status="wait"]').first();
             tr.attr("data-continue", "true");
             tr.find(".item-upload").trigger("click");
         }
 
-        function AddGroup() {
-            ku.page.msg.prompt({ formType: 0, maxlength: 20, title: '新建分组'}, function (name, index) {
-                ku.ajax.post("Upload/SaveGroup", { Name: name}, function (reply) {
-                    if (reply.code === 0) {
-                        layui.layer.close(index);
-                    }
-                });                
-            });
-        }
-
         function selectGroup() {
-            OpenWindow("选择素材分组", `/MaterialCenter/UserMaterialGroup/Selector`, null, function (items) {
-                //if (items) {
-                //    for (var i = 0; i < items.length; i++) {
-                //        let item = items[i];
-                //        var rowHmtl = '<tr>'
-                //            + `<td>${item.name}</td>`
-                //            + '<td><input type="text" name="input1" class="layui-input"></td>'
-                //            + '<td><button type="button" class="layui-btn layui-btn-xs layui-btn-warm" action="js:removeRow($this)">删除</button></td>'
-                //            + '</tr>';
-                //        $("#ID_attrs_table tbody").append(rowHmtl);
-                //    }
-                //}
+            OpenWindow("选择分组", `/MaterialCenter/UserMaterialGroup/Selector?type=@EmUserMaterialGroupType.Picture`, null, function (items) {
+                var html = [];
+                var groupIds = [];
+                if (items && items.length > 0) {
+                    for (var i = 0; i < items.length; i++) {
+                        let item = items[i];
+                        groupIds.push(item.id);
+                        html.push(`<em>${item.name}</em>`);
+                    }
+                    $("#groups_tip").html(html.join(" , "));
+                } else {
+                    $("#groups_tip").html("未选择分组");
+                }
+                $("#groups_tip").attr("data-ids", groupIds.join(","));
             });
-            //layer.open({
-            //    type: 1,
-            //    shade: false,
-            //    title: '选择分组', //不显示标题
-            //    content: $('#group_selecter'),
-            //    success: function (layero, index) {
-            //        $("#group_selecter").find("li").off("click").on("click", function () {
-            //            layui.layer.close(index);
-            //            $("#group_selecter").hide();
-            //        });
-            //    },
-            //    cancel: function () {
-            //        $("#group_selecter").hide();
-            //    },
-            //    btn: ['新建分组', '确认选择'],
-            //    yes: function (index, layero) {
-            //        AddGroup();
-            //    }
-            //});
         }
     </script>
 }

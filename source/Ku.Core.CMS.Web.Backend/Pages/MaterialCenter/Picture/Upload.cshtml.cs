@@ -10,6 +10,7 @@ using Ku.Core.CMS.IService.MaterialCenter;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.IdGenerator;
 using Microsoft.AspNetCore.Hosting;
@@ -36,16 +37,12 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
             _groupService = groupService;
         }
 
-        public List<UserMaterialGroupDto> Groups { set; get; }
-
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            //取得用户素材分组
-            Groups = await _groupService.GetListAsync(new UserMaterialGroupSearch { UserId = User.GetUserIdOrZero(), Type = Domain.Enum.MaterialCenter.EmUserMaterialGroupType.Picture }, null);
         }
 
         [Auth("upload")]
-        public async Task<IActionResult> OnPostAsync(ICollection<IFormFile> file)
+        public async Task<IActionResult> OnPostAsync(ICollection<IFormFile> file, string groups)
         {
             string yyyymm = DateTime.Now.ToyyyyMM();
             var config = await _configService.GetAsync();
@@ -58,6 +55,18 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
+            }
+
+            long[] groupIds = groups.SplitToInt64();
+            //检查素材分组与用户关系
+            foreach (var id in groupIds)
+            {
+                var group = await _groupService.GetByIdAsync(id);
+                if (group == null || group.Type != Domain.Enum.MaterialCenter.EmUserMaterialGroupType.Picture 
+                    || group.UserId != User.GetUserIdOrZero())
+                {
+                    throw new KuException("选择的素材分组不正确！");
+                }
             }
             foreach (var item in file)
             {
@@ -80,16 +89,8 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
                 model.FileSize = item.Length;
                 model.FileType = suffix;
                 model.UploadUserId = User.GetUserIdOrZero();
-                await _service.AddAsync(model);
+                await _service.AddAsync(model, groupIds);
             }
-            return Json(true);
-        }
-
-        [Auth("addgroup")]
-        public async Task<IActionResult> OnPostSaveGroupAsync([Required, MaxLength(16)]string name)
-        {
-            var dto = new UserMaterialGroupDto { Name = name, Type = Domain.Enum.MaterialCenter.EmUserMaterialGroupType.Picture, UserId = User.GetUserIdOrZero() };
-            await _groupService.SaveAsync(dto);
             return Json(true);
         }
     }

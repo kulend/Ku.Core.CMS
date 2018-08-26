@@ -17,6 +17,7 @@ using Dnc.Extensions.Dapper;
 using Ku.Core.Infrastructure.IdGenerator;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Ku.Core.CMS.Service.MaterialCenter
 {
@@ -33,15 +34,22 @@ namespace Ku.Core.CMS.Service.MaterialCenter
         /// <summary>
         /// 新增数据
         /// </summary>
-        public async Task AddAsync(PictureDto dto)
+        public async Task AddAsync(PictureDto dto, long[] groups)
         {
             Picture model = Mapper.Map<Picture>(dto);
             //新增
             model.CreateTime = DateTime.Now;
             model.IsDeleted = false;
-            using (var dapper = DapperFactory.Create())
+
+            var grouprefs = groups?.Select(x => new UserMaterialGroupRef { MaterialId = model.Id, GroupId = x });
+
+            using (var dapper = DapperFactory.CreateWithTrans())
             {
                 await dapper.InsertAsync(model);
+                //素材分组
+                await dapper.InsertAsync<UserMaterialGroupRef>(grouprefs);
+
+                dapper.Commit();
             }
         }
 

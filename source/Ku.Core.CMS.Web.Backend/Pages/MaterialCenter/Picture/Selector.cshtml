@@ -189,9 +189,9 @@
 <script id="tp:img-item" type="text/html">
     {{each items value i}}
     <li class="img_item">
-        <label class="frm_checkbox_label img_item_bd {{value.Id | inArraySelected}}" data-item='{"id":"{{value.Id}}", "thumb":"{{value.ThumbPath}}", "path":"{{value.FilePath}}"}'>
+        <label class="frm_checkbox_label img_item_bd {{value.Id | inArraySelected}}" data-item='{"id":"{{value.Id}}", "thumb":"{{value.ThumbPath}}", "path":"{{value.FilePath}}", "url":"{{value.Url}}"}'>
             <div class="pic_box">
-                <img class="pic" src="{{value.ThumbPath||value.FilePath}}" />
+                <img class="pic" src="{{value.ThumbUrl||value.Url}}" />
             </div>
             <span class="lbl_content">
                 {{value.Title}}

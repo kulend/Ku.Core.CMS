@@ -16,46 +16,53 @@
     Layout = "_WindowFormLayout";
 }
 @using Ku.Core.CMS.Domain.Enum.Content
+@section Css
+    {
+    <link rel="stylesheet" href="~/lib/umeditor/themes/default/css/umeditor.css">
+}
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<EditModel>(""))
     {
-    <div class="layui-body">
-        @Html.InputFor(x => x.Dto.Id)
-        @Html.InputFor(x => x.Dto.ColumnId)
-        <div class="layui-form-item">
-            <label class="layui-form-label">栏目</label>
-            <div class="layui-input-block">
-                <label class="layui-form-label-show">@Model.Dto.Column.Name</label>
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.ColumnId)
+            <div class="layui-form-item">
+                <label class="layui-form-label">栏目</label>
+                <div class="layui-input-block">
+                    <label class="layui-form-label-show">@Model.Dto.Column.Name</label>
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.Title, x => x.Dto.SubTitle)
+            @Html.InputFor(x => x.Dto.Author, x => x.Dto.Provenance)
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面</label>
+                <div id="coverList" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
+            @Html.InputFor(x => x.Dto.Keyword, x => x.Dto.OrderIndex)
+            @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
+            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Text ? "" : "layui-hide")">
+                <label class="layui-form-label">详情内容</label>
+                <div id="ID_content_1" class="layui-input-block long">
+                    <textarea class="layui-textarea">@(Model.Dto.ContentType == EmArticleContentType.Text ? Model.Dto.Content : "")</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.RichText ? "" : "layui-hide")">
+                <label class="layui-form-label">详情内容</label>
+                <div id="ID_content_2" class="layui-input-block">
+                    <!-- 加载编辑器的容器 -->
+                    <script id="container" name="content" type="text/plain" style="width:700px;">
+                        @Html.Raw(Model.Dto.ContentType == EmArticleContentType.RichText ? Model.Dto.Content : "")
+                    </script>
+                </div>
+            </div>
+            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Picture ? "" : "layui-hide")">
+                <label class="layui-form-label">详情图</label>
+                <div id="ID_content_3" class="layui-input-block">
+                </div>
             </div>
         </div>
-        @Html.InputFor(x => x.Dto.Title, x => x.Dto.SubTitle)
-        @Html.InputFor(x => x.Dto.Author, x => x.Dto.Provenance)
-        <div class="layui-form-item">
-            <label class="layui-form-label">封面</label>
-            <div id="coverList" class="layui-input-block">
-            </div>
-        </div>
-        @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
-        @Html.InputFor(x => x.Dto.Keyword, x => x.Dto.OrderIndex)
-        @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
-        <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Text ? "" : "layui-hide")">
-            <label class="layui-form-label">详情内容</label>
-            <div id="ID_content_1" class="layui-input-block long">
-                <textarea class="layui-textarea">@(Model.Dto.ContentType == EmArticleContentType.Text ? Model.Dto.Content : "")</textarea>
-            </div>
-        </div>
-        <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.RichText ? "" : "layui-hide")">
-            <label class="layui-form-label">详情内容</label>
-            <div id="ID_content_2" class="layui-input-block">
-                @Html.Raw(Model.Dto.ContentType == EmArticleContentType.RichText ? Model.Dto.Content : "")
-            </div>
-        </div>
-        <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Picture ? "" : "layui-hide")">
-            <label class="layui-form-label">详情图</label>
-            <div id="ID_content_3" class="layui-input-block">
-            </div>
-        </div>
-    </div>
         <div class="layui-footer">
             <input type="hidden" id="hdContent" value="@Model.Dto.Content" />
             @Html.ActionsForSubmitAndClose()
@@ -66,6 +73,8 @@
     {
     <script src="~/js/ku/ku.image.picker.js"></script>
     <script src="~/lib/wangEditor/wangEditor.js"></script>
+    <script src="~/lib/umeditor/umeditor.config.js"></script>
+    <script src="~/lib/umeditor/umeditor.js"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
@@ -85,9 +94,48 @@
                 $("#ID_content_3").kuImagePicker("loadData", $("#hdContent").val());
             }
 
-            var E = window.wangEditor;
-            var editor = new E('#ID_content_2');
-            editor.create();
+            //var E = window.wangEditor;
+            //var editor = new E('#ID_content_2');
+            //editor.create();
+
+            UM.plugins["myimage"] = function () {
+                var me = this;
+                //执行命令
+                me.commands["myimage"] = {
+                    execCommand: function () {
+                        OpenWindow("选择图片", `MaterialCenter/Picture/Selector?max=99`, { area: ['837px', '468px'], maxmin: false }, function (files) {
+                            if (!files.length) return;
+                            var images = [];
+                            for (var i = 0; i < files.length; i++) {
+                                images.push({ src: files[i].url});
+                            }
+                            me.execCommand("insertimage", images);
+                        });
+                    }
+                };
+            };
+
+            UM.registerUI('myimage', function (name) {
+                var me = this;
+                var $btn = $.eduibutton({
+                    icon: name,
+                    click: function () {
+                        me.execCommand(name);
+                    },
+                    title: this.getLang('labelMap')[name] || ''
+                });
+
+                this.addListener('selectionchange', function () {
+                    var state = this.queryCommandState(name);
+                    $btn.edui().disabled(state === -1).active(state === 1);
+                });
+                return $btn;
+            });
+
+
+
+            window.um = UM.getEditor('container', {
+            });
 
             //监听事件
             form.on('radio(ContentType)', function (item) {

@@ -45,6 +45,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
                 foreach (var item in data.items)
                 {
                     item.Url = config.PictureUrl.Contact(item.FilePath);
+                    item.ThumbUrl = config.PictureUrl.Contact(item.ThumbPath);
                 }
             }
 

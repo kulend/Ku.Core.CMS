@@ -20,8 +20,11 @@ namespace Ku.Core.CMS.Domain.Dto.MaterialCenter
     public class PictureDto : BaseMaterialDto
     {
         [StringLength(256)]
-        [Display(Name = "缩略图地址")]
+        [Display(Name = "缩略图路径")]
         public string ThumbPath { set; get; }
+
+        [Display(Name = "缩略图地址")]
+        public string ThumbUrl { set; get; }
 
         /// <summary>
         /// 是否已压缩

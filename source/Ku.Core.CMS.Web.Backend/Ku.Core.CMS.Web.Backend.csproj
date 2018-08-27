@@ -37,5 +37,23 @@
   <ItemGroup>
     <ProjectReference Include="..\Ku.Core.CMS.Web\Ku.Core.CMS.Web.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\umeditor\dialogs\emotion\emotion.js" />
+    <None Include="wwwroot\lib\umeditor\dialogs\formula\formula.js" />
+    <None Include="wwwroot\lib\umeditor\dialogs\image\image.js" />
+    <None Include="wwwroot\lib\umeditor\dialogs\link\link.js" />
+    <None Include="wwwroot\lib\umeditor\dialogs\map\map.js" />
+    <None Include="wwwroot\lib\umeditor\dialogs\video\video.js" />
+    <None Include="wwwroot\lib\umeditor\lang\en\en.js" />
+    <None Include="wwwroot\lib\umeditor\lang\zh-cn\zh-cn.js" />
+    <None Include="wwwroot\lib\umeditor\third-party\jquery.min.js" />
+    <None Include="wwwroot\lib\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneral-webfont.svg" />
+    <None Include="wwwroot\lib\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneralbol-webfont.svg" />
+    <None Include="wwwroot\lib\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneralbolita-webfont.svg" />
+    <None Include="wwwroot\lib\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneralitalic-webfont.svg" />
+    <None Include="wwwroot\lib\umeditor\third-party\mathquill\font\Symbola.svg" />
+    <None Include="wwwroot\lib\umeditor\third-party\mathquill\mathquill.js" />
+    <None Include="wwwroot\lib\umeditor\third-party\mathquill\mathquill.min.js" />
+  </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 </Project>

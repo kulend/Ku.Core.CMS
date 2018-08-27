@@ -4,6 +4,7 @@ using Ku.Core.CMS.IService.MaterialCenter;
 using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Extensions;
 using Ku.Core.CMS.Web.Security;
+using Ku.Core.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,11 +17,13 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
     {
         private readonly IPictureService _service;
         private readonly IUserMaterialGroupService _groupService;
+        private readonly IMaterialCenterConfigService _configService;
 
-        public SelectorModel(IPictureService service, IUserMaterialGroupService groupService)
+        public SelectorModel(IPictureService service, IUserMaterialGroupService groupService, IMaterialCenterConfigService configService)
         {
             _service = service;
             _groupService = groupService;
+            _configService = configService;
         }
 
         public List<UserMaterialGroupDto> Groups { set; get; }
@@ -33,7 +36,17 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
 
         public async Task<IActionResult> OnPostAsync(int page, int rows, PictureSearch where)
         {
+            var config = await _configService.GetAsync();
+
             var data = await _service.GetListAsync(page, rows, where, null);
+            if (config.PictureUrl.IsNotNullOrEmpty())
+            {
+                foreach (var item in data.items)
+                {
+                    item.Url = config.PictureUrl.Contact(item.FilePath);
+                    item.ThumbUrl = config.PictureUrl.Contact(item.ThumbPath);
+                }
+            }
             return PagerData(data.items, page, rows, data.count);
         }
     }

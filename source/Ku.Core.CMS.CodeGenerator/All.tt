@@ -12,9 +12,9 @@
 <#@ import namespace="System.Reflection" #>
 <#@ include file="manager.ttinclude"#>
 <#
-	var name = "UserMaterialGroup";
-	var desc = "用户素材分组";
-	var area = "MaterialCenter";
+	var name = "PageViewRecord";
+	var desc = "页面浏览记录";
+	var area = "DataCenter";
 	var logicDel = false;
 	var HasRecycle = false;
    	var HasDetail = false;

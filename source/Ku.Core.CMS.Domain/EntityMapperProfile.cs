@@ -92,6 +92,8 @@ namespace Ku.Core.CMS.Domain
             CreateMap<Domain.Entity.Mall.ProductUnit, Domain.Dto.Mall.ProductUnitDto>().ReverseMap();
             CreateMap<Domain.Entity.Mall.Order, Domain.Dto.Mall.OrderDto>().ReverseMap();
             CreateMap<Domain.Entity.Mall.OrderProduct, Domain.Dto.Mall.OrderProductDto>().ReverseMap();
+            //DataCenter
+            CreateMap<Domain.Entity.DataCenter.PageViewRecord, Domain.Dto.DataCenter.PageViewRecordDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.App, Domain.Dto.DataCenter.AppDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppVersion, Domain.Dto.DataCenter.AppVersionDto>().ReverseMap();
             CreateMap<Domain.Entity.DataCenter.AppFeedback, Domain.Dto.DataCenter.AppFeedbackDto>().ReverseMap();

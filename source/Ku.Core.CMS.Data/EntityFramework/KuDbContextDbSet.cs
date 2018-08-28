@@ -183,6 +183,11 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.DataCenter.AppFeedback> AppFeedbacks { get; set; }
 
         /// <summary>
+        /// DataCenter 页面浏览记录
+        /// </summary>
+        public DbSet<Domain.Entity.DataCenter.PageViewRecord> DataCenterPageViewRecords { get; set; }
+		
+        /// <summary>
         /// 用户
         /// </summary>
         public DbSet<Domain.Entity.UserCenter.User> UserCenterUsers { get; set; }

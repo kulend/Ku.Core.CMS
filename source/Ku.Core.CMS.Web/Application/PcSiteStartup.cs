@@ -67,6 +67,7 @@ namespace Ku.Core.CMS.Web.Application
             services.AddMvc(opts =>
             {
                 opts.Filters.Add(typeof(ApiThrottleActionFilter));
+                opts.Filters.Add(typeof(PageViewRecordFilter));
                 opts.Filters.Add(typeof(JsonWrapperAsyncResultFilter));
                 opts.Filters.Add(typeof(ExceptionFilter));
             }).AddJsonOptions(json =>

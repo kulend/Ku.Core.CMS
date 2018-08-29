@@ -108,7 +108,7 @@ body{margin: 0px; padding:0px; height:100%; font-family:\5FAE\8F6F\96C5\9ED1;}
 .topQi {width:268px; height:398px; margin-left:20px; border:1px solid #c00;}
 .topQiTit {line-height:30px; background-color:#ffebda; padding-left:5px; font-weight:bold}
 .topQiBox {height:368px; overflow:hidden;}
-.topQo_jp {background:url(../images/jpqi.png) 115px 55px no-repeat;}  /*½ðÅÆ*/
+.topQo_jp {background:url(../images/jpqi.png) 115px 55px no-repeat;}  /*é‡‘ç‰Œ*/
 #qiPlayer {position:absolute;}
 #qiPlayer a {height:91px; width:268px; display:block; border-bottom:1px dotted #CCC;}
 #qiPlayer div {padding-top:9px; height:82px;}

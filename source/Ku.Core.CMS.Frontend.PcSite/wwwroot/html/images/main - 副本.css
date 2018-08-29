@@ -36,62 +36,11 @@ body{margin: 0px; padding:0px; height:100%; font-family:\5FAE\8F6F\96C5\9ED1;}
 .prt_leftBox {width:910px;}
 .prt_tit {border-bottom:2px solid #C00; height:35px;}
 .prt_listBox {width:455px; padding-top:12px;}
-.prt_list a {height:30px; line-height:30px; display:block; font-size:15px}
+.prt_list a {height:35px; line-height:35px; display:block; font-size:16px}
 .prt_rightAds {width:270px; height:270px;}
 .prt_rightAds_link {height:130px;}
 .qiVideo {width:268px; height:298px; border:1px solid #c00;}
 .qiVideo .links {width:248px; display:block; padding:8px 10px 0px 10px;}
-.prt_dlBox {margin-right:-20px;}
-.prt_dlBox a {display:block; width:290px; float:left; margin:20px 20px 0px 0px; height:110px;}
-.prt_dlBox p {line-height:22px; padding-top:5px; color:#999;}
-.prt_hfLink {display:block; width:265px; float:right; margin-right:20px;}
-.prt_Meet a {display:block; margin:10px 10px 0px 10px; height:105px; padding:0px 5px 0px 15px; border-bottom:1px solid #CCC; font-size:16px; background:url(../images/icon_jt.gif) no-repeat 0px 8px;}
-.prt_Meet p {line-height:20px; color:#666; font-size:12px; padding-top:3px;}
-
-.prt_buyer {width:1190px; height:510px; margin:0px auto 20px auto;}
-.prt_buyerBox {width:910px; height:510px;}
-.prt_buyerTit {height:250px; margin-bottom:10px;}
-
-.prt_playerBox {width:268px; height:508px; border:1px solid #c00;}
-.prt_player a {display:block; width:134px; float:left; height:140px; margin-top:15px; line-height:20px; text-align: center;}
-.prt_player img {width:100px; height:100px;}
-.prt_player h5 {font-size:14px; padding-top:5px; color:#333;}
-.prt_player span {color:#C30}
-
-.prt_Ser {width:215px; border-right:1px solid #CCC; margin-left:20px; height:150px;}
-.prt_Ser h4 { background:url(images/map.png) no-repeat 0px 0px; padding-left:30px;}
-.prt_Ser a {display:block; width:71px; line-height:30px; font-size:14px; float:left}
-.prt_Sers {width:240px; border-right:1px solid #CCC; margin-left:20px; height:150px;}
-.prt_Sers h4 { background:url(images/ser.png) no-repeat 0px 0px; padding-left:26px;}
-.prt_Sers a {display:block; width:80px; line-height:30px; font-size:14px; float:left}
-.prt_Sales {width:190px; margin-left:20px; height:150px;}
-.prt_Sales h4 { background:url(images/market.png) no-repeat 0px 0px; padding-left:30px;}
-.prt_Sales a {display:block; line-height:30px; font-size:14px;}
-
-.prt_supply {border-right:1px solid #C00; border-left:1px solid #C00; border-bottom:1px solid #C00; height:263px; margin-right:-1px;}
-.prt_supTit {float:left; width:454px; height:264px;}
-.prt_supTits {background-color:#f5f5f5; line-height:30px; height:30px;}
-.prt_supTits p {float:left; text-align:center;}
-.prt_supList {height:234px; width:454px; overflow:hidden;}
-.prt_supList a { line-height:25px; border-bottom:1px dotted #CCC; width:454px; display:block;}
-.prt_supList a:hover { background-color:#ffebda}
-.prt_supListJg {float:left; width:1px; background-color:#c00; height:263px;}
-.prt_supList p { float:left}
-.w40 { width:40%;}
-.w30 { width:30%;}
-
-.videoClass {clear:both; margin-right:-10px;}
-.videoClassBox {height:250px;}
-.videoClass a {width:220px; display:block; float:left; margin-right:10px;}
-.videoClass p {width:220px; height:165px; position:relative}
-.videoClass i{z-index:1; background:url(../images/videoBox.png); width:220px; height:165px; left:0px; top:0px; margin:0px;}
-.videoClass span {display:block; z-index:2; right:10px; bottom:10px; position:absolute; color:#FFF; font-size:12px;}
- 
-.backTo {width:268px; height:298px; border:1px solid #ccc}
-.backTo p {line-height:30px; background-color:#f5f5f5; padding-left:10px;}
-.backTo div {background:url(../images/gqSearch.png); height:231px; border-bottom:1px solid #CCC;}
-.backTo input {height:35px; border:3px solid #88b347; padding:0px 8px; color:#666; font-size:14px; width:200px; top:125px; left:23px;}
-.backTo button {height:35px; width:120px; text-align:center; line-height:35px; background-color:#88b347; color:#FFF; top:180px; border-radius:5px; left:74px;}
 
 .hotNews {font-size:16px; line-height:30px; background-color:#f9f9f9;}
 .hotNews a { display:block; line-height:35px; border-bottom:1px dotted #CCC; background:url(../images/news.png) no-repeat 5px 6px; padding-left:35px;}
@@ -108,7 +57,7 @@ body{margin: 0px; padding:0px; height:100%; font-family:\5FAE\8F6F\96C5\9ED1;}
 .topQi {width:268px; height:398px; margin-left:20px; border:1px solid #c00;}
 .topQiTit {line-height:30px; background-color:#ffebda; padding-left:5px; font-weight:bold}
 .topQiBox {height:368px; overflow:hidden;}
-.topQo_jp {background:url(../images/jpqi.png) 115px 55px no-repeat;}  /*½ðÅÆ*/
+.topQo_jp {background:url(../images/jpqi.png) 115px 55px no-repeat;}  /*é‡‘ç‰Œ*/
 #qiPlayer {position:absolute;}
 #qiPlayer a {height:91px; width:268px; display:block; border-bottom:1px dotted #CCC;}
 #qiPlayer div {padding-top:9px; height:82px;}
@@ -117,10 +66,6 @@ body{margin: 0px; padding:0px; height:100%; font-family:\5FAE\8F6F\96C5\9ED1;}
 .hotLinks {width:1190px; margin-top:1px; margin:0px auto;}
 .hotLinks_list { padding:20px 0px;}
 .hotLinks_list a {line-height:30px; font-size:16px;}
-
-.adsBox {width:1190px; margin:0px auto 20px auto; height:70px; overflow:hidden; clear:both}
-.adsBox a {width:190px; height:70px; margin-right:10px; float:left; position:relative; display:block; overflow:hidden;}
-.adsBox p {margin-right:-10px;}
 
 .foot {background-color:#333; height:280px;}
 .footBox {width:1190px; margin-top:1px; height:280px; margin:10px auto 0px auto;}

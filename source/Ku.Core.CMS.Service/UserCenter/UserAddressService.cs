@@ -120,5 +120,23 @@ namespace Ku.Core.CMS.Service.UserCenter
                 }
             }
         }
+
+        /// <summary>
+        /// 设置默认地址
+        /// </summary>
+        public async Task SetDefaultAsync(UserAddressDto dto)
+        {
+            if (dto.Default)
+            {
+                return;
+            }
+            using (var dapper = DapperFactory.Create())
+            {
+                //更新其他地址为非默认地址
+                await dapper.UpdateAsync<UserAddress>(new { Default = false }, new { UserId = dto.UserId, Default = true });
+
+                await dapper.UpdateAsync<UserAddress>(new { Default = true }, new { dto.Id });
+            }
+        }
     }
 }

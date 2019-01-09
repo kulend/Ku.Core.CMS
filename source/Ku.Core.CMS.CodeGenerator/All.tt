@@ -12,17 +12,17 @@
 <#@ import namespace="System.Reflection" #>
 <#@ include file="manager.ttinclude"#>
 <#
-	var name = "PageViewRecord";
-	var desc = "页面浏览记录";
-	var area = "DataCenter";
-	var logicDel = false;
-	var HasRecycle = false;
+	var name = "Video";
+	var desc = "视频素材";
+	var area = "MaterialCenter";
+	var logicDel = true;
+	var HasRecycle = true;
    	var HasDetail = false;
    	//模式1，普通无回收站
    	//模式2，普通有回收站
    	//模式3，父子级无回收站
    	//模式4，父子级有回收站
-	var mode = 1;
+	var mode = 2;
 
 	var table = name.ToLower();
 	name = name.Replace("_", "");

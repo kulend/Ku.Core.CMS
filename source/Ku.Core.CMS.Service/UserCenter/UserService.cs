@@ -24,6 +24,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dnc.Extensions.Dapper.Builders;
+using Ku.Core.CMS.Domain.Enum.UserCenter;
 
 namespace Ku.Core.CMS.Service.UserCenter
 {
@@ -143,6 +144,9 @@ namespace Ku.Core.CMS.Service.UserCenter
                     item.IsEnable = model.IsEnable;
                     item.Remarks = model.Remarks;
                     item.IsAdmin = model.IsAdmin;
+                    item.QQ = model.QQ;
+                    item.WebsiteUrl = model.WebsiteUrl;
+                    item.Signature = model.Signature;
                     if (!model.Password.EqualOrdinalIgnoreCase("********************"))
                     {
                         model.EncryptPassword();
@@ -310,7 +314,10 @@ namespace Ku.Core.CMS.Service.UserCenter
                     model.HeadImage,
                     model.Email,
                     model.Sex,
-                    model.Remarks
+                    model.Remarks,
+                    model.QQ,
+                    model.Signature,
+                    model.WebsiteUrl
                 };
                 await _dapper.UpdateAsync<User>(item, new { model.Id });
             }
@@ -336,6 +343,198 @@ namespace Ku.Core.CMS.Service.UserCenter
                     throw new KuException("该账号已被禁止登陆！");
                 }
                 return entity.CheckPassword(password);
+            }
+        }
+
+        /// <summary>
+        /// 登陆(第三方登录)
+        /// </summary>
+        public async Task<UserDto> OAuthLoginAsync(EmUserLoginType type, string openId)
+        {
+            if (openId.IsNullOrEmpty())
+                throw new KuArgNullException("OpenId不能为空！");
+
+            using (var _dapper = DapperFactory.Create())
+            {
+                User user = null;
+                switch (type)
+                {
+                    case EmUserLoginType.QQ:
+                        user = await _dapper.QueryOneAsync<User>(new { QQOpenId = openId, IsDeleted = false });
+                        break;
+                    case EmUserLoginType.Weixin:
+                        break;
+                    default:
+                        break;
+                }
+
+                if (user == null)
+                {
+                    return null;
+                }
+                if (!user.IsEnable)
+                {
+                    throw new KuException("该账号已被禁止登陆！");
+                }
+
+                var dto = Mapper.Map<UserDto>(user);
+                dto.Password = "";
+
+                //发送消息
+                //await _eventPublisher.PublishAsync(new UserLoginEvent { UserId = entity.Id });
+
+                return dto;
+            }
+        }
+
+        /// <summary>
+        /// 绑定(第三方登录)
+        /// </summary>
+        public async Task OAuthBindAsync(long userId, EmUserLoginType type, string openId)
+        {
+            if (openId.IsNullOrEmpty())
+                throw new KuArgNullException("OpenId不能为空！");
+
+            using (var _dapper = DapperFactory.Create())
+            {
+                switch (type)
+                {
+                    case EmUserLoginType.QQ:
+                        await _dapper.UpdateAsync<User>(new { QQOpenId = openId }, new { Id = userId });
+                        break;
+                    case EmUserLoginType.Weixin:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        public async Task<UserDto> RegisterAsync(string mobile, string password)
+        {
+            if (mobile.IsNullOrEmpty())
+                throw new KuArgNullException("手机号不能为空！");
+
+            if (password.IsNullOrEmpty())
+                throw new KuArgNullException("密码不能为空！");
+
+            //新增
+            using (var dapper = DapperFactory.Create())
+            {
+                var model = new User {
+                    Account = mobile,
+                    Password = password,
+                    Mobile = mobile,
+                    Sex = Domain.Enum.EmSex.Secret,
+                    NickName = "手机用户" + mobile.Substring(7)
+                };
+
+                //格式
+                if (!model.Mobile.IsMobile())
+                {
+                    throw new KuException("手机号格式不正确！");
+                }
+                //是否重复
+                var count = await dapper.QueryCountAsync<User>(new { Mobile = model.Mobile });
+                if (count > 0)
+                {
+                    throw new KuException("该手机号已被注册！");
+                }
+
+                //检查账户是否重复
+                count = await dapper.QueryCountAsync<User>(new { Account = model.Account });
+                if (count > 0)
+                {
+                    throw new KuException("该手机号已被注册！");
+                }
+
+                model.Id = ID.NewID();
+                model.CreateTime = DateTime.Now;
+                model.IsDeleted = false;
+                model.Factor = new Random().Next(9999);
+                //密码加密处理
+                model.EncryptPassword();
+
+                using (var trans = dapper.BeginTrans())
+                {
+                    await dapper.InsertAsync(model);
+                    trans.Commit();
+                }
+
+                var dto = Mapper.Map<UserDto>(model);
+                dto.Password = "";
+                return dto;
+            }
+        }
+
+        /// <summary>
+        /// 手机绑定
+        /// </summary>
+        public async Task MobileBindAsync(long userId, string mobile)
+        {
+            using (var _dapper = DapperFactory.Create())
+            {
+                var entity = await _dapper.QueryOneAsync<User>(new { Id = userId });
+                if (entity.Account.Eq(entity.Mobile))
+                {
+                    var item = new
+                    {
+                        Account = mobile,
+                        Mobile = mobile
+                    };
+                    await _dapper.UpdateAsync<User>(item, new { entity.Id });
+                }
+                else
+                {
+                    var item = new
+                    {
+                        Mobile = mobile
+                    };
+                    await _dapper.UpdateAsync<User>(item, new { entity.Id });
+                }
+            }
+        }
+
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        public async Task ResetPasswordAsync(string mobile, string password)
+        {
+            if (password.IsNullOrEmpty())
+            {
+                //当前密码不能为空
+                throw new KuArgNullException("密码不能为空！");
+            }
+            using (var _dapper = DapperFactory.Create())
+            {
+                var item = await _dapper.QueryOneAsync<User>(new { Mobile = mobile });
+                if (item == null)
+                {
+                    throw new KuDataNotFoundException("无法取得用户数据！");
+                }
+
+                item.Password = password;
+                item.EncryptPassword();
+
+                await _dapper.UpdateAsync<User>(new { item.Password }, new { Id = item.Id });
+            }
+        }
+
+        /// <summary>
+        /// 用户头像保存
+        /// </summary>
+        public async Task SaveHeadImageAsync(long userId, string HeadImagePath)
+        {
+            using (var _dapper = DapperFactory.Create())
+            {
+                var item = new
+                {
+                    HeadImage = HeadImagePath
+                };
+                await _dapper.UpdateAsync<User>(item, new { Id = userId });
             }
         }
     }

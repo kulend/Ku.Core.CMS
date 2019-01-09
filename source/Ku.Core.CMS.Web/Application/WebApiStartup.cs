@@ -61,12 +61,6 @@ namespace Ku.Core.CMS.Web.Application
                 {
                     Policy = Policy.Header,
                     PolicyKey = "p"
-                }, new RateValve
-                {
-                    Policy = Policy.Ip,
-                    Limit = 1,
-                    Duration = 30,
-                    WhenNull = WhenNull.Pass
                 });
             });
 

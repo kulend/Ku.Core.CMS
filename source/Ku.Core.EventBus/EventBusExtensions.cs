@@ -56,7 +56,7 @@ namespace Microsoft.AspNetCore.Builder
         {
             if ("CAP".Equals(EventBusConfig.Provider, StringComparison.OrdinalIgnoreCase))
             {
-                app.UseCap();
+                //app.UseCap();
             }
             return app;
         }

@@ -28,12 +28,22 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         /// <summary>
         /// 栏目Id
         /// </summary>
-        public long ColumnId { set; get; }
+        public long? ColumnId { set; get; }
 
         /// <summary>
         /// 栏目
         /// </summary>
         public virtual Column Column { set; get; }
+
+        /// <summary>
+        /// 专辑Id
+        /// </summary>
+        public long? AlbumId { set; get; }
+
+        /// <summary>
+        /// 专辑
+        /// </summary>
+        public virtual Album Album { set; get; }
 
         /// <summary>
         /// 标题
@@ -45,7 +55,7 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         /// <summary>
         /// 副标题
         /// </summary>
-        [Required, MaxLength(256)]
+        [MaxLength(256)]
         [Display(Name = "副标题")]
         public string SubTitle { set; get; }
 
@@ -62,6 +72,13 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         [MaxLength(64)]
         [Display(Name = "来源")]
         public string Provenance { set; get; }
+
+        /// <summary>
+        /// 简介
+        /// </summary>
+        [MaxLength(3000)]
+        [Display(Name = "简介")]
+        public string Intro { set; get; }
 
         /// <summary>
         /// 排序值
@@ -113,6 +130,38 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         [MaxLength(512)]
         [Display(Name = "封面")]
         public string CoverData { set; get; }
+
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        [Display(Name = "点赞数")]
+        public int Praises { set; get; } = 0;
+
+        /// <summary>
+        /// 收藏数
+        /// </summary>
+        [Display(Name = "收藏数")]
+        public int Collects { set; get; } = 0;
+
+        /// <summary>
+        /// 标签
+        /// </summary>
+        [MaxLength(128)]
+        [Display(Name = "标签")]
+        public string Tags { set; get; }
+
+        /// <summary>
+        /// 评论数
+        /// </summary>
+        [Display(Name = "评论数")]
+        public int Comments { set; get; } = 0;
+
+        /// <summary>
+        /// 时长
+        /// </summary>
+        [Display(Name = "时长")]
+        [MaxLength(10)]
+        public string Duration { set; get; }
     }
 
     /// <summary>
@@ -126,5 +175,21 @@ namespace Ku.Core.CMS.Domain.Entity.Content
 
         [Condition(Name = "ColumnId", Operation = ConditionOperation.In, WhenNull = WhenNull.Ignore)]
         public long[] ColumnIds { set; get; }
+
+        [Condition(Name = "Tags", Operation = ConditionOperation.Like, LeftChar = "%|", RightChar = "|%",  WhenNull = WhenNull.Ignore)]
+        public string HasTag { set; get; }
+
+        [Condition(WhenNull = WhenNull.Ignore, Operation = ConditionOperation.Custom, CustomSql = "(Title LIKE @value OR SubTitle LIKE @value OR Keyword LIKE @value)")]
+        public string Keyword { set; get; }
+
+        /// <summary>
+        /// 详情模式
+        /// </summary>
+        public EmArticleContentType? ContentType { set; get; }
+
+        public long? AlbumId { set; get; }
+
+        [Condition(WhenNull = WhenNull.Ignore, Operation = ConditionOperation.Custom, CustomSql = "((@value = 1 and AlbumId IS NOT NULL) or (@value = 0 and AlbumId IS NULL))")]
+        public bool? InAlbum { set; get; }
     }
 }

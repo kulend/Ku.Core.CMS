@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -37,5 +38,7 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         /// </summary>
         [Display(Name = "是否可用", Prompt = "是|否")]
         public bool IsEnable { set; get; } = true;
+
+        public virtual IEnumerable<AdvertisementDto> Advertisements { set; get; }
     }
 }

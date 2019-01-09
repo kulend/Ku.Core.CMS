@@ -1,0 +1,51 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.Content.ArticleUserEvent.IndexModel
+@{
+	//----------------------------------------------------------------
+	// Copyright (C) 2018 kulend 版权所有
+	//
+	// 文件名：Index.cshtml
+	// 功能描述：文章用户事件 列表页面
+	//
+	// 创建者：kulend@qq.com
+	// 创建时间：2018-09-14 22:48
+	//
+	//----------------------------------------------------------------
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">文章用户事件</div>
+        <div class="layui-card-body">
+            <table id="list"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbar-list">
+    <div class="layui-btn-container">
+        <action title="刷新" action="grid:reload['#list']" />
+        <action auth-code="content.articleuserevent.edit" text="新增" icon="&#xe608;" action="window:/Content/ArticleUserEvent/Edit" after="grid:reload['#list']" />
+        <action auth-code="content.articleuserevent.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+    </div>
+</script>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#list").kuGrid({
+                url: 'Index/Data',
+				toolbar: '#toolbar-list',
+                cols: [[
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "content.articleuserevent.edit", text: "编辑", action: `window:/Content/ArticleUserEvent/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                            { code: "content.articleuserevent.detail", text: "详情", action: `window:/Content/ArticleUserEvent/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "content.articleuserevent.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]]
+            });
+        });
+    </script>
+}

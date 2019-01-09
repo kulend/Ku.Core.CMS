@@ -1,0 +1,60 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.Content.Album.EditModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Edit.cshtml
+    // 功能描述：专辑 编辑页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-12-27 07:48
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+@using Ku.Core.CMS.Domain.Enum.Content
+@using Ku.Core.Infrastructure.Extensions
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<EditModel>(""))
+    {
+        <div class="layui-body">
+            @Html.InputFor(x => x.Dto.Id)
+            @Html.InputFor(x => x.Dto.Title)
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面</label>
+                <div id="coverList" class="layui-input-block">
+                </div>
+            </div>
+            @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
+            @Html.InputFor(x => x.Dto.OrderIndex)
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="Dto.Tags" value="elite" title="精品课程" @(Model.Dto.Tags.SplitRemoveEmpty('|').Contains("elite") ? "checked" : "")>
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer">
+            @Html.ActionsForSubmitAndClose()
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script src="~/js/ku/ku.image.picker.js"></script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+
+            $("#coverList").kuImagePicker({
+                field_data: "Dto.CoverData",
+                max_count: 1
+            });
+
+            $("#coverList").kuImagePicker("loadData", '@Html.Raw(Model.Dto.CoverData)');
+        });
+    </script>
+}

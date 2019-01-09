@@ -40,18 +40,9 @@
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
-                            <div class="toolbar">
-                                <action title="刷新" action="grid:reload['#list']" />
-                                <action  id="btnAdd" auth-code="content.article.edit" text="新增" icon="&#xe608;" action="window:/Content/Article/Edit" after="grid:reload['#list']" />
-                                <action auth-code="content.article.delete" text="批量删除" icon="&#xe640;" action="post:Index/Delete" after="grid:reload" />
-                            </div>
                             <table id="list"></table>
                         </div>
                         <div class="layui-tab-item">
-                            <div class="toolbar">
-                                <action title="刷新" action="grid:reload['#recycles']" />
-                                <action auth-code="content.article.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
-                            </div>
                             <table id="recycles"></table>
                         </div>
                     </div>
@@ -60,6 +51,19 @@
         </div>
     </div>
 </div>
+<script type="text/html" id="toolbar-list">
+    <div class="layui-btn-container">
+        <action title="刷新" action="grid:reload['#list']" />
+        <action id="btnAdd" auth-code="content.article.edit" text="新增" icon="&#xe608;" action="window:/Content/Article/Edit" after="grid:reload['#list']" />
+        <action auth-code="content.article.delete" text="批量删除" icon="&#xe640;" action="post:Index/Delete" after="grid:reload" />
+    </div>
+</script>
+<script type="text/html" id="toolbar-recycle">
+    <div class="layui-btn-container">
+        <action title="刷新" action="grid:reload['#recycles']" />
+        <action auth-code="content.article.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycles', 'post:Index/Restore']" after="grid:reload" />
+    </div>
+</script>
 @section Scripts
     {
     <script>
@@ -92,6 +96,7 @@
                 //初始化回收站
                 $("#recycles").kuGrid({
                     url: 'Index/Data',
+                    toolbar: '#toolbar-recycle',
                     cols: [cols.concat([
                         {
                             title: '操作', fixed: 'right', width: 160, align: 'center',
@@ -114,13 +119,13 @@
 
     var cols = [
         { field: 'Title', title: '标题', width: 220 },
-        { field: 'Author', title: '作者', width: 120 },
-        { field: 'Provenance', title: '来源', width: 140 },
+        { field: 'Author', title: '作者', width: 120, hide: true  },
+        { field: 'Provenance', title: '来源', width: 140, hide: true },
         { field: 'IsPublished', title: '是否发布', width: 100, align: 'center', templet: grid_templet_bool("IsPublished") },
         { field: 'OrderIndex', title: '排序', width: 80, align: 'center' },
         { field: 'Visits', title: '浏览量', width: 80, align: 'center' },
-        { field: 'PublishedTime', title: '发布时间', width: 170, align: 'center' },
-        { field: 'CreateTime', title: '创建时间', width: 170, align: 'center' }
+        { field: 'PublishedTime', title: '发布时间', width: 170, align: 'center', hide: true  },
+        { field: 'CreateTime', title: '创建时间', width: 170, align: 'center', hide: true }
     ];
 
     var selFilterValue;
@@ -129,9 +134,10 @@
             selFilterValue = filterValue;
             $("#list").kuGrid({
                 url: 'Index/Data',
+                toolbar: '#toolbar-list',
                 cols: [cols.concat([
                     {
-                        title: '操作', fixed: 'right', width: 100, align: 'center',
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
                         toolbar: grid_templet_operate([
                             { code: "content.article.edit", text: "编辑", action: `window:/Content/Article/Edit?id={{d.Id}}`, after: "grid:reload['#list']" },
                             { code: "content.article.detail", text: "详情", action: `window:/Content/Article/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
@@ -144,6 +150,9 @@
                         IsDeleted: false,
                         ColumnId: selFilterValue
                     };
+                },
+                done: function () { 
+                    $("#btnAdd").attr("action", "window:/Content/Article/Edit?ColumnId=" + selFilterValue);
                 }
             });
         } else if (selFilterValue !== filterValue) {
@@ -154,7 +163,7 @@
             }
         }
 
-        $("#btnAdd").attr("action", "window:/Content/Article/Edit?ColumnId=" + selFilterValue);
+        //$("#btnAdd").attr("action", "window:/Content/Article/Edit?ColumnId=" + selFilterValue);
     }
     </script>
 }

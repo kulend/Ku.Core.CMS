@@ -9,9 +9,11 @@
 //
 //----------------------------------------------------------------
 
+using Ku.Core.CMS.Domain.Base;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Ku.Core.CMS.Domain.Dto.Content
 {
@@ -79,5 +81,16 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         /// </summary>
         [Display(Name = "排序值")]
         public int OrderIndex { set; get; }
+
+        /// <summary>
+        /// 图片
+        /// </summary>
+        public virtual JsonUploadImage Image
+        {
+            get
+            {
+                return JsonUploadImage.Parse(ImageData).FirstOrDefault();
+            }
+        }
     }
 }

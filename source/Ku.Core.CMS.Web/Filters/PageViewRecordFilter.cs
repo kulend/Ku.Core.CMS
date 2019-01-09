@@ -37,6 +37,7 @@ namespace Ku.Core.CMS.Web.Filters
                         Referer = context.HttpContext.UrlReferrer(),
                         UserAgent = context.HttpContext.UserAgent().SubstringByByte(128),
                         ClientIp = context.HttpContext.IpAddress(),
+                        CreateTime = DateTime.Now
                     });
                 }
             });

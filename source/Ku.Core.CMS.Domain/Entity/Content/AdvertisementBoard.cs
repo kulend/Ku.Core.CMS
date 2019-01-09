@@ -47,5 +47,9 @@ namespace Ku.Core.CMS.Domain.Entity.Content
     {
         [Condition(Operation = ConditionOperation.Custom, CustomSql = "EXISTS (SELECT * FROM content_advertisement_board_ref ref WHERE ref.AdvertisementBoardId=m.Id AND ref.AdvertisementId=@value)")]
         public long? AdvertisementId { set; get; }
+
+        public bool? IsEnable { set; get; }
+
+        public string Tag { set; get; }
     }
 }

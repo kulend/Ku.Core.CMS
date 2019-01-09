@@ -3,6 +3,7 @@
 @{
     Layout = "_WindowFormLayout";
 }
+@using Ku.Core.Infrastructure.Extensions
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<EditModel>(""))
     {
@@ -16,7 +17,7 @@
                         {
                             foreach (var dto in Model.Parents)
                             {
-                            <a href="javascript:;">@dto.Name</a>
+                                <a href="javascript:;">@dto.Name</a>
                             }
                         }
                     </label>
@@ -27,6 +28,13 @@
             @Html.InputFor(x => x.Dto.ParentId)
             @Html.InputFor(x => x.Dto.Tag)
             @Html.InputFor(x => x.Dto.Name, x => x.Dto.Title)
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="Dto.Tags" value="picnews" title="图片新闻" @(Model.Dto.Tags.SplitRemoveEmpty('|').Contains("picnews") ? "checked" : "")>
+                    <input type="checkbox" name="Dto.Tags" value="video" title="视频新闻" @(Model.Dto.Tags.SplitRemoveEmpty('|').Contains("video") ? "checked" : "")>
+                </div>
+            </div>
             @Html.InputFor(x => x.Dto.OrderIndex)
         </div>
         <div class="layui-footer">

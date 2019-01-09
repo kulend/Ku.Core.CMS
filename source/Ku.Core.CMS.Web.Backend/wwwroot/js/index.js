@@ -3,8 +3,8 @@
     var layer = layui.layer;
 
     //打开首页
-    var homeTabId = 'profile';
-    openTab('profile', { id: 'profile', title: '基本资料', url:'/Account/Profile' });
+    var homeTabId = 'dashboard';
+    openTab('dashboard', { id: 'dashboard', title: '控制台', url:'/Dashboard' });
 
     // 菜单点击
     element.on('nav(layadmin-system-side-menu)', function () {

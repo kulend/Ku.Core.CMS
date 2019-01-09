@@ -18,30 +18,32 @@
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<EditModel>(""))
     {
-        <div class="layui-body">
-            @Html.InputFor(x => x.Dto.Id)
-            @Html.InputFor(x => x.Dto.Account, x => x.Dto.Password)
-            @Html.InputFor(x => x.Dto.NickName, x => x.Dto.RealName)
-            @Html.InputFor(x => x.Dto.Mobile, x => x.Dto.Email)
-            @Html.InputFor(x => x.Dto.Sex, x => x.Dto.IsEnable)
-            <div class="layui-form-item">
-                <label class="layui-form-label">头像</label>
-                <div id="HeadImage" class="layui-input-block">
-                </div>
-            </div>
-            @Html.InputFor(x => x.Dto.Remarks)
-            @Html.InputFor(x => x.Dto.IsAdmin, new { lay_filter = "IsAdmin" })
-
-            <div id="ID_UserRoles" class="layui-form-item @(!Model.Dto.IsAdmin?"layui-hide":"")">
-                <label class="layui-form-label">用户角色</label>
-                <div class="layui-input-block">
-                    @foreach (Ku.Core.CMS.Domain.Dto.UserCenter.RoleDto role in Model.Roles)
-                    {
-                        <input type="checkbox" name="UserRoles" value="@role.Id" title="@role.Name" lay-skin="primary" @(role.IsEnable ? "" : "disabled") @(Model.UserRoles.Any(x => x == role.Id) ? "checked" : "") />
-                    }
-                </div>
+    <div class="layui-body">
+        @Html.InputFor(x => x.Dto.Id)
+        @Html.InputFor(x => x.Dto.Account, x => x.Dto.Password)
+        @Html.InputFor(x => x.Dto.NickName, x => x.Dto.RealName)
+        @Html.InputFor(x => x.Dto.Mobile, x => x.Dto.Email)
+        @Html.InputFor(x => x.Dto.Sex, x => x.Dto.IsEnable)
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像</label>
+            <div id="HeadImage" class="layui-input-block">
             </div>
         </div>
+        @Html.InputFor(x => x.Dto.QQ, x => x.Dto.WebsiteUrl)
+        @Html.InputFor(x => x.Dto.Signature)
+        @Html.InputFor(x => x.Dto.Remarks)
+        @Html.InputFor(x => x.Dto.IsAdmin, new { lay_filter = "IsAdmin" })
+
+        <div id="ID_UserRoles" class="layui-form-item @(!Model.Dto.IsAdmin?"layui-hide":"")">
+            <label class="layui-form-label">用户角色</label>
+            <div class="layui-input-block">
+                @foreach (Ku.Core.CMS.Domain.Dto.UserCenter.RoleDto role in Model.Roles)
+                {
+                    <input type="checkbox" name="UserRoles" value="@role.Id" title="@role.Name" lay-skin="primary" @(role.IsEnable ? "" : "disabled") @(Model.UserRoles.Any(x => x == role.Id) ? "checked" : "") />
+                }
+            </div>
+        </div>
+    </div>
         <div class="layui-footer">
             @Html.ActionsForSubmitAndClose()
         </div>

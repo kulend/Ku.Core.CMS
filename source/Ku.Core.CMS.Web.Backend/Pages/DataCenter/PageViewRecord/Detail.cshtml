@@ -1,0 +1,43 @@
+@page
+@model Ku.Core.CMS.Web.Backend.Pages.DataCenter.PageViewRecord.DetailModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Detail.cshtml
+// 功能描述：页面浏览记录 详情页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-08-28 10:37
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowFormLayout";
+}
+<div class="layui-layout layui-layout-window">
+    @using (Html.BeginForm<DetailModel>(""))
+    {
+    <div class="layui-body">
+        @Html.ShowFor(x => x.Dto.SessionId)
+        @Html.ShowFor(x => x.Dto.PageName)
+        @Html.ShowFor(x => x.Dto.Url)
+        @Html.ShowFor(x => x.Dto.Referer)
+        @Html.ShowFor(x => x.Dto.UserAgent)
+        @Html.ShowFor(x => x.Dto.ClientIp)
+        @Html.ShowFor(x => x.Dto.Location)
+        @Html.ShowFor(x => x.Dto.CreateTime)
+    </div>
+    <div class="layui-footer">
+        @Html.ActionsForClose()
+    </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        });
+    </script>
+}

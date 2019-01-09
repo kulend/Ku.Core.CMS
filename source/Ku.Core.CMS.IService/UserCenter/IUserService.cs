@@ -11,6 +11,7 @@
 
 using Ku.Core.CMS.Domain.Dto.UserCenter;
 using Ku.Core.CMS.Domain.Entity.UserCenter;
+using Ku.Core.CMS.Domain.Enum.UserCenter;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -43,5 +44,35 @@ namespace Ku.Core.CMS.IService.UserCenter
         /// 密码验证
         /// </summary>
         Task<bool> PasswordCheckAsync(long id, string password);
+
+        /// <summary>
+        /// 登陆(第三方登录)
+        /// </summary>
+        Task<UserDto> OAuthLoginAsync(EmUserLoginType type, string openId);
+
+        /// <summary>
+        /// 绑定(第三方登录)
+        /// </summary>
+        Task OAuthBindAsync(long userId, EmUserLoginType type, string openId);
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        Task<UserDto> RegisterAsync(string mobile, string password);
+
+        /// <summary>
+        /// 手机绑定
+        /// </summary>
+        Task MobileBindAsync(long userId, string mobile);
+
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        Task ResetPasswordAsync(string mobile, string password);
+
+        /// <summary>
+        /// 用户头像保存
+        /// </summary>
+        Task SaveHeadImageAsync(long userId, string HeadImagePath);
     }
 }

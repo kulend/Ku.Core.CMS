@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Dnc.Extensions.Dapper.Attributes;
 using Ku.Core.CMS.Domain.Enum;
 using Ku.Core.Infrastructure.Extensions;
 using Ku.Core.Infrastructure.Helper;
@@ -95,6 +96,24 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
         public bool IsAdmin { set; get; } = false;
 
         /// <summary>
+        /// QQ
+        /// </summary>
+        [MaxLength(12)]
+        public string QQ { get; set; }
+
+        /// <summary>
+        /// 个性签名
+        /// </summary>
+        [MaxLength(256)]
+        public string Signature { get; set; }
+
+        /// <summary>
+        /// 个性网站
+        /// </summary>
+        [MaxLength(256)]
+        public string WebsiteUrl { get; set; }
+
+        /// <summary>
         /// 密码加密
         /// </summary>
         public void EncryptPassword()
@@ -134,6 +153,12 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
 
             return result.EqualOrdinalIgnoreCase(this.Password);
         }
+
+        /// <summary>
+        /// QQ登陆用户OpenID
+        /// </summary>
+        [StringLength(64)]
+        public string QQOpenId { set; get; }
     }
 
     /// <summary>
@@ -144,5 +169,8 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
         public bool? IsAdmin { set; get; }
 
         public string Mobile { set; get; }
+
+        [Condition(WhenNull = WhenNull.Ignore)]
+        public string QQOpenId { set; get; }
     }
 }

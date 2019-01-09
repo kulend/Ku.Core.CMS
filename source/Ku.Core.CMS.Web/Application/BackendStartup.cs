@@ -52,6 +52,8 @@ namespace Ku.Core.CMS.Web.Application
                 opt.ActionTagSize = "layui-btn-sm";
             });
 
+            services.AddCors();
+
             services.AddMvc(opts =>
                 {
                     opts.Filters.Add(typeof(VinoActionFilter));
@@ -97,6 +99,10 @@ namespace Ku.Core.CMS.Web.Application
 
             //身份认证
             app.UseBackendAuth(Configuration);
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+                );
 
             app.UseMvc(routes =>
             {

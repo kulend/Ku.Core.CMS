@@ -14,8 +14,10 @@
 }
 @{
     Layout = "_WindowFormLayout";
+    var IsVideoMode = Model.Dto.AlbumId.HasValue || Model.Dto.Column.Tags.SplitRemoveEmpty('|').Contains("video");
 }
 @using Ku.Core.CMS.Domain.Enum.Content
+@using Ku.Core.Infrastructure.Extensions
 @section Css
     {
     <link rel="stylesheet" href="~/lib/umeditor/themes/default/css/umeditor.css">
@@ -23,45 +25,100 @@
 <div class="layui-layout layui-layout-window">
     @using (Html.BeginForm<EditModel>(""))
     {
+        <input type="hidden" id="IsVideoMode" value="@(IsVideoMode?"1":"0")" />
         <div class="layui-body">
             @Html.InputFor(x => x.Dto.Id)
             @Html.InputFor(x => x.Dto.ColumnId)
-            <div class="layui-form-item">
-                <label class="layui-form-label">栏目</label>
-                <div class="layui-input-block">
-                    <label class="layui-form-label-show">@Model.Dto.Column.Name</label>
+            @if (@Model.Dto.Column != null)
+            {
+                <div class="layui-form-item">
+                    <label class="layui-form-label">栏目</label>
+                    <div class="layui-input-block">
+                        <label class="layui-form-label-show">@Model.Dto.Column.Name</label>
+                    </div>
                 </div>
-            </div>
-            @Html.InputFor(x => x.Dto.Title, x => x.Dto.SubTitle)
-            @Html.InputFor(x => x.Dto.Author, x => x.Dto.Provenance)
-            <div class="layui-form-item">
-                <label class="layui-form-label">封面</label>
-                <div id="coverList" class="layui-input-block">
+            }
+            @Html.InputFor(x => x.Dto.AlbumId)
+            @if (@Model.Dto.Album != null)
+            {
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属专辑</label>
+                    <div class="layui-input-block">
+                        <label class="layui-form-label-show">@Model.Dto.Album.Title</label>
+                    </div>
                 </div>
-            </div>
+            }
+            @if (IsVideoMode)
+            {
+                <input type="hidden" name="Dto.ContentType" value="Video" />
+                <div class="layui-form-item">
+                    <label class="layui-form-label">视频</label>
+                    <div class="layui-input-block video-upload">
+                        <div class="video-box">
+                            <a class="img" href="javascript:;">
+                                <img src="/images/empty_photo.jpg" align="absmiddle">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @Html.InputFor(x => x.Dto.Title)
+                <div class="layui-form-item">
+                    <label class="layui-form-label">封面</label>
+                    <div id="coverList" class="layui-input-block">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">视频地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Dto.Content" required lay-verify="required" class="layui-input" value="@Model.Dto.Content">
+                    </div>
+                </div>
+                @Html.InputFor(x => x.Dto.Duration)
+            }
+            else
+            {
+                @Html.InputFor(x => x.Dto.Title, x => x.Dto.SubTitle)
+                @Html.InputFor(x => x.Dto.Author, x => x.Dto.Provenance)
+                <div class="layui-form-item">
+                    <label class="layui-form-label">封面</label>
+                    <div id="coverList" class="layui-input-block">
+                    </div>
+                </div>
+            }
+
             @Html.InputFor(x => x.Dto.IsPublished, x => x.Dto.PublishedTime)
             @Html.InputFor(x => x.Dto.Keyword, x => x.Dto.OrderIndex)
-            @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
-            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Text ? "" : "layui-hide")">
-                <label class="layui-form-label">详情内容</label>
-                <div id="ID_content_1" class="layui-input-block long">
-                    <textarea class="layui-textarea">@(Model.Dto.ContentType == EmArticleContentType.Text ? Model.Dto.Content : "")</textarea>
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="Dto.Tags" value="topline" title="头条新闻" @(Model.Dto.Tags.SplitRemoveEmpty('|').Contains("topline") ? "checked" : "")>
                 </div>
             </div>
-            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.RichText ? "" : "layui-hide")">
-                <label class="layui-form-label">详情内容</label>
-                <div id="ID_content_2" class="layui-input-block">
-                    <!-- 加载编辑器的容器 -->
-                    <script id="container" name="content" type="text/plain" style="width:700px;">
-                        @Html.Raw(Model.Dto.ContentType == EmArticleContentType.RichText ? Model.Dto.Content : "")
-                    </script>
+            @if (IsVideoMode)
+            {
+                @Html.InputFor(x => x.Dto.Intro)
+            }
+            else
+            {
+                @Html.InputFor(x => x.Dto.ContentType, new { lay_filter = "ContentType" })
+                <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Text ? "" : "layui-hide")">
+                    <label class="layui-form-label">详情内容</label>
+                    <div id="ID_content_1" class="layui-input-block long">
+                        <textarea class="layui-textarea">@(Model.Dto.ContentType == EmArticleContentType.Text ? Model.Dto.Content : "")</textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Picture ? "" : "layui-hide")">
-                <label class="layui-form-label">详情图</label>
-                <div id="ID_content_3" class="layui-input-block">
+                <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.RichText ? "" : "layui-hide")">
+                    <label class="layui-form-label">详情内容</label>
+                    <div id="ID_content_2" class="layui-input-block">
+                        <textarea id="container" style="width:700px;height:300px;">@Html.Raw(Model.Dto.Content)</textarea>
+                    </div>
                 </div>
-            </div>
+                <div class="layui-form-item @(Model.Dto.ContentType == EmArticleContentType.Picture ? "" : "layui-hide")">
+                    <label class="layui-form-label">详情图</label>
+                    <div id="ID_content_3" class="layui-input-block">
+                    </div>
+                </div>
+            }
         </div>
         <div class="layui-footer">
             <input type="hidden" id="hdContent" value="@Model.Dto.Content" />
@@ -72,9 +129,9 @@
 @section Scripts
     {
     <script src="~/js/ku/ku.image.picker.js"></script>
-    <script src="~/lib/wangEditor/wangEditor.js"></script>
     <script src="~/lib/umeditor/umeditor.config.js"></script>
     <script src="~/lib/umeditor/umeditor.js"></script>
+    <script src="~/lib/umeditor/umeditor.ext.js"></script>
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
@@ -86,91 +143,73 @@
 
             $("#coverList").kuImagePicker("loadData", '@Html.Raw(Model.Dto.CoverData)');
 
-            $("#ID_content_3").kuImagePicker({
-                max_count: 10
-            });
-
-            if ($("input[name='Dto.ContentType']:checked").attr("key") === "Picture") {
-                $("#ID_content_3").kuImagePicker("loadData", $("#hdContent").val());
-            }
-
-            //var E = window.wangEditor;
-            //var editor = new E('#ID_content_2');
-            //editor.create();
-
-            UM.plugins["myimage"] = function () {
-                var me = this;
-                //执行命令
-                me.commands["myimage"] = {
-                    execCommand: function () {
-                        OpenWindow("选择图片", `MaterialCenter/Picture/Selector?max=99`, { area: ['837px', '468px'], maxmin: false }, function (files) {
-                            if (!files.length) return;
-                            var images = [];
-                            for (var i = 0; i < files.length; i++) {
-                                images.push({ src: files[i].url});
-                            }
-                            me.execCommand("insertimage", images);
-                        });
-                    }
-                };
-            };
-
-            UM.registerUI('myimage', function (name) {
-                var me = this;
-                var $btn = $.eduibutton({
-                    icon: name,
-                    click: function () {
-                        me.execCommand(name);
-                    },
-                    title: this.getLang('labelMap')[name] || ''
+            var isVideo = $("#IsVideoMode").val() === "1";
+            if (!isVideo) {
+                $("#ID_content_3").kuImagePicker({
+                    max_count: 10
                 });
 
-                this.addListener('selectionchange', function () {
-                    var state = this.queryCommandState(name);
-                    $btn.edui().disabled(state === -1).active(state === 1);
+                if ($("input[name='Dto.ContentType']:checked").attr("key") === "Picture") {
+                    $("#ID_content_3").kuImagePicker("loadData", $("#hdContent").val());
+                }
+
+                window.um = UM.getEditor('container', {
                 });
-                return $btn;
-            });
 
-
-
-            window.um = UM.getEditor('container', {
-            });
-
-            //监听事件
-            form.on('radio(ContentType)', function (item) {
-                var key = $(item.elem).attr("key");
-                if (key === "Text") {
-                    $("#ID_content_1").closest(".layui-form-item").removeClass("layui-hide");
-                    $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
-                    $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
-                } else if (key === "RichText") {
-                    $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
-                    $("#ID_content_2").closest(".layui-form-item").removeClass("layui-hide");
-                    $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
-                }
-                else if (key === "Picture") {
-                    $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
-                    $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
-                    $("#ID_content_3").closest(".layui-form-item").removeClass("layui-hide");
-                }
-            });
-
-            _bindForm($("form"), {
-                onBefore: function (arr, $from, options) {
-                    var key = $("input[name='Dto.ContentType']:checked").attr("key");
+                //监听事件
+                form.on('radio(ContentType)', function (item) {
+                    var key = $(item.elem).attr("key");
                     if (key === "Text") {
-                        arr.push({ name: "Dto.Content", value: $("#ID_content_1 textarea").val() });
+                        $("#ID_content_1").closest(".layui-form-item").removeClass("layui-hide");
+                        $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
+                        $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
                     } else if (key === "RichText") {
-                        arr.push({ name: "Dto.Content", value: editor.txt.html() });
+                        $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
+                        $("#ID_content_2").closest(".layui-form-item").removeClass("layui-hide");
+                        $("#ID_content_3").closest(".layui-form-item").addClass("layui-hide");
                     }
                     else if (key === "Picture") {
-                        alert($("#ID_content_3").kuImagePicker("getData"));
-                        arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").kuImagePicker("getData")) });
-                        console.log(arr);
+                        $("#ID_content_1").closest(".layui-form-item").addClass("layui-hide");
+                        $("#ID_content_2").closest(".layui-form-item").addClass("layui-hide");
+                        $("#ID_content_3").closest(".layui-form-item").removeClass("layui-hide");
                     }
-                    return true;
-                }
+                });
+
+                _bindForm($("form"), {
+                    onBefore: function (arr, $from, options) {
+                        var key = $("input[name='Dto.ContentType']:checked").attr("key");
+                        if (key === "Text") {
+                            arr.push({ name: "Dto.Content", value: $("#ID_content_1 textarea").val() });
+                        } else if (key === "RichText") {
+                            arr.push({ name: "Dto.Content", value: window.um.getContent() });
+                        }
+                        else if (key === "Picture") {
+                            arr.push({ name: "Dto.Content", value: JSON.stringify($("#ID_content_3").kuImagePicker("getData")) });
+                            console.log(arr);
+                        }
+                        return true;
+                    }
+                });
+            }
+
+            $(".video-box a").on("click", function () {
+                OpenWindow("选择视频", "/MaterialCenter/Video/Selector?max=1", null, function (data) {
+                    if (data && data.length) {
+                        var video = data[0];
+                        $(".video-box a img").attr("src", video.thumb_url);
+                        $("input[name='Dto.Title']").val(video.title);
+                        $("input[name='Dto.Content']").val(video.path);
+                        $("input[name='Dto.Duration']").val(video.duration);
+                        var files = [];
+                        files.push({
+                            path: video.thumb,
+                            thumb: video.thumb,
+                            url: video.thumb_url,
+                            thumb_url: video.thumb_url
+                        });
+                        $("#coverList").kuImagePicker("loadData", JSON.stringify(files));
+                    }
+                });
             });
         });
     </script>

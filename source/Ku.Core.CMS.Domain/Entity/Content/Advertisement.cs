@@ -87,5 +87,7 @@ namespace Ku.Core.CMS.Domain.Entity.Content
     {
         [Condition(WhenNull = WhenNull.Ignore, Operation = ConditionOperation.Custom, CustomSql = "EXISTS (SELECT * FROM content_advertisement_board_ref ref WHERE ref.AdvertisementId=m.Id AND ref.AdvertisementBoardId=@value)")]
         public long? AdvertisementBoardId { set; get; }
+
+        public bool? IsPublished { set; get; }
     }
 }

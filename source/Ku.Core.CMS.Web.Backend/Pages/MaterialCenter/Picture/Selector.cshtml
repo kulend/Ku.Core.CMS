@@ -170,7 +170,7 @@
         </div>
         <div style="width: 82%; float:left;">
             <div class="search-bar">
-                <action auth-code="materialcenter.picture.upload" text="本地上传" css="layui-btn-sm layui-btn-normal" icon="&#xe67c;" action="window:MaterialCenter/Picture/Upload" after="doReload()" />
+                <action auth-code="materialcenter.picture.upload" text="本地上传" css="layui-btn-sm layui-btn-normal" icon="&#xe67c;" action="window:MaterialCenter/Picture/Upload" after="js:doReload()" />
                 <div id="pager" style="float:right;"></div>
             </div>
             <div style="padding-left:15px; margin-top: 20px;">
@@ -189,7 +189,7 @@
 <script id="tp:img-item" type="text/html">
     {{each items value i}}
     <li class="img_item">
-        <label class="frm_checkbox_label img_item_bd {{value.Id | inArraySelected}}" data-item='{"id":"{{value.Id}}", "thumb":"{{value.ThumbPath}}", "path":"{{value.FilePath}}", "url":"{{value.Url}}"}'>
+        <label class="frm_checkbox_label img_item_bd {{value.Id | inArraySelected}}" data-item='{"id":"{{value.Id}}", "thumb":"{{value.ThumbPath}}", "path":"{{value.FilePath}}", "url":"{{value.Url}}", "thumb_url":"{{value.ThumbUrl}}"}'>
             <div class="pic_box">
                 <img class="pic" src="{{value.ThumbUrl||value.Url}}" />
             </div>

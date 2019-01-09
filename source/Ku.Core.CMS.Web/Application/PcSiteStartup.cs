@@ -34,6 +34,12 @@ namespace Ku.Core.CMS.Web.Application
             string connection = Configuration.GetConnectionString("Mysql");
             services.AddDapper(options => options.UseMySql(connection));
 
+            //HttpClient
+            services.AddHttpClient();
+            services.AddHttpClient("qq_login", c => {
+                    c.BaseAddress = new Uri("https://graph.qq.com/");
+            });
+
             //Api限流
             services.AddApiThrottle(options => {
                 options.UseRedisCacheAndStorage(redisOption => {
@@ -53,16 +59,18 @@ namespace Ku.Core.CMS.Web.Application
                 };
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(o =>
-            {
-                o.LoginPath = new PathString(Configuration["JwtAuth:LoginPath"]);
-                o.AccessDeniedPath = new PathString(Configuration["JwtAuth:AccessDeniedPath"]);
-                o.Cookie.Name = Configuration["JwtAuth:CookieName"];
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o =>
+                {
+                    o.LoginPath = new PathString(Configuration["Authentication:LoginPath"]);
+                    o.AccessDeniedPath = new PathString(Configuration["Authentication:AccessDeniedPath"]);
+                    o.Cookie.Name = Configuration["Authentication:CookieName"];
+                    o.Cookie.HttpOnly = true;
+                });
+
+            services.AddSession();
+
+            services.AddCors();
 
             services.AddMvc(opts =>
             {
@@ -93,12 +101,33 @@ namespace Ku.Core.CMS.Web.Application
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
 
+            app.UseStatusCodePages(async context =>
+            {
+                if (!context.HttpContext.Request.IsJsonRequest())
+                {
+                    context.HttpContext.Response.Redirect("/Error/" + context.HttpContext.Response.StatusCode);
+                }
+            });
+
+            //app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
             app.UseStaticFiles();
 
+            app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromMinutes(30) });
+
             app.UseAuthentication();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+                );
 
             app.UseMvc();
         }

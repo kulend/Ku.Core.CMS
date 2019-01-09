@@ -20,7 +20,7 @@ namespace Ku.Core.CMS.Domain.Entity.DataCenter
     [Table("datacenter_pageview_record")]
     public class PageViewRecord : BaseEntity
     {
-        [Required, StringLength(32)]
+        [Required, StringLength(64)]
         public string SessionId { set; get; }
 
         [StringLength(32)]
@@ -38,7 +38,7 @@ namespace Ku.Core.CMS.Domain.Entity.DataCenter
         [StringLength(64)]
         public string ClientIp { set; get; }
 
-        [StringLength(64)]
+        [StringLength(128)]
         public string Location { set; get; }
     }
 

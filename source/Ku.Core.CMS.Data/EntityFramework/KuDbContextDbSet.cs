@@ -78,6 +78,11 @@ namespace Ku.Core.CMS.Data.EntityFramework
         public DbSet<Domain.Entity.MaterialCenter.Picture> MaterialCenterPictures { get; set; }
 		
         /// <summary>
+        /// MaterialCenter 视频素材
+        /// </summary>
+        public DbSet<Domain.Entity.MaterialCenter.Video> MaterialCenterVideos { get; set; }
+		
+        /// <summary>
         /// MaterialCenter 用户素材分组
         /// </summary>
         public DbSet<Domain.Entity.MaterialCenter.UserMaterialGroup> MaterialCenterUserMaterialGroups { get; set; }
@@ -92,6 +97,11 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// </summary>
         public DbSet<Domain.Entity.Content.Article> ContentArticles { get; set; }
 
+        /// <summary>
+        /// Content 文章用户事件
+        /// </summary>
+        public DbSet<Domain.Entity.Content.ArticleUserEvent> ContentArticleUserEvents { get; set; }
+		
         /// <summary>
         /// Content 栏目
         /// </summary>
@@ -116,6 +126,16 @@ namespace Ku.Core.CMS.Data.EntityFramework
         /// Content 广告牌广告关联
         /// </summary>
         public DbSet<Domain.Entity.Content.AdvertisementBoardRef> ContentAdvertisementBoardRefs { get; set; }
+
+        /// <summary>
+        /// Content 专辑
+        /// </summary>
+        public DbSet<Domain.Entity.Content.Album> ContentAlbums { get; set; }
+		
+        /// <summary>
+        /// Content 评论
+        /// </summary>
+        public DbSet<Domain.Entity.Content.Comment> ContentComments { get; set; }
 		
         /// <summary>
         /// Mall 配送模板

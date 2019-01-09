@@ -22,7 +22,9 @@
             var item = {
                 index: index + 1,
                 path: $(this).attr("data-path"),
-                thumb: $(this).attr("data-thumb")
+                thumb: $(this).attr("data-thumb"),
+                url: $(this).attr("data-url"),
+                thumb_url: $(this).attr("data-thumb_url")
             };
             if (opts.onDataParse && typeof (opts.onDataParse) === "function") {
                 opts.onDataParse.call(this, item);
@@ -66,7 +68,7 @@
         $item.mouseout(function () {
             $(this).find(".pic-remove").hide();
         });
-    }
+    };
 
     var addItem = function ($element, file) {
         var opts = $element.data("options") || {};
@@ -88,7 +90,9 @@
         $addObj.attr("data-id", new Date().getTime());
         $addObj.attr("data-path", file.path);
         $addObj.attr("data-thumb", file.thumb);
-        $addObj.find("img").attr("src", file.thumb || file.path);
+        $addObj.attr("data-url", file.url);
+        $addObj.attr("data-thumb_url", file.thumb_url);
+        $addObj.find("img").attr("src", file.thumb_url || file.url);
         $empty.before($addObj);
         bindImageEvent($addObj);
         currentcount++;
@@ -96,7 +100,7 @@
             $empty.hide();
         }
         upadteFieldValue($element);
-    }
+    };
 
     var loadItem = function ($element, data) {
         var opts = $element.data("options") || {};
@@ -117,7 +121,9 @@
         $addObj.attr("data-id", new Date().getTime());
         $addObj.attr("data-path", data.path);
         $addObj.attr("data-thumb", data.thumb);
-        $addObj.find("img").attr("src", data.thumb || data.path);
+        $addObj.attr("data-url", data.url);
+        $addObj.attr("data-thumb_url", data.thumb_url);
+        $addObj.find("img").attr("src", data.thumb_url || data.url);
 
         if (opts.onLoadParse && typeof (opts.onLoadParse) === "function") {
             opts.onLoadParse.call($addObj[0], data);
@@ -129,7 +135,7 @@
             $empty.hide();
         }
         upadteFieldValue($element);
-    }
+    };
 
     var bindButton = function ($element) {
         $element.find(".link-btn").click(function () {
@@ -145,19 +151,19 @@
                 return;
             }
             var max = 1;
-            if (!notAdd)
-            {
+            if (!notAdd) {
                 max = maxcount - currentcount;
             }
             OpenWindow("选择图片", `MaterialCenter/Picture/Selector?max=${max}`, { area: ['837px', '468px'], maxmin: false }, function (files) {
-                console.log(files);
                 if (!files.length) return;
                 if (notAdd) {
                     //如果是替换
                     var file = files[0];
                     $li.attr("data-path", file.path);
                     $li.attr("data-thumb", file.thumb);
-                    $imgItem.attr("src", file.thumb || file.path);
+                    $li.attr("data-url", file.url);
+                    $li.attr("data-thumb_url", file.thumb_url);
+                    $imgItem.attr("src", file.thumb_url || file.url);
                 } else {
                     //添加
                     for (var i = 0; i < files.length; i++) {
@@ -167,7 +173,7 @@
                 upadteFieldValue($element);
             });
         });
-    }
+    };
 
     function init(element) {
         var $element = $(element);

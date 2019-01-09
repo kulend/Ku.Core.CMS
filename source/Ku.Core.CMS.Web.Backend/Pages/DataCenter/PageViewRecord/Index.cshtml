@@ -14,30 +14,32 @@
 }
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-card-header">页面浏览记录</div>
         <div class="layui-card-body">
-            <div class="toolbar">
-                <action title="刷新" action="grid:reload['#list']" />
-                <action auth-code="datacenter.pageviewrecord.edit" text="新增" icon="&#xe608;" action="window:/DataCenter/PageViewRecord/Edit" after="grid:reload['#list']" />
-                <action auth-code="datacenter.pageviewrecord.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
-            </div>
             <table id="list"></table>
         </div>
     </div>
 </div>
+<script type="text/html" id="toolbar-list">
+    <div class="layui-btn-container">
+        <action title="刷新" action="grid:reload['#list']" />
+    </div>
+</script>
 @section Scripts
 {
     <script>
         $(function () {
             $("#list").kuGrid({
                 url: 'Index/Data',
+                toolbar: '#toolbar-list',
                 cols: [[
-                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center'},
+                    { field: 'PageName', title: '页面名称', width: 100 },
+                    { field: 'Url', title: '页面地址', width: 200 },
+                    { field: 'ClientIp', title: '客户端IP', width: 150, align: 'center' },
+                    { field: 'CreateTime', title: '访问时间', width: 170, align: 'center'},
                     {
                         title: '操作', fixed: 'right', width: 160, align: 'center',
                         toolbar: grid_templet_operate([
-                            { code: "datacenter.pageviewrecord.edit", text: "编辑", action: `window:/DataCenter/PageViewRecord/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
-                            { code: "datacenter.pageviewrecord.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                            { code: "datacenter.pageviewrecord.detail", text: "详情", action: `window:/DataCenter/PageViewRecord/Detail?id={{d.Id}}`, css: "layui-btn-primary" }
                         ])
                     }
                 ]]

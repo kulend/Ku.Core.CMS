@@ -1,0 +1,91 @@
+﻿@page "{handler?}"
+@model SelectorModel
+@{
+    //----------------------------------------------------------------
+    // Copyright (C) 2018 kulend 版权所有
+    //
+    // 文件名：Selector.cshtml
+    // 功能描述：视频 选择页面
+    //
+    // 创建者：kulend@qq.com
+    // 创建时间：2018-05-16 10:45
+    //
+    //----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowListLayout";
+}
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <div class="toolbar">
+            <action title="刷新" action="grid:reload['#list']" />
+        </div>
+        <table id="list" lay-filter="list"></table>
+    </div>
+    <div class="layui-footer">
+        <span id="sel-tip" style="position:absolute; left:20px;">已选1个，可选10个</span>
+        <span>
+            <button class="layui-btn layui-btn-sm" action="javascript:doSelectOk()">确 定</button>
+            <action text="取 消" css="layui-btn-warm" action="javascript:closeWindow()" />
+        </span>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['table'], function () {
+            var table = layui.table;
+            $("#list").kuGrid({
+                url: 'Selector/Data',
+                cols: [[
+                    {
+                        field: 'FilePath', title: '预览图', width: 120, align: 'center'
+                        , templet: '<div><img src="{{d.ThumbUrl}}" /></div>'
+                    },
+                    { field: 'Title', title: '文件名', width: 200 },
+                    { field: 'FileType', title: '文件类型', width: 90 },
+                    { field: 'Md5Code', title: 'MD5码', width: 120, hide: true },
+                    {
+                        field: 'FileSize', title: '文件大小', width: 120, align: 'center'
+                        , templet: '<div>{{# var s = (d.FileSize / 1014).toFixed(1) }} {{s}} kb</div>'
+                    },
+                    { field: 'Duration', title: '时长', width: 90 },
+                    { field: 'FilePath', title: '文件路径', width: 160, hide: true },
+                    { field: 'CreateTime', title: '上传时间', width: 160 }
+                ]]
+            });
+
+            table.on('checkbox(list)', function (obj) {
+                showSelTip();
+            });
+
+            showSelTip();
+        });
+
+        function doSelectOk() {
+            var checkStatus = layui.table.checkStatus('list');
+            if (checkStatus.data.length === 0) {
+                ku.page.msg.tip(`请至少选择一条数据！`);
+                return;
+            }
+            var sels = [];
+            for (var i = 0; i < checkStatus.data.length; i++) {
+                sels.push({
+                    id: checkStatus.data[i].Id,
+                    title: checkStatus.data[i].Title,
+                    path: checkStatus.data[i].FilePath,
+                    duration: checkStatus.data[i].Duration,
+                    thumb: checkStatus.data[i].ThumbPath,
+                    thumb_url: checkStatus.data[i].ThumbUrl,
+                });
+            }
+            closeWindow(sels);
+        }
+
+        function showSelTip() {
+            var checkStatus = layui.table.checkStatus('list');
+            var max = ku.page.querystring.get("max") || 1;
+            $("#sel-tip").text(`已选${checkStatus.data.length}个，可选${max}个`);
+        }
+    </script>
+}

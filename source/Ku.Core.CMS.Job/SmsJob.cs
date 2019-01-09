@@ -5,6 +5,7 @@ using Ku.Core.CMS.Domain.Enum.Communication;
 using Ku.Core.Communication.SMS;
 using Ku.Core.Infrastructure.Extensions;
 using Newtonsoft.Json;
+using NLog;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,11 @@ namespace Ku.Core.CMS.Job
     [DisallowConcurrentExecution]
     public class SmsJob : BaseJob
     {
+        public static Logger logger = LogManager.GetCurrentClassLogger();
+
         public override async Task Run(IJobExecutionContext context)
         {
-            await Console.Out.WriteLineAsync("开始处理短信事务...");
+            logger.Info("开始处理短信事务...");
 
             var count = 0;
             //取得待发送列表
@@ -95,9 +98,9 @@ namespace Ku.Core.CMS.Job
 
             }
 
-            await Console.Out.WriteLineAsync($"共发送{count}条短信");
+            logger.Info($"共发送{count}条短信");
 
-            await Console.Out.WriteLineAsync("结束处理短信事务...");
+            logger.Info("结束处理短信事务...");
         }
 
     }

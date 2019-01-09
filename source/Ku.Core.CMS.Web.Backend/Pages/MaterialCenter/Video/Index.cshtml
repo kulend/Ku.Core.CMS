@@ -1,0 +1,115 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Video.IndexModel
+@{
+	//----------------------------------------------------------------
+	// Copyright (C) 2018 kulend 版权所有
+	//
+	// 文件名：Index.cshtml
+	// 功能描述：视频素材 列表页面
+	//
+	// 创建者：kulend@qq.com
+	// 创建时间：2019-01-02 23:14
+	//
+	//----------------------------------------------------------------
+}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief" lay-filter="tabMian">
+            <ul class="layui-tab-title">
+                <li lay-id="list" class="layui-this">视频素材</li>
+                <li lay-id="recycle"><i class="layui-icon">&#xe640;</i> 回收站</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table id="list"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table id="recycle"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbar-list">
+    <div class="layui-btn-container">
+        <action title="刷新" action="grid:reload['#list']" />
+        <action auth-code="materialcenter.video.upload" text="本地上传" icon="&#xe67c;" action="window:/MaterialCenter/Video/Upload" after="grid:reload['#list']" />
+        <action auth-code="materialcenter.video.delete" text="批量删除" icon="&#xe640;" action="batch:['#list', 'post:Index/Delete']" after="grid:reload" />
+    </div>
+</script>
+<script type="text/html" id="toolbar-recycle">
+    <div class="layui-btn-container">
+        <action title="刷新" action="grid:reload['#recycle']" />
+        <action auth-code="materialcenter.video.restore" text="批量恢复" icon="&#xe65c;" action="batch:['#recycle', 'post:Index/Restore']" after="grid:reload" />
+    </div>
+</script>
+@section Scripts
+{
+<script>
+    layui.use(['element'], function () {
+        var element = layui.element;
+
+        var cols = [
+            {
+                field: 'FilePath', title: '预览图', width: 120, align: 'center'
+                , templet: '<div><img src="{{d.ThumbUrl}}" /></div>'
+            },
+            { field: 'Title', title: '文件名', width: 200 },
+            { field: 'FileType', title: '文件类型', width: 90 },
+            { field: 'Md5Code', title: 'MD5码', width: 120, hide: true },
+            {
+                field: 'FileSize', title: '文件大小', width: 120, align: 'center'
+                , templet: '<div>{{# var s = (d.FileSize / 1014).toFixed(1) }} {{s}} kb</div>'
+            },
+            { field: 'Duration', title: '时长', width: 90 },
+            { field: 'FilePath', title: '文件路径', width: 160 },
+            { field: 'CreateTime', title: '上传时间', width: 160 }
+        ];
+
+        $("#list").kuGrid({
+            url: 'Index/Data',
+            size: 'lg',
+			toolbar: '#toolbar-list',
+            cols: [cols.concat([
+                {
+                    title: '操作', fixed: 'right', width: 160, align: 'center',
+                    toolbar: grid_templet_operate([
+                        { code: "materialcenter.video.edit", text: "编辑", action: `window:/MaterialCenter/Video/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },
+                        { code: "materialcenter.video.delete", text: "删除", action: `post:Index/Delete?id={{d.Id}}` }
+                    ])
+                }
+            ])],
+            onWhere: function () {
+                return {
+                    IsDeleted: false
+                };
+            }
+        });
+
+        element.on('tab(tabMian)', function () {
+            if (this.getAttribute('lay-id') === "recycle" && !$("#recycle").hasClass("ku-grid"))
+            { 
+                //初始化回收站
+                $("#recycle").kuGrid({
+                    url: 'Index/Data',
+                    size: 'lg',
+					toolbar: '#toolbar-recycle',
+                    cols: [cols.concat([
+                        {
+                            title: '操作', fixed: 'right', width: 160, align: 'center',
+                            toolbar: grid_templet_operate([
+                                { code: "materialcenter.video.restore", text: "恢复", action: `post:Index/Restore?id={{d.Id}}` }
+                            ])
+                        }
+                    ])],
+                    onWhere: function () {
+                        return {
+                            IsDeleted: true
+                        };
+                    }
+                });
+            }
+        });
+    });
+</script>
+}

@@ -69,3 +69,13 @@
 .multi-box .multi-box-action-tip { position: absolute; text-align:center; color: #666; font-weight: 300; line-height: 38px; padding: 0 15px; }
 .multi-box .layui-btn-group a { color: #666; font-weight: 300; line-height: 38px; font-size: 24px; margin-right:15px; }
 .multi-box .layui-btn-group a .layui-icon { font-size: 24px; color: #666; }
+
+.video-upload{overflow:hidden;}
+.video-upload .video-box{height:100px;position:relative;cursor:pointer; float:left;width:170px;}
+.video-upload img{width:160px;height:90px;padding:4px;border:1px solid #dedede;}
+.video-upload .video-from{float:left; width:450px;}
+.video-upload .video-from .layui-form-label{width:70px;}
+.video-upload .video-from .layui-input-block{margin-left:100px;}
+.video-upload .video-box .layui-form-checkbox{position:absolute;right:0;top:0; margin-top:3px;}
+.video-upload .video-box .layui-form-checkbox span{padding-right:5px;}
+.video-upload .actions{float:left; padding-left:10px;}

@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Dnc.Extensions.Dapper" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\开源\Dnc.Extensions\Dnc.Extensions.Dapper\Dnc.Extensions.Dapper.csproj" />
     <ProjectReference Include="..\Ku.Core.EventBus\Ku.Core.EventBus.csproj" />
     <ProjectReference Include="..\Ku.Core.Infrastructure\Ku.Core.Infrastructure.csproj" />
   </ItemGroup>

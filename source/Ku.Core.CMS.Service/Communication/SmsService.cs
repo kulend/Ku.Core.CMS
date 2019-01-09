@@ -105,6 +105,7 @@ namespace Ku.Core.CMS.Service.Communication
                 CreateTime = DateTime.Now,
                 IsDeleted = false,
                 Data = JsonConvert.SerializeObject(data),
+                Mobile = mobile
             };
             using (var dapper = DapperFactory.Create())
             {

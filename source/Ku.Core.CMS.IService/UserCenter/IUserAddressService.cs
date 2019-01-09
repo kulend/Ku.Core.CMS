@@ -21,5 +21,10 @@ namespace Ku.Core.CMS.IService.UserCenter
         /// 保存数据
         /// </summary>
         Task SaveAsync(UserAddressDto dto);
+
+        /// <summary>
+        /// 设置默认地址
+        /// </summary>
+        Task SetDefaultAsync(UserAddressDto dto);
     }
 }

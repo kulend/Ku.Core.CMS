@@ -15,5 +15,8 @@ namespace Ku.Core.CMS.Domain.Enum.Content
 
         [Display(Name = "多图")]
         Picture = 2,
+
+        [Display(Name = "视频")]
+        Video = 3,
     }
 }

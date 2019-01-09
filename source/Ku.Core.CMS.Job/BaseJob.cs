@@ -1,11 +1,9 @@
-﻿using Ku.Core.CMS.IService.System;
+﻿using Ku.Core.CMS.Domain.Enum.System;
+using Ku.Core.CMS.IService.System;
+using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Ku.Core.CMS.Domain.Enum.System;
 
 namespace Ku.Core.CMS.Job
 {

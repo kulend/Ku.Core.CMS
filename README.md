@@ -3,8 +3,8 @@
 
 ## 使用组件及框架
 <ol>
-<li>.net core 2.0</li>
-<li>EF core 2.0</li>
+<li>.net core 2.1</li>
+<li>EF core 2.1</li>
 <li>Dapper</li>
 <li>Layui</li>
 <li>CAP</li>

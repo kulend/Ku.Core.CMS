@@ -48,11 +48,11 @@
                 }
                 var v = parseInt(value);
                 var min = $(item).data("val-range-min");
-                if (min != undefined && v < min) {
+                if (min !== undefined && v < min) {
                     return `输入的值不能小于${min}`;
                 }
                 var max = $(item).data("val-range-max");
-                if (max != undefined && v > max) {
+                if (max !== undefined && v > max) {
                     return `输入的值不能大于${max}`;
                 }
             }
@@ -65,11 +65,11 @@
                 }
                 var v = parseFloat(value);
                 var min = $(item).data("val-range-min");
-                if (min != undefined && v < min) {
+                if (min !== undefined && v < min) {
                     return `输入的值不能小于${min}`;
                 }
                 var max = $(item).data("val-range-max");
-                if (max != undefined && v > max) {
+                if (max !== undefined && v > max) {
                     return `输入的值不能大于${max}`;
                 }
             }
@@ -78,11 +78,11 @@
         stringlength: function (value, item) {
             if (value) {
                 var min = $(item).data("val-length-min");
-                if (min != undefined && value.length < min) {
+                if (min !== undefined && value.length < min) {
                     return `输入的值长度不能小于${min}，当前长度${value.length}`;
                 }
                 var max = $(item).data("val-length-max");
-                if (max != undefined && value.length > max) {
+                if (max !== undefined && value.length > max) {
                     return `输入的值长度不能大于${max}，当前长度${value.length}`;
                 }
             }
@@ -92,8 +92,8 @@
             if (value) {
                 var pattern = $(item).data("val-regular-pattern");
                 var msg = $(item).data("val-regular-msg");
-                if (pattern != undefined && pattern.length > 0) {
-                    if (pattern.indexOf("custom") == 0) {
+                if (pattern !== undefined && pattern.length > 0) {
+                    if (pattern.indexOf("custom") === 0) {
                         let js = pattern.substring(7);
                         if (!eval(js)) {
                             return msg || "输入的值不符合规则";

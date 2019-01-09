@@ -54,5 +54,12 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         public string Tag { set; get; }
 
         public virtual IList<ColumnDto> Subs { set; get; }
+
+        /// <summary>
+        /// 标签
+        /// </summary>
+        [StringLength(128)]
+        [Display(Name = "标签")]
+        public string Tags { set; get; }
     }
 }

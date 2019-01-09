@@ -42,7 +42,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Sys.Menu
         [Auth("view")]
         public async Task<IActionResult> OnPostDataAsync(int page, int rows, MenuSearch where)
         {
-            var data = await _service.GetListAsync(page, rows, where, new { OrderIndex = "asc"});
+            var data = await _service.GetListAsync(page, rows, where, "OrderIndex asc");
             return PagerData(data.items, page, rows, data.count);
         }
 

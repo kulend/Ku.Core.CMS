@@ -10,6 +10,7 @@ using Ku.Core.CMS.Web.Base;
 using Ku.Core.CMS.Web.Security;
 using Ku.Core.Infrastructure.Exceptions;
 using Ku.Core.CMS.Domain.Enum.MaterialCenter;
+using Ku.Core.CMS.Web.Extensions;
 
 namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.UserMaterialGroup
 {
@@ -62,7 +63,10 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.UserMaterialGroup
             {
                 throw new KuArgNullException();
             }
-
+            if (Dto.Id == 0)
+            {
+                Dto.UserId = User.GetUserIdOrZero();
+            }
             await _service.SaveAsync(Dto);
             return Json(true);
         }

@@ -1,0 +1,53 @@
+﻿@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.DashboardModel
+@using Ku.Core.CMS.Domain
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：Dashboard.cshtml
+// 功能描述：仪表盘 页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-05-25 14:53
+//
+//----------------------------------------------------------------
+}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">页面缓存清除</div>
+                <div class="layui-card-body">
+                    <ul class="layui-row layui-col-space10">
+                        <li class="layui-col-xs2">
+                            <action text="栏目数据" css="layui-btn-default" action="post:Dashboard/ClearCache?key=@CacheKeyDefinition.ContentColumnList" />
+                        </li>
+                        <li class="layui-col-xs2">
+                            <action text="广告数据" css="layui-btn-default" action="post:Dashboard/ClearCache?key=@CacheKeyDefinition.PcSiteAdvertisement" />
+                        </li>
+                        <li class="layui-col-xs2">
+                            <action text="首页缓存" css="layui-btn-default" action="post:Dashboard/ClearCacheByPrefix?prefix=pcsite:index:" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">栏目</div>
+                <div class="layui-card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+    layui.use(['form','element'], function () {
+        var element = layui.element;
+        var form = layui.form;
+    });
+    </script>
+}

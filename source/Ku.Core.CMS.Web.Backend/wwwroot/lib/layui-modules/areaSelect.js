@@ -8,9 +8,11 @@ layui.define(['form', 'layer'], function (exports) {
 
     var areaSelect = function (parameter) {
         var defaults = {
-            dataApi: 'http://passer-by.com/data_location/list.json',     //数据接口地址
+            //dataApi: 'http://passer-by.com/data_location/list.json',     //数据接口地址
+            dataApi: 'https://admin.cdmgqw.com/lib/data_location/list.json',     //数据接口地址
             streetDataApi: function (region) {
-                return 'http://passer-by.com/data_location/town/' + region + '.json';
+                //return 'http://passer-by.com/data_location/town/' + region + '.json';
+                return 'https://admin.cdmgqw.com/lib/data_location/town/' + region + '.json';
             },
             crossDomain: true,        //是否开启跨域
             dataType: 'json',          //数据库类型:'json'或'jsonp'

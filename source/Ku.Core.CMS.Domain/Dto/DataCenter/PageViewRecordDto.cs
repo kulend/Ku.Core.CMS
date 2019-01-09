@@ -20,7 +20,7 @@ namespace Ku.Core.CMS.Domain.Dto.DataCenter
     public class PageViewRecordDto : BaseDto
     {
         [Display(Name = "回话ID")]
-        [Required, StringLength(32)]
+        [Required, StringLength(64)]
         public string SessionId { set; get; }
 
         [Display(Name = "页面名称")]
@@ -41,7 +41,7 @@ namespace Ku.Core.CMS.Domain.Dto.DataCenter
         [StringLength(64)]
         public string ClientIp { set; get; }
 
-        [StringLength(64)]
+        [StringLength(128)]
         public string Location { set; get; }
     }
 }

@@ -49,8 +49,10 @@ namespace Ku.Core.CMS.Web.Backend.Pages.Account
         public void OnGet()
         {
             Input = new LoginData();
+#if DEBUG
             Input.Account = "admin";
             Input.Password = "123456";
+#endif
         }
 
         [IgnorePageLock]

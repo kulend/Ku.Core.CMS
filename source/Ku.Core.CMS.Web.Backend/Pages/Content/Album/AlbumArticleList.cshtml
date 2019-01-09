@@ -1,0 +1,62 @@
+@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.Content.Album.AlbumArticleListModel
+@{
+//----------------------------------------------------------------
+// Copyright (C) 2018 kulend 版权所有
+//
+// 文件名：AlbumArticleList.cshtml
+// 功能描述：专辑文章列表页面
+//
+// 创建者：kulend@qq.com
+// 创建时间：2018-06-23 10:50
+//
+//----------------------------------------------------------------
+}
+@{
+    Layout = "_WindowListLayout";
+}
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <div class="toolbar">
+            <action title="刷新" action="grid:reload['#list']" />
+            <action id="btnAdd" auth-code="content.article.edit" text="新增" icon="&#xe608;" action="window:/Content/Article/Edit?albumId=@ViewData["AlbumId"]" after="grid:reload['#list']" />
+        </div>
+        <table id="list"></table>
+    </div>
+    <div class="layui-footer">
+        <action text="关 闭" css="layui-btn-warm" action="javascript:closeWindow()" />
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        layui.use(['table'], function () {
+            var table = layui.table;
+            $("#list").kuGrid({
+                url: 'AlbumArticleList/Data',
+                cols: [[
+                    { field: 'Title', title: '标题', width: 220 },
+                    { field: 'IsPublished', title: '是否发布', width: 100, align: 'center', templet: grid_templet_bool("IsPublished") },
+                    { field: 'OrderIndex', title: '排序', width: 80, align: 'center' },
+                    { field: 'Visits', title: '浏览量', width: 80, align: 'center' },
+                    { field: 'PublishedTime', title: '发布时间', width: 170, align: 'center', hide: true },
+                    { field: 'CreateTime', title: '创建时间', width: 170, align: 'center', hide: true },
+                    {
+                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        toolbar: grid_templet_operate([
+                            { code: "content.article.edit", text: "编辑", action: `window:/Content/Article/Edit?id={{d.Id}}`, after: "grid:reload['#list']" },
+                            { code: "content.article.detail", text: "详情", action: `window:/Content/Article/Detail?id={{d.Id}}`, css: "layui-btn-primary" },
+                            { code: "content.article.delete", text: "删除", action: `post:/Content/Article/Index/Delete?id={{d.Id}}` }
+                        ])
+                    }
+                ]],
+                onWhere: function () {
+                    return {
+                        IsDeleted: false,
+                        AlbumId: ku.page.querystring.get("albumId")
+                    };
+                }
+            });
+        });
+    </script>
+}

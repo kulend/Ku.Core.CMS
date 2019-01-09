@@ -98,5 +98,34 @@ namespace Ku.Core.CMS.Domain.Dto.UserCenter
         /// </summary>
         [Display(Name = "管理员", Prompt = "是|否")]
         public bool IsAdmin { set; get; } = false;
+
+        /// <summary>
+        /// QQ登陆用户OpenID
+        /// </summary>
+        [StringLength(64)]
+        public string QQOpenId { set; get; }
+
+        /// <summary>
+        /// QQ
+        /// </summary>
+        [MaxLength(12)]
+        [Display(Name = "QQ")]
+        public string QQ { get; set; }
+
+        /// <summary>
+        /// 个性签名
+        /// </summary>
+        [MaxLength(256)]
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "个性签名")]
+        public string Signature { get; set; }
+
+        /// <summary>
+        /// 个性网站
+        /// </summary>
+        [MaxLength(256)]
+        [Display(Name = "个性网站")]
+        [DataType(DataType.Url)]
+        public string WebsiteUrl { get; set; }
     }
 }

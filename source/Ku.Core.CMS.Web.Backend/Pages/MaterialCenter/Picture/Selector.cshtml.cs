@@ -38,13 +38,16 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Picture
         {
             var config = await _configService.GetAsync();
 
-            var data = await _service.GetListAsync(page, rows, where, null);
+            var data = await _service.GetListAsync(page, rows, where, "CreateTime desc");
             if (config.PictureUrl.IsNotNullOrEmpty())
             {
                 foreach (var item in data.items)
                 {
                     item.Url = config.PictureUrl.Contact(item.FilePath);
-                    item.ThumbUrl = config.PictureUrl.Contact(item.ThumbPath);
+                    if (!string.IsNullOrEmpty(item.ThumbPath))
+                    {
+                        item.ThumbUrl = config.PictureUrl.Contact(item.ThumbPath);
+                    }
                 }
             }
             return PagerData(data.items, page, rows, data.count);

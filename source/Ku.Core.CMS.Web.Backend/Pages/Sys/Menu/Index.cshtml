@@ -48,7 +48,7 @@
                     { field: 'HasSubMenu', title: '子菜单', width: 80, align: 'center', switch: true },
                     { field: 'OrderIndex', title: '排序值', width: 80 },
                     {
-                        title: '操作', fixed: 'right', width: 160, align: 'center',
+                        title: '操作', fixed: 'right', width: 170, align: 'center',
                         toolbar: grid_templet_operate([
                             { code: "", text: "子菜单", action: `Index?parentId={{d.Id}}`, css: "layui-btn-primary" },
                             { code: "system.menu.edit", text: "编辑", action: `window:/Sys/Menu/Edit?id={{d.Id}}`, after:"grid:reload['#list']" },

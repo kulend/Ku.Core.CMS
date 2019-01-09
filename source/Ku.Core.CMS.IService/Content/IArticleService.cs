@@ -24,5 +24,34 @@ namespace Ku.Core.CMS.IService.Content
         /// </summary>
         Task SaveAsync(ArticleDto dto);
 
+        /// <summary>
+        /// 增加点击数
+        /// </summary>
+        Task<bool> IncreaseVisitsAsync(long id, int count = 1);
+
+        /// <summary>
+        /// 点赞
+        /// </summary>
+        Task<bool> PraiseAsync(long id, long userId);
+
+        /// <summary>
+        /// 检查是否点赞
+        /// </summary>
+        Task<bool> HasUserPraisedAsync(long id, long userId);
+
+        /// <summary>
+        /// 收藏
+        /// </summary>
+        Task<bool> CollectAsync(long id, long userId);
+
+        /// <summary>
+        /// 取消收藏
+        /// </summary>
+        Task<bool> UnCollectAsync(long id, long userId);
+
+        /// <summary>
+        /// 检查是否收藏
+        /// </summary>
+        Task<bool> HasUserCollectedAsync(long id, long userId);
     }
 }

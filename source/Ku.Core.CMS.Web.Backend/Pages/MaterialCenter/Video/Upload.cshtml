@@ -1,0 +1,160 @@
+﻿@page "{handler?}"
+@model Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Video.UploadModel
+@{
+    Layout = "_WindowFormLayout";
+}
+@using Ku.Core.CMS.Domain.Enum.MaterialCenter
+
+<div class="layui-layout layui-layout-window">
+    <div class="layui-body">
+        <div class="layui-row">
+            <div class="layui-col-xs12" style="text-align:center;">
+                <div id="areaUplaod" class="layui-upload-drag" style="padding:5px 0; width:100%">
+                    <i class="layui-icon">&#xe67c;</i>
+                    <p>点击上传，或将文件拖拽到此处</p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-col-xs12">
+                <div class="layui-upload">
+                    <div class="layui-upload-list">
+                        <table id="table" class="layui-table">
+                            <colgroup>
+                                <col />
+                                <col width="10%" />
+                                <col width="10%" />
+                                <col width="20%" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>文件名</th>
+                                    <th>大小</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer">
+        <a class="layui-hide" id="btnBind">上传</a>
+        <a class="layui-btn layui-btn-sm" id="btnUpload" style="display:none;">开始上传</a>
+        <action text="关 闭" size="sm" action="javascript:closeWindow(true)" />
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        var files;
+        var ins;
+        layui.use('upload', function () {
+            var $ = layui.jquery, upload = layui.upload;
+
+            var list = $('#list');
+            var btnUpload = $('#btnUpload');
+            ins = upload.render({
+                elem: '#areaUplaod'
+                , url: '/MaterialCenter/Video/Upload'
+                , accept: 'video'
+                , multiple: true
+                , exts: 'mp4'
+                , auto: false
+                , bindAction: '#btnBind'
+                , data: {
+                }
+                , choose: function (obj) {
+                    files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                    btnUpload.show();
+                    //读取本地文件
+                    obj.preview(function (index, file, result) {
+                        console.log(result);
+                        var tr = $(['<tr id="upload-' + index + '" data-status="wait">'
+                            , '<td><p style="width:120px; overflow:hidden;">' + file.name + '</p></td>'
+                            , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
+                            , '<td class="item-status">待传</td>'
+                            , '<td>'
+                            , '<a class="layui-btn layui-btn-xs item-upload">上传</a>'
+                            , '<a class="layui-btn layui-btn-xs layui-btn-danger item-delete">移除</a>'
+                            , '</td>'
+                            , '</tr>'].join(''));
+
+                        //单个上传
+                        tr.find('.item-upload').on('click', function () {
+                            var status = tr.data("status");
+                            if (status === "wait" || status === "error")
+                            {
+                                tr.attr("data-status", "upload");
+                                $(this).hide();
+                                tr.find(".item-delete").hide();
+                                tr.find("td.item-status").html('<i class="layui-icon">&#xe63d;</i>');
+                                if (list.find('tr[data-status="wait"]').length === 0) {
+                                    btnUpload.hide();
+                                }
+                                obj.upload(index, file);
+                            }
+                        });
+
+                        //删除
+                        tr.find('.item-delete').on('click', function () {
+                            delete files[index]; //删除对应的文件
+                            tr.remove();
+                            if (list.find('tr[data-status="wait"]').length === 0) {
+                                btnUpload.hide();
+                            }
+                        });
+
+                        list.append(tr);
+                    });
+                }
+                , done: function (res, index, upload) {
+                    if (res.code === 0) { //上传成功
+                        var tr = list.find('tr#upload-' + index);
+                        tr.attr("data-status", "success");
+                        tr.find("td.item-status").html('<i class="layui-icon" style="color: #5FB878;">&#xe605;</i>');
+                        delete files[index]; //删除文件队列已经上传成功的文件
+                        if (tr.attr("data-continue")) {
+                            doUpload();
+                        }
+                        return;
+                    }
+                    this.error(index, upload);
+                }
+                , error: function (index, upload) {
+                    var tr = list.find('tr#upload-' + index);
+                    tr.attr("data-status", "error");
+                    tr.find("td.item-status").html('<i class="layui-icon" style="color: #1E9FFF;">&#x1006;</i>');
+                    tr.find(".item-upload").show();
+                    tr.find(".item-upload").addClass("layui-btn-warm");
+                    tr.find(".item-upload").text("重新上传");
+                    if (tr.attr("data-continue"))
+                    {
+                        doUpload();
+                    }
+                }
+            });
+
+            btnUpload.on('click', function () {
+                doUpload();
+            });
+        });
+
+        function doUpload()
+        {
+            if ($('#list').find('tr[data-status="wait"]').length === 0) {
+                $('#btnUpload').hide();
+                ku.page.msg.tip("上传完成");
+                return;
+            }
+            //ins.config.data = { type: 1 };
+            var tr = $('#list').find('tr[data-status="wait"]').first();
+            tr.attr("data-continue", "true");
+            tr.find(".item-upload").trigger("click");
+        }
+    </script>
+}
+

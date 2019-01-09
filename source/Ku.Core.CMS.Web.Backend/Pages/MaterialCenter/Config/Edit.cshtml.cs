@@ -36,7 +36,7 @@ namespace Ku.Core.CMS.Web.Backend.Pages.MaterialCenter.Config
             Dto = await _service.GetAsync();
         }
 
-        [UserOperationAttribute("修改密码")]
+        [UserOperationAttribute("修改素材库配置")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OnPostAsync()
         {

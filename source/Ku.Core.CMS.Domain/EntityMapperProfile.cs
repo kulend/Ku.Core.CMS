@@ -62,12 +62,16 @@ namespace Ku.Core.CMS.Domain
             //MaterialCenter
             CreateMap<Domain.Entity.MaterialCenter.UserMaterialGroup, Domain.Dto.MaterialCenter.UserMaterialGroupDto>().ReverseMap();
             CreateMap<Domain.Entity.MaterialCenter.Picture, Domain.Dto.MaterialCenter.PictureDto>().ReverseMap();
+            CreateMap<Domain.Entity.MaterialCenter.Video, Domain.Dto.MaterialCenter.VideoDto>().ReverseMap();
             //Content
             CreateMap<Domain.Entity.Content.Advertisement, Domain.Dto.Content.AdvertisementDto>().ReverseMap();
 			CreateMap<Domain.Entity.Content.AdvertisementBoard, Domain.Dto.Content.AdvertisementBoardDto>().ReverseMap();
             CreateMap<Domain.Entity.Content.Article, Domain.Dto.Content.ArticleDto>().ReverseMap();
+			CreateMap<Domain.Entity.Content.ArticleUserEvent, Domain.Dto.Content.ArticleUserEventDto>().ReverseMap();
             CreateMap<Domain.Entity.Content.Column, Domain.Dto.Content.ColumnDto>().ReverseMap();
             CreateMap<Domain.Entity.Content.MaskWord, Domain.Dto.Content.MaskWordDto>().ReverseMap();
+			CreateMap<Domain.Entity.Content.Album, Domain.Dto.Content.AlbumDto>().ReverseMap();
+			CreateMap<Domain.Entity.Content.Comment, Domain.Dto.Content.CommentDto>().ReverseMap();
             CreateMap<Domain.Entity.Mall.DeliveryTemplet, Domain.Dto.Mall.DeliveryTempletDto>().ReverseMap();
             CreateMap<Domain.Entity.Mall.Payment, Domain.Dto.Mall.PaymentDto>().ForMember(x => x.PaymentConfig, opt =>
             {

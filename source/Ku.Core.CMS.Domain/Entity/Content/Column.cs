@@ -9,6 +9,7 @@
 //
 //----------------------------------------------------------------
 
+using Dnc.Extensions.Dapper.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -51,6 +52,12 @@ namespace Ku.Core.CMS.Domain.Entity.Content
 
         [NotMapped]
         public virtual IList<Column> Subs { set; get; }
+
+        /// <summary>
+        /// 标签
+        /// </summary>
+        [StringLength(128)]
+        public string Tags { set; get; }
     }
 
     /// <summary>
@@ -61,7 +68,7 @@ namespace Ku.Core.CMS.Domain.Entity.Content
         /// <summary>
         /// 父栏目
         /// </summary>
-        [SearchCondition(ignoreWhenNull: false)]
+        [Condition(WhenNull = WhenNull.IsNull)]
         public long? ParentId { get; set; }
 
         public string Tag { set; get; }

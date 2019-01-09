@@ -64,5 +64,17 @@ namespace Ku.Core.CMS.Web.Extensions
             var version = self.FindFirst(ClaimTypes.Version)?.Value;
             return version;
         }
+
+        /// <summary>
+        /// 获取用户Id
+        /// </summary>
+        public static bool IsLogin(this ClaimsPrincipal self)
+        {
+            if (self == null)
+            {
+                return false;
+            }
+            return !string.IsNullOrEmpty(self.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        }
     }
 }

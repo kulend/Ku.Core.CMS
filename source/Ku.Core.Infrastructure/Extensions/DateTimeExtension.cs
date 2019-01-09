@@ -19,5 +19,23 @@ namespace Ku.Core.Infrastructure.Extensions
         {
             return obj.ToString("yyyyMM");
         }
+
+        public static string Format(this DateTime self, string format = "")
+        {
+            if (self == null)
+            {
+                return "";
+            }
+            return self.ToString(format);
+        }
+
+        public static string Format(this DateTime? self, string format = "")
+        {
+            if (self == null)
+            {
+                return "";
+            }
+            return self.Value.ToString(format);
+        }
     }
 }

@@ -113,6 +113,9 @@ namespace Ku.Core.CMS.Domain.Entity.UserCenter
     /// </summary>
     public class UserAddressSearch : BaseProtectedSearch<UserAddress>
     {
-
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public long? UserId { get; set; }
     }
 }

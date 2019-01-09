@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Ku.Core.Cache;
 using Ku.Core.CMS.Domain;
 using System.Linq;
+using Ku.Core.Infrastructure.Extensions;
 
 namespace Ku.Core.CMS.Service.Content
 {
@@ -49,6 +50,7 @@ namespace Ku.Core.CMS.Service.Content
                 model.Id = ID.NewID();
                 model.CreateTime = DateTime.Now;
                 model.IsDeleted = false;
+                model.Tags = "|" + string.Join("|", model.Tags.SplitRemoveEmpty(',')) + "|";
                 using (var dapper = DapperFactory.Create())
                 {
                     await dapper.InsertAsync(model);
@@ -64,7 +66,8 @@ namespace Ku.Core.CMS.Service.Content
                         model.Name,
                         model.Title,
                         model.OrderIndex,
-                        model.Tag
+                        model.Tag,
+                        Tags = "|" + string.Join("|", model.Tags.SplitRemoveEmpty(',')) + "|"
                     };
                     await dapper.UpdateAsync<Column>(item, new { model.Id });
                 }
@@ -72,6 +75,7 @@ namespace Ku.Core.CMS.Service.Content
 
             //清除缓存
             await _cache.RemoveAsync(CacheKeyDefinition.ContentColumnList);
+            await _cache.RemoveAsync(CacheKeyDefinition.PcSiteColumn);
         }
 
         #region 其他方法

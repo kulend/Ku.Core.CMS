@@ -13,7 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
+using Ku.Core.CMS.Domain.Base;
 using Ku.Core.CMS.Domain.Enum.Content;
 
 namespace Ku.Core.CMS.Domain.Dto.Content
@@ -27,12 +29,23 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         /// 栏目Id
         /// </summary>
         [DataType("hidden")]
-        public long ColumnId { set; get; }
+        public long? ColumnId { set; get; }
 
         /// <summary>
         /// 栏目
         /// </summary>
         public virtual ColumnDto Column { set; get; }
+
+        /// <summary>
+        /// 专辑Id
+        /// </summary>
+        [DataType("hidden")]
+        public long? AlbumId { set; get; }
+
+        /// <summary>
+        /// 专辑
+        /// </summary>
+        public virtual AlbumDto Album { set; get; }
 
         /// <summary>
         /// 标题
@@ -44,7 +57,7 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         /// <summary>
         /// 副标题
         /// </summary>
-        [Required, MaxLength(256)]
+        [MaxLength(256)]
         [Display(Name = "副标题")]
         public string SubTitle { set; get; }
 
@@ -61,6 +74,14 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         [MaxLength(64)]
         [Display(Name = "来源")]
         public string Provenance { set; get; }
+
+        /// <summary>
+        /// 简介
+        /// </summary>
+        [MaxLength(3000)]
+        [Display(Name = "简介")]
+        [DataType(DataType.MultilineText)]
+        public string Intro { set; get; }
 
         /// <summary>
         /// 排序值
@@ -114,5 +135,48 @@ namespace Ku.Core.CMS.Domain.Dto.Content
         [MaxLength(512)]
         [Display(Name = "封面")]
         public string CoverData { set; get; }
+
+        /// <summary>
+        /// 封面
+        /// </summary>
+        public virtual JsonUploadImage Cover
+        {
+            get
+            {
+                return JsonUploadImage.Parse(CoverData).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        [Display(Name = "点赞数")]
+        public int Praises { set; get; } = 0;
+
+        /// <summary>
+        /// 收藏数
+        /// </summary>
+        [Display(Name = "收藏数")]
+        public int Collects { set; get; } = 0;
+
+        /// <summary>
+        /// 标签
+        /// </summary>
+        [MaxLength(128)]
+        [Display(Name = "标签")]
+        public string Tags { set; get; }
+
+        /// <summary>
+        /// 评论数
+        /// </summary>
+        [Display(Name = "评论数")]
+        public int Comments { set; get; } = 0;
+
+        /// <summary>
+        /// 时长
+        /// </summary>
+        [Display(Name = "时长")]
+        [MaxLength(10)]
+        public string Duration { set; get; }
     }
 }

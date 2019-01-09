@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ku.Core.CMS.Data.EntityFramework
+namespace Ku.Core.CMS.Data.Migrations.EntityFramework
 {
     public interface IDbContext
     {

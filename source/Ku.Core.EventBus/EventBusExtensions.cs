@@ -45,6 +45,39 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
+        public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration Configuration)
+        {
+            var config = Configuration.GetSection("EventBus");
+            var provider = config["Provider"];
+            EventBusConfig.Provider = provider;
+
+            if (string.IsNullOrEmpty(provider) || "None".Equals(provider))
+            {
+                services.AddScoped<IEventPublisher, EmptyEventPublisher>();
+            }
+            else if ("CAP".Equals(provider, StringComparison.OrdinalIgnoreCase))
+            {
+                services.AddScoped<IEventPublisher, CapEventPublisher>();
+                var capConfig = config.GetSection("CAP");
+                //CAP
+                services.AddCap(x =>
+                {
+                    x.UseMySql(capConfig["MySql"]);
+
+                    // If your Message Queue is using RabbitMQ you need to add the config：
+                    var rabbitMQConfig = capConfig.GetSection("RabbitMQ");
+                    x.UseRabbitMQ(opt =>
+                    {
+                        opt.HostName = rabbitMQConfig["HostName"];
+                        opt.Port = int.Parse(rabbitMQConfig["Port"]);
+                        opt.UserName = rabbitMQConfig["UserName"];
+                        opt.Password = rabbitMQConfig["Password"];
+                    });
+                });
+            }
+
+            return services;
+        }
     }
 }
 

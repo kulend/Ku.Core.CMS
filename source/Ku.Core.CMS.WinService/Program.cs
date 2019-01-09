@@ -16,7 +16,7 @@ namespace Ku.Core.CMS.WinService
     {
         //使用 sc.exe 命令行工具创建服务。 binPath 值是应用的可执行文件的路径，其中包括可执行文件的文件名。 
         //等于号和路径开头的引号字符之间需要添加空格。
-        //sc create Ku.Core.CMS.WinService binPath= "D:\wwwroots\official_website\WinService\Ku.Core.CMS.WinService.exe"
+        //sc create Ku.Core.CMS.WinService binPath= "D:\wwwroots\WinService\Ku.Core.CMS.WinService.exe"
 
 
         //在服务之外运行时更便于进行测试和调试，因此通常仅在特定情况下添加调用 RunAsService 的代码。 

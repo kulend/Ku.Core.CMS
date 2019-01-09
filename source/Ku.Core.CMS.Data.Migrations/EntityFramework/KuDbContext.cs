@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace Ku.Core.CMS.Data.EntityFramework
+namespace Ku.Core.CMS.Data.Migrations.EntityFramework
 {
     public partial class KuDbContext : DbContext, IDbContext
     {

@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Ku.Core.CMS.Data.EntityFramework;
 using Ku.Core.CMS.Service.UserCenter;
 using Ku.Core.Infrastructure.DependencyResolver;
 using Ku.Core.Tokens.Jwt;
@@ -12,7 +11,6 @@ namespace Ku.Core.CMS.Web.Application
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<KuDbContext>().As<IDbContext>().InstancePerLifetimeScope();
             builder.RegisterType<AutofacResolver>().As<IIocResolver>().InstancePerLifetimeScope();
 
             //Repository

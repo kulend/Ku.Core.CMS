@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Ku.Core.CMS.Data.EntityFramework;
 using Ku.Core.CMS.Domain;
 using System.Reflection;
 
@@ -42,7 +41,7 @@ namespace Ku.Core.CMS.Web.Application
             services.AddCache(Configuration);
 
             //事件消息发送订阅
-            services.AddEventBus<KuDbContext>(Configuration);
+            services.AddEventBus(Configuration);
 
             //Autofac依赖注入
             var builder = new ContainerBuilder();
@@ -56,6 +55,8 @@ namespace Ku.Core.CMS.Web.Application
         {
             //Dapper
             app.UseDapper();
+
+
 
             //事件消息发送订阅
             app.UseEventBus();

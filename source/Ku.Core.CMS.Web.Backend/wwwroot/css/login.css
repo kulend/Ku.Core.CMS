@@ -34,6 +34,12 @@ body {
     position: relative;
 }
 
+.login-logo span {
+    font-size: 20px;
+    color: #fff;
+    line-height: 60px;
+}
+
     .login-logo .logo,
     .frame-header .logo {
         position: absolute;

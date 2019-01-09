@@ -75,7 +75,6 @@ namespace Ku.Core.CMS.Service.Content
 
             //清除缓存
             await _cache.RemoveAsync(CacheKeyDefinition.ContentColumnList);
-            await _cache.RemoveAsync(CacheKeyDefinition.PcSiteColumn);
         }
 
         #region 其他方法

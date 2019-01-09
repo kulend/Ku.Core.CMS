@@ -13,7 +13,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Ku.Core.CMS.Data.EntityFramework
+namespace Ku.Core.CMS.Data.Migrations.EntityFramework
 {
     public partial class KuDbContext
     {

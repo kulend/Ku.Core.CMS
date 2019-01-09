@@ -119,9 +119,6 @@ namespace Ku.Core.CMS.Service.Content
             }
 
             //清除缓存
-            await _cache.RemoveByPrefixAsync("pcsite:index:articles.");
-            await _cache.RemoveAsync(CacheKeyDefinition.PcSiteServiceCenterMenu);
-            await _cache.RemoveAsync(CacheKeyDefinition.PcSiteIndexTopline);
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using Ku.Core.CMS.Data.EntityFramework;
-using Ku.Core.CMS.Web.Filters;
+﻿using Ku.Core.CMS.Web.Filters;
 using Ku.Core.Infrastructure.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +25,6 @@ namespace Ku.Core.CMS.Web.Application
             //Dapper
             string connection = Configuration.GetConnectionString("Mysql");
             services.AddDapper(options => options.UseMySql(connection));
-            services.AddDbContextPool<KuDbContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Ku.Core.CMS.Web.Backend")));
 
             //微信
             services.AddWeChat();

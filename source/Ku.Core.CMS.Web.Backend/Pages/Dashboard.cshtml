@@ -17,19 +17,8 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
             <div class="layui-card">
-                <div class="layui-card-header">页面缓存清除</div>
+                <div class="layui-card-header"></div>
                 <div class="layui-card-body">
-                    <ul class="layui-row layui-col-space10">
-                        <li class="layui-col-xs2">
-                            <action text="栏目数据" css="layui-btn-default" action="post:Dashboard/ClearCache?key=@CacheKeyDefinition.ContentColumnList" />
-                        </li>
-                        <li class="layui-col-xs2">
-                            <action text="广告数据" css="layui-btn-default" action="post:Dashboard/ClearCache?key=@CacheKeyDefinition.PcSiteAdvertisement" />
-                        </li>
-                        <li class="layui-col-xs2">
-                            <action text="首页缓存" css="layui-btn-default" action="post:Dashboard/ClearCacheByPrefix?prefix=pcsite:index:" />
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
